@@ -26,14 +26,14 @@ const sb=supabase.createClient("https://sxifooelnulxldcbtmvd.supabase.co","sb_pu
         '<p>'+esc(p.category||"")+'</p>'+
         '<div class="price">₹'+p.price+'</div>'+
         '<p>Stock: '+(p.stock||0)+'</p>'+
-        '<a class="btn" target="_blank" href="https://wa.me/916204117647?text='+
-        encodeURIComponent("Hello Aarvi Fashion, I want to order "+p.name+" for ₹"+p.price)+
-        '">Order on WhatsApp</a>'+
+        '<button class="btn" onclick="orderProduct(\''+esc(p.name)+'\','+p.price+')">Order Now</button>'+
         '</div></article>';
     })
     .join("")||"<p>No products available yet.</p>";
 }
-
+function orderProduct(name,price){
+  alert("Order: "+name+" | Price: ₹"+price);
+}
 function nextPhoto(btn){
   let box=btn.parentElement;
   let photos=box.querySelectorAll(".product-photo");
