@@ -1038,9 +1038,14 @@ async function trackMyOrder() {
 <!-- ================= TRACK ORDER ================= -->
 
 <div id="trackModal" class="track-modal">
+
   <div class="track-box">
 
-    <button class="track-close" onclick="closeTrackOrder()">×</button>
+    <button
+      class="track-close"
+      onclick="closeTrackOrder()">
+      ×
+    </button>
 
     <h2>🚚 Track Your Order</h2>
 
@@ -1060,10 +1065,183 @@ async function trackMyOrder() {
       Track Order
     </button>
 
-    <div id="trackResult" style="margin-top:18px;"></div>
+    <div
+      id="trackResult"
+      style="margin-top:18px;">
+    </div>
 
   </div>
+
 </div>
+
+<script>
+
+async function trackByPhone() {
+
+  const phone = document
+    .getElementById("trackPhone")
+    .value
+    .replace(/\D/g, "");
+
+  const result =
+    document.getElementById("trackResult");
+
+  if (phone.length !== 10) {
+
+    result.innerHTML = `
+      <div class="track-order-card">
+        ⚠️ 10 digit mobile number daaliye.
+      </div>
+    `;
+
+    return;
+  }
+
+  result.innerHTML = `
+    <div class="track-order-card">
+      🔎 Order search ho raha hai...
+    </div>
+  `;
+
+  const { data, error } = await sb.rpc(
+    "track_orders_by_phone",
+    {
+      phone_input: phone
+    }
+  );
+
+  if (error) {
+
+    console.error(error);
+
+    result.innerHTML = `
+      <div class="track-order-card">
+        ❌ Tracking mein problem aa rahi hai.
+      </div>
+    `;
+
+    return;
+  }
+
+  if (!data || data.length === 0) {
+
+    result.innerHTML = `
+      <div class="track-order-card">
+        ❌ Is mobile number se koi order nahi mila.
+      </div>
+    `;
+
+    return;
+  }
+
+  let orders = Array.isArray(data)
+    ? data
+    : [data];
+
+  result.innerHTML = `
+    <h3 style="color:#d94f82;">
+      Your Orders (${orders.length})
+    </h3>
+
+    ${orders.map((order, index) => {
+
+      const status =
+        order.Order_states ||
+        order.order_status ||
+        order.status ||
+        "Order Received";
+
+      const product =
+        order.Product_name ||
+        order.product_name ||
+        order.product ||
+        order.name ||
+        "Your Order";
+
+      const amount =
+        order.Total_amount ||
+        order.total_amount ||
+        order.amount ||
+        order.price ||
+        "0";
+
+      const orderId =
+        order.id ||
+        order.order_id ||
+        "Generated";
+
+      return `
+        <div class="track-order-card">
+
+          <h3>
+            📦 Order ${index + 1}
+          </h3>
+
+          <p>
+            <b>Order ID:</b>
+            ${escapeTrack(String(orderId))}
+          </p>
+
+          <p>
+            <b>Product:</b>
+            ${escapeTrack(String(product))}
+          </p>
+
+          <p>
+            <b>Amount:</b>
+            ₹${escapeTrack(String(amount))}
+          </p>
+
+          <div class="track-status">
+            🚚 ${escapeTrack(String(status))}
+          </div>
+
+        </div>
+      `;
+
+    }).join("")}
+  `;
+}
+
+
+function escapeTrack(value) {
+
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+function openTrackOrder() {
+
+  document
+    .getElementById("trackModal")
+    .style.display = "flex";
+
+  document
+    .getElementById("trackPhone")
+    .value = "";
+
+  document
+    .getElementById("trackResult")
+    .innerHTML = "";
+
+}
+
+
+function closeTrackOrder() {
+
+  document
+    .getElementById("trackModal")
+    .style.display = "none";
+
+}
+
+</script>
 <style>
 
 .topbar {
