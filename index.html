@@ -146,19 +146,127 @@
 
     .order {
       display: block;
+      width: 100%;
       text-align: center;
       padding: 11px;
       border-radius: 10px;
       background: #d94f82;
       color: white;
-      text-decoration: none;
+      border: none;
       font-weight: 700;
+      cursor: pointer;
+    }
+
+    .order:hover {
+      background: #c63f70;
     }
 
     .empty {
       text-align: center;
       padding: 40px 10px;
       grid-column: 1 / -1;
+    }
+
+    /* ORDER MODAL */
+
+    .order-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      z-index: 9999;
+      overflow-y: auto;
+    }
+
+    .order-box {
+      width: 100%;
+      max-width: 520px;
+      background: white;
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 15px 50px rgba(0,0,0,.25);
+    }
+
+    .order-box h2 {
+      margin: 0 0 8px;
+      color: #d94f82;
+    }
+
+    .selected-product {
+      background: #fff0f5;
+      padding: 12px;
+      border-radius: 10px;
+      margin: 12px 0 18px;
+    }
+
+    .order-box label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .order-box input,
+    .order-box textarea,
+    .order-box select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 9px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .order-box input:focus,
+    .order-box textarea:focus,
+    .order-box select:focus {
+      border-color: #d94f82;
+    }
+
+    .order-box textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .payment-note {
+      font-size: 13px;
+      color: #777;
+      margin-top: 5px;
+    }
+
+    .place-order {
+      width: 100%;
+      border: none;
+      padding: 13px;
+      margin-top: 18px;
+      border-radius: 10px;
+      background: #d94f82;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .place-order:hover {
+      background: #c63f70;
+    }
+
+    .cancel-order {
+      width: 100%;
+      border: 1px solid #ddd;
+      padding: 11px;
+      margin-top: 9px;
+      border-radius: 10px;
+      background: white;
+      color: #555;
+      cursor: pointer;
+    }
+
+    .cancel-order:hover {
+      background: #f7f7f7;
     }
 
     @media (max-width: 850px) {
@@ -178,6 +286,10 @@
 
       .hero h1 {
         font-size: 30px;
+      }
+
+      .order-box {
+        padding: 18px;
       }
     }
   </style>
@@ -290,8 +402,8 @@
           ${photos}
 
           <div class="photo-buttons">
-            <button onclick="prevPhoto(this)">‹</button>
-            <button onclick="nextPhoto(this)">›</button>
+            <button type="button" onclick="prevPhoto(this)">‹</button>
+            <button type="button" onclick="nextPhoto(this)">›</button>
           </div>
         </div>
       `;
@@ -378,13 +490,14 @@
                 Stock: ${esc(product.stock ?? 0)}
               </div>
 
-             <button
-  class="order"
-  data-name="${esc(product.name)}"
-  data-price="${Number(product.price) || 0}"
-  onclick="openOrderFormFromButton(this)">
-  Order Now
-</button> 
+              <button
+                type="button"
+                class="order"
+                data-name="${esc(product.name || "Product")}"
+                data-price="${Number(product.price) || 0}"
+                onclick="openOrderFormFromButton(this)">
+                Order Now
+              </button>
 
             </div>
           </article>
@@ -408,9 +521,322 @@
       renderProducts(filtered);
     }
 
+
+    /* ============================
+       ORDER FORM
+    ============================ */
+
+    function openOrderFormFromButton(button) {
+
+      const productName =
+        button.dataset.name || "Product";
+
+      const productPrice =
+        Number(button.dataset.price || 0);
+
+      const oldModal =
+        document.getElementById("orderModal");
+
+      if (oldModal) {
+        oldModal.remove();
+      }
+
+      const modal =
+        document.createElement("div");
+
+      modal.id = "orderModal";
+      modal.className = "order-modal";
+
+      modal.innerHTML = `
+
+        <div class="order-box">
+
+          <h2>Place Your Order</h2>
+
+          <div class="selected-product">
+            <strong>${esc(productName)}</strong>
+            <br>
+            Price: ₹${productPrice}
+          </div>
+
+
+          <label>Full Name *</label>
+          <input
+            id="orderName"
+            type="text"
+            placeholder="Enter your full name"
+          >
+
+
+          <label>Mobile Number *</label>
+          <input
+            id="orderPhone"
+            type="tel"
+            maxlength="10"
+            placeholder="Enter 10 digit mobile number"
+          >
+
+
+          <label>Full Address *</label>
+          <textarea
+            id="orderAddress"
+            placeholder="House no., street, area"
+          ></textarea>
+
+
+          <label>City *</label>
+          <input
+            id="orderCity"
+            type="text"
+            placeholder="Enter city"
+          >
+
+
+          <label>State *</label>
+          <input
+            id="orderState"
+            type="text"
+            placeholder="Enter state"
+          >
+
+
+          <label>PIN Code *</label>
+          <input
+            id="orderPincode"
+            type="text"
+            maxlength="6"
+            placeholder="Enter 6 digit PIN code"
+          >
+
+
+          <label>Quantity *</label>
+          <input
+            id="orderQty"
+            type="number"
+            min="1"
+            value="1"
+          >
+
+
+          <label>Payment Method *</label>
+
+          <select id="orderPayment">
+
+            <option value="COD">
+              Cash on Delivery
+            </option>
+
+            <option value="Online">
+              Online Payment
+            </option>
+
+          </select>
+
+          <div class="payment-note">
+            Online Payment selected hone par payment status
+            Pending rahega jab tak payment gateway connect nahi hota.
+          </div>
+
+
+          <button
+            type="button"
+            class="place-order"
+            onclick="submitWebsiteOrder()">
+            Place Order
+          </button>
+
+
+          <button
+            type="button"
+            class="cancel-order"
+            onclick="closeOrderForm()">
+            Cancel
+          </button>
+
+        </div>
+      `;
+
+      document.body.appendChild(modal);
+    }
+
+
+    function closeOrderForm() {
+
+      const modal =
+        document.getElementById("orderModal");
+
+      if (modal) {
+        modal.remove();
+      }
+    }
+
+
+    async function submitWebsiteOrder() {
+
+      const customerName =
+        document.getElementById("orderName")
+          .value.trim();
+
+      const phone =
+        document.getElementById("orderPhone")
+          .value.trim();
+
+      const address =
+        document.getElementById("orderAddress")
+          .value.trim();
+
+      const city =
+        document.getElementById("orderCity")
+          .value.trim();
+
+      const state =
+        document.getElementById("orderState")
+          .value.trim();
+
+      const pincode =
+        document.getElementById("orderPincode")
+          .value.trim();
+
+      const quantity =
+        Number(
+          document.getElementById("orderQty")
+            .value
+        );
+
+      const paymentMethod =
+        document.getElementById("orderPayment")
+          .value;
+
+
+      const productBox =
+        document.querySelector(".selected-product");
+
+      const productName =
+        productBox
+          ? productBox.querySelector("strong").textContent
+          : "Product";
+
+
+      if (!customerName) {
+        alert("Please enter your name.");
+        return;
+      }
+
+      if (!/^[0-9]{10}$/.test(phone)) {
+        alert("Please enter a valid 10 digit mobile number.");
+        return;
+      }
+
+      if (!address) {
+        alert("Please enter your full address.");
+        return;
+      }
+
+      if (!city) {
+        alert("Please enter your city.");
+        return;
+      }
+
+      if (!state) {
+        alert("Please enter your state.");
+        return;
+      }
+
+      if (!/^[0-9]{6}$/.test(pincode)) {
+        alert("Please enter a valid 6 digit PIN code.");
+        return;
+      }
+
+      if (!quantity || quantity < 1) {
+        alert("Please enter a valid quantity.");
+        return;
+      }
+
+
+      const paymentStatus =
+        paymentMethod === "COD"
+          ? "COD"
+          : "Pending";
+
+
+      const orderData = {
+
+        Customer_Name:
+          customerName,
+
+        Phone:
+          phone,
+
+        Address:
+          address,
+
+        City:
+          city,
+
+        State:
+          state,
+
+        "Pin Code":
+          pincode,
+
+        Product_name:
+          productName,
+
+        Quantity:
+          quantity,
+
+        Payment_method:
+          paymentMethod,
+
+        Payment_status:
+          paymentStatus,
+
+        Order_states:
+          "New"
+
+      };
+
+
+      const { error } =
+        await sb
+          .from("ORDER'S")
+          .insert([orderData]);
+
+
+      if (error) {
+
+        console.error(
+          "Order error:",
+          error
+        );
+
+        alert(
+          "Order save nahi hua.\n\n" +
+          error.message
+        );
+
+        return;
+      }
+
+
+      alert(
+        "Order successfully placed! ✅\n\n" +
+        "Aapka order receive ho gaya hai."
+      );
+
+
+      closeOrderForm();
+    }
+
+
+    /* ============================
+       LOAD PRODUCTS
+    ============================ */
+
     async function loadProducts() {
 
-      const container = document.getElementById("products");
+      const container =
+        document.getElementById("products");
 
       container.innerHTML = `
         <div class="empty">
@@ -418,14 +844,18 @@
         </div>
       `;
 
-      const { data, error } = await sb
-        .from("products")
-        .select("*")
-        .order("created_at", {
-          ascending: false
-        });
+
+      const { data, error } =
+        await sb
+          .from("products")
+          .select("*")
+          .order("created_at", {
+            ascending: false
+          });
+
 
       if (error) {
+
         console.error(error);
 
         container.innerHTML = `
@@ -438,12 +868,19 @@
         return;
       }
 
-      allProducts = data || [];
 
-      renderProducts(allProducts);
+      allProducts =
+        data || [];
+
+
+      renderProducts(
+        allProducts
+      );
     }
 
+
     loadProducts();
+
   </script>
 
 </body>
