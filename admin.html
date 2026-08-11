@@ -11,16 +11,56 @@ function show(id,t){$(id).textContent=t;$(id).classList.remove("hide")}
 async function login(){let r=await sb.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});if(r.error)show("loginmsg",r.error.message);else openApp()}
 async function logout(){await sb.auth.signOut();location.reload()}
 function openApp(){$("login").classList.add("hide");$("app").classList.remove("hide");load()}
-async function add(){
- let f=$("photo").files[0];if(!$("name").value||!$("price").value||!f){show("msg","Name, price और photo भरें");return}
- let path=Date.now()+"-"+f.name.replace(/[^a-zA-Z0-9.-]/g,"-");
- let u=await sb.storage.from("product-images").upload(path,f);if(u.error){show("msg",u.error.message);return}
- let url=sb.storage.from("product-images").getPublicUrl(path).data.publicUrl;
- let r=await sb.from("products").insert({name:$("name").value.trim(),category:$("category").value,price:Number($("price").value),original_price:Number($("original").value)||null,stock:Number($("stock").value)||0,description:$("desc").value.trim(),image_url:url});
- if(r.error){show("msg",r.error.message);return}show("msg","Product added ✅");$("name").value="";$("price").value="";$("original").value="";$("stock").value=1;$("desc").value="";$("photo").value="";load()
-}
 async function load(){let r=await sb.from("products").select("*").order("created_at",{ascending:false});let e=$("products");e.innerHTML="";if(r.error){e.textContent=r.error.message;return}(r.data||[]).forEach(p=>{let d=document.createElement("div");d.className="product";d.innerHTML='<img src="'+(p.image_url||"")+'"><div class="info"><b>'+esc(p.name)+'</b><p>'+esc(p.category||"")+' • ₹'+p.price+' • Stock: '+(p.stock||0)+'</p><button class="danger" onclick="del('+p.id+')">Delete</button></div>';e.appendChild(d)})}
 async function del(id){if(!confirm("Delete product?"))return;let r=await sb.from("products").delete().eq("id",id);if(r.error)alert(r.error.message);else load()}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
-sb.auth.getSession().then(x=>{if(x.data.session)openApp()});
+sb.auth.async function add(){
+  let fs=[...$("photo").files].slice(0,4);
+
+  if(!$("name").value||!$("price").value||!fs.length){
+    show("msg","Name, price और कम से कम 1 photo भरें");
+    return;
+  }
+
+  let urls=[];
+
+  for(let f of fs){
+    let path=Date.now()+"-"+Math.random().toString(36).slice(2)+"-"+f.name.replace(/[^a-zA-Z0-9.-]/g,"-");
+
+    let u=await sb.storage.from("product-images").upload(path,f);
+
+    if(u.error){
+      show("msg",u.error.message);
+      return;
+    }
+
+    let url=sb.storage.from("product-images").getPublicUrl(path).data.publicUrl;
+    urls.push(url);
+  }
+
+  let r=await sb.from("products").insert({
+    name:$("name").value.trim(),
+    category:$("category").value,
+    price:Number($("price").value),
+    original_price:Number($("original").value)||null,
+    stock:Number($("stock").value)||0,
+    description:$("desc").value.trim(),
+    image_url:urls[0],
+    image_urls:JSON.stringify(urls)
+  });
+
+  if(r.error){
+    show("msg",r.error.message);
+    return;
+  }
+
+  show("msg","Product added ✅");
+  $("name").value="";
+  $("price").value="";
+  $("original").value="";
+  $("stock").value=1;
+  $("desc").value="";
+  $("photo").value="";
+  load();
+getSession().then(x=>{if(x.data.session)openApp()});
 </script></body></html>
