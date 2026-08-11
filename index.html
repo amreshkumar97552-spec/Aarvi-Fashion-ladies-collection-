@@ -1615,12 +1615,14 @@ function closeTrackOrder() {
 
 async function trackByPhone() {
 
-  const phoneInput = document.getElementById("trackPhone");
-  const result = document.getElementById("trackResult");
-
-  const phone = phoneInput.value
+  const phone = document
+    .getElementById("trackPhone")
+    .value
     .replace(/\D/g, "")
     .trim();
+
+  const result =
+    document.getElementById("trackResult");
 
   if (phone.length !== 10) {
     result.innerHTML = `
@@ -1637,157 +1639,97 @@ async function trackByPhone() {
     </div>
   `;
 
-  try {
-
-    // Mobile number ke possible formats
-    const phoneVariants = [
-      phone,
-      "+91" + phone,
-      "91" + phone
-    ];
-
-    let data = null;
-    let error = null;
-
-    // Pehle normal 10 digit number se search
-    let response = await sb
-      .from("orders")
-      .select("*")
-      .eq("phone", phone)
-      .order("created_at", { ascending: false });
-
-    data = response.data;
-    error = response.error;
-
-    // Agar nahi mila to +91 format try karo
-    if (!error && (!data || data.length === 0)) {
-
-      response = await sb
-        .from("orders")
-        .select("*")
-        .eq("phone", "+91" + phone)
-        .order("created_at", { ascending: false });
-
-      data = response.data;
-      error = response.error;
+  const { data, error } = await sb.rpc(
+    "track_orders_by_phone",
+    {
+      phone_input: phone
     }
+  );
 
-    // Agar 91 format me save hai
-    if (!error && (!data || data.length === 0)) {
+  if (error) {
 
-      response = await sb
-        .from("orders")
-        .select("*")
-        .eq("phone", "91" + phone)
-        .order("created_at", { ascending: false });
-
-      data = response.data;
-      error = response.error;
-    }
-
-    if (error) {
-      console.error("Track order error:", error);
-
-      result.innerHTML = `
-        <div class="track-order-card">
-          ❌ Order track nahi ho raha.
-          <br><br>
-          Please thodi der baad try karein.
-        </div>
-      `;
-
-      return;
-    }
-
-    if (!data || data.length === 0) {
-
-      result.innerHTML = `
-        <div class="track-order-card">
-          ❌ Is mobile number se koi order nahi mila.
-          <br><br>
-          Mobile number check karke dobara try karein.
-        </div>
-      `;
-
-      return;
-    }
-
-    // Saare orders show honge
-    result.innerHTML = data.map(order => `
-
-      <div class="track-order-card">
-
-        <h3>🚚 Order Status</h3>
-
-        <div class="track-status">
-          📦 ${escapeHtml(order.status || "Order Received")}
-        </div>
-
-        <p>
-          <b>📱 Mobile:</b>
-          ${escapeHtml(order.phone || phone)}
-        </p>
-
-        <p>
-          <b>🧾 Order ID:</b>
-          ${escapeHtml(String(order.id || "Generated"))}
-        </p>
-
-        ${
-          order.product_name || order.name
-            ? `
-              <p>
-                <b>👗 Product:</b>
-                ${escapeHtml(
-                  order.product_name ||
-                  order.name ||
-                  "Your Order"
-                )}
-              </p>
-            `
-            : ""
-        }
-
-        ${
-          order.total || order.price
-            ? `
-              <p>
-                <b>💰 Amount:</b>
-                ₹${escapeHtml(
-                  String(order.total || order.price || "0")
-                )}
-              </p>
-            `
-            : ""
-        }
-
-        ${
-          order.created_at
-            ? `
-              <p>
-                <b>📅 Order Date:</b>
-                ${new Date(order.created_at).toLocaleString("en-IN")}
-              </p>
-            `
-            : ""
-        }
-
-      </div>
-
-    `).join("");
-
-  } catch (err) {
-
-    console.error("Track order exception:", err);
+    console.error("Tracking error:", error);
 
     result.innerHTML = `
       <div class="track-order-card">
-        ❌ Kuch problem aa gayi.
+        ❌ Order track nahi ho raha.
         <br><br>
-        Please dobara try karein.
+        ${escapeHtml(error.message || "")}
       </div>
     `;
+
+    return;
   }
+
+  if (!data || data.length === 0) {
+
+    result.innerHTML = `
+      <div class="track-order-card">
+        ❌ Is mobile number se koi order nahi mila.
+      </div>
+    `;
+
+    return;
+  }
+
+  result.innerHTML = data.map((order, index) => {
+
+    const product =
+      order.Product_name ||
+      order.product_name ||
+      "Your Order";
+
+    const status =
+      order.Order_states ||
+      order.order_status ||
+      order.status ||
+      "New";
+
+    const payment =
+      order.Payment_method ||
+      order.payment_method ||
+      "-";
+
+    const quantity =
+      order.Quantity ||
+      order.quantity ||
+      1;
+
+    return `
+      <div class="track-order-card">
+
+        <h3>📦 Order ${index + 1}</h3>
+
+        <p>
+          <b>Product:</b>
+          ${escapeHtml(String(product))}
+        </p>
+
+        <p>
+          <b>Quantity:</b>
+          ${escapeHtml(String(quantity))}
+        </p>
+
+        <p>
+          <b>Mobile:</b>
+          ${escapeHtml(phone)}
+        </p>
+
+        <p>
+          <b>Payment:</b>
+          ${escapeHtml(String(payment))}
+        </p>
+
+        <div class="track-status">
+          🚚 Status:
+          ${escapeHtml(String(status))}
+        </div>
+
+      </div>
+    `;
+
+  }).join("");
+
 }
 
 </script>
