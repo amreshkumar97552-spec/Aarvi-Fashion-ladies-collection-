@@ -882,6 +882,217 @@
     loadProducts();
 
   </script>
+<!-- TRACK ORDER -->
+<div style="
+  max-width:500px;
+  margin:30px auto;
+  padding:20px;
+  background:white;
+  border:1px solid #f0d8e1;
+  border-radius:18px;
+">
 
+  <h2 style="margin-top:0;color:#d94f82;">
+    🚚 Track Your Order
+  </h2>
+
+  <p style="color:#666;">
+    Apna Order ID aur mobile number daaliye.
+  </p>
+
+  <input
+    id="trackId"
+    type="number"
+    placeholder="Order ID"
+    style="
+      width:100%;
+      padding:13px;
+      margin:7px 0;
+      border:1px solid #ddd;
+      border-radius:10px;
+      font-size:16px;
+    "
+  >
+
+  <input
+    id="trackPhone"
+    type="tel"
+    placeholder="Mobile Number"
+    style="
+      width:100%;
+      padding:13px;
+      margin:7px 0;
+      border:1px solid #ddd;
+      border-radius:10px;
+      font-size:16px;
+    "
+  >
+
+  <button
+    onclick="trackMyOrder()"
+    style="
+      width:100%;
+      padding:13px;
+      margin-top:8px;
+      background:#d94f82;
+      color:white;
+      border:0;
+      border-radius:10px;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+    "
+  >
+    Track Order
+  </button>
+
+  <div id="trackResult" style="margin-top:18px;"></div>
+
+</div>
+
+<script>
+
+async function trackMyOrder() {
+
+  const orderId =
+    Number(document.getElementById("trackId").value);
+
+  const phone =
+    document.getElementById("trackPhone").value.trim();
+
+  const result =
+    document.getElementById("trackResult");
+
+  if (!orderId || !phone) {
+    result.innerHTML = `
+      <div style="
+        padding:12px;
+        background:#fff0f5;
+        border-radius:10px;
+      ">
+        ⚠️ Order ID aur mobile number dono bhariye.
+      </div>
+    `;
+    return;
+  }
+
+  result.innerHTML = "🔎 Order check ho raha hai...";
+
+  const { data, error } = await sb.rpc(
+    "track_my_order",
+    {
+      order_id_input: orderId,
+      phone_input: phone
+    }
+  );
+
+  if (error) {
+
+    console.error(error);
+
+    result.innerHTML = `
+      <div style="
+        padding:12px;
+        background:#fff0f5;
+        border-radius:10px;
+      ">
+        ❌ Order track nahi ho raha.
+      </div>
+    `;
+
+    return;
+  }
+
+  if (!data) {
+
+    result.innerHTML = `
+      <div style="
+        padding:12px;
+        background:#fff0f5;
+        border-radius:10px;
+      ">
+        ❌ Order nahi mila.<br>
+        Order ID aur mobile number check karein.
+      </div>
+    `;
+
+    return;
+  }
+
+  const order = data;
+
+  const status =
+    order.Order_states ||
+    order.order_status ||
+    order.status ||
+    "Order Received";
+
+  const product =
+    order.Product_name ||
+    order.product_name ||
+    order.product ||
+    "-";
+
+  const name =
+    order.Customer_Name ||
+    order.customer_name ||
+    order.name ||
+    "-";
+
+  const amount =
+    order.Total_amount ||
+    order.total_amount ||
+    order.amount ||
+    order.price ||
+    "-";
+
+  result.innerHTML = `
+    <div style="
+      padding:18px;
+      background:#fff7fa;
+      border:1px solid #f0d8e1;
+      border-radius:14px;
+    ">
+
+      <h3 style="
+        margin-top:0;
+        color:#d94f82;
+      ">
+        Order Found ✅
+      </h3>
+
+      <p>
+        <b>Order ID:</b> ${orderId}
+      </p>
+
+      <p>
+        <b>Customer:</b> ${esc(name)}
+      </p>
+
+      <p>
+        <b>Product:</b> ${esc(product)}
+      </p>
+
+      <p>
+        <b>Amount:</b> ₹${esc(amount)}
+      </p>
+
+      <div style="
+        margin-top:15px;
+        padding:14px;
+        background:#d94f82;
+        color:white;
+        border-radius:10px;
+        text-align:center;
+        font-weight:bold;
+      ">
+        📦 ${esc(status)}
+      </div>
+
+    </div>
+  `;
+}
+
+</script>
 </body>
 </html>
