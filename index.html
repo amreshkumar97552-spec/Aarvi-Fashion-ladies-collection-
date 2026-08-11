@@ -299,10 +299,18 @@
 
   <div class="wrap">
 
-    <header>
+   <header>
+  <div class="topbar">
+    <div>
       <div class="brand">AARVI FASHION</div>
       <div>Saree • Kurti • Top • Suit</div>
-    </header>
+    </div>
+
+    <button class="track-btn" onclick="openTrackOrder()">
+      🚚 Track Order
+    </button>
+  </div>
+</header> 
 
     <main>
 
@@ -1094,5 +1102,495 @@ async function trackMyOrder() {
 }
 
 </script>
+<!-- ================= TRACK ORDER ================= -->
+
+<div id="trackModal" class="track-modal">
+
+  <div class="track-box">
+
+    <button class="track-close" onclick="closeTrackOrder()">×</button>
+
+    <h2>🚚 Track Your Order</h2>
+
+    <p>Apna mobile number daaliye.</p>
+
+    <input
+      id="trackPhone"
+      type="tel"
+      inputmode="numeric"
+      maxlength="10"
+      placeholder="10 digit mobile number"
+    >
+
+    <button
+      class="track-search"
+      onclick="trackByPhone()">
+      Track Order
+    </button>
+
+    <div id="trackResult"></div>
+
+  </div>
+
+</div>
+
+
+<style>
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.track-btn {
+  border: none;
+  background: #d94f82;
+  color: white;
+  padding: 11px 17px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.track-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.track-box {
+  width: 100%;
+  max-width: 430px;
+  background: white;
+  border-radius: 20px;
+  padding: 25px;
+  position: relative;
+}
+
+.track-box h2 {
+  margin-top: 0;
+  color: #d94f82;
+}
+
+.track-box p {
+  color: #666;
+}
+
+.track-box input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 17px;
+  margin: 12px 0;
+}
+
+.track-search {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  background: #d94f82;
+  color: white;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.track-close {
+  position: absolute;
+  right: 15px;
+  top: 8px;
+  border: none;
+  background: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.track-order-card {
+  margin-top: 15px;
+  padding: 15px;
+  background: #fff7fa;
+  border-radius: 12px;
+  border: 1px solid #f0d8e1;
+}
+
+.track-status {
+  color: #d94f82;
+  font-weight: 800;
+  margin-top: 8px;
+}
+
+</style>
+
+
+<script>
+
+function openTrackOrder() {
+
+  document.getElementById("trackModal").style.display = "flex";
+
+  document.getElementById("trackPhone").value = "";
+
+  document.getElementById("trackResult").innerHTML = "";
+
+}
+
+
+function closeTrackOrder() {
+
+  document.getElementById("trackModal").style.display = "none";
+
+}
+
+
+async function trackByPhone() {
+
+  const phone = document
+    .getElementById("trackPhone")
+    .value
+    .replace(/\D/g, "");
+
+  const result =
+    document.getElementById("trackResult");
+
+
+  if (phone.length !== 10) {
+
+    result.innerHTML = `
+      <div class="track-order-card">
+        ⚠️ Please enter a valid 10 digit mobile number.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  result.innerHTML = `
+    <div class="track-order-card">
+      🔎 Order search ho raha hai...
+    </div>
+  `;
+
+
+  const { data, error } = await sb
+    .from("orders")
+    .select("*")
+    .eq("phone", phone)
+    .order("created_at", {
+      ascending: false
+    });
+
+
+  if (error) {
+
+    console.error(error);
+
+    result.innerHTML = `
+      <div class="track-order-card">
+        ❌ Order track nahi ho raha.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  if (!data || data.length === 0) {
+
+    result.innerHTML = `
+      <div class="track-order-card">
+        ❌ Is mobile number se koi order nahi mila.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  result.innerHTML = data.map(order => `
+
+    <div class="track-order-card">
+
+      <strong>Order Received ✅</strong>
+
+      <div style="margin-top:8px;">
+        ${esc(
+          order.product_name ||
+          order.name ||
+          "Your Order"
+        )}
+      </div>
+
+      <div style="margin-top:6px;">
+        Amount:
+        ₹${esc(
+          order.total ||
+          order.price ||
+          "0"
+        )}
+      </div>
+
+      <div class="track-status">
+
+        Status:
+        ${esc(
+          order.status ||
+          "Order Received"
+        )}
+
+      </div>
+
+    </div>
+
+  `).join("");
+
+}
+
+</script>
+
+<!-- ================= TRACK ORDER ================= -->
+
+<div id="trackModal" class="track-modal">
+
+  <div class="track-box">
+
+    <button class="track-close" onclick="closeTrackOrder()">×</button>
+
+    <h2>🚚 Track Your Order</h2>
+
+    <p>Apna mobile number daaliye.</p>
+
+    <input
+      id="trackPhone"
+      type="tel"
+      inputmode="numeric"
+      maxlength="10"
+      placeholder="10 digit mobile number"
+    >
+
+    <button
+      class="track-search"
+      onclick="trackByPhone()">
+      Track Order
+    </button>
+
+    <div id="trackResult"></div>
+
+  </div>
+
+</div>
+
+
+<style>
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.track-btn {
+  border: none;
+  background: #d94f82;
+  color: white;
+  padding: 11px 17px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.track-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.track-box {
+  width: 100%;
+  max-width: 430px;
+  background: white;
+  border-radius: 20px;
+  padding: 25px;
+  position: relative;
+}
+
+.track-box h2 {
+  margin-top: 0;
+  color: #d94f82;
+}
+
+.track-box p {
+  color: #666;
+}
+
+.track-box input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 17px;
+  margin: 12px 0;
+}
+
+.track-search {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  background: #d94f82;
+  color: white;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.track-close {
+  position: absolute;
+  right: 15px;
+  top: 8px;
+  border: none;
+  background: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.track-order-card {
+  margin-top: 15px;
+  padding: 15px;
+  background: #fff7fa;
+  border-radius: 12px;
+  border: 1px solid #f0d8e1;
+}
+
+.track-status {
+  color: #d94f82;
+  font-weight: 800;
+  margin-top: 8px;
+}
+
+</style>
+
+
+<script>
+
+function openTrackOrder() {
+
+  document.getElementById("trackModal").style.display = "flex";
+
+  document.getElementById("trackPhone").value = "";
+
+  document.getElementById("trackResult").innerHTML = "";
+
+}
+
+
+function closeTrackOrder() {
+
+  document.getElementById("trackModal").style.display = "none";
+
+}
+
+
+async function trackByPhone() {
+
+  const phone = document
+    .getElementById("trackPhone")
+    .value
+    .replace(/\D/g, "");
+
+  const result = document.getElementById("trackResult");
+
+  if (phone.length !== 10) {
+    result.innerHTML = `
+      <div class="track-order-card">
+        ⚠️ Please enter a valid 10 digit mobile number.
+      </div>
+    `;
+    return;
+  }
+
+  result.innerHTML = `
+    <div class="track-order-card">
+      🔎 Order search ho raha hai...
+    </div>
+  `;
+
+  const { data, error } = await sb
+    .from("orders")
+    .select("*")
+    .eq("phone", phone)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+
+    result.innerHTML = `
+      <div class="track-order-card">
+        ❌ Order track nahi ho raha.
+        <br>
+        Please thodi der baad try karein.
+      </div>
+    `;
+
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    result.innerHTML = `
+      <div class="track-order-card">
+        ❌ Is mobile number se koi order nahi mila.
+        <br><br>
+        Mobile number check karke dobara try karein.
+      </div>
+    `;
+
+    return;
+  }
+
+  result.innerHTML = data.map(order => `
+    <div class="track-order-card">
+
+      <h3>🚚 Order Status</h3>
+
+      <div class="track-status">
+        📦 ${escapeHtml(order.status || "Order Received")}
+      </div>
+
+      <p>
+        <b>📱 Mobile:</b> ${escapeHtml(order.phone || phone)}
+      </p>
+
+      <p>
+        <b>🆔 Order ID:</b> ${escapeHtml(String(order.id || "Generated"))}
+      </p>
+
+      ${
+        order.created_at
+          ? `<p><b>📅 Order Date:</b> ${new Date(order.created_at).toLocaleString("en-IN")}</p>`
+          : ""
+      }
+
+    </div>
+  `).join("");
+}
+
+</script>
+
+
 </body>
 </html>
