@@ -378,15 +378,13 @@
                 Stock: ${esc(product.stock ?? 0)}
               </div>
 
-              <a
-                class="order"
-                href="https://wa.me/?text=${encodeURIComponent(
-                  "I want to order " + (product.name || "this product")
-                )}"
-                target="_blank"
-              >
-                Order Now
-              </a>
+             <button
+  class="order"
+  data-name="${esc(product.name)}"
+  data-price="${Number(product.price) || 0}"
+  onclick="openOrderFormFromButton(this)">
+  Order Now
+</button> 
 
             </div>
           </article>
