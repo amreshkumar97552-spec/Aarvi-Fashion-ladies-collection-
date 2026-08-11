@@ -48,5 +48,5 @@ function prevPhoto(btn){
   let current=[...photos].findIndex(x=>x.style.display!="none");
   photos[current].style.display="none";
   photos[(current-1+photos.length)%photos.length].style.display="block";
-function $(x){return document.getElementById(x)}function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}load();
+function $(x){}return document.getElementById(x)}function esc(s){}return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}load();
 </script></body></html>
