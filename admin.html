@@ -1,91 +1,1657 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Aarvi Fashion Admin</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
-*{box-sizing:border-box}body{font-family:Arial;margin:0;background:#fff7fa;color:#3a2430}.wrap{max-width:1050px;margin:auto;padding:24px}.card{background:#fff;border:1px solid #f0d8e1;border-radius:18px;padding:20px;margin:16px 0}h1{color:#d94f82}input,select,textarea{width:100%;padding:12px;margin:6px 0 14px;border:1px solid #e4cbd5;border-radius:10px}button{padding:12px 17px;border:0;border-radius:10px;background:#d94f82;color:#fff;font-weight:700;cursor:pointer}.danger{background:#8d274d}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.products{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.product{border:1px solid #f0d8e1;border-radius:15px;overflow:hidden}.product img{width:100%;height:220px;object-fit:contain;background:#fff0f5}.info{padding:14px}.hide{display:none}.msg{background:#fff0f5;padding:10px;border-radius:10px}.top{display:flex;justify-content:space-between}@media(max-width:700px){.grid,.products{grid-template-columns:1fr}.top{display:block}}</style></head><body>
-<div id="login" class="card" style="max-width:420px;margin:80px auto"><h1>🌸 Aarvi Fashion</h1><p>Admin Login</p><input id="email" value="amreshkumar97552@gmail.com"><input id="password" type="password" placeholder="Password"><button onclick="login()">Login</button><div id="loginmsg" class="msg hide"></div></div>
-<div id="app" class="wrap hide"><div class="top"><div><h1>Aarvi Fashion Admin</h1><p>Products & Stock</p></div><div><button onclick="window.open('https://aarvi-fashion-ladies-collection.vercel.app','_blank')">Open Store</button> <button onclick="logout()">Logout</button></div></div>
-<div class="card"><h2>Add Product</h2><div id="msg" class="msg hide"></div><div class="grid"><div><label>Name</label><input id="name"></div><div><label>Category</label><select id="category"><option>Saree</option><option>Kurti</option><option>Top</option><option>Suit</option></select></div><div><label>Selling Price</label><input id="price" type="number"></div><div><label>Original Price</label><input id="original" type="number"></div></div><label>Description</label><textarea id="desc"></textarea><button<div>
-  <label>Photo 1</label>
-  <input id="photo1" type="file" accept="image/*">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Aarvi Fashion Admin</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#fff7fa;
+  color:#3a2430
+}
+
+.wrap{
+  max-width:1200px;
+  margin:auto;
+  padding:20px
+}
+
+.card{
+  background:#fff;
+  border:1px solid #f0d8e1;
+  border-radius:18px;
+  padding:20px;
+  margin:16px 0
+}
+
+h1,h2{
+  color:#d94f82
+}
+
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  margin:6px 0 14px;
+  border:1px solid #e4cbd5;
+  border-radius:10px;
+  outline:none
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical
+}
+
+button{
+  padding:11px 16px;
+  border:0;
+  border-radius:10px;
+  background:#d94f82;
+  color:#fff;
+  font-weight:700;
+  cursor:pointer
+}
+
+button:hover{
+  opacity:.9
+}
+
+.danger{
+  background:#8d274d
+}
+
+.secondary{
+  background:#777
+}
+
+.green{
+  background:#29914b
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px
+}
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px
+}
+
+.product{
+  border:1px solid #f0d8e1;
+  border-radius:15px;
+  overflow:hidden;
+  background:white
+}
+
+.product img{
+  width:100%;
+  height:220px;
+  object-fit:contain;
+  background:#fff0f5
+}
+
+.info{
+  padding:14px
+}
+
+.hide{
+  display:none!important
+}
+
+.msg{
+  background:#fff0f5;
+  padding:10px;
+  border-radius:10px;
+  margin:10px 0
+}
+
+.success{
+  background:#eefbf2;
+  color:#26723a;
+  padding:10px;
+  border-radius:10px;
+  margin:10px 0
+}
+
+.error{
+  background:#fff0f0;
+  color:#a52c2c;
+  padding:10px;
+  border-radius:10px;
+  margin:10px 0
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px
+}
+
+.tabs{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap
+}
+
+.tabs button{
+  background:white;
+  color:#d94f82;
+  border:1px solid #d94f82
+}
+
+.tabs button.active{
+  background:#d94f82;
+  color:white
+}
+
+.order{
+  border:1px solid #f0d8e1;
+  border-radius:14px;
+  padding:15px;
+  margin:10px 0;
+  background:white
+}
+
+.status{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:20px;
+  background:#d94f82;
+  color:white;
+  font-size:12px;
+  font-weight:bold
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px
+}
+
+.stat{
+  background:white;
+  border:1px solid #f0d8e1;
+  border-radius:14px;
+  padding:17px
+}
+
+.stat b{
+  display:block;
+  font-size:25px;
+  color:#d94f82;
+  margin-top:5px
+}
+
+.photo-preview{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-bottom:15px
+}
+
+.photo-preview img{
+  width:100%;
+  height:100px;
+  object-fit:contain;
+  border:1px solid #eee;
+  border-radius:8px;
+  background:#fff0f5
+}
+
+@media(max-width:800px){
+  .products{
+    grid-template-columns:repeat(2,1fr)
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr)
+  }
+}
+
+@media(max-width:600px){
+  .grid{
+    grid-template-columns:1fr
+  }
+
+  .products{
+    grid-template-columns:1fr
+  }
+
+  .top{
+    display:block
+  }
+
+  .top button{
+    margin-top:5px
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= LOGIN ================= -->
+
+<div id="login"
+     class="card"
+     style="max-width:430px;margin:70px auto">
+
+  <h1>🌸 Aarvi Fashion</h1>
+
+  <p><b>Admin Login</b></p>
+
+  <label>Email</label>
+
+  <input
+    id="email"
+    type="email"
+    value="amreshkumar97552@gmail.com">
+
+  <label>Password</label>
+
+  <input
+    id="password"
+    type="password"
+    placeholder="Admin password">
+
+  <button
+    style="width:100%"
+    onclick="login()">
+
+    Login
+
+  </button>
+
+  <div
+    id="loginmsg"
+    class="msg hide">
+  </div>
+
 </div>
 
-<div>
-  <label>Photo 2</label>
-  <input id="photo2" type="file" accept="image/*">
+
+<!-- ================= ADMIN APP ================= -->
+
+<div id="app"
+     class="wrap hide">
+
+  <div class="top">
+
+    <div>
+      <h1>Aarvi Fashion Admin</h1>
+      <p>Products • Stock • Orders • Customers</p>
+    </div>
+
+    <div>
+
+      <button
+        onclick="openStore()">
+
+        Open Store
+
+      </button>
+
+      <button
+        class="secondary"
+        onclick="logout()">
+
+        Logout
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= STATS ================= -->
+
+  <div class="stats">
+
+    <div class="stat">
+      Products
+      <b id="productCount">0</b>
+    </div>
+
+    <div class="stat">
+      Stock
+      <b id="stockCount">0</b>
+    </div>
+
+    <div class="stat">
+      Orders
+      <b id="orderCount">0</b>
+    </div>
+
+    <div class="stat">
+      New Orders
+      <b id="newOrderCount">0</b>
+    </div>
+
+  </div>
+
+
+  <!-- ================= TABS ================= -->
+
+  <div class="card">
+
+    <div class="tabs">
+
+      <button
+        class="active"
+        id="tabProducts"
+        onclick="showSection('productsSection',this)">
+
+        📦 Products
+
+      </button>
+
+      <button
+        id="tabOrders"
+        onclick="showSection('ordersSection',this)">
+
+        🛍️ Orders
+
+      </button>
+
+      <button
+        id="tabCustomers"
+        onclick="showSection('customersSection',this)">
+
+        👥 Customers
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= PRODUCTS SECTION ================= -->
+
+  <section id="productsSection">
+
+    <div class="card">
+
+      <h2>➕ Add Product</h2>
+
+      <div
+        id="msg"
+        class="msg hide">
+      </div>
+
+      <div class="grid">
+
+        <div>
+
+          <label>Product Name *</label>
+
+          <input id="name"
+                 placeholder="Product name">
+
+        </div>
+
+        <div>
+
+          <label>Category *</label>
+
+          <select id="category">
+
+            <option value="Saree">Saree</option>
+            <option value="Kurti">Kurti</option>
+            <option value="Top">Top</option>
+            <option value="Suit">Suit</option>
+
+          </select>
+
+        </div>
+
+        <div>
+
+          <label>Selling Price *</label>
+
+          <input
+            id="price"
+            type="number"
+            min="0"
+            placeholder="999">
+
+        </div>
+
+        <div>
+
+          <label>Original Price</label>
+
+          <input
+            id="original"
+            type="number"
+            min="0"
+            placeholder="1499">
+
+        </div>
+
+        <div>
+
+          <label>Stock *</label>
+
+          <input
+            id="stock"
+            type="number"
+            min="0"
+            value="1">
+
+        </div>
+
+      </div>
+
+
+      <label>Description</label>
+
+      <textarea
+        id="desc"
+        placeholder="Product description">
+      </textarea>
+
+
+      <h3>Product Photos</h3>
+
+      <label>Photo 1 *</label>
+
+      <input
+        id="photo1"
+        type="file"
+        accept="image/*">
+
+      <label>Photo 2</label>
+
+      <input
+        id="photo2"
+        type="file"
+        accept="image/*">
+
+      <label>Photo 3</label>
+
+      <input
+        id="photo3"
+        type="file"
+        accept="image/*">
+
+      <label>Photo 4</label>
+
+      <input
+        id="photo4"
+        type="file"
+        accept="image/*">
+
+
+      <button
+        onclick="addProduct()">
+
+        Save Product
+
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="top">
+
+        <h2>📦 Products</h2>
+
+        <button
+          class="secondary"
+          onclick="loadProducts()">
+
+          Refresh
+
+        </button>
+
+      </div>
+
+      <div
+        id="products"
+        class="products">
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= ORDERS ================= -->
+
+  <section
+    id="ordersSection"
+    class="hide">
+
+    <div class="card">
+
+      <div class="top">
+
+        <h2>🛍️ Customer Orders</h2>
+
+        <button
+          class="secondary"
+          onclick="loadOrders()">
+
+          Refresh
+
+        </button>
+
+      </div>
+
+      <div
+        id="orders">
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= CUSTOMERS ================= -->
+
+  <section
+    id="customersSection"
+    class="hide">
+
+    <div class="card">
+
+      <div class="top">
+
+        <h2>👥 Customers</h2>
+
+        <button
+          class="secondary"
+          onclick="loadCustomers()">
+
+          Refresh
+
+        </button>
+
+      </div>
+
+      <div
+        id="customers">
+      </div>
+
+    </div>
+
+  </section>
+
 </div>
 
-<div>
-  <label>Photo 3</label>
-  <input id="photo3" type="file" accept="image/*">
-</div>
 
-<div>
-  <label>Photo 4</label>
-  <input id="photo4" type="file" accept="image/*">
-</div onclick="add()">Save Product</button></div>
-<div class="card"><h2>Products</h2><div id="products" class="products"></div></div></div>
 <script>
-const U="https://sxifooelnulxldcbtmvd.supabase.co",K="sb_publishable_nLLITIJxfhc52cUkZaGZ4w_GvJubfM-",sb=supabase.createClient(U,K);
-const $=x=>document.getElementById(x);
-function show(id,t){$(id).textContent=t;$(id).classList.remove("hide")}
-async function login(){let r=await sb.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});if(r.error)show("loginmsg",r.error.message);else openApp()}
-async function logout(){await sb.auth.signOut();location.reload()}
-function openApp(){$("login").classList.add("hide");$("app").classList.remove("hide");load()}
-async function load(){let r=await sb.from("products").select("*").order("created_at",{ascending:false});let e=$("products");e.innerHTML="";if(r.error){e.textContent=r.error.message;return}(r.data||[]).forEach(p=>{let d=document.createElement("div");d.className="product";d.innerHTML='<img src="'+(p.image_url||"")+'"><div class="info"><b>'+esc(p.name)+'</b><p>'+esc(p.category||"")+' • ₹'+p.price+' • Stock: '+(p.stock||0)+'</p><button class="danger" onclick="del('+p.id+')">Delete</button></div>';e.appendChild(d)})}
-async function del(id){if(!confirm("Delete product?"))return;let r=await sb.from("products").delete().eq("id",id);if(r.error)alert(r.error.message);else load()}
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
-sb.auth.async function add(){
-  let fs=[
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+"https://sxifooelnulxldcbtmvd.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_nLLITIJxfhc52cUkZaGZ4w_GvJubfM-";
+
+const sb =
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+const $ =
+id => document.getElementById(id);
+
+
+function esc(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function showMessage(id,text,type="msg"){
+
+  const el=$(id);
+
+  if(!el) return;
+
+  el.className=type;
+
+  el.textContent=text;
+
+  el.classList.remove("hide");
+
+}
+
+
+function money(value){
+
+  return Number(value||0)
+    .toLocaleString("en-IN");
+
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+async function login(){
+
+  const email =
+    $("email").value.trim();
+
+  const password =
+    $("password").value;
+
+  if(!email||!password){
+
+    showMessage(
+      "loginmsg",
+      "Email aur password bhariye.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const {error} =
+    await sb.auth.signInWithPassword({
+
+      email:email,
+
+      password:password
+
+    });
+
+
+  if(error){
+
+    showMessage(
+      "loginmsg",
+      error.message,
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  openApp();
+
+}
+
+
+async function logout(){
+
+  await sb.auth.signOut();
+
+  location.reload();
+
+}
+
+
+function openApp(){
+
+  $("login")
+    .classList.add("hide");
+
+  $("app")
+    .classList.remove("hide");
+
+  loadProducts();
+
+  loadOrders();
+
+  loadCustomers();
+
+}
+
+
+/* =========================================================
+   SESSION CHECK
+========================================================= */
+
+async function checkSession(){
+
+  const {data} =
+    await sb.auth.getSession();
+
+  if(data.session){
+
+    openApp();
+
+  }
+
+}
+
+checkSession();
+
+
+/* =========================================================
+   SECTION SWITCH
+========================================================= */
+
+function showSection(id,button){
+
+  document
+    .querySelectorAll("#productsSection,#ordersSection,#customersSection")
+    .forEach(el=>
+      el.classList.add("hide")
+    );
+
+  $(id)
+    .classList.remove("hide");
+
+
+  document
+    .querySelectorAll(".tabs button")
+    .forEach(b=>
+      b.classList.remove("active")
+    );
+
+  if(button)
+    button.classList.add("active");
+
+
+  if(id==="ordersSection")
+    loadOrders();
+
+  if(id==="customersSection")
+    loadCustomers();
+
+}
+
+
+/* =========================================================
+   OPEN STORE
+========================================================= */
+
+function openStore(){
+
+  window.open(
+    "https://aarvi-fashion-ladies-collection.vercel.app",
+    "_blank"
+  );
+
+}
+
+
+/* =========================================================
+   LOAD PRODUCTS
+========================================================= */
+
+async function loadProducts(){
+
+  const container =
+    $("products");
+
+  container.innerHTML =
+    "<p>Loading products...</p>";
+
+
+  const {data,error} =
+    await sb
+      .from("products")
+      .select("*")
+      .order(
+        "created_at",
+        {ascending:false}
+      );
+
+
+  if(error){
+
+    container.innerHTML =
+      `<div class="error">
+        ${esc(error.message)}
+      </div>`;
+
+    return;
+
+  }
+
+
+  const products =
+    data||[];
+
+
+  $("productCount")
+    .textContent=products.length;
+
+
+  $("stockCount")
+    .textContent=
+      products.reduce(
+        (sum,p)=>
+          sum+Number(p.stock||0),
+        0
+      );
+
+
+  if(!products.length){
+
+    container.innerHTML =
+      `<div class="msg">
+        Abhi koi product nahi hai.
+      </div>`;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    products.map(p=>{
+
+      let images=[];
+
+      try{
+
+        if(p.image_urls)
+          images=JSON.parse(p.image_urls);
+
+      }catch(e){}
+
+      if(!Array.isArray(images))
+        images=[];
+
+      if(!images.length && p.image_url)
+        images=[p.image_url];
+
+
+      return `
+
+        <div class="product">
+
+          <img
+            src="${esc(images[0]||"")}"
+            alt="${esc(p.name)}">
+
+          <div class="info">
+
+            <h3>
+              ${esc(p.name)}
+            </h3>
+
+            <p>
+              ${esc(p.category||"")}
+            </p>
+
+            <p>
+              <b style="color:#d94f82">
+                ₹${money(p.price)}
+              </b>
+
+              ${
+                p.original_price
+                ?
+                `<span style="
+                  text-decoration:line-through;
+                  color:#999;
+                  margin-left:6px">
+                  ₹${money(p.original_price)}
+                </span>`
+                :
+                ""
+              }
+
+            </p>
+
+            <p>
+              Stock:
+              <b>${Number(p.stock||0)}</b>
+            </p>
+
+
+            <button
+              onclick="editStock(${Number(p.id)},${Number(p.stock||0)})">
+
+              Stock
+
+            </button>
+
+            <button
+              class="danger"
+              onclick="deleteProduct(${Number(p.id)})">
+
+              Delete
+
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================================
+   ADD PRODUCT
+========================================================= */
+
+async function addProduct(){
+
+  const name =
+    $("name").value.trim();
+
+  const category =
+    $("category").value;
+
+  const price =
+    Number($("price").value);
+
+  const original =
+    Number($("original").value)||null;
+
+  const stock =
+    Number($("stock").value)||0;
+
+  const description =
+    $("desc").value.trim();
+
+
+  const files=[
     $("photo1").files[0],
     $("photo2").files[0],
     $("photo3").files[0],
     $("photo4").files[0]
   ].filter(Boolean);
 
-  if(!$("name").value.trim() || !$("price").value || !fs.length){
-    show("msg","Name, price और कम से कम 1 photo भरें");
+
+  if(!name){
+
+    showMessage(
+      "msg",
+      "Product name bhariye.",
+      "error"
+    );
+
     return;
+
   }
 
-  let urls=[];
 
-  for(let f of fs){
-    let path=Date.now()+"-"+Math.random().toString(36).slice(2)+"-"+f.name.replace(/[^a-zA-Z0-9.-]/g,"-");
+  if(!price){
 
-    let u=await sb.storage.from("product-images").upload(path,f);
+    showMessage(
+      "msg",
+      "Selling price bhariye.",
+      "error"
+    );
 
-    if(u.error){
-      show("msg",u.error.message);
+    return;
+
+  }
+
+
+  if(!files.length){
+
+    showMessage(
+      "msg",
+      "Kam se kam 1 photo select karein.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  showMessage(
+    "msg",
+    "Photos upload ho rahi hain..."
+  );
+
+
+  const urls=[];
+
+
+  for(const file of files){
+
+    const safeName =
+      file.name
+        .replace(
+          /[^a-zA-Z0-9.-]/g,
+          "-"
+        );
+
+
+    const path =
+      Date.now()+
+      "-" +
+      Math.random()
+        .toString(36)
+        .slice(2)+
+      "-" +
+      safeName;
+
+
+    const upload =
+      await sb
+        .storage
+        .from("product-images")
+        .upload(
+          path,
+          file
+        );
+
+
+    if(upload.error){
+
+      showMessage(
+        "msg",
+        upload.error.message,
+        "error"
+      );
+
       return;
+
     }
 
-    let url=sb.storage.from("product-images").getPublicUrl(path).data.publicUrl;
-    urls.push(url);
+
+    const publicUrl =
+      sb
+        .storage
+        .from("product-images")
+        .getPublicUrl(path)
+        .data
+        .publicUrl;
+
+
+    urls.push(publicUrl);
+
   }
 
-  let r=await sb.from("products").insert({
-    name:$("name").value.trim(),
-    category:$("category").value,
-    price:Number($("price").value),
-    original_price:Number($("original").value)||null,
-    stock:Number($("stock").value)||0,
-    description:$("desc").value.trim(),
-    image_url:urls[0],
-    image_urls:JSON.stringify(urls)
-  });
 
-  if(r.error){
-    show("msg",r.error.message);
+  showMessage(
+    "msg",
+    "Product save ho raha hai..."
+  );
+
+
+  const {error} =
+    await sb
+      .from("products")
+      .insert({
+
+        name:name,
+
+        category:category,
+
+        price:price,
+
+        original_price:original,
+
+        stock:stock,
+
+        description:description,
+
+        image_url:urls[0],
+
+        image_urls:
+          JSON.stringify(urls)
+
+      });
+
+
+  if(error){
+
+    showMessage(
+      "msg",
+      error.message,
+      "error"
+    );
+
     return;
+
   }
 
-  show("msg","Product added ✅");
-  $("name").value="";
-  $("price").value="";
-  $("original").value="";
-  $("stock").value=1;
-  $("desc").value="";
-  $("photo1").value="";
-  $("photo2").value="";
-  $("photo3").value="";
-  $("photo4").value="";
-  load();
+
+  showMessage(
+    "msg",
+    "Product successfully added! ✅",
+    "success"
+  );
+
+
+  clearProductForm();
+
+  loadProducts();
+
 }
+
+
+/* =========================================================
+   CLEAR FORM
+========================================================= */
+
+function clearProductForm(){
+
+  $("name").value="";
+
+  $("price").value="";
+
+  $("original").value="";
+
+  $("stock").value="1";
+
+  $("desc").value="";
+
+  $("photo1").value="";
+
+  $("photo2").value="";
+
+  $("photo3").value="";
+
+  $("photo4").value="";
+
+}
+
+
+/* =========================================================
+   EDIT STOCK
+========================================================= */
+
+async function editStock(id,current){
+
+  const value =
+    prompt(
+      "New stock quantity:",
+      current
+    );
+
+
+  if(value===null)
+    return;
+
+
+  const stock =
+    Number(value);
+
+
+  if(
+    !Number.isFinite(stock) ||
+    stock<0
+  ){
+
+    alert(
+      "Valid stock quantity bhariye."
+    );
+
+    return;
+
+  }
+
+
+  const {error} =
+    await sb
+      .from("products")
+      .update({
+        stock:stock
+      })
+      .eq("id",id);
+
+
+  if(error){
+
+    alert(error.message);
+
+    return;
+
+  }
+
+
+  loadProducts();
+
+}
+
+
+/* =========================================================
+   DELETE PRODUCT
+========================================================= */
+
+async function deleteProduct(id){
+
+  if(
+    !confirm(
+      "Kya aap product delete karna chahte hain?"
+    )
+  )
+    return;
+
+
+  const {error} =
+    await sb
+      .from("products")
+      .delete()
+      .eq("id",id);
+
+
+  if(error){
+
+    alert(error.message);
+
+    return;
+
+  }
+
+
+  loadProducts();
+
+}
+
+
+/* =========================================================
+   LOAD ORDERS
+========================================================= */
+
+async function loadOrders(){
+
+  const container =
+    $("orders");
+
+  if(!container)
+    return;
+
+
+  container.innerHTML =
+    "<p>Orders loading...</p>";
+
+
+  const {data,error} =
+    await sb
+      .from("ORDER'S")
+      .select("*")
+      .order(
+        "id",
+        {ascending:false}
+      );
+
+
+  if(error){
+
+    container.innerHTML =
+      `<div class="error">
+        ${esc(error.message)}
+      </div>`;
+
+    return;
+
+  }
+
+
+  const orders =
+    data||[];
+
+
+  $("orderCount")
+    .textContent=orders.length;
+
+
+  $("newOrderCount")
+    .textContent=
+      orders.filter(o=>
+        String(
+          o.Order_states||
+          o.Order_status||
+          ""
+        ).toLowerCase()==="new"
+      ).length;
+
+
+  if(!orders.length){
+
+    container.innerHTML =
+      `<div class="msg">
+        Abhi koi order nahi hai.
+      </div>`;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    orders.map(o=>{
+
+      const status =
+        o.Order_states||
+        o.Order_status||
+        "New";
+
+
+      const phone =
+        o.Phone||"";
+
+
+      const whatsappText =
+        encodeURIComponent(
+
+          `Aarvi Fashion Order Update\n\n`+
+          `Order ID: ${o.id}\n`+
+          `Product: ${o.Product_name||"-"}\n`+
+          `Status: ${status}`
+
+        );
+
+
+      return `
+
+        <div class="order">
+
+          <h3>
+            🛍️ Order #${esc(o.id)}
+          </h3>
+
+          <p>
+            <b>Customer:</b>
+            ${esc(o.Customer_Name||"-")}
+          </p>
+
+          <p>
+            <b>Phone:</b>
+            ${esc(phone)}
+          </p>
+
+          <p>
+            <b>Product:</b>
+            ${esc(o.Product_name||"-")}
+          </p>
+
+          <p>
+            <b>Quantity:</b>
+            ${esc(o.Quantity||1)}
+          </p>
+
+          <p>
+            <b>Address:</b>
+            ${esc(o.Address||"-")}
+            ${esc(o.City||"")}
+            ${esc(o.State||"")}
+            ${esc(o["Pin Code"]||"")}
+          </p>
+
+          <p>
+            <b>Payment:</b>
+            ${esc(o.Payment_method||"-")}
+          </p>
+
+          <p>
+            <span class="status">
+              ${esc(status)}
+            </span>
+          </p>
+
+
+          <label>
+            Order Status
+          </label>
+
+          <select
+            id="status-${Number(o.id)}">
+
+            <option
+              value="New"
+              ${status==="New"?"selected":""}>
+              New
+            </option>
+
+            <option
+              value="Confirmed"
+              ${status==="Confirmed"?"selected":""}>
+              Confirmed
+            </option>
+
+            <option
+              value="Packed"
+              ${status==="Packed"?"selected":""}>
+              Packed
+            </option>
+
+            <option
+              value="Shipped"
+              ${status==="Shipped"?"selected":""}>
+              Shipped
+            </option>
+
+            <option
+              value="Out for Delivery"
+              ${status==="Out for Delivery"?"selected":""}>
+              Out for Delivery
+            </option>
+
+            <option
+              value="Delivered"
+              ${status==="Delivered"?"selected":""}>
+              Delivered
+            </option>
+
+            <option
+              value="Cancelled"
+              ${status==="Cancelled"?"selected":""}>
+              Cancelled
+            </option>
+
+            <option
+              value="Returned"
+              ${status==="Returned"?"selected":""}>
+              Returned
+            </option>
+
+          </select>
+
+
+          <button
+            onclick="updateOrderStatus(${Number(o.id)})">
+
+            Update Status
+
+          </button>
+
+
+          ${
+            phone
+            ?
+            `<a
+              href="https://wa.me/91${esc(phone)}?text=${whatsappText}"
+              target="_blank"
+              style="text-decoration:none">
+
+              <button
+                class="green"
+                type="button">
+
+                WhatsApp Customer
+
+              </button>
+
+            </a>`
+            :
+            ""
+          }
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================================
+   UPDATE ORDER STATUS
+========================================================= */
+
+async function updateOrderStatus(id){
+
+  const select =
+    $("status-"+id);
+
+
+  if(!select)
+    return;
+
+
+  const status =
+    select.value;
+
+
+  const {error} =
+    await sb
+      .from("ORDER'S")
+      .update({
+
+        Order_states:status
+
+      })
+      .eq("id",id);
+
+
+  if(error){
+
+    alert(
+      "Status update failed:\n"+
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  alert(
+    "Order status updated! ✅"
+  );
+
+
+  loadOrders();
+
+}
+
+
+/* =========================================================
+   LOAD CUSTOMERS
+========================================================= */
+
+async function loadCustomers(){
+
+  const container =
+    $("customers");
+
+  if(!container)
+    return;
+
+
+  container.innerHTML =
+    "<p>Customers loading...</p>";
+
+
+  const {data,error} =
+    await sb
+      .from("customer_profiles")
+      .select("*")
+      .order(
+        "created_at",
+        {ascending:false}
+      );
+
+
+  if(error){
+
+    container.innerHTML =
+      `<div class="error">
+        ${esc(error.message)}
+      </div>`;
+
+    return;
+
+  }
+
+
+  const customers =
+    data||[];
+
+
+  if(!customers.length){
+
+    container.innerHTML =
+      `<div class="msg">
+        Abhi customer profile nahi mila.
+      </div>`;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    customers.map(c=>`
+
+      <div class="order">
+
+        <h3>
+          👤 ${esc(c.full_name||"Customer")}
+        </h3>
+
+        <p>
+          <b>Email:</b>
+          ${esc(c.email||"-")}
+        </p>
+
+        <p>
+          <b>Phone:</b>
+          ${esc(c.phone||"-")}
+        </p>
+
+        <p>
+          <b>Account Type:</b>
+          ${esc(c.account_type||"Customer")}
+        </p>
+
+      </div>
+
+    `).join("");
+
+}
+
+</script>
+
+</body>
+</html>
