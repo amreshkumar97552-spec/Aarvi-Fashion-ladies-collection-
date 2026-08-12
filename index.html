@@ -1,2636 +1,3344 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Aarvi Fashion - Ladies Collection</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #fff7fa;
-      color: #3a2430;
-    }
-
-    button,
-    input,
-    textarea,
-    select {
-      font-family: inherit;
-    }
-
-    .wrap {
-      max-width: 1100px;
-      margin: auto;
-      padding: 18px;
-    }
-
-    /* ================= HEADER ================= */
-
-    header {
-      margin-bottom: 10px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .brand {
-      font-size: 28px;
-      font-weight: 800;
-      color: #d94f82;
-      letter-spacing: 2px;
-    }
-
-    .brand-sub {
-      margin-top: 3px;
-      color: #666;
-      font-size: 14px;
-    }
-
-    .header-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .header-btn {
-      border: none;
-      background: #d94f82;
-      color: white;
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .header-btn.secondary {
-      background: white;
-      color: #d94f82;
-      border: 1px solid #d94f82;
-    }
-
-    .header-btn:hover {
-      opacity: .9;
-    }
-
-    .user-info {
-      display: none;
-      background: #fff0f5;
-      color: #d94f82;
-      padding: 9px 12px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    /* ================= HERO ================= */
-
-    .hero {
-      text-align: center;
-      padding: 35px 0;
-    }
-
-    .hero h1 {
-      margin: 0 0 12px;
-      font-size: 38px;
-    }
-
-    .hero p {
-      margin: 0 0 20px;
-      font-size: 17px;
-    }
-
-    .cats {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .cats button {
-      padding: 10px 16px;
-      border: 1px solid #d94f82;
-      border-radius: 20px;
-      background: white;
-      color: #d94f82;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    .cats button:hover,
-    .cats button.active {
-      background: #d94f82;
-      color: white;
-    }
-
-    /* ================= PRODUCTS ================= */
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-
-    .card {
-      background: #fff;
-      border: 1px solid #f0d8e1;
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 5px 18px rgba(0,0,0,.04);
-    }
-
-    .gallery {
-      position: relative;
-      background: #fff0f5;
-    }
-
-    .product-photo {
-      width: 100%;
-      height: 270px;
-      object-fit: contain;
-      display: block;
-      background: #fff0f5;
-    }
-
-    .photo-buttons {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      justify-content: space-between;
-      padding: 0 8px;
-    }
-
-    .photo-buttons button {
-      width: 34px;
-      height: 34px;
-      border: none;
-      border-radius: 50%;
-      background: rgba(255,255,255,.9);
-      cursor: pointer;
-      font-size: 18px;
-    }
-
-    .info {
-      padding: 15px;
-    }
-
-    .info h3 {
-      margin: 0 0 8px;
-      font-size: 18px;
-    }
-
-    .category {
-      font-size: 14px;
-      color: #777;
-      margin-bottom: 8px;
-    }
-
-    .price {
-      font-size: 21px;
-      font-weight: 800;
-      color: #d94f82;
-      margin-bottom: 8px;
-    }
-
-    .stock {
-      margin-bottom: 12px;
-      font-size: 14px;
-    }
-
-    .stock.out {
-      color: #d33;
-      font-weight: 700;
-    }
-
-    .order {
-      display: block;
-      width: 100%;
-      text-align: center;
-      padding: 11px;
-      border-radius: 10px;
-      background: #d94f82;
-      color: white;
-      border: none;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .order:hover {
-      background: #c63f70;
-    }
-
-    .order:disabled {
-      background: #aaa;
-      cursor: not-allowed;
-    }
-
-    .empty {
-      text-align: center;
-      padding: 40px 10px;
-      grid-column: 1 / -1;
-    }
-
-    /* ================= MODALS ================= */
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.55);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 15px;
-      z-index: 9999;
-      overflow-y: auto;
-    }
-
-    .modal.show {
-      display: flex;
-    }
-
-    .modal-box {
-      width: 100%;
-      max-width: 470px;
-      background: white;
-      border-radius: 20px;
-      padding: 22px;
-      box-shadow: 0 15px 50px rgba(0,0,0,.25);
-      position: relative;
-    }
-
-    .modal-box.large {
-      max-width: 520px;
-    }
-
-    .modal-box h2 {
-      margin: 0 0 8px;
-      color: #d94f82;
-    }
-
-    .modal-close {
-      position: absolute;
-      right: 14px;
-      top: 8px;
-      border: none;
-      background: none;
-      font-size: 30px;
-      cursor: pointer;
-      color: #555;
-    }
-
-    .modal-subtitle {
-      color: #777;
-      font-size: 14px;
-      margin-bottom: 18px;
-    }
-
-    /* ================= AUTH ================= */
-
-    .auth-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 18px;
-    }
-
-    .auth-tab {
-      flex: 1;
-      padding: 11px;
-      border: 1px solid #d94f82;
-      border-radius: 10px;
-      background: white;
-      color: #d94f82;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    .auth-tab.active {
-      background: #d94f82;
-      color: white;
-    }
-
-    .auth-form {
-      display: none;
-    }
-
-    .auth-form.active {
-      display: block;
-    }
-
-    label {
-      display: block;
-      margin: 10px 0 5px;
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    input,
-    textarea,
-    select {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 9px;
-      font-size: 15px;
-      outline: none;
-    }
-
-    input:focus,
-    textarea:focus,
-    select:focus {
-      border-color: #d94f82;
-    }
-
-    textarea {
-      min-height: 80px;
-      resize: vertical;
-    }
-
-    .main-btn {
-      width: 100%;
-      border: none;
-      padding: 13px;
-      margin-top: 18px;
-      border-radius: 10px;
-      background: #d94f82;
-      color: white;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .main-btn:hover {
-      background: #c63f70;
-    }
-
-    .secondary-btn {
-      width: 100%;
-      border: 1px solid #ddd;
-      padding: 11px;
-      margin-top: 9px;
-      border-radius: 10px;
-      background: white;
-      color: #555;
-      cursor: pointer;
-    }
-
-    .auth-message {
-      margin-top: 12px;
-      padding: 10px;
-      border-radius: 9px;
-      display: none;
-      font-size: 14px;
-    }
-
-    .auth-message.show {
-      display: block;
-    }
-
-    .auth-message.error {
-      background: #fff0f0;
-      color: #c33;
-    }
-
-    .auth-message.success {
-      background: #effaf2;
-      color: #287a3e;
-    }
-
-    /* ================= ORDER ================= */
-
-    .selected-product {
-      background: #fff0f5;
-      padding: 12px;
-      border-radius: 10px;
-      margin: 12px 0 18px;
-    }
-
-    .payment-note {
-      font-size: 13px;
-      color: #777;
-      margin-top: 5px;
-    }
-
-    /* ================= TRACK ================= */
-
-    .track-order-card {
-      margin-top: 15px;
-      padding: 15px;
-      background: #fff7fa;
-      border-radius: 12px;
-      border: 1px solid #f0d8e1;
-    }
-
-    .track-status {
-      color: #d94f82;
-      font-weight: 800;
-      margin-top: 8px;
-    }
-
-    /* ================= LOADING ================= */
-
-    .loading {
-      text-align: center;
-      padding: 40px;
-      grid-column: 1 / -1;
-    }
-
-    /* ================= MOBILE ================= */
-
-    @media (max-width: 850px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 500px) {
-      .wrap {
-        padding: 15px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero h1 {
-        font-size: 30px;
-      }
-
-      .brand {
-        font-size: 23px;
-      }
-
-      .topbar {
-        align-items: flex-start;
-      }
-
-      .header-actions {
-        width: 100%;
-      }
-
-      .header-btn {
-        flex: 1;
-      }
-
-      .modal-box {
-        padding: 18px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Aarvi Fashion - Ladies Collection</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#fff7fa;
+  color:#3a2430;
+}
+
+button,input,textarea,select{font:inherit}
+
+button{cursor:pointer}
+
+.wrap{
+  max-width:1150px;
+  margin:auto;
+  padding:18px;
+}
+
+/* HEADER */
+
+header{
+  background:white;
+  border-bottom:1px solid #f0d8e1;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.header-inner{
+  max-width:1150px;
+  margin:auto;
+  padding:13px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.brand{
+  font-size:25px;
+  font-weight:900;
+  color:#d94f82;
+  letter-spacing:2px;
+}
+
+.brand-sub{
+  font-size:12px;
+  color:#777;
+  margin-top:3px;
+}
+
+.header-actions{
+  display:flex;
+  gap:7px;
+  align-items:center;
+}
+
+.icon-btn{
+  border:1px solid #f0d8e1;
+  background:white;
+  border-radius:12px;
+  padding:9px 11px;
+  color:#d94f82;
+  font-weight:700;
+}
+
+.icon-btn:hover{
+  background:#fff0f5;
+}
+
+/* HERO */
+
+.hero{
+  text-align:center;
+  padding:35px 0 25px;
+}
+
+.hero h1{
+  margin:0 0 10px;
+  font-size:36px;
+}
+
+.hero p{
+  margin:0 0 20px;
+  color:#666;
+}
+
+.cats{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.cats button{
+  border:1px solid #d94f82;
+  background:white;
+  color:#d94f82;
+  padding:9px 15px;
+  border-radius:20px;
+}
+
+.cats button.active,
+.cats button:hover{
+  background:#d94f82;
+  color:white;
+}
+
+/* PRODUCTS */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:17px;
+}
+
+.card{
+  background:white;
+  border:1px solid #f0d8e1;
+  border-radius:17px;
+  overflow:hidden;
+  box-shadow:0 3px 12px rgba(80,30,50,.04);
+}
+
+.gallery{
+  position:relative;
+  background:#fff0f5;
+}
+
+.product-photo{
+  width:100%;
+  height:270px;
+  object-fit:contain;
+  display:block;
+  background:#fff0f5;
+}
+
+.photo-buttons{
+  position:absolute;
+  top:50%;
+  left:7px;
+  right:7px;
+  transform:translateY(-50%);
+  display:flex;
+  justify-content:space-between;
+}
+
+.photo-buttons button{
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.93);
+  font-size:20px;
+}
+
+.info{
+  padding:14px;
+}
+
+.info h3{
+  margin:0 0 6px;
+  font-size:17px;
+}
+
+.category{
+  color:#777;
+  font-size:13px;
+  margin-bottom:7px;
+}
+
+.price{
+  color:#d94f82;
+  font-size:21px;
+  font-weight:900;
+}
+
+.original{
+  color:#999;
+  text-decoration:line-through;
+  margin-left:6px;
+  font-size:13px;
+}
+
+.stock{
+  margin:8px 0;
+  font-size:13px;
+}
+
+.order{
+  width:100%;
+  border:0;
+  padding:11px;
+  border-radius:10px;
+  background:#d94f82;
+  color:white;
+  font-weight:800;
+}
+
+.order:hover{
+  background:#c63f70;
+}
+
+.wish{
+  width:100%;
+  margin-top:7px;
+  padding:9px;
+  border:1px solid #f0d8e1;
+  background:white;
+  color:#d94f82;
+  border-radius:10px;
+  font-weight:700;
+}
+
+.empty{
+  grid-column:1/-1;
+  text-align:center;
+  padding:45px 10px;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:5000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  overflow-y:auto;
+}
+
+.modal-box{
+  width:100%;
+  max-width:520px;
+  max-height:94vh;
+  overflow-y:auto;
+  background:white;
+  border-radius:20px;
+  padding:20px;
+  position:relative;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+.close{
+  position:absolute;
+  top:10px;
+  right:12px;
+  border:0;
+  background:#fff0f5;
+  color:#d94f82;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  font-size:22px;
+}
+
+.modal h2{
+  margin:0 0 15px;
+  color:#d94f82;
+}
+
+label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin:10px 0 5px;
+}
+
+input,textarea,select{
+  width:100%;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  outline:none;
+}
+
+input:focus,textarea:focus,select:focus{
+  border-color:#d94f82;
+}
+
+textarea{
+  min-height:75px;
+  resize:vertical;
+}
+
+.primary{
+  width:100%;
+  margin-top:15px;
+  padding:12px;
+  border:0;
+  border-radius:10px;
+  background:#d94f82;
+  color:white;
+  font-weight:800;
+}
+
+.secondary{
+  width:100%;
+  margin-top:8px;
+  padding:11px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  background:white;
+}
+
+.tabs{
+  display:flex;
+  gap:7px;
+  margin-bottom:15px;
+}
+
+.tabs button{
+  flex:1;
+  padding:10px;
+  border:1px solid #f0d8e1;
+  background:white;
+  border-radius:10px;
+  color:#d94f82;
+  font-weight:700;
+}
+
+.tabs button.active{
+  background:#d94f82;
+  color:white;
+}
+
+.notice{
+  background:#fff0f5;
+  padding:11px;
+  border-radius:10px;
+  font-size:13px;
+  margin-top:10px;
+}
+
+.success{
+  background:#eefbf2;
+  color:#28733c;
+  padding:11px;
+  border-radius:10px;
+  margin-top:10px;
+}
+
+.error{
+  background:#fff0f0;
+  color:#a52c2c;
+  padding:11px;
+  border-radius:10px;
+  margin-top:10px;
+}
+
+/* ACCOUNT */
+
+.account-menu{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px;
+}
+
+.account-menu button{
+  padding:13px;
+  text-align:left;
+  border:1px solid #f0d8e1;
+  border-radius:12px;
+  background:white;
+  color:#3a2430;
+}
+
+.account-menu button:hover{
+  background:#fff0f5;
+}
+
+.account-head{
+  background:#fff0f5;
+  padding:15px;
+  border-radius:14px;
+  margin-bottom:15px;
+}
+
+.account-head strong{
+  color:#d94f82;
+  font-size:18px;
+}
+
+.order-item{
+  border:1px solid #f0d8e1;
+  border-radius:12px;
+  padding:13px;
+  margin-bottom:9px;
+}
+
+.status{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:20px;
+  background:#d94f82;
+  color:white;
+  font-size:12px;
+  font-weight:700;
+}
+
+/* TRACK */
+
+.track-result{
+  margin-top:15px;
+}
+
+/* FOOTER */
+
+footer{
+  margin-top:45px;
+  background:white;
+  border-top:1px solid #f0d8e1;
+  padding:25px 18px;
+  text-align:center;
+  color:#666;
+}
+
+footer a{
+  color:#d94f82;
+  text-decoration:none;
+  font-weight:700;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+  .grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:650px){
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .hero h1{
+    font-size:29px;
+  }
+
+  .product-photo{
+    height:230px;
+  }
+
+  .brand{
+    font-size:19px;
+  }
+
+  .header-actions .text-btn{
+    display:none;
+  }
+}
+
+@media(max-width:430px){
+  .wrap{
+    padding:12px;
+  }
+
+  .grid{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .product-photo{
+    height:190px;
+  }
+
+  .info{
+    padding:10px;
+  }
+
+  .info h3{
+    font-size:15px;
+  }
+
+  .price{
+    font-size:18px;
+  }
+}
+</style>
 </head>
 
 <body>
 
+<!-- HEADER -->
+
+<header>
+  <div class="header-inner">
+
+    <div>
+      <div class="brand">AARVI FASHION</div>
+      <div class="brand-sub">Saree • Kurti • Top • Suit</div>
+    </div>
+
+    <div class="header-actions">
+
+      <button class="icon-btn" onclick="openTrack()">
+        🚚 <span class="text-btn">Track</span>
+      </button>
+
+      <button class="icon-btn" onclick="openAccount()">
+        👤 <span class="text-btn">Account</span>
+      </button>
+
+    </div>
+
+  </div>
+</header>
+
+
 <div class="wrap">
 
-  <!-- ================= HEADER ================= -->
+  <section class="hero">
 
-  <header>
+    <h1>Style that feels beautifully yours.</h1>
 
-    <div class="topbar">
+    <p>
+      COD • UPI Coming Soon • All India Delivery
+    </p>
 
-      <div>
-        <div class="brand">AARVI FASHION</div>
-        <div class="brand-sub">
-          Saree • Kurti • Top • Suit
-        </div>
-      </div>
+    <div class="cats">
 
-      <div class="header-actions">
+      <button class="active" onclick="filterProducts('All',this)">
+        All
+      </button>
 
-        <div
-          id="userInfo"
-          class="user-info">
-          Account
-        </div>
+      <button onclick="filterProducts('Saree',this)">
+        Saree
+      </button>
 
-        <button
-          type="button"
-          class="header-btn secondary"
-          onclick="openTrackOrder()">
-          🚚 Track Order
-        </button>
+      <button onclick="filterProducts('Kurti',this)">
+        Kurti
+      </button>
 
-        <button
-          type="button"
-          id="authButton"
-          class="header-btn"
-          onclick="openAuthModal()">
-          Login / Sign Up
-        </button>
+      <button onclick="filterProducts('Top',this)">
+        Top
+      </button>
 
-        <button
-          type="button"
-          id="logoutButton"
-          class="header-btn secondary"
-          onclick="logoutCustomer()"
-          style="display:none;">
-          Logout
-        </button>
-
-      </div>
+      <button onclick="filterProducts('Suit',this)">
+        Suit
+      </button>
 
     </div>
 
-  </header>
+  </section>
 
 
-  <main>
-
-    <!-- ================= HERO ================= -->
-
-    <section class="hero">
-
-      <h1>
-        Style that feels beautifully yours.
-      </h1>
-
-      <p>
-        COD • UPI • All India Delivery
-      </p>
-
-      <div class="cats">
-
-        <button
-          class="active"
-          onclick="filterProducts('All', this)">
-          All
-        </button>
-
-        <button
-          onclick="filterProducts('Saree', this)">
-          Saree
-        </button>
-
-        <button
-          onclick="filterProducts('Kurti', this)">
-          Kurti
-        </button>
-
-        <button
-          onclick="filterProducts('Top', this)">
-          Top
-        </button>
-
-        <button
-          onclick="filterProducts('Suit', this)">
-          Suit
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= PRODUCTS ================= -->
-
-    <div
-      id="products"
-      class="grid">
-
-      <div class="loading">
-        Loading products...
-      </div>
-
-    </div>
-
-  </main>
+  <div id="products" class="grid">
+    <div class="empty">Loading products...</div>
+  </div>
 
 </div>
 
 
-<!-- ========================================================= -->
-<!-- AUTH MODAL -->
-<!-- ========================================================= -->
+<footer>
 
-<div
-  id="authModal"
-  class="modal">
+  <div>
+    📍 Rahui
+  </div>
 
-  <div class="modal-box">
+  <div style="margin-top:7px">
+    📸 Instagram:
+    <a href="https://instagram.com/aarvi_fashion"
+       target="_blank">
+       @aarvi_fashion
+    </a>
+  </div>
 
-    <button
-      class="modal-close"
-      onclick="closeAuthModal()">
-      ×
-    </button>
+  <div style="margin-top:7px">
+    📱 WhatsApp:
+    <a href="https://wa.me/916204117647"
+       target="_blank">
+       6204117647
+    </a>
+  </div>
 
-    <h2>
-      Welcome to Aarvi Fashion
-    </h2>
+</footer>
 
-    <div class="modal-subtitle">
-      Order karne ke liye account required hai.
+
+<script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+"https://sxifooelnulxldcbtmvd.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_nLLITIJxfhc52cUkZaGZ4w_GvJubfM-";
+
+const sb =
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+let allProducts = [];
+
+let selectedProduct = null;
+
+let currentLoginMode = "email";
+
+let currentAuthMode = "login";
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function esc(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function money(value){
+
+  return Number(value || 0)
+    .toLocaleString("en-IN");
+
+}
+
+
+function closeModal(){
+
+  const m =
+    document.querySelector(".modal");
+
+  if(m) m.remove();
+
+}
+
+
+/* =========================================================
+   PRODUCT IMAGES
+========================================================= */
+
+function getImages(product){
+
+  let images=[];
+
+  try{
+
+    if(product.image_urls){
+
+      images =
+        JSON.parse(product.image_urls);
+
+    }
+
+  }catch(e){
+
+    images=[];
+
+  }
+
+  if(!Array.isArray(images))
+    images=[];
+
+  if(!images.length && product.image_url)
+    images=[product.image_url];
+
+  return images.filter(Boolean);
+
+}
+
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+function makeGallery(product){
+
+  const images =
+    getImages(product);
+
+  if(!images.length){
+
+    return `
+      <div class="gallery">
+        <div class="product-photo"></div>
+      </div>
+    `;
+
+  }
+
+  const photos =
+    images.map((url,index)=>`
+
+      <img
+        src="${esc(url)}"
+        class="product-photo"
+        style="${index===0 ? "" : "display:none"}"
+        alt="${esc(product.name)}"
+      >
+
+    `).join("");
+
+  if(images.length===1){
+
+    return `
+      <div class="gallery">
+        ${photos}
+      </div>
+    `;
+
+  }
+
+  return `
+    <div class="gallery">
+
+      ${photos}
+
+      <div class="photo-buttons">
+
+        <button
+          type="button"
+          onclick="prevPhoto(this)">
+          ‹
+        </button>
+
+        <button
+          type="button"
+          onclick="nextPhoto(this)">
+          ›
+        </button>
+
+      </div>
+
     </div>
+  `;
+
+}
 
 
-    <div class="auth-tabs">
+function prevPhoto(button){
+
+  const gallery =
+    button.closest(".gallery");
+
+  const photos =
+    gallery.querySelectorAll(".product-photo");
+
+  if(photos.length<2) return;
+
+  let current=0;
+
+  photos.forEach((p,i)=>{
+
+    if(p.style.display!=="none")
+      current=i;
+
+  });
+
+  photos[current].style.display="none";
+
+  const previous =
+    (current-1+photos.length)
+    %photos.length;
+
+  photos[previous].style.display="block";
+
+}
+
+
+function nextPhoto(button){
+
+  const gallery =
+    button.closest(".gallery");
+
+  const photos =
+    gallery.querySelectorAll(".product-photo");
+
+  if(photos.length<2) return;
+
+  let current=0;
+
+  photos.forEach((p,i)=>{
+
+    if(p.style.display!=="none")
+      current=i;
+
+  });
+
+  photos[current].style.display="none";
+
+  const next =
+    (current+1)%photos.length;
+
+  photos[next].style.display="block";
+
+}
+
+
+/* =========================================================
+   LOAD PRODUCTS
+========================================================= */
+
+async function loadProducts(){
+
+  const container =
+    document.getElementById("products");
+
+  container.innerHTML =
+    `<div class="empty">
+      Loading products...
+    </div>`;
+
+  const {data,error} =
+    await sb
+      .from("products")
+      .select("*")
+      .order("created_at",{ascending:false});
+
+  if(error){
+
+    console.error(error);
+
+    container.innerHTML =
+      `<div class="empty">
+        Products load nahi ho rahe.<br>
+        ${esc(error.message)}
+      </div>`;
+
+    return;
+
+  }
+
+  allProducts=data||[];
+
+  renderProducts(allProducts);
+
+}
+
+
+/* =========================================================
+   RENDER PRODUCTS
+========================================================= */
+
+function renderProducts(products){
+
+  const container =
+    document.getElementById("products");
+
+  if(!products.length){
+
+    container.innerHTML =
+      `<div class="empty">
+        No products available yet.
+      </div>`;
+
+    return;
+
+  }
+
+  container.innerHTML =
+    products.map(product=>{
+
+      const stock =
+        Number(product.stock||0);
+
+      const original =
+        Number(product.original_price||0);
+
+      return `
+
+        <article class="card">
+
+          ${makeGallery(product)}
+
+          <div class="info">
+
+            <h3>
+              ${esc(product.name||"Product")}
+            </h3>
+
+            <div class="category">
+              ${esc(product.category||"")}
+            </div>
+
+            <div class="price">
+
+              ₹${money(product.price)}
+
+              ${
+                original > Number(product.price||0)
+                ?
+                `<span class="original">
+                   ₹${money(original)}
+                 </span>`
+                :
+                ""
+              }
+
+            </div>
+
+            <div class="stock">
+
+              ${
+                stock>0
+                ?
+                `Stock: ${stock}`
+                :
+                `<b style="color:#b52c2c">
+                   Out of Stock
+                 </b>`
+              }
+
+            </div>
+
+            <button
+              class="order"
+              type="button"
+              ${stock<=0 ? "disabled style='opacity:.5'" : ""}
+              onclick="startOrder(${Number(product.id)})">
+
+              ${
+                stock>0
+                ? "Order Now"
+                : "Out of Stock"
+              }
+
+            </button>
+
+            <button
+              class="wish"
+              type="button"
+              onclick="toggleWishlist(${Number(product.id)})">
+
+              ❤️ Add to Wishlist
+
+            </button>
+
+          </div>
+
+        </article>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function filterProducts(category,button){
+
+  document
+    .querySelectorAll(".cats button")
+    .forEach(b=>b.classList.remove("active"));
+
+  if(button)
+    button.classList.add("active");
+
+  if(category==="All"){
+
+    renderProducts(allProducts);
+    return;
+
+  }
+
+  const filtered =
+    allProducts.filter(p=>
+      String(p.category||"")
+      .toLowerCase()
+      ===
+      category.toLowerCase()
+    );
+
+  renderProducts(filtered);
+
+}
+
+
+/* =========================================================
+   AUTH SESSION
+========================================================= */
+
+async function getSession(){
+
+  const {data} =
+    await sb.auth.getSession();
+
+  return data.session;
+
+}
+
+
+/* =========================================================
+   AUTH MODAL
+========================================================= */
+
+function openAuth(){
+
+  closeModal();
+
+  currentAuthMode="login";
+
+  const modal =
+    document.createElement("div");
+
+  modal.className="modal";
+
+  modal.innerHTML=`
+
+    <div class="modal-box">
 
       <button
-        id="loginTab"
-        class="auth-tab active"
-        onclick="showAuthTab('login')">
-        Login
+        class="close"
+        onclick="closeModal()">
+        ×
       </button>
 
-      <button
-        id="signupTab"
-        class="auth-tab"
-        onclick="showAuthTab('signup')">
-        Sign Up
-      </button>
+      <h2>🌸 Aarvi Fashion</h2>
+
+      <div class="tabs">
+
+        <button
+          id="emailTab"
+          class="active"
+          onclick="switchLoginMode('email')">
+
+          📧 Email
+
+        </button>
+
+        <button
+          id="phoneTab"
+          onclick="switchLoginMode('phone')">
+
+          📱 Phone OTP
+
+        </button>
+
+      </div>
+
+      <div class="tabs">
+
+        <button
+          id="loginTab"
+          class="active"
+          onclick="switchAuthMode('login')">
+
+          Login
+
+        </button>
+
+        <button
+          id="signupTab"
+          onclick="switchAuthMode('signup')">
+
+          Sign Up
+
+        </button>
+
+      </div>
+
+      <div id="authArea"></div>
 
     </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  renderAuthForm();
+
+}
 
 
-    <!-- LOGIN -->
+function switchLoginMode(mode){
 
-    <div
-      id="loginForm"
-      class="auth-form active">
+  currentLoginMode=mode;
 
-      <label>
-        Email
-      </label>
+  document
+    .getElementById("emailTab")
+    .classList.toggle(
+      "active",
+      mode==="email"
+    );
+
+  document
+    .getElementById("phoneTab")
+    .classList.toggle(
+      "active",
+      mode==="phone"
+    );
+
+  renderAuthForm();
+
+}
+
+
+function switchAuthMode(mode){
+
+  currentAuthMode=mode;
+
+  document
+    .getElementById("loginTab")
+    .classList.toggle(
+      "active",
+      mode==="login"
+    );
+
+  document
+    .getElementById("signupTab")
+    .classList.toggle(
+      "active",
+      mode==="signup"
+    );
+
+  renderAuthForm();
+
+}
+
+
+/* =========================================================
+   AUTH FORM
+========================================================= */
+
+function renderAuthForm(){
+
+  const area =
+    document.getElementById("authArea");
+
+  if(currentLoginMode==="phone"){
+
+    area.innerHTML=`
+
+      <label>Mobile Number</label>
 
       <input
-        id="loginEmail"
+        id="authPhone"
+        type="tel"
+        maxlength="10"
+        inputmode="numeric"
+        placeholder="10 digit mobile number"
+      >
+
+      <button
+        class="primary"
+        onclick="sendPhoneOTP()">
+
+        Send OTP
+
+      </button>
+
+      <div
+        class="notice">
+
+        Phone login/signup OTP se hoga.
+        Account verification ke baad hi
+        order kar sakte hain.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  if(currentAuthMode==="login"){
+
+    area.innerHTML=`
+
+      <label>Email</label>
+
+      <input
+        id="authEmail"
         type="email"
-        autocomplete="email"
-        placeholder="Enter your email">
+        placeholder="your@email.com"
+      >
 
-
-      <label>
-        Password
-      </label>
+      <label>Password</label>
 
       <input
-        id="loginPassword"
+        id="authPassword"
         type="password"
-        autocomplete="current-password"
-        placeholder="Enter password">
-
+        placeholder="Password"
+      >
 
       <button
-        type="button"
-        class="main-btn"
-        onclick="loginCustomer()">
+        class="primary"
+        onclick="emailLogin()">
+
         Login
+
       </button>
 
-    </div>
+      <div
+        id="authMessage">
+      </div>
 
+    `;
 
-    <!-- SIGNUP -->
+  }else{
 
-    <div
-      id="signupForm"
-      class="auth-form">
+    area.innerHTML=`
 
-      <label>
-        Email
-      </label>
+      <label>Full Name *</label>
+
+      <input
+        id="signupName"
+        placeholder="Full Name"
+      >
+
+      <label>Phone Number *</label>
+
+      <input
+        id="signupPhone"
+        type="tel"
+        maxlength="10"
+        inputmode="numeric"
+        placeholder="10 digit mobile"
+      >
+
+      <label>Email *</label>
 
       <input
         id="signupEmail"
         type="email"
-        autocomplete="email"
-        placeholder="Enter your email">
+        placeholder="Email"
+      >
 
-
-      <label>
-        Password
-      </label>
+      <label>Password *</label>
 
       <input
         id="signupPassword"
         type="password"
-        autocomplete="new-password"
-        placeholder="Minimum 6 characters">
+        placeholder="Password"
+      >
 
-
-      <label>
-        Confirm Password
-      </label>
+      <label>Confirm Password *</label>
 
       <input
-        id="signupConfirmPassword"
+        id="signupConfirm"
         type="password"
-        autocomplete="new-password"
-        placeholder="Re-enter password">
+        placeholder="Confirm Password"
+      >
 
+      <label>Account Type</label>
+
+      <select id="accountType">
+
+        <option value="Customer">
+          Customer
+        </option>
+
+        <option value="Seller">
+          Seller
+        </option>
+
+        <option value="Supplier">
+          Supplier
+        </option>
+
+      </select>
 
       <button
-        type="button"
-        class="main-btn"
-        onclick="signupCustomer()">
+        class="primary"
+        onclick="emailSignup()">
+
         Create Account
+
+      </button>
+
+      <div
+        id="authMessage">
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================================================
+   EMAIL LOGIN
+========================================================= */
+
+async function emailLogin(){
+
+  const email =
+    document.getElementById("authEmail")
+      .value.trim();
+
+  const password =
+    document.getElementById("authPassword")
+      .value;
+
+  const message =
+    document.getElementById("authMessage");
+
+  if(!email||!password){
+
+    message.innerHTML =
+      `<div class="error">
+        Email aur password bhariye.
+      </div>`;
+
+    return;
+
+  }
+
+  const {error} =
+    await sb.auth.signInWithPassword({
+      email,
+      password
+    });
+
+  if(error){
+
+    message.innerHTML =
+      `<div class="error">
+        ${esc(error.message)}
+      </div>`;
+
+    return;
+
+  }
+
+  closeModal();
+
+  alert("Login successful! ✅");
+
+}
+
+
+/* =========================================================
+   EMAIL SIGNUP
+========================================================= */
+
+async function emailSignup(){
+
+  const name =
+    document.getElementById("signupName")
+      .value.trim();
+
+  const phone =
+    document.getElementById("signupPhone")
+      .value.trim();
+
+  const email =
+    document.getElementById("signupEmail")
+      .value.trim();
+
+  const password =
+    document.getElementById("signupPassword")
+      .value;
+
+  const confirmPassword =
+    document.getElementById("signupConfirm")
+      .value;
+
+  const accountType =
+    document.getElementById("accountType")
+      .value;
+
+  const message =
+    document.getElementById("authMessage");
+
+  if(!name||!email||!password||!confirmPassword){
+
+    message.innerHTML =
+      `<div class="error">
+        Required fields bhariye.
+      </div>`;
+
+    return;
+
+  }
+
+  if(phone && !/^[0-9]{10}$/.test(phone)){
+
+    message.innerHTML =
+      `<div class="error">
+        Valid 10 digit phone number bhariye.
+      </div>`;
+
+    return;
+
+  }
+
+  if(password!==confirmPassword){
+
+    message.innerHTML =
+      `<div class="error">
+        Password match nahi kar raha.
+      </div>`;
+
+    return;
+
+  }
+
+  if(password.length<6){
+
+    message.innerHTML =
+      `<div class="error">
+        Password minimum 6 characters ka hona chahiye.
+      </div>`;
+
+    return;
+
+  }
+
+
+  const {data,error} =
+    await sb.auth.signUp({
+
+      email,
+      password,
+
+      options:{
+        data:{
+          full_name:name,
+          phone:phone,
+          account_type:accountType
+        }
+      }
+
+    });
+
+
+  if(error){
+
+    message.innerHTML =
+      `<div class="error">
+        ${esc(error.message)}
+      </div>`;
+
+    return;
+
+  }
+
+
+  if(data.session){
+
+    await saveProfile(
+      data.user,
+      name,
+      phone,
+      email,
+      accountType
+    );
+
+    message.innerHTML =
+      `<div class="success">
+        Account successfully ban gaya! ✅
+      </div>`;
+
+    setTimeout(
+      closeModal,
+      1000
+    );
+
+  }else{
+
+    message.innerHTML =
+      `<div class="success">
+        Account ban gaya! ✅<br><br>
+        Email confirmation complete karke
+        login karein.
+      </div>`;
+
+  }
+
+}
+
+
+/* =========================================================
+   PHONE OTP
+========================================================= */
+
+async function sendPhoneOTP(){
+
+  const input =
+    document.getElementById("authPhone");
+
+  let phone =
+    input.value.trim();
+
+  if(!/^[0-9]{10}$/.test(phone)){
+
+    alert(
+      "10 digit mobile number bhariye."
+    );
+
+    return;
+
+  }
+
+  phone="+91"+phone;
+
+  const {error} =
+    await sb.auth.signInWithOtp({
+
+      phone:phone,
+
+      options:{
+        shouldCreateUser:true
+      }
+
+    });
+
+  if(error){
+
+    alert(
+      "OTP nahi gaya:\n"+
+      error.message
+    );
+
+    return;
+
+  }
+
+  renderOTPForm(phone);
+
+}
+
+
+/* =========================================================
+   OTP FORM
+========================================================= */
+
+function renderOTPForm(phone){
+
+  const area =
+    document.getElementById("authArea");
+
+  area.innerHTML=`
+
+    <label>OTP</label>
+
+    <input
+      id="otpCode"
+      type="text"
+      maxlength="6"
+      inputmode="numeric"
+      placeholder="6 digit OTP"
+    >
+
+    <button
+      class="primary"
+      onclick="verifyPhoneOTP('${phone}')">
+
+      Verify OTP
+
+    </button>
+
+    <div class="notice">
+
+      OTP ${esc(phone)} par bheja gaya hai.
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   VERIFY PHONE OTP
+========================================================= */
+
+async function verifyPhoneOTP(phone){
+
+  const token =
+    document.getElementById("otpCode")
+      .value.trim();
+
+  if(!/^[0-9]{6}$/.test(token)){
+
+    alert("6 digit OTP bhariye.");
+
+    return;
+
+  }
+
+  const {data,error} =
+    await sb.auth.verifyOtp({
+
+      phone:phone,
+      token:token,
+      type:"sms"
+
+    });
+
+  if(error){
+
+    alert(
+      "OTP verification failed:\n"+
+      error.message
+    );
+
+    return;
+
+  }
+
+  if(data.user){
+
+    const meta =
+      data.user.user_metadata||{};
+
+    await saveProfile(
+
+      data.user,
+
+      meta.full_name||"Customer",
+
+      phone.replace("+91",""),
+
+      meta.email||data.user.email||"",
+
+      meta.account_type||"Customer"
+
+    );
+
+  }
+
+  closeModal();
+
+  alert(
+    "Phone verified! Account ready hai. ✅"
+  );
+
+}
+
+
+/* =========================================================
+   SAVE PROFILE
+========================================================= */
+
+async function saveProfile(
+  user,
+  name,
+  phone,
+  email,
+  accountType
+){
+
+  if(!user) return;
+
+  const {error} =
+    await sb
+      .from("customer_profiles")
+      .upsert({
+
+        id:user.id,
+
+        full_name:name||"Customer",
+
+        phone:phone||null,
+
+        email:email||null,
+
+        account_type:
+          accountType||"Customer"
+
+      });
+
+  if(error)
+    console.error(
+      "Profile error:",
+      error
+    );
+
+}
+
+
+/* =========================================================
+   ACCOUNT
+========================================================= */
+
+async function openAccount(){
+
+  const session =
+    await getSession();
+
+  if(!session){
+
+    openAuth();
+
+    return;
+
+  }
+
+  const {data:profile} =
+    await sb
+      .from("customer_profiles")
+      .select("*")
+      .eq("id",session.user.id)
+      .maybeSingle();
+
+  closeModal();
+
+  const modal =
+    document.createElement("div");
+
+  modal.className="modal";
+
+  modal.innerHTML=`
+
+    <div class="modal-box">
+
+      <button
+        class="close"
+        onclick="closeModal()">
+        ×
+      </button>
+
+      <h2>👤 My Account</h2>
+
+      <div class="account-head">
+
+        <strong>
+          ${esc(profile?.full_name||"Customer")}
+        </strong>
+
+        <div style="margin-top:5px;font-size:13px">
+
+          ${esc(
+            profile?.email ||
+            session.user.email ||
+            profile?.phone ||
+            ""
+          )}
+
+        </div>
+
+        <div style="margin-top:5px;font-size:12px;color:#777">
+
+          Account:
+          ${esc(profile?.account_type||"Customer")}
+
+        </div>
+
+      </div>
+
+
+      <div class="account-menu">
+
+        <button onclick="showMyOrders()">
+          📦 My Orders
+        </button>
+
+        <button onclick="showWishlist()">
+          ❤️ Wishlist
+        </button>
+
+        <button onclick="showProfile()">
+          👤 My Profile
+        </button>
+
+        <button onclick="openTrack()">
+          🚚 Track Order
+        </button>
+
+        <button onclick="showAddresses()">
+          📍 Saved Address
+        </button>
+
+        <button onclick="showPayments()">
+          💳 Payment & Refund
+        </button>
+
+        <button onclick="showSharedProducts()">
+          🔗 Shared Products
+        </button>
+
+        <button onclick="showFollowedShops()">
+          🏪 Followed Shops
+        </button>
+
+        <button onclick="showSettings()">
+          ⚙️ Settings
+        </button>
+
+        <button onclick="rateWebsite()">
+          ⭐ Rate Website
+        </button>
+
+        <button onclick="showLegal()">
+          📜 Legal & Policies
+        </button>
+
+        <button onclick="logoutCustomer()">
+          🚪 Logout
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(modal);
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+async function showProfile(){
+
+  const session =
+    await getSession();
+
+  if(!session) return;
+
+  const {data:p} =
+    await sb
+      .from("customer_profiles")
+      .select("*")
+      .eq("id",session.user.id)
+      .maybeSingle();
+
+  closeModal();
+
+  const modal =
+    document.createElement("div");
+
+  modal.className="modal";
+
+  modal.innerHTML=`
+
+    <div class="modal-box">
+
+      <button class="close"
+        onclick="closeModal()">
+        ×
+      </button>
+
+      <h2>👤 My Profile</h2>
+
+      <label>Full Name</label>
+
+      <input
+        id="profileName"
+        value="${esc(p?.full_name||"")}"
+      >
+
+      <label>Phone</label>
+
+      <input
+        value="${esc(p?.phone||"")}"
+        disabled
+      >
+
+      <label>Email</label>
+
+      <input
+        value="${esc(p?.email||session.user.email||"")}"
+        disabled
+      >
+
+      <button
+        class="primary"
+        onclick="saveProfileChanges()">
+
+        Save Profile
+
       </button>
 
     </div>
 
+  `;
 
-    <div
-      id="authMessage"
-      class="auth-message">
-    </div>
+  document.body.appendChild(modal);
 
-  </div>
+}
 
-</div>
 
+async function saveProfileChanges(){
 
-<!-- ========================================================= -->
-<!-- ORDER MODAL -->
-<!-- ========================================================= -->
+  const session =
+    await getSession();
 
-<div
-  id="orderModal"
-  class="modal">
+  if(!session) return;
 
-  <div class="modal-box large">
+  const name =
+    document.getElementById("profileName")
+      .value.trim();
 
-    <button
-      class="modal-close"
-      onclick="closeOrderForm()">
-      ×
-    </button>
+  if(!name){
 
-    <h2>
-      Place Your Order
-    </h2>
+    alert("Name bhariye.");
 
-    <div
-      id="selectedProduct"
-      class="selected-product">
-    </div>
-
-
-    <label>
-      Full Name *
-    </label>
-
-    <input
-      id="orderName"
-      type="text"
-      placeholder="Enter your full name">
-
-
-    <label>
-      Mobile Number *
-    </label>
-
-    <input
-      id="orderPhone"
-      type="tel"
-      inputmode="numeric"
-      maxlength="10"
-      placeholder="Enter 10 digit mobile number">
-
-
-    <label>
-      Full Address *
-    </label>
-
-    <textarea
-      id="orderAddress"
-      placeholder="House no., street, area">
-    </textarea>
-
-
-    <label>
-      City *
-    </label>
-
-    <input
-      id="orderCity"
-      type="text"
-      placeholder="Enter city">
-
-
-    <label>
-      State *
-    </label>
-
-    <input
-      id="orderState"
-      type="text"
-      placeholder="Enter state">
-
-
-    <label>
-      PIN Code *
-    </label>
-
-    <input
-      id="orderPincode"
-      type="text"
-      inputmode="numeric"
-      maxlength="6"
-      placeholder="Enter 6 digit PIN code">
-
-
-    <label>
-      Quantity *
-    </label>
-
-    <input
-      id="orderQty"
-      type="number"
-      min="1"
-      value="1">
-
-
-    <label>
-      Payment Method *
-    </label>
-
-    <select id="orderPayment">
-
-      <option value="COD">
-        Cash on Delivery
-      </option>
-
-      <option value="Online">
-        Online Payment
-      </option>
-
-    </select>
-
-
-    <div class="payment-note">
-      Online Payment selected hone par payment status
-      Pending rahega jab tak payment gateway connect nahi hota.
-    </div>
-
-
-    <button
-      type="button"
-      class="main-btn"
-      onclick="submitWebsiteOrder()">
-      Place Order
-    </button>
-
-
-    <button
-      type="button"
-      class="secondary-btn"
-      onclick="closeOrderForm()">
-      Cancel
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- ========================================================= -->
-<!-- TRACK ORDER MODAL -->
-<!-- ========================================================= -->
-
-<div
-  id="trackModal"
-  class="modal">
-
-  <div class="modal-box">
-
-    <button
-      class="modal-close"
-      onclick="closeTrackOrder()">
-      ×
-    </button>
-
-    <h2>
-      🚚 Track Your Order
-    </h2>
-
-    <div class="modal-subtitle">
-      Apna mobile number daaliye.
-    </div>
-
-
-    <input
-      id="trackPhone"
-      type="tel"
-      inputmode="numeric"
-      maxlength="10"
-      placeholder="10 digit mobile number">
-
-
-    <button
-      type="button"
-      class="main-btn"
-      onclick="trackByPhone()">
-      Track Order
-    </button>
-
-
-    <div
-      id="trackResult"
-      style="margin-top:18px;">
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- ========================================================= -->
-<!-- SUPABASE -->
-<!-- ========================================================= -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-
-  /* =========================================================
-     SUPABASE CONNECTION
-  ========================================================= */
-
-  const SUPABASE_URL =
-    "https://sxifooelnulxldcbtmvd.supabase.co";
-
-  const SUPABASE_KEY =
-    "sb_publishable_nLLITIJxfhc52cUkZaGZ4w_GvJubfM-";
-
-  const sb =
-    supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
-
-
-  let allProducts = [];
-
-  let selectedProduct = null;
-
-
-  /* =========================================================
-     ESCAPE HTML
-  ========================================================= */
-
-  function esc(value) {
-
-    return String(value ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+    return;
 
   }
 
+  const {error} =
+    await sb
+      .from("customer_profiles")
+      .update({
+        full_name:name
+      })
+      .eq("id",session.user.id);
 
-  /* =========================================================
-     AUTH STATE
-  ========================================================= */
+  if(error){
 
-  async function updateAuthUI() {
+    alert(error.message);
 
-    const {
-      data: {
-        session
-      }
-    } = await sb.auth.getSession();
-
-
-    const authButton =
-      document.getElementById("authButton");
-
-    const logoutButton =
-      document.getElementById("logoutButton");
-
-    const userInfo =
-      document.getElementById("userInfo");
-
-
-    if (session) {
-
-      authButton.style.display = "none";
-
-      logoutButton.style.display = "block";
-
-      userInfo.style.display = "block";
-
-      userInfo.textContent =
-        "👤 " +
-        (session.user.email || "Customer");
-
-    } else {
-
-      authButton.style.display = "block";
-
-      logoutButton.style.display = "none";
-
-      userInfo.style.display = "none";
-
-    }
+    return;
 
   }
 
+  alert("Profile updated! ✅");
 
-  sb.auth.onAuthStateChange(
-    function () {
-      updateAuthUI();
-    }
-  );
+  openAccount();
 
+}
 
-  /* =========================================================
-     AUTH MODAL
-  ========================================================= */
 
-  function openAuthModal() {
+/* =========================================================
+   ORDER
+========================================================= */
 
-    document
-      .getElementById("authModal")
-      .classList.add("show");
+async function startOrder(productId){
 
-    showAuthTab("login");
+  const session =
+    await getSession();
 
-    clearAuthMessage();
-
-  }
-
-
-  function closeAuthModal() {
-
-    document
-      .getElementById("authModal")
-      .classList.remove("show");
-
-  }
-
-
-  function showAuthTab(type) {
-
-    const loginTab =
-      document.getElementById("loginTab");
-
-    const signupTab =
-      document.getElementById("signupTab");
-
-    const loginForm =
-      document.getElementById("loginForm");
-
-    const signupForm =
-      document.getElementById("signupForm");
-
-
-    if (type === "login") {
-
-      loginTab.classList.add("active");
-      signupTab.classList.remove("active");
-
-      loginForm.classList.add("active");
-      signupForm.classList.remove("active");
-
-    } else {
-
-      loginTab.classList.remove("active");
-      signupTab.classList.add("active");
-
-      loginForm.classList.remove("active");
-      signupForm.classList.add("active");
-
-    }
-
-    clearAuthMessage();
-
-  }
-
-
-  function showAuthMessage(message, type) {
-
-    const box =
-      document.getElementById("authMessage");
-
-    box.textContent = message;
-
-    box.className =
-      "auth-message show " + type;
-
-  }
-
-
-  function clearAuthMessage() {
-
-    const box =
-      document.getElementById("authMessage");
-
-    box.textContent = "";
-
-    box.className =
-      "auth-message";
-
-  }
-
-
-  /* =========================================================
-     LOGIN
-  ========================================================= */
-
-  async function loginCustomer() {
-
-    const email =
-      document
-        .getElementById("loginEmail")
-        .value
-        .trim();
-
-    const password =
-      document
-        .getElementById("loginPassword")
-        .value;
-
-
-    if (!email || !password) {
-
-      showAuthMessage(
-        "Email aur password dono bhariye.",
-        "error"
-      );
-
-      return;
-    }
-
-
-    showAuthMessage(
-      "Login ho raha hai...",
-      "success"
-    );
-
-
-    const {
-      data,
-      error
-    } =
-      await sb.auth.signInWithPassword({
-
-        email: email,
-
-        password: password
-
-      });
-
-
-    if (error) {
-
-      showAuthMessage(
-        "Login failed: " +
-        error.message,
-        "error"
-      );
-
-      return;
-    }
-
-
-    if (data.session) {
-
-      showAuthMessage(
-        "Login successful! ✅",
-        "success"
-      );
-
-      await updateAuthUI();
-
-      setTimeout(
-        closeAuthModal,
-        700
-      );
-
-    }
-
-  }
-
-
-  /* =========================================================
-     SIGN UP
-  ========================================================= */
-
-  async function signupCustomer() {
-
-    const email =
-      document
-        .getElementById("signupEmail")
-        .value
-        .trim();
-
-    const password =
-      document
-        .getElementById("signupPassword")
-        .value;
-
-    const confirmPassword =
-      document
-        .getElementById("signupConfirmPassword")
-        .value;
-
-
-    if (!email || !password || !confirmPassword) {
-
-      showAuthMessage(
-        "Saari fields bhariye.",
-        "error"
-      );
-
-      return;
-    }
-
-
-    if (password.length < 6) {
-
-      showAuthMessage(
-        "Password minimum 6 characters ka hona chahiye.",
-        "error"
-      );
-
-      return;
-    }
-
-
-    if (password !== confirmPassword) {
-
-      showAuthMessage(
-        "Passwords match nahi kar rahe.",
-        "error"
-      );
-
-      return;
-    }
-
-
-    showAuthMessage(
-      "Account create ho raha hai...",
-      "success"
-    );
-
-
-    const {
-      data,
-      error
-    } =
-      await sb.auth.signUp({
-
-        email: email,
-
-        password: password
-
-      });
-
-
-    if (error) {
-
-      showAuthMessage(
-        "Signup failed: " +
-        error.message,
-        "error"
-      );
-
-      return;
-    }
-
-
-    if (data.session) {
-
-      showAuthMessage(
-        "Account ban gaya! ✅ Ab aap order kar sakte hain.",
-        "success"
-      );
-
-      await updateAuthUI();
-
-      setTimeout(
-        closeAuthModal,
-        900
-      );
-
-      return;
-    }
-
-
-    showAuthMessage(
-      "Account ban gaya! 📧 Apne email par confirmation link check karein, phir login karein.",
-      "success"
-    );
-
-  }
-
-
-  /* =========================================================
-     LOGOUT
-  ========================================================= */
-
-  async function logoutCustomer() {
-
-    const {
-      error
-    } =
-      await sb.auth.signOut();
-
-
-    if (error) {
-
-      alert(
-        "Logout failed: " +
-        error.message
-      );
-
-      return;
-    }
-
-
-    await updateAuthUI();
+  if(!session){
 
     alert(
-      "Logout successful."
+      "Order karne ke liye pehle Login / Sign Up karein."
     );
 
-  }
+    openAuth();
 
-
-  /* =========================================================
-     PRODUCT IMAGES
-  ========================================================= */
-
-  function getImages(product) {
-
-    let images = [];
-
-
-    try {
-
-      if (product.image_urls) {
-
-        images =
-          JSON.parse(
-            product.image_urls
-          );
-
-      }
-
-    } catch (e) {
-
-      images = [];
-
-    }
-
-
-    if (!Array.isArray(images)) {
-
-      images = [];
-
-    }
-
-
-    if (
-      !images.length &&
-      product.image_url
-    ) {
-
-      images = [
-        product.image_url
-      ];
-
-    }
-
-
-    return images.filter(Boolean);
+    return;
 
   }
 
+  selectedProduct =
+    allProducts.find(
+      p=>Number(p.id)===Number(productId)
+    );
 
-  /* =========================================================
-     PRODUCT GALLERY
-  ========================================================= */
+  if(!selectedProduct) return;
 
-  function makeGallery(images) {
+  openOrderForm();
 
-    if (!images.length) {
-
-      return `
-        <div class="gallery">
-          <div class="product-photo"></div>
-        </div>
-      `;
-
-    }
+}
 
 
-    const photos =
-      images
-        .map(
-          function (url, index) {
+function openOrderForm(){
 
-            return `
-              <img
-                src="${esc(url)}"
-                class="product-photo"
-                style="${
-                  index === 0
-                    ? ""
-                    : "display:none;"
-                }"
-                alt="Product image"
-                onerror="this.style.display='none'"
-              >
-            `;
+  closeModal();
 
-          }
-        )
-        .join("");
+  const p =
+    selectedProduct;
 
+  const modal =
+    document.createElement("div");
 
-    if (images.length === 1) {
+  modal.className="modal";
 
-      return `
-        <div class="gallery">
-          ${photos}
-        </div>
-      `;
+  modal.innerHTML=`
 
-    }
+    <div class="modal-box">
 
+      <button class="close"
+        onclick="closeModal()">
+        ×
+      </button>
 
-    return `
-      <div class="gallery">
+      <h2>🛍️ Place Your Order</h2>
 
-        ${photos}
+      <div class="notice">
 
-        <div class="photo-buttons">
+        <b>${esc(p.name)}</b><br>
 
-          <button
-            type="button"
-            onclick="prevPhoto(this)">
-            ‹
-          </button>
-
-          <button
-            type="button"
-            onclick="nextPhoto(this)">
-            ›
-          </button>
-
-        </div>
+        ₹${money(p.price)}
 
       </div>
-    `;
 
-  }
 
+      <label>Full Name *</label>
 
-  function prevPhoto(button) {
+      <input
+        id="orderName"
+        placeholder="Full Name"
+      >
 
-    const gallery =
-      button.closest(".gallery");
 
-    const photos =
-      gallery.querySelectorAll(
-        ".product-photo"
-      );
+      <label>Mobile Number *</label>
 
+      <input
+        id="orderPhone"
+        type="tel"
+        maxlength="10"
+        inputmode="numeric"
+        placeholder="10 digit mobile"
+      >
 
-    if (photos.length < 2) return;
 
+      <label>Full Address *</label>
 
-    let current = 0;
+      <textarea
+        id="orderAddress"
+        placeholder="House no., street, area"
+      ></textarea>
 
 
-    photos.forEach(
-      function (photo, index) {
+      <label>City *</label>
 
-        if (
-          photo.style.display !== "none"
-        ) {
+      <input
+        id="orderCity"
+        placeholder="City"
+      >
 
-          current = index;
 
-        }
+      <label>State *</label>
 
-      }
-    );
+      <input
+        id="orderState"
+        placeholder="State"
+      >
 
 
-    photos[current].style.display =
-      "none";
+      <label>PIN Code *</label>
 
+      <input
+        id="orderPincode"
+        maxlength="6"
+        inputmode="numeric"
+        placeholder="6 digit PIN"
+      >
 
-    const previous =
-      (
-        current -
-        1 +
-        photos.length
-      ) %
-      photos.length;
 
+      <label>Quantity *</label>
 
-    photos[previous].style.display =
-      "block";
+      <input
+        id="orderQty"
+        type="number"
+        min="1"
+        max="${Number(p.stock||1)}"
+        value="1"
+      >
 
-  }
 
+      <label>Payment Method *</label>
 
-  function nextPhoto(button) {
+      <select id="orderPayment">
 
-    const gallery =
-      button.closest(".gallery");
+        <option value="COD">
+          Cash on Delivery
+        </option>
 
-    const photos =
-      gallery.querySelectorAll(
-        ".product-photo"
-      );
+        <option value="Online">
+          UPI / Online Payment — Coming Soon
+        </option>
 
+      </select>
 
-    if (photos.length < 2) return;
 
+      <div class="notice">
 
-    let current = 0;
+        UPI option available hai,
+        lekin payment gateway abhi connect nahi hai.
+        Abhi COD use karein.
 
+      </div>
 
-    photos.forEach(
-      function (photo, index) {
 
-        if (
-          photo.style.display !== "none"
-        ) {
+      <button
+        class="primary"
+        onclick="submitOrder()">
 
-          current = index;
+        Place Order
 
-        }
+      </button>
 
-      }
-    );
+    </div>
 
+  `;
 
-    photos[current].style.display =
-      "none";
+  document.body.appendChild(modal);
 
 
-    const next =
-      (
-        current +
-        1
-      ) %
-      photos.length;
+  loadProfileIntoOrder();
 
+}
 
-    photos[next].style.display =
-      "block";
-
-  }
-
-
-  /* =========================================================
-     RENDER PRODUCTS
-  ========================================================= */
-
-  function renderProducts(products) {
-
-    const container =
-      document.getElementById(
-        "products"
-      );
-
-
-    if (!products.length) {
-
-      container.innerHTML = `
-        <div class="empty">
-          No products available yet.
-        </div>
-      `;
-
-      return;
-    }
-
-
-    container.innerHTML =
-      products
-        .map(
-          function (product) {
-
-            const images =
-              getImages(product);
-
-            const stock =
-              Number(
-                product.stock || 0
-              );
-
-            const outOfStock =
-              stock <= 0;
-
-
-            return `
-              <article class="card">
-
-                ${makeGallery(images)}
-
-                <div class="info">
-
-                  <h3>
-                    ${esc(
-                      product.name ||
-                      "Product"
-                    )}
-                  </h3>
-
-                  <div class="category">
-                    ${esc(
-                      product.category ||
-                      ""
-                    )}
-                  </div>
-
-                  <div class="price">
-                    ₹${esc(
-                      product.price ||
-                      "0"
-                    )}
-                  </div>
-
-                  <div
-                    class="stock ${
-                      outOfStock
-                        ? "out"
-                        : ""
-                    }">
-
-                    ${
-                      outOfStock
-                        ? "Out of Stock"
-                        : "Stock: " + stock
-                    }
 
-                  </div>
+async function loadProfileIntoOrder(){
 
-                  <button
-                    type="button"
-                    class="order"
-                    ${
-                      outOfStock
-                        ? "disabled"
-                        : ""
-                    }
-                    data-product-id="${
-                      esc(
-                        product.id ||
-                        ""
-                      )
-                    }"
-                    data-name="${
-                      esc(
-                        product.name ||
-                        "Product"
-                      )
-                    }"
-                    data-price="${
-                      Number(
-                        product.price
-                      ) || 0
-                    }"
-                    data-stock="${
-                      stock
-                    }"
-                    onclick="openOrderFormFromButton(this)">
+  const session =
+    await getSession();
 
-                    ${
-                      outOfStock
-                        ? "Out of Stock"
-                        : "Order Now"
-                    }
+  if(!session) return;
 
-                  </button>
+  const {data:p} =
+    await sb
+      .from("customer_profiles")
+      .select("*")
+      .eq("id",session.user.id)
+      .maybeSingle();
 
-                </div>
+  if(p){
 
-              </article>
-            `;
-
-          }
-        )
-        .join("");
-
-  }
-
-
-  /* =========================================================
-     FILTER
-  ========================================================= */
-
-  function filterProducts(
-    category,
-    clickedButton
-  ) {
-
-    document
-      .querySelectorAll(
-        ".cats button"
-      )
-      .forEach(
-        function (button) {
-
-          button.classList.remove(
-            "active"
-          );
-
-        }
-      );
-
-
-    if (clickedButton) {
-
-      clickedButton.classList.add(
-        "active"
-      );
-
-    }
-
-
-    if (category === "All") {
-
-      renderProducts(
-        allProducts
-      );
-
-      return;
-    }
-
-
-    const filtered =
-      allProducts.filter(
-        function (product) {
-
-          return String(
-            product.category ||
-            ""
-          )
-            .toLowerCase() ===
-            category.toLowerCase();
-
-        }
-      );
-
-
-    renderProducts(
-      filtered
-    );
-
-  }
-
-
-  /* =========================================================
-     OPEN ORDER FORM
-  ========================================================= */
-
-  async function openOrderFormFromButton(
-    button
-  ) {
-
-    /* IMPORTANT:
-       Account required before order.
-    */
-
-    const {
-      data: {
-        session
-      }
-    } =
-      await sb.auth.getSession();
-
-
-    if (!session) {
-
-      alert(
-        "Order karne ke liye pehle Login / Sign Up karein."
-      );
-
-      openAuthModal();
-
-      return;
-    }
-
-
-    const productId =
-      button.dataset.productId ||
-      "";
-
-    const productName =
-      button.dataset.name ||
-      "Product";
-
-    const productPrice =
-      Number(
-        button.dataset.price ||
-        0
-      );
-
-    const productStock =
-      Number(
-        button.dataset.stock ||
-        0
-      );
-
-
-    selectedProduct = {
-
-      id: productId,
-
-      name: productName,
-
-      price: productPrice,
-
-      stock: productStock
-
-    };
-
-
-    document
-      .getElementById(
-        "selectedProduct"
-      )
-      .innerHTML = `
-
-        <strong>
-          ${esc(productName)}
-        </strong>
-
-        <br>
-
-        Price:
-        ₹${esc(productPrice)}
-
-        <br>
-
-        Available Stock:
-        ${esc(productStock)}
-
-      `;
-
-
-    document
-      .getElementById(
-        "orderQty"
-      )
-      .value = 1;
-
-
-    document
-      .getElementById(
-        "orderModal"
-      )
-      .classList.add("show");
-
-  }
-
-
-  /* =========================================================
-     CLOSE ORDER
-  ========================================================= */
-
-  function closeOrderForm() {
-
-    document
-      .getElementById(
-        "orderModal"
-      )
-      .classList.remove("show");
-
-  }
-
-
-  /* =========================================================
-     SUBMIT ORDER
-  ========================================================= */
-
-  async function submitWebsiteOrder() {
-
-    /* Double security:
-       login check again before saving.
-    */
-
-    const {
-      data: {
-        session
-      }
-    } =
-      await sb.auth.getSession();
-
-
-    if (!session) {
-
-      closeOrderForm();
-
-      alert(
-        "Order karne ke liye Login / Sign Up required hai."
-      );
-
-      openAuthModal();
-
-      return;
-    }
-
-
-    if (!selectedProduct) {
-
-      alert(
-        "Product select nahi hua."
-      );
-
-      return;
-    }
-
-
-    const customerName =
-      document
-        .getElementById(
-          "orderName"
-        )
-        .value
-        .trim();
-
+    const name =
+      document.getElementById("orderName");
 
     const phone =
-      document
-        .getElementById(
-          "orderPhone"
-        )
-        .value
-        .replace(/\D/g, "");
+      document.getElementById("orderPhone");
 
+    if(name)
+      name.value=p.full_name||"";
 
-    const address =
-      document
-        .getElementById(
-          "orderAddress"
-        )
-        .value
-        .trim();
+    if(phone)
+      phone.value=p.phone||"";
 
+  }
 
-    const city =
-      document
-        .getElementById(
-          "orderCity"
-        )
-        .value
-        .trim();
+}
 
 
-    const state =
-      document
-        .getElementById(
-          "orderState"
-        )
-        .value
-        .trim();
+/* =========================================================
+   SUBMIT ORDER
+========================================================= */
 
+async function submitOrder(){
 
-    const pincode =
-      document
-        .getElementById(
-          "orderPincode"
-        )
-        .value
-        .replace(/\D/g, "");
+  const session =
+    await getSession();
 
-
-    const quantity =
-      Number(
-        document
-          .getElementById(
-            "orderQty"
-          )
-          .value
-      );
-
-
-    const paymentMethod =
-      document
-        .getElementById(
-          "orderPayment"
-        )
-        .value;
-
-
-    if (!customerName) {
-
-      alert(
-        "Please enter your name."
-      );
-
-      return;
-    }
-
-
-    if (
-      !/^[0-9]{10}$/.test(
-        phone
-      )
-    ) {
-
-      alert(
-        "Please enter a valid 10 digit mobile number."
-      );
-
-      return;
-    }
-
-
-    if (!address) {
-
-      alert(
-        "Please enter your full address."
-      );
-
-      return;
-    }
-
-
-    if (!city) {
-
-      alert(
-        "Please enter your city."
-      );
-
-      return;
-    }
-
-
-    if (!state) {
-
-      alert(
-        "Please enter your state."
-      );
-
-      return;
-    }
-
-
-    if (
-      !/^[0-9]{6}$/.test(
-        pincode
-      )
-    ) {
-
-      alert(
-        "Please enter a valid 6 digit PIN code."
-      );
-
-      return;
-    }
-
-
-    if (
-      !quantity ||
-      quantity < 1
-    ) {
-
-      alert(
-        "Please enter a valid quantity."
-      );
-
-      return;
-    }
-
-
-    if (
-      selectedProduct.stock > 0 &&
-      quantity >
-      selectedProduct.stock
-    ) {
-
-      alert(
-        "Itni quantity stock mein available nahi hai."
-      );
-
-      return;
-    }
-
-
-    const paymentStatus =
-      paymentMethod === "COD"
-        ? "COD"
-        : "Pending";
-
-
-    const orderData = {
-
-      Customer_Name:
-        customerName,
-
-      Phone:
-        phone,
-
-      Address:
-        address,
-
-      City:
-        city,
-
-      State:
-        state,
-
-      "Pin Code":
-        pincode,
-
-      Product_name:
-        selectedProduct.name,
-
-      Quantity:
-        quantity,
-
-      Payment_method:
-        paymentMethod,
-
-      Payment_status:
-        paymentStatus,
-
-      Order_states:
-        "New"
-
-    };
-
-
-    const {
-      error
-    } =
-      await sb
-        .from("ORDER'S")
-        .insert([
-          orderData
-        ]);
-
-
-    if (error) {
-
-      console.error(
-        "Order error:",
-        error
-      );
-
-      alert(
-        "Order save nahi hua.\n\n" +
-        error.message
-      );
-
-      return;
-    }
-
+  if(!session){
 
     alert(
-      "Order successfully placed! ✅\n\n" +
-      "Aapka order receive ho gaya hai."
+      "Login required."
     );
 
+    return;
 
-    closeOrderForm();
+  }
+
+  const name =
+    document.getElementById("orderName")
+      .value.trim();
+
+  const phone =
+    document.getElementById("orderPhone")
+      .value.trim();
+
+  const address =
+    document.getElementById("orderAddress")
+      .value.trim();
+
+  const city =
+    document.getElementById("orderCity")
+      .value.trim();
+
+  const state =
+    document.getElementById("orderState")
+      .value.trim();
+
+  const pincode =
+    document.getElementById("orderPincode")
+      .value.trim();
+
+  const qty =
+    Number(
+      document.getElementById("orderQty").value
+    );
+
+  const payment =
+    document.getElementById("orderPayment").value;
 
 
-    /* Reset form */
+  if(!name){
 
-    document
-      .getElementById(
-        "orderName"
-      )
-      .value = "";
+    alert("Name bhariye.");
+    return;
 
-    document
-      .getElementById(
-        "orderPhone"
-      )
-      .value = "";
+  }
 
-    document
-      .getElementById(
-        "orderAddress"
-      )
-      .value = "";
+  if(!/^[0-9]{10}$/.test(phone)){
 
-    document
-      .getElementById(
-        "orderCity"
-      )
-      .value = "";
+    alert(
+      "Valid 10 digit mobile number bhariye."
+    );
 
-    document
-      .getElementById(
-        "orderState"
-      )
-      .value = "";
+    return;
 
-    document
-      .getElementById(
-        "orderPincode"
-      )
-      .value = "";
+  }
+
+  if(!address||!city||!state){
+
+    alert(
+      "Address, city aur state bhariye."
+    );
+
+    return;
+
+  }
+
+  if(!/^[0-9]{6}$/.test(pincode)){
+
+    alert("Valid 6 digit PIN bhariye.");
+
+    return;
+
+  }
+
+  if(
+    !qty ||
+    qty<1 ||
+    qty>Number(selectedProduct.stock||0)
+  ){
+
+    alert(
+      "Valid quantity bhariye."
+    );
+
+    return;
 
   }
 
 
-  /* =========================================================
-     LOAD PRODUCTS
-  ========================================================= */
-
-  async function loadProducts() {
-
-    const container =
-      document.getElementById(
-        "products"
-      );
+  const paymentStatus =
+    payment==="COD"
+    ? "COD"
+    : "Pending";
 
 
-    container.innerHTML = `
-      <div class="loading">
-        Loading products...
+  const orderData={
+
+    user_id:
+      session.user.id,
+
+    Customer_Name:
+      name,
+
+    Phone:
+      phone,
+
+    Address:
+      address,
+
+    City:
+      city,
+
+    State:
+      state,
+
+    "Pin Code":
+      pincode,
+
+    Product_name:
+      selectedProduct.name,
+
+    Quantity:
+      qty,
+
+    Payment_method:
+      payment,
+
+    Payment_status:
+      paymentStatus,
+
+    Order_states:
+      "New"
+
+  };
+
+
+  const {data,error} =
+    await sb
+      .from("ORDER'S")
+      .insert([orderData])
+      .select()
+      .single();
+
+
+  if(error){
+
+    console.error(error);
+
+    alert(
+      "Order save nahi hua:\n"+
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  closeModal();
+
+
+  const orderId =
+    data?.id || "N/A";
+
+
+  const whatsappText =
+    `New Aarvi Fashion Order%0A%0A`+
+    `Order ID: ${orderId}%0A`+
+    `Customer: ${name}%0A`+
+    `Phone: ${phone}%0A`+
+    `Product: ${selectedProduct.name}%0A`+
+    `Quantity: ${qty}%0A`+
+    `Payment: ${payment}%0A`+
+    `Address: ${address}, ${city}, ${state} - ${pincode}`;
+
+
+  const whatsappUrl =
+    "https://wa.me/916204117647?text="+
+    whatsappText;
+
+
+  const modal =
+    document.createElement("div");
+
+  modal.className="modal";
+
+  modal.innerHTML=`
+
+    <div class="modal-box"
+         style="text-align:center">
+
+      <h2>🎉 Order Placed!</h2>
+
+      <div class="success">
+
+        Aapka order successfully receive ho gaya hai.
+
       </div>
-    `;
+
+      <div class="notice">
+
+        <b>Order ID:</b>
+        ${esc(orderId)}
+
+        <br><br>
+
+        Status:
+        <b>New</b>
+
+      </div>
 
 
-    const {
-      data,
-      error
-    } =
+      <button
+        class="primary"
+        onclick="window.open('${whatsappUrl}','_blank')">
+
+        📱 WhatsApp Order Details
+
+      </button>
+
+
+      <button
+        class="secondary"
+        onclick="closeModal()">
+
+        Done
+
+      </button>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(modal);
+
+}
+
+
+/* =========================================================
+   MY ORDERS
+========================================================= */
+
+async function showMyOrders(){
+
+  const session =
+    await getSession();
+
+  if(!session) return;
+
+  const {data,error} =
+    await sb
+      .from("ORDER'S")
+      .select("*")
+      .eq("user_id",session.user.id)
+      .order("id",{ascending:false});
+
+  if(error){
+
+    alert(error.message);
+    return;
+
+  }
+
+  closeModal();
+
+  const modal =
+    document.createElement("div");
+
+  modal.className="modal";
+
+  let html="";
+
+  if(!data||!data.length){
+
+    html=
+      `<div class="empty">
+        Abhi koi order nahi hai.
+      </div>`;
+
+  }else{
+
+    html =
+      data.map(o=>`
+
+        <div class="order-item">
+
+          <b>Order #${esc(o.id)}</b>
+
+          <p>
+            ${esc(o.Product_name||"-")}
+          </p>
+
+          <p>
+            Quantity:
+            ${esc(o.Quantity||1)}
+          </p>
+
+          <p>
+            Payment:
+            ${esc(o.Payment_method||"-")}
+          </p>
+
+          <span class="status">
+
+            ${esc(
+              o.Order_states ||
+              o.Order_status ||
+              "New"
+            )}
+
+          </span>
+
+        </div>
+
+      `).join("");
+
+  }
+
+  modal.innerHTML=`
+
+    <div class="modal-box">
+
+      <button class="close"
+        onclick="closeModal()">
+        ×
+      </button>
+
+      <h2>📦 My Orders</h2>
+
+      ${html}
+
+    </div>
+
+  `;
+
+  document.body.appendChild(modal);
+
+}
+
+
+/* =========================================================
+   WISHLIST
+========================================================= */
+
+async function toggleWishlist(productId){
+
+  const session =
+    await getSession();
+
+  if(!session){
+
+    alert(
+      "Wishlist use karne ke liye login karein."
+    );
+
+    openAuth();
+
+    return;
+
+  }
+
+  const {data:existing} =
+    await sb
+      .from("wishlist")
+      .select("id")
+      .eq("user_id",session.user.id)
+      .eq("product_id",productId)
+      .maybeSingle();
+
+  if(existing){
+
+    await sb
+      .from("wishlist")
+      .delete()
+      .eq("id",existing.id);
+
+    alert("Wishlist se remove ho gaya.");
+
+  }else{
+
+    const {error} =
       await sb
-        .from("products")
-        .select("*")
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
-        );
+        .from("wishlist")
+        .insert({
 
+          user_id:session.user.id,
 
-    if (error) {
+          product_id:productId
 
-      console.error(
-        "Products error:",
-        error
-      );
+        });
 
+    if(error){
 
-      container.innerHTML = `
-
-        <div class="empty">
-
-          ❌ Products load nahi ho rahe.
-
-          <br><br>
-
-          Supabase error:
-
-          <br>
-
-          ${esc(
-            error.message ||
-            "Unknown error"
-          )}
-
-        </div>
-
-      `;
-
+      alert(error.message);
       return;
+
     }
 
+    alert("Wishlist mein add ho gaya ❤️");
 
-    allProducts =
-      data || [];
+  }
+
+}
 
 
-    renderProducts(
-      allProducts
+async function showWishlist(){
+
+  const session =
+    await getSession();
+
+  if(!session) return;
+
+  const {data:items,error} =
+    await sb
+      .from("wishlist")
+      .select("product_id")
+      .eq("user_id",session.user.id);
+
+  if(error){
+
+    alert(error.message);
+    return;
+
+  }
+
+  closeModal();
+
+  const ids =
+    (items||[])
+      .map(x=>Number(x.product_id));
+
+  const products =
+    allProducts.filter(
+      p=>ids.includes(Number(p.id))
     );
 
-  }
+  const modal =
+    document.createElement("div");
 
+  modal.className="modal";
 
-  /* =========================================================
-     TRACK ORDER
-  ========================================================= */
+  modal.innerHTML=`
 
-  function openTrackOrder() {
+    <div class="modal-box">
 
-    document
-      .getElementById(
-        "trackModal"
-      )
-      .classList.add("show");
+      <button class="close"
+        onclick="closeModal()">
+        ×
+      </button>
 
-
-    document
-      .getElementById(
-        "trackPhone"
-      )
-      .value = "";
-
-
-    document
-      .getElementById(
-        "trackResult"
-      )
-      .innerHTML = "";
-
-  }
-
-
-  function closeTrackOrder() {
-
-    document
-      .getElementById(
-        "trackModal"
-      )
-      .classList.remove("show");
-
-  }
-
-
-  function escapeTrack(value) {
-
-    return esc(value);
-
-  }
-
-
-  async function trackByPhone() {
-
-    const phone =
-      document
-        .getElementById(
-          "trackPhone"
-        )
-        .value
-        .replace(/\D/g, "");
-
-
-    const result =
-      document
-        .getElementById(
-          "trackResult"
-        );
-
-
-    if (
-      phone.length !== 10
-    ) {
-
-      result.innerHTML = `
-
-        <div class="track-order-card">
-
-          ⚠️ 10 digit mobile number daaliye.
-
-        </div>
-
-      `;
-
-      return;
-    }
-
-
-    result.innerHTML = `
-
-      <div class="track-order-card">
-
-        🔎 Order search ho raha hai...
-
-      </div>
-
-    `;
-
-
-    const {
-      data,
-      error
-    } =
-      await sb.rpc(
-        "track_orders_by_phone",
-        {
-          phone_input:
-            phone
-        }
-      );
-
-
-    if (error) {
-
-      console.error(
-        "Tracking error:",
-        error
-      );
-
-
-      result.innerHTML = `
-
-        <div class="track-order-card">
-
-          ❌ Order track nahi ho raha.
-
-          <br><br>
-
-          ${escapeTrack(
-            error.message ||
-            ""
-          )}
-
-        </div>
-
-      `;
-
-      return;
-    }
-
-
-    if (
-      !data ||
-      data.length === 0
-    ) {
-
-      result.innerHTML = `
-
-        <div class="track-order-card">
-
-          ❌ Is mobile number se koi order nahi mila.
-
-        </div>
-
-      `;
-
-      return;
-    }
-
-
-    const orders =
-      Array.isArray(data)
-        ? data
-        : [data];
-
-
-    result.innerHTML = `
-
-      <h3
-        style="color:#d94f82;">
-        Your Orders
-        (${orders.length})
-      </h3>
+      <h2>❤️ Wishlist</h2>
 
       ${
-        orders
-          .map(
-            function (order, index) {
+        products.length
+        ?
+        products.map(p=>`
 
-              const status =
-                order.Order_states ||
-                order.order_status ||
-                order.status ||
-                "Order Received";
+          <div class="order-item">
 
+            <b>${esc(p.name)}</b>
 
-              const product =
-                order.Product_name ||
-                order.product_name ||
-                order.product ||
-                "Your Order";
+            <p>
+              ₹${money(p.price)}
+            </p>
 
+            <button
+              class="primary"
+              onclick="closeModal();startOrder(${Number(p.id)})">
 
-              const quantity =
-                order.Quantity ||
-                order.quantity ||
-                1;
+              Order Now
 
+            </button>
 
-              const payment =
-                order.Payment_method ||
-                order.payment_method ||
-                "-";
+          </div>
 
-
-              const orderId =
-                order.id ||
-                order.order_id ||
-                "Generated";
-
-
-              return `
-
-                <div class="track-order-card">
-
-                  <h3>
-                    📦 Order
-                    ${index + 1}
-                  </h3>
-
-                  <p>
-                    <b>Order ID:</b>
-                    ${escapeTrack(
-                      orderId
-                    )}
-                  </p>
-
-                  <p>
-                    <b>Product:</b>
-                    ${escapeTrack(
-                      product
-                    )}
-                  </p>
-
-                  <p>
-                    <b>Quantity:</b>
-                    ${escapeTrack(
-                      quantity
-                    )}
-                  </p>
-
-                  <p>
-                    <b>Mobile:</b>
-                    ${escapeTrack(
-                      phone
-                    )}
-                  </p>
-
-                  <p>
-                    <b>Payment:</b>
-                    ${escapeTrack(
-                      payment
-                    )}
-                  </p>
-
-                  <div
-                    class="track-status">
-
-                    🚚 Status:
-                    ${escapeTrack(
-                      status
-                    )}
-
-                  </div>
-
-                </div>
-
-              `;
-
-            }
-          )
-          .join("")
+        `).join("")
+        :
+        `<div class="empty">
+          Wishlist empty hai.
+        </div>`
       }
 
-    `;
+    </div>
+
+  `;
+
+  document.body.appendChild(modal);
+
+}
+
+
+/* =========================================================
+   SAVED ADDRESS
+========================================================= */
+
+async function showAddresses(){
+
+  const session =
+    await getSession();
+
+  if(!session) return;
+
+  const {data,error} =
+    await sb
+      .from("customer_addresses")
+      .select("*")
+      .eq("user_id",session.user.id)
+      .order("id",{ascending:false});
+
+  if(error){
+
+    alert(error.message);
+    return;
+
+  }
+
+  closeModal();
+
+  const modal =
+    document.createElement("div");
+
+  modal.className="modal";
+
+  modal.innerHTML=`
+
+    <div class="modal-box">
+
+      <button class="close"
+        onclick="closeModal()">
+        ×
+      </button>
+
+      <h2>📍 Saved Address</h2>
+
+      ${
+        data?.length
+        ?
+        data.map(a=>`
+
+          <div class="order-item">
+
+            <b>${esc(a.full_name||"")}</b>
+
+            <p>
+              ${esc(a.address||"")}
+            </p>
+
+            <p>
+              ${esc(a.city||"")},
+              ${esc(a.state||"")} -
+              ${esc(a.pincode||"")}
+            </p>
+
+          </div>
+
+        `).join("")
+        :
+        `<div class="empty">
+          Abhi saved address nahi hai.
+        </div>`
+      }
+
+    </div>
+
+  `;
+
+  document.body.appendChild(modal);
+
+}
+
+
+/* =========================================================
+   PAYMENTS
+========================================================= */
+
+async function showPayments(){
+
+  closeModal();
+
+  const modal =
+    document.createElement("div");
+
+  modal.className="modal";
+
+  modal.innerHTML=`
+
+    <div class="modal-box">
+
+      <button class="close"
+        onclick="closeModal()">
+        ×
+      </button>
+
+      <h2>💳 Payment & Refund</h2>
+
+      <div class="order-item">
+
+        <b>Cash on Delivery</b>
+
+        <p>
+          COD abhi available hai.
+        </p>
+
+      </div>
+
+      <div class="order-item">
+
+        <b>UPI / Online Payment</b>
+
+        <p>
+          Coming Soon
+        </p>
+
+      </div>
+
+      <div class="notice">
+
+        Online payment gateway connect hone ke baad
+        UPI payment yahin activate ki jayegi.
+
+      </div>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(modal);
+
+}
+
+
+/* =========================================================
+   SHARED PRODUCTS
+========================================================= */
+
+async function showSharedProducts(){
+
+  const session =
+    await getSession();
+
+  if(!session) return;
+
+  const {data,error} =
+    await sb
+      .from("shared_products")
+      .select("*")
+      .eq("user_id",session.user.id);
+
+  if(error){
+
+    alert(error.message);
+    return;
+
+  }
+
+  closeModal();
+
+  const modal =
+    document.createElement("div");
+
+  modal.className="modal";
+
+  modal.innerHTML=`
+
+    <div class="modal-box">
+
+      <button class="close"
+        onclick="closeModal()">
+        ×
+      </button>
+
+      <h2>🔗 Shared Products</h2>
+
+      ${
+        data?.length
+        ?
+        `<div class="notice">
+          ${data.length} shared product(s).
+        </div>`
+        :
+        `<div class="empty">
+          Abhi koi shared product nahi hai.
+        </div>`
+      }
+
+    </div>
+
+  `;
+
+  document.body.appendChild(modal);
+
+}
+
+
+/* =========================================================
+   FOLLOWED SHOPS
+========================================================= */
+
+async function showFollowedShops(){
+
+  const session =
+    await getSession();
+
+  if(!session) return;
+
+  const {data,error} =
+    await sb
+      .from("followed_shops")
+      .select("*")
+      .eq("user_id",session.user.id);
+
+  if(error){
+
+    alert(error.message);
+    return;
+
+  }
+
+  closeModal();
+
+  const modal =
+    document.createElement("div");
+
+  modal.className="modal";
+
+  modal.innerHTML=`
+
+    <div class="modal-box">
+
+      <button class="close"
+        onclick="closeModal()">
+        ×
+      </button>
+
+      <h2>🏪 Followed Shops</h2>
+
+      ${
+        data?.length
+        ?
+        data.map(s=>`
+
+          <div class="order-item">
+
+            🏪
+            ${esc(s.shop_name)}
+
+          </div>
+
+        `).join("")
+        :
+        `<div class="empty">
+          Abhi koi followed shop nahi hai.
+        </div>`
+      }
+
+      <button
+        class="primary"
+        onclick="followAarviShop()">
+
+        ❤️ Follow Aarvi Fashion
+
+      </button>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(modal);
+
+}
+
+
+async function followAarviShop(){
+
+  const session =
+    await getSession();
+
+  if(!session) return;
+
+  const {error} =
+    await sb
+      .from("followed_shops")
+      .upsert({
+
+        user_id:session.user.id,
+
+        shop_name:"Aarvi Fashion"
+
+      });
+
+  if(error){
+
+    alert(error.message);
+    return;
+
+  }
+
+  alert(
+    "Aarvi Fashion followed ❤️"
+  );
+
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+function showSettings(){
+
+  closeModal();
+
+  const modal =
+    document.createElement("div");
+
+  modal.className="modal";
+
+  modal.innerHTML=`
+
+    <div class="modal-box">
+
+      <button class="close"
+        onclick="closeModal()">
+        ×
+      </button>
+
+      <h2>⚙️ Settings</h2>
+
+      <div class="account-menu">
+
+        <button
+          onclick="alert('Password reset email flow available hai.')">
+
+          🔐 Password & Security
+
+        </button>
+
+        <button
+          onclick="alert('Language settings coming soon.')">
+
+          🌐 Language
+
+        </button>
+
+        <button
+          onclick="alert('Notification settings coming soon.')">
+
+          🔔 Notifications
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(modal);
+
+}
+
+
+/* =========================================================
+   RATE
+========================================================= */
+
+function rateWebsite(){
+
+  closeModal();
+
+  alert(
+    "⭐ Rating system ko baad mein Google/website review se connect kar sakte hain."
+  );
+
+}
+
+
+/* =========================================================
+   LEGAL
+========================================================= */
+
+function showLegal(){
+
+  closeModal();
+
+  const modal =
+    document.createElement("div");
+
+  modal.className="modal";
+
+  modal.innerHTML=`
+
+    <div class="modal-box">
+
+      <button class="close"
+        onclick="closeModal()">
+        ×
+      </button>
+
+      <h2>📜 Legal & Policies</h2>
+
+      <div class="order-item">
+
+        <b>Privacy Policy</b>
+
+        <p>
+          Customer information order processing
+          aur account management ke liye use hoti hai.
+        </p>
+
+      </div>
+
+      <div class="order-item">
+
+        <b>Return & Refund</b>
+
+        <p>
+          Return/refund policy ko business rules
+          ke according update kiya ja sakta hai.
+        </p>
+
+      </div>
+
+      <div class="order-item">
+
+        <b>Terms & Conditions</b>
+
+        <p>
+          Order place karne par customer
+          business terms accept karta hai.
+        </p>
+
+      </div>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(modal);
+
+}
+
+
+/* =========================================================
+   TRACK ORDER
+========================================================= */
+
+function openTrack(){
+
+  closeModal();
+
+  const modal =
+    document.createElement("div");
+
+  modal.className="modal";
+
+  modal.innerHTML=`
+
+    <div class="modal-box">
+
+      <button class="close"
+        onclick="closeModal()">
+        ×
+      </button>
+
+      <h2>🚚 Track Your Order</h2>
+
+      <label>Order ID</label>
+
+      <input
+        id="trackId"
+        type="number"
+        placeholder="Order ID"
+      >
+
+      <label>Mobile Number</label>
+
+      <input
+        id="trackPhone"
+        type="tel"
+        maxlength="10"
+        inputmode="numeric"
+        placeholder="10 digit mobile"
+      >
+
+      <button
+        class="primary"
+        onclick="trackOrder()">
+
+        Track Order
+
+      </button>
+
+      <div
+        id="trackResult"
+        class="track-result">
+      </div>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(modal);
+
+}
+
+
+async function trackOrder(){
+
+  const id =
+    Number(
+      document.getElementById("trackId").value
+    );
+
+  const phone =
+    document.getElementById("trackPhone")
+      .value.trim();
+
+  const result =
+    document.getElementById("trackResult");
+
+  if(!id||!phone){
+
+    result.innerHTML=
+      `<div class="error">
+        Order ID aur mobile number bhariye.
+      </div>`;
+
+    return;
 
   }
 
 
-  /* =========================================================
-     MODAL OUTSIDE CLICK
-  ========================================================= */
+  result.innerHTML=
+    `<div class="notice">
+      Order check ho raha hai...
+    </div>`;
 
-  document
-    .querySelectorAll(".modal")
-    .forEach(
-      function (modal) {
 
-        modal.addEventListener(
-          "click",
-          function (event) {
-
-            if (
-              event.target === modal
-            ) {
-
-              modal.classList.remove(
-                "show"
-              );
-
-            }
-
-          }
-        );
-
+  const {data,error} =
+    await sb.rpc(
+      "track_my_order",
+      {
+        order_id_input:id,
+        phone_input:phone
       }
     );
 
 
-  /* =========================================================
-     START APP
-  ========================================================= */
+  if(error){
 
-  updateAuthUI();
+    result.innerHTML=
+      `<div class="error">
+        ${esc(error.message)}
+      </div>`;
 
-  loadProducts();
+    return;
+
+  }
+
+
+  if(!data){
+
+    result.innerHTML=
+      `<div class="error">
+        Order nahi mila.
+      </div>`;
+
+    return;
+
+  }
+
+
+  const status =
+    data.Order_states ||
+    data.Order_status ||
+    data.status ||
+    "New";
+
+
+  result.innerHTML=`
+
+    <div class="order-item">
+
+      <h3 style="color:#d94f82">
+        Order Found ✅
+      </h3>
+
+      <p>
+        <b>Order ID:</b>
+        ${esc(id)}
+      </p>
+
+      <p>
+        <b>Product:</b>
+        ${esc(
+          data.Product_name||
+          data.product_name||
+          "-"
+        )}
+      </p>
+
+      <div class="status">
+
+        📦 ${esc(status)}
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logoutCustomer(){
+
+  await sb.auth.signOut();
+
+  closeModal();
+
+  alert(
+    "Logout successful."
+  );
+
+}
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+sb.auth.onAuthStateChange(
+  async(event,session)=>{
+
+    if(session){
+
+      const meta =
+        session.user.user_metadata||{};
+
+      await saveProfile(
+
+        session.user,
+
+        meta.full_name||"Customer",
+
+        meta.phone||
+          session.user.phone||
+          "",
+
+        meta.email||
+          session.user.email||
+          "",
+
+        meta.account_type||
+          "Customer"
+
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+loadProducts();
 
 </script>
 
