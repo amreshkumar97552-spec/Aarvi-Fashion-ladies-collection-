@@ -533,8 +533,60 @@
     /* ============================
        ORDER FORM
     ============================ */
+<script>
+async function requireCustomerLogin() {
+    const { data: { session } } = await sb.auth.getSession();
 
-    function openOrderFormFromButton(button) {
+    if (session) {
+        return true;
+    }
+
+    const email = prompt("Login ke liye apna email enter karein:");
+    if (!email) return false;
+
+    const password = prompt("Password enter karein:");
+    if (!password) return false;
+
+    const { error } = await sb.auth.signInWithPassword({
+        email: email.trim(),
+        password: password
+    });
+
+    if (!error) {
+        alert("Login successful!");
+        return true;
+    }
+
+    const signup = confirm(
+        "Login nahi hua.\n\nKya aap naya account banana chahte hain?"
+    );
+
+    if (!signup) return false;
+
+    const { data, error: signupError } = await sb.auth.signUp({
+        email: email.trim(),
+        password: password
+    });
+
+    if (signupError) {
+        alert("Signup error: " + signupError.message);
+        return false;
+    }
+
+    if (data.session) {
+        alert("Account ban gaya! Ab aap order kar sakte hain.");
+        return true;
+    }
+
+    alert(
+        "Account ban gaya.\n\nApne email par confirmation link check karein, " +
+        "phir login karke order karein."
+    );
+
+    return false;
+}
+</script>
+   async function openOrderFormFromButton(button) {
 
       const productName =
         button.dataset.name || "Product";
