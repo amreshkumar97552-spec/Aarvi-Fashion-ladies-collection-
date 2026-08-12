@@ -3268,10 +3268,48 @@ async function trackOrder(){
       </p>
 
       <div class="status">
+  <div class="tracking-title">📦 Order Tracking</div>
 
-        📦 ${esc(status)}
+  <div class="tracking-step active">
+    <span>✓</span>
+    <div>
+      <b>Order Confirmed</b>
+      <small>Your order has been confirmed</small>
+    </div>
+  </div>
 
-      </div>
+  <div class="tracking-step">
+    <span>2</span>
+    <div>
+      <b>Packed</b>
+      <small>Your order is being packed</small>
+    </div>
+  </div>
+
+  <div class="tracking-step">
+    <span>3</span>
+    <div>
+      <b>Shipped</b>
+      <small>Courier pickup pending</small>
+    </div>
+  </div>
+
+  <div class="tracking-step">
+    <span>4</span>
+    <div>
+      <b>Out for Delivery</b>
+      <small>Courier is on the way</small>
+    </div>
+  </div>
+
+  <div class="tracking-step">
+    <span>5</span>
+    <div>
+      <b>Delivered</b>
+      <small>Order delivered to customer</small>
+    </div>
+  </div>
+</div>
 
     </div>
 
