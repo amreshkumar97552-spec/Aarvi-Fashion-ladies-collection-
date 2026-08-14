@@ -36,13 +36,18 @@ h1,h2{
   color:#d94f82
 }
 
+h3{
+  margin-top:10px
+}
+
 input,select,textarea{
   width:100%;
   padding:12px;
   margin:6px 0 14px;
   border:1px solid #e4cbd5;
   border-radius:10px;
-  outline:none
+  outline:none;
+  font-size:15px
 }
 
 textarea{
@@ -57,7 +62,8 @@ button{
   background:#d94f82;
   color:#fff;
   font-weight:700;
-  cursor:pointer
+  cursor:pointer;
+  margin:3px
 }
 
 button:hover{
@@ -95,11 +101,27 @@ button:hover{
   background:white
 }
 
-.product img{
+.product-main-img{
   width:100%;
   height:220px;
   object-fit:contain;
   background:#fff0f5
+}
+
+.product-thumbs{
+  display:flex;
+  gap:5px;
+  padding:7px;
+  overflow-x:auto;
+  background:#fff8fb
+}
+
+.product-thumbs img{
+  width:48px;
+  height:48px;
+  object-fit:cover;
+  border-radius:6px;
+  border:1px solid #efd2de
 }
 
 .info{
@@ -195,20 +217,115 @@ button:hover{
   margin-top:5px
 }
 
+/* SIZE SYSTEM */
+
+.size-box{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:8px 0 15px
+}
+
+.size-option{
+  position:relative
+}
+
+.size-option input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none
+}
+
+.size-option label{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:55px;
+  padding:11px 15px;
+  border:1px solid #e2c6d2;
+  border-radius:10px;
+  background:#fff;
+  color:#d94f82;
+  font-weight:bold;
+  cursor:pointer
+}
+
+.size-option input:checked + label{
+  background:#d94f82;
+  color:#fff;
+  border-color:#d94f82
+}
+
+/* PHOTO PREVIEW */
+
 .photo-preview{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:8px;
-  margin-bottom:15px
+  margin:8px 0 15px
 }
 
-.photo-preview img{
-  width:100%;
-  height:100px;
-  object-fit:contain;
-  border:1px solid #eee;
-  border-radius:8px;
+.preview-item{
+  position:relative;
+  border:1px solid #efd2de;
+  border-radius:10px;
+  overflow:hidden;
   background:#fff0f5
+}
+
+.preview-item img{
+  width:100%;
+  height:110px;
+  object-fit:contain;
+  display:block
+}
+
+.preview-label{
+  position:absolute;
+  left:5px;
+  bottom:5px;
+  background:#d94f82;
+  color:#fff;
+  padding:4px 7px;
+  border-radius:6px;
+  font-size:11px
+}
+
+.selected-sizes{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin:6px 0 10px
+}
+
+.selected-size{
+  background:#fff0f5;
+  color:#d94f82;
+  border:1px solid #efd2de;
+  border-radius:15px;
+  padding:5px 9px;
+  font-size:12px;
+  font-weight:bold
+}
+
+.stock-badge{
+  display:inline-block;
+  background:#eefbf2;
+  color:#26723a;
+  border-radius:15px;
+  padding:5px 9px;
+  font-size:12px;
+  font-weight:bold
+}
+
+.out-badge{
+  display:inline-block;
+  background:#fff0f0;
+  color:#a52c2c;
+  border-radius:15px;
+  padding:5px 9px;
+  font-size:12px;
+  font-weight:bold
 }
 
 @media(max-width:800px){
@@ -236,6 +353,10 @@ button:hover{
 
   .top button{
     margin-top:5px
+  }
+
+  .photo-preview{
+    grid-template-columns:repeat(2,1fr)
   }
 }
 </style>
@@ -270,23 +391,17 @@ button:hover{
   <button
     style="width:100%"
     onclick="login()">
-
     Login
-
   </button>
 
-  <div
-    id="loginmsg"
-    class="msg hide">
-  </div>
+  <div id="loginmsg" class="msg hide"></div>
 
 </div>
 
 
 <!-- ================= ADMIN APP ================= -->
 
-<div id="app"
-     class="wrap hide">
+<div id="app" class="wrap hide">
 
   <div class="top">
 
@@ -297,19 +412,12 @@ button:hover{
 
     <div>
 
-      <button
-        onclick="openStore()">
-
+      <button onclick="openStore()">
         Open Store
-
       </button>
 
-      <button
-        class="secondary"
-        onclick="logout()">
-
+      <button class="secondary" onclick="logout()">
         Logout
-
       </button>
 
     </div>
@@ -354,25 +462,19 @@ button:hover{
         class="active"
         id="tabProducts"
         onclick="showSection('productsSection',this)">
-
         📦 Products
-
       </button>
 
       <button
         id="tabOrders"
         onclick="showSection('ordersSection',this)">
-
         🛍️ Orders
-
       </button>
 
       <button
         id="tabCustomers"
         onclick="showSection('customersSection',this)">
-
         👥 Customers
-
       </button>
 
     </div>
@@ -388,10 +490,8 @@ button:hover{
 
       <h2>➕ Add Product</h2>
 
-      <div
-        id="msg"
-        class="msg hide">
-      </div>
+      <div id="msg" class="msg hide"></div>
+
 
       <div class="grid">
 
@@ -399,10 +499,12 @@ button:hover{
 
           <label>Product Name *</label>
 
-          <input id="name"
-                 placeholder="Product name">
+          <input
+            id="name"
+            placeholder="Product name">
 
         </div>
+
 
         <div>
 
@@ -419,6 +521,7 @@ button:hover{
 
         </div>
 
+
         <div>
 
           <label>Selling Price *</label>
@@ -430,6 +533,7 @@ button:hover{
             placeholder="999">
 
         </div>
+
 
         <div>
 
@@ -443,9 +547,10 @@ button:hover{
 
         </div>
 
+
         <div>
 
-          <label>Stock *</label>
+          <label>Total Stock *</label>
 
           <input
             id="stock"
@@ -458,54 +563,104 @@ button:hover{
       </div>
 
 
+      <!-- ================= SIZE ================= -->
+
+      <h3>👕 Available Sizes</h3>
+
+      <p style="font-size:13px;color:#777">
+        Product mein jo size available hai usko select karein.
+      </p>
+
+      <div class="size-box">
+
+        <div class="size-option">
+          <input type="checkbox" id="sizeS" value="S">
+          <label for="sizeS">S</label>
+        </div>
+
+        <div class="size-option">
+          <input type="checkbox" id="sizeM" value="M">
+          <label for="sizeM">M</label>
+        </div>
+
+        <div class="size-option">
+          <input type="checkbox" id="sizeL" value="L">
+          <label for="sizeL">L</label>
+        </div>
+
+        <div class="size-option">
+          <input type="checkbox" id="sizeXL" value="XL">
+          <label for="sizeXL">XL</label>
+        </div>
+
+        <div class="size-option">
+          <input type="checkbox" id="sizeXXL" value="XXL">
+          <label for="sizeXXL">XXL</label>
+        </div>
+
+      </div>
+
+
+      <!-- ================= DESCRIPTION ================= -->
+
       <label>Description</label>
 
       <textarea
         id="desc"
-        placeholder="Product description">
-      </textarea>
+        placeholder="Product description"></textarea>
 
 
-      <h3>Product Photos</h3>
+      <!-- ================= PHOTOS ================= -->
+
+      <h3>📸 Product Photos — Maximum 4</h3>
 
       <label>Photo 1 *</label>
 
       <input
         id="photo1"
         type="file"
-        accept="image/*">
+        accept="image/*"
+        onchange="previewPhotos()">
+
 
       <label>Photo 2</label>
 
       <input
         id="photo2"
         type="file"
-        accept="image/*">
+        accept="image/*"
+        onchange="previewPhotos()">
+
 
       <label>Photo 3</label>
 
       <input
         id="photo3"
         type="file"
-        accept="image/*">
+        accept="image/*"
+        onchange="previewPhotos()">
+
 
       <label>Photo 4</label>
 
       <input
         id="photo4"
         type="file"
-        accept="image/*">
+        accept="image/*"
+        onchange="previewPhotos()">
 
 
-      <button
-        onclick="addProduct()">
+      <div id="photoPreview" class="photo-preview"></div>
 
-        Save Product
 
+      <button onclick="addProduct()">
+        💾 Save Product
       </button>
 
     </div>
 
+
+    <!-- ================= PRODUCT LIST ================= -->
 
     <div class="card">
 
@@ -516,18 +671,12 @@ button:hover{
         <button
           class="secondary"
           onclick="loadProducts()">
-
           Refresh
-
         </button>
 
       </div>
 
-      <div
-        id="products"
-        class="products">
-
-      </div>
+      <div id="products" class="products"></div>
 
     </div>
 
@@ -536,9 +685,7 @@ button:hover{
 
   <!-- ================= ORDERS ================= -->
 
-  <section
-    id="ordersSection"
-    class="hide">
+  <section id="ordersSection" class="hide">
 
     <div class="card">
 
@@ -549,16 +696,12 @@ button:hover{
         <button
           class="secondary"
           onclick="loadOrders()">
-
           Refresh
-
         </button>
 
       </div>
 
-      <div
-        id="orders">
-      </div>
+      <div id="orders"></div>
 
     </div>
 
@@ -567,9 +710,7 @@ button:hover{
 
   <!-- ================= CUSTOMERS ================= -->
 
-  <section
-    id="customersSection"
-    class="hide">
+  <section id="customersSection" class="hide">
 
     <div class="card">
 
@@ -580,16 +721,12 @@ button:hover{
         <button
           class="secondary"
           onclick="loadCustomers()">
-
           Refresh
-
         </button>
 
       </div>
 
-      <div
-        id="customers">
-      </div>
+      <div id="customers"></div>
 
     </div>
 
@@ -644,9 +781,7 @@ function showMessage(id,text,type="msg"){
   if(!el) return;
 
   el.className=type;
-
   el.textContent=text;
-
   el.classList.remove("hide");
 
 }
@@ -656,6 +791,76 @@ function money(value){
 
   return Number(value||0)
     .toLocaleString("en-IN");
+
+}
+
+
+/* =========================================================
+   GET SIZES
+========================================================= */
+
+function getSelectedSizes(){
+
+  return [
+    "sizeS",
+    "sizeM",
+    "sizeL",
+    "sizeXL",
+    "sizeXXL"
+  ]
+  .map(id=>$(id))
+  .filter(el=>el && el.checked)
+  .map(el=>el.value);
+
+}
+
+
+/* =========================================================
+   PHOTO PREVIEW
+========================================================= */
+
+function previewPhotos(){
+
+  const container=$("photoPreview");
+
+  if(!container) return;
+
+  container.innerHTML="";
+
+  const files=[
+    $("photo1").files[0],
+    $("photo2").files[0],
+    $("photo3").files[0],
+    $("photo4").files[0]
+  ];
+
+  files.forEach((file,index)=>{
+
+    if(!file) return;
+
+    if(!file.type.startsWith("image/"))
+      return;
+
+    const url=
+      URL.createObjectURL(file);
+
+    container.innerHTML += `
+
+      <div class="preview-item">
+
+        <img
+          src="${url}"
+          alt="Photo ${index+1}">
+
+        <span class="preview-label">
+          Photo ${index+1}
+        </span>
+
+      </div>
+
+    `;
+
+  });
 
 }
 
@@ -689,7 +894,6 @@ async function login(){
     await sb.auth.signInWithPassword({
 
       email:email,
-
       password:password
 
     });
@@ -724,16 +928,12 @@ async function logout(){
 
 function openApp(){
 
-  $("login")
-    .classList.add("hide");
+  $("login").classList.add("hide");
 
-  $("app")
-    .classList.remove("hide");
+  $("app").classList.remove("hide");
 
   loadProducts();
-
   loadOrders();
-
   loadCustomers();
 
 }
@@ -766,20 +966,23 @@ checkSession();
 function showSection(id,button){
 
   document
-    .querySelectorAll("#productsSection,#ordersSection,#customersSection")
-    .forEach(el=>
-      el.classList.add("hide")
-    );
+    .querySelectorAll(
+      "#productsSection,#ordersSection,#customersSection"
+    )
+    .forEach(el=>{
+      el.classList.add("hide");
+    });
 
-  $(id)
-    .classList.remove("hide");
+
+  $(id).classList.remove("hide");
 
 
   document
     .querySelectorAll(".tabs button")
-    .forEach(b=>
-      b.classList.remove("active")
-    );
+    .forEach(b=>{
+      b.classList.remove("active");
+    });
+
 
   if(button)
     button.classList.add("active");
@@ -787,6 +990,7 @@ function showSection(id,button){
 
   if(id==="ordersSection")
     loadOrders();
+
 
   if(id==="customersSection")
     loadCustomers();
@@ -814,10 +1018,9 @@ function openStore(){
 
 async function loadProducts(){
 
-  const container =
-    $("products");
+  const container=$("products");
 
-  container.innerHTML =
+  container.innerHTML=
     "<p>Loading products...</p>";
 
 
@@ -833,7 +1036,7 @@ async function loadProducts(){
 
   if(error){
 
-    container.innerHTML =
+    container.innerHTML=
       `<div class="error">
         ${esc(error.message)}
       </div>`;
@@ -843,26 +1046,24 @@ async function loadProducts(){
   }
 
 
-  const products =
-    data||[];
+  const products=data||[];
 
 
-  $("productCount")
-    .textContent=products.length;
+  $("productCount").textContent=
+    products.length;
 
 
-  $("stockCount")
-    .textContent=
-      products.reduce(
-        (sum,p)=>
-          sum+Number(p.stock||0),
-        0
-      );
+  $("stockCount").textContent=
+    products.reduce(
+      (sum,p)=>
+        sum+Number(p.stock||0),
+      0
+    );
 
 
   if(!products.length){
 
-    container.innerHTML =
+    container.innerHTML=
       `<div class="msg">
         Abhi koi product nahi hai.
       </div>`;
@@ -872,23 +1073,85 @@ async function loadProducts(){
   }
 
 
-  container.innerHTML =
+  container.innerHTML=
     products.map(p=>{
 
       let images=[];
 
       try{
 
-        if(p.image_urls)
-          images=JSON.parse(p.image_urls);
+        if(p.image_urls){
 
-      }catch(e){}
+          if(Array.isArray(p.image_urls))
+            images=p.image_urls;
+
+          else
+            images=JSON.parse(p.image_urls);
+
+        }
+
+      }catch(e){
+
+        images=[];
+
+      }
+
 
       if(!Array.isArray(images))
         images=[];
 
+
       if(!images.length && p.image_url)
         images=[p.image_url];
+
+
+      let sizes=[];
+
+      try{
+
+        if(Array.isArray(p.sizes))
+          sizes=p.sizes;
+
+        else if(p.sizes)
+          sizes=JSON.parse(p.sizes);
+
+      }catch(e){
+
+        sizes=[];
+
+      }
+
+
+      if(!Array.isArray(sizes))
+        sizes=[];
+
+
+      const stock=
+        Number(p.stock||0);
+
+
+      const sizeHTML=
+        sizes.length
+        ?
+        `<div class="selected-sizes">
+          ${sizes.map(s=>
+            `<span class="selected-size">
+              ${esc(s)}
+            </span>`
+          ).join("")}
+        </div>`
+        :
+        `<span style="font-size:12px;color:#999">
+          No size selected
+        </span>`;
+
+
+      const thumbs=
+        images.slice(0,4).map(url=>
+          `<img
+            src="${esc(url)}"
+            alt="Product photo">`
+        ).join("");
 
 
       return `
@@ -896,8 +1159,21 @@ async function loadProducts(){
         <div class="product">
 
           <img
+            class="product-main-img"
             src="${esc(images[0]||"")}"
             alt="${esc(p.name)}">
+
+
+          ${
+            images.length>1
+            ?
+            `<div class="product-thumbs">
+              ${thumbs}
+            </div>`
+            :
+            ""
+          }
+
 
           <div class="info">
 
@@ -905,11 +1181,14 @@ async function loadProducts(){
               ${esc(p.name)}
             </h3>
 
+
             <p>
               ${esc(p.category||"")}
             </p>
 
+
             <p>
+
               <b style="color:#d94f82">
                 ₹${money(p.price)}
               </b>
@@ -929,25 +1208,48 @@ async function loadProducts(){
 
             </p>
 
+
             <p>
-              Stock:
-              <b>${Number(p.stock||0)}</b>
+              <b>Available Sizes:</b>
+            </p>
+
+            ${sizeHTML}
+
+
+            <p>
+
+              <b>Stock:</b>
+
+              ${
+                stock>0
+                ?
+                `<span class="stock-badge">
+                  ${stock} available
+                </span>`
+                :
+                `<span class="out-badge">
+                  Out of Stock
+                </span>`
+              }
+
             </p>
 
 
             <button
-              onclick="editStock(${Number(p.id)},${Number(p.stock||0)})">
-
+              onclick="editStock(
+                ${Number(p.id)},
+                ${stock}
+              )">
               Stock
-
             </button>
+
 
             <button
               class="danger"
-              onclick="deleteProduct(${Number(p.id)})">
-
+              onclick="deleteProduct(
+                ${Number(p.id)}
+              )">
               Delete
-
             </button>
 
           </div>
@@ -967,23 +1269,32 @@ async function loadProducts(){
 
 async function addProduct(){
 
-  const name =
+  const name=
     $("name").value.trim();
 
-  const category =
+
+  const category=
     $("category").value;
 
-  const price =
+
+  const price=
     Number($("price").value);
 
-  const original =
+
+  const original=
     Number($("original").value)||null;
 
-  const stock =
+
+  const stock=
     Number($("stock").value)||0;
 
-  const description =
+
+  const description=
     $("desc").value.trim();
+
+
+  const sizes=
+    getSelectedSizes();
 
 
   const files=[
@@ -992,6 +1303,9 @@ async function addProduct(){
     $("photo3").files[0],
     $("photo4").files[0]
   ].filter(Boolean);
+
+
+  /* VALIDATION */
 
 
   if(!name){
@@ -1007,11 +1321,37 @@ async function addProduct(){
   }
 
 
-  if(!price){
+  if(!price || price<0){
 
     showMessage(
       "msg",
-      "Selling price bhariye.",
+      "Valid selling price bhariye.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(stock<0){
+
+    showMessage(
+      "msg",
+      "Stock 0 ya usse zyada hona chahiye.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(!sizes.length){
+
+    showMessage(
+      "msg",
+      "Kam se kam 1 size select karein.",
       "error"
     );
 
@@ -1033,6 +1373,55 @@ async function addProduct(){
   }
 
 
+  if(files.length>4){
+
+    showMessage(
+      "msg",
+      "Maximum 4 photos allowed hain.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  /* FILE SIZE CHECK */
+
+  const maxSize=
+    5*1024*1024;
+
+
+  for(const file of files){
+
+    if(!file.type.startsWith("image/")){
+
+      showMessage(
+        "msg",
+        "Sirf image files upload karein.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if(file.size>maxSize){
+
+      showMessage(
+        "msg",
+        `${file.name} 5MB se chhoti honi chahiye.`,
+        "error"
+      );
+
+      return;
+
+    }
+
+  }
+
+
   showMessage(
     "msg",
     "Photos upload ho rahi hain..."
@@ -1042,17 +1431,21 @@ async function addProduct(){
   const urls=[];
 
 
-  for(const file of files){
+  /* UPLOAD 4 PHOTOS */
 
-    const safeName =
-      file.name
-        .replace(
-          /[^a-zA-Z0-9.-]/g,
-          "-"
-        );
+  for(let i=0;i<files.length;i++){
+
+    const file=files[i];
 
 
-    const path =
+    const safeName=
+      file.name.replace(
+        /[^a-zA-Z0-9.-]/g,
+        "-"
+      );
+
+
+    const path=
       Date.now()+
       "-" +
       Math.random()
@@ -1062,7 +1455,7 @@ async function addProduct(){
       safeName;
 
 
-    const upload =
+    const upload=
       await sb
         .storage
         .from("product-images")
@@ -1076,6 +1469,7 @@ async function addProduct(){
 
       showMessage(
         "msg",
+        "Photo upload failed: "+
         upload.error.message,
         "error"
       );
@@ -1085,7 +1479,7 @@ async function addProduct(){
     }
 
 
-    const publicUrl =
+    const publicUrl=
       sb
         .storage
         .from("product-images")
@@ -1105,7 +1499,9 @@ async function addProduct(){
   );
 
 
-  const {error} =
+  /* SAVE PRODUCT */
+
+  const {error}=
     await sb
       .from("products")
       .insert({
@@ -1125,7 +1521,9 @@ async function addProduct(){
         image_url:urls[0],
 
         image_urls:
-          JSON.stringify(urls)
+          JSON.stringify(urls),
+
+        sizes:sizes
 
       });
 
@@ -1173,13 +1571,26 @@ function clearProductForm(){
 
   $("desc").value="";
 
+
   $("photo1").value="";
-
   $("photo2").value="";
-
   $("photo3").value="";
-
   $("photo4").value="";
+
+
+  [
+    "sizeS",
+    "sizeM",
+    "sizeL",
+    "sizeXL",
+    "sizeXXL"
+  ].forEach(id=>{
+    if($(id))
+      $(id).checked=false;
+  });
+
+
+  $("photoPreview").innerHTML="";
 
 }
 
@@ -1190,7 +1601,7 @@ function clearProductForm(){
 
 async function editStock(id,current){
 
-  const value =
+  const value=
     prompt(
       "New stock quantity:",
       current
@@ -1201,17 +1612,18 @@ async function editStock(id,current){
     return;
 
 
-  const stock =
+  const stock=
     Number(value);
 
 
   if(
     !Number.isFinite(stock) ||
-    stock<0
+    stock<0 ||
+    !Number.isInteger(stock)
   ){
 
     alert(
-      "Valid stock quantity bhariye."
+      "Valid whole number stock quantity bhariye."
     );
 
     return;
@@ -1219,7 +1631,7 @@ async function editStock(id,current){
   }
 
 
-  const {error} =
+  const {error}=
     await sb
       .from("products")
       .update({
@@ -1256,7 +1668,7 @@ async function deleteProduct(id){
     return;
 
 
-  const {error} =
+  const {error}=
     await sb
       .from("products")
       .delete()
@@ -1283,18 +1695,17 @@ async function deleteProduct(id){
 
 async function loadOrders(){
 
-  const container =
-    $("orders");
+  const container=$("orders");
 
   if(!container)
     return;
 
 
-  container.innerHTML =
+  container.innerHTML=
     "<p>Orders loading...</p>";
 
 
-  const {data,error} =
+  const {data,error}=
     await sb
       .from("ORDER'S")
       .select("*")
@@ -1306,7 +1717,7 @@ async function loadOrders(){
 
   if(error){
 
-    container.innerHTML =
+    container.innerHTML=
       `<div class="error">
         ${esc(error.message)}
       </div>`;
@@ -1316,28 +1727,26 @@ async function loadOrders(){
   }
 
 
-  const orders =
-    data||[];
+  const orders=data||[];
 
 
-  $("orderCount")
-    .textContent=orders.length;
+  $("orderCount").textContent=
+    orders.length;
 
 
-  $("newOrderCount")
-    .textContent=
-      orders.filter(o=>
-        String(
-          o.Order_states||
-          o.Order_status||
-          ""
-        ).toLowerCase()==="new"
-      ).length;
+  $("newOrderCount").textContent=
+    orders.filter(o=>
+      String(
+        o.Order_states||
+        o.Order_status||
+        ""
+      ).toLowerCase()==="new"
+    ).length;
 
 
   if(!orders.length){
 
-    container.innerHTML =
+    container.innerHTML=
       `<div class="msg">
         Abhi koi order nahi hai.
       </div>`;
@@ -1347,20 +1756,20 @@ async function loadOrders(){
   }
 
 
-  container.innerHTML =
+  container.innerHTML=
     orders.map(o=>{
 
-      const status =
+      const status=
         o.Order_states||
         o.Order_status||
         "New";
 
 
-      const phone =
+      const phone=
         o.Phone||"";
 
 
-      const whatsappText =
+      const whatsappText=
         encodeURIComponent(
 
           `Aarvi Fashion Order Update\n\n`+
@@ -1379,25 +1788,42 @@ async function loadOrders(){
             🛍️ Order #${esc(o.id)}
           </h3>
 
+
           <p>
             <b>Customer:</b>
             ${esc(o.Customer_Name||"-")}
           </p>
+
 
           <p>
             <b>Phone:</b>
             ${esc(phone)}
           </p>
 
+
           <p>
             <b>Product:</b>
             ${esc(o.Product_name||"-")}
           </p>
 
+
           <p>
             <b>Quantity:</b>
             ${esc(o.Quantity||1)}
           </p>
+
+
+          ${
+            o.Size
+            ?
+            `<p>
+              <b>Size:</b>
+              ${esc(o.Size)}
+            </p>`
+            :
+            ""
+          }
+
 
           <p>
             <b>Address:</b>
@@ -1407,10 +1833,12 @@ async function loadOrders(){
             ${esc(o["Pin Code"]||"")}
           </p>
 
+
           <p>
             <b>Payment:</b>
             ${esc(o.Payment_method||"-")}
           </p>
+
 
           <p>
             <span class="status">
@@ -1423,8 +1851,8 @@ async function loadOrders(){
             Order Status
           </label>
 
-          <select
-            id="status-${Number(o.id)}">
+
+          <select id="status-${Number(o.id)}">
 
             <option
               value="New"
@@ -1432,11 +1860,13 @@ async function loadOrders(){
               New
             </option>
 
+
             <option
               value="Confirmed"
               ${status==="Confirmed"?"selected":""}>
               Confirmed
             </option>
+
 
             <option
               value="Packed"
@@ -1444,11 +1874,13 @@ async function loadOrders(){
               Packed
             </option>
 
+
             <option
               value="Shipped"
               ${status==="Shipped"?"selected":""}>
               Shipped
             </option>
+
 
             <option
               value="Out for Delivery"
@@ -1456,17 +1888,20 @@ async function loadOrders(){
               Out for Delivery
             </option>
 
+
             <option
               value="Delivered"
               ${status==="Delivered"?"selected":""}>
               Delivered
             </option>
 
+
             <option
               value="Cancelled"
               ${status==="Cancelled"?"selected":""}>
               Cancelled
             </option>
+
 
             <option
               value="Returned"
@@ -1479,9 +1914,7 @@ async function loadOrders(){
 
           <button
             onclick="updateOrderStatus(${Number(o.id)})">
-
             Update Status
-
           </button>
 
 
@@ -1496,9 +1929,7 @@ async function loadOrders(){
               <button
                 class="green"
                 type="button">
-
                 WhatsApp Customer
-
               </button>
 
             </a>`
@@ -1521,7 +1952,7 @@ async function loadOrders(){
 
 async function updateOrderStatus(id){
 
-  const select =
+  const select=
     $("status-"+id);
 
 
@@ -1529,17 +1960,15 @@ async function updateOrderStatus(id){
     return;
 
 
-  const status =
+  const status=
     select.value;
 
 
-  const {error} =
+  const {error}=
     await sb
       .from("ORDER'S")
       .update({
-
         Order_states:status
-
       })
       .eq("id",id);
 
@@ -1572,18 +2001,19 @@ async function updateOrderStatus(id){
 
 async function loadCustomers(){
 
-  const container =
+  const container=
     $("customers");
+
 
   if(!container)
     return;
 
 
-  container.innerHTML =
+  container.innerHTML=
     "<p>Customers loading...</p>";
 
 
-  const {data,error} =
+  const {data,error}=
     await sb
       .from("customer_profiles")
       .select("*")
@@ -1595,7 +2025,7 @@ async function loadCustomers(){
 
   if(error){
 
-    container.innerHTML =
+    container.innerHTML=
       `<div class="error">
         ${esc(error.message)}
       </div>`;
@@ -1605,13 +2035,13 @@ async function loadCustomers(){
   }
 
 
-  const customers =
+  const customers=
     data||[];
 
 
   if(!customers.length){
 
-    container.innerHTML =
+    container.innerHTML=
       `<div class="msg">
         Abhi customer profile nahi mila.
       </div>`;
@@ -1621,7 +2051,7 @@ async function loadCustomers(){
   }
 
 
-  container.innerHTML =
+  container.innerHTML=
     customers.map(c=>`
 
       <div class="order">
@@ -1630,15 +2060,18 @@ async function loadCustomers(){
           👤 ${esc(c.full_name||"Customer")}
         </h3>
 
+
         <p>
           <b>Email:</b>
           ${esc(c.email||"-")}
         </p>
 
+
         <p>
           <b>Phone:</b>
           ${esc(c.phone||"-")}
         </p>
+
 
         <p>
           <b>Account Type:</b>
