@@ -1,290 +1,331 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Aarvi Fashion Admin</title>
+<head>
+
+<meta charset="utf-8">
+
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>Aarvi Fashion — Admin</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+box-sizing:border-box;
+}
 
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#fff7fa;
-  color:#392531
-}
-
-button,input,textarea,select{
-  font:inherit
-}
-
-button{
-  cursor:pointer;
-  border:0
-}
-
-.hide{
-  display:none!important
-}
-
-:root{
-  --p:#d94f82;
-  --d:#b83268;
-  --s:#fff0f5;
-  --b:#f0d7e1;
-  --g:#29914b
+margin:0;
+font-family:Arial,sans-serif;
+background:#fff7fa;
+color:#3a2430;
 }
 
 .wrap{
-  max-width:1200px;
-  margin:auto;
-  padding:16px
+max-width:1200px;
+margin:auto;
+padding:20px;
 }
 
 .card{
-  background:#fff;
-  border:1px solid var(--b);
-  border-radius:20px;
-  padding:18px;
-  margin:14px 0
+background:#fff;
+border:1px solid #f0d8e1;
+border-radius:18px;
+padding:20px;
+margin:16px 0;
 }
 
-.top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px
-}
-
-.btn{
-  background:var(--p);
-  color:#fff;
-  padding:10px 14px;
-  border-radius:10px;
-  font-weight:800
-}
-
-.secondary{
-  background:#fff;
-  color:var(--d);
-  border:1px solid var(--b)
-}
-
-.danger{
-  background:#8d274d
-}
-
-.green{
-  background:var(--g)
+h1,
+h2{
+color:#d94f82;
 }
 
 input,
 select,
 textarea{
-  width:100%;
-  padding:11px;
-  border:1px solid var(--b);
-  border-radius:10px;
-  margin:5px 0 12px
+width:100%;
+padding:12px;
+margin:6px 0 14px;
+border:1px solid #e4cbd5;
+border-radius:10px;
+outline:none;
 }
 
 textarea{
-  min-height:90px
+min-height:90px;
+resize:vertical;
+}
+
+button{
+padding:11px 16px;
+border:0;
+border-radius:10px;
+background:#d94f82;
+color:#fff;
+font-weight:700;
+cursor:pointer;
+}
+
+button:hover{
+opacity:.9;
+}
+
+.danger{
+background:#8d274d;
+}
+
+.secondary{
+background:#777;
+}
+
+.green{
+background:#29914b;
 }
 
 .grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px
-}
-
-.stat{
-  background:#fff;
-  border:1px solid var(--b);
-  border-radius:15px;
-  padding:15px
-}
-
-.stat b{
-  display:block;
-  color:var(--d);
-  font-size:24px;
-  margin-top:5px
-}
-
-.tabs{
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap
-}
-
-.tab{
-  background:#fff;
-  border:1px solid var(--b);
-  padding:10px 14px;
-  border-radius:10px;
-  color:var(--d);
-  font-weight:700
-}
-
-.tab.active{
-  background:var(--p);
-  color:#fff
-}
-
-.sizes{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:8px
-}
-
-.photos{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px
-}
-
-.photos img{
-  width:100%;
-  height:100px;
-  object-fit:contain;
-  background:var(--s);
-  border-radius:8px
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
 }
 
 .products{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px;
 }
 
 .product{
-  border:1px solid var(--b);
-  border-radius:15px;
-  overflow:hidden;
-  background:#fff
+border:1px solid #f0d8e1;
+border-radius:15px;
+overflow:hidden;
+background:white;
 }
 
-.product>img{
-  width:100%;
-  height:210px;
-  object-fit:contain;
-  background:var(--s)
+.product img{
+width:100%;
+height:220px;
+object-fit:contain;
+background:#fff0f5;
 }
 
-.pi{
-  padding:12px
+.info{
+padding:14px;
 }
 
-.order{
-  border:1px solid var(--b);
-  border-radius:14px;
-  padding:14px;
-  margin:10px 0;
-  background:#fff
-}
-
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  background:var(--s);
-  color:var(--d);
-  border-radius:20px;
-  font-size:11px;
-  font-weight:800
-}
-
-.msg,
-.success,
-.error{
-  padding:10px;
-  border-radius:10px;
-  margin:8px 0
+.hide{
+display:none!important;
 }
 
 .msg{
-  background:var(--s)
+background:#fff0f5;
+padding:10px;
+border-radius:10px;
+margin:10px 0;
 }
 
 .success{
-  background:#eefbf2;
-  color:#26723a
+background:#eefbf2;
+color:#26723a;
+padding:10px;
+border-radius:10px;
+margin:10px 0;
 }
 
 .error{
-  background:#fff0f0;
-  color:#a52c2c
+background:#fff0f0;
+color:#a52c2c;
+padding:10px;
+border-radius:10px;
+margin:10px 0;
 }
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+}
+
+.tabs{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+}
+
+.tabs button{
+background:white;
+color:#d94f82;
+border:1px solid #d94f82;
+}
+
+.tabs button.active{
+background:#d94f82;
+color:white;
+}
+
+.order{
+border:1px solid #f0d8e1;
+border-radius:14px;
+padding:15px;
+margin:10px 0;
+background:white;
+}
+
+.status{
+display:inline-block;
+padding:6px 10px;
+border-radius:20px;
+background:#d94f82;
+color:white;
+font-size:12px;
+font-weight:bold;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+}
+
+.stat{
+background:white;
+border:1px solid #f0d8e1;
+border-radius:14px;
+padding:17px;
+}
+
+.stat b{
+display:block;
+font-size:25px;
+color:#d94f82;
+margin-top:5px;
+}
+
+.photo-preview{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:8px;
+margin-bottom:15px;
+}
+
+.photo-preview img{
+width:100%;
+height:100px;
+object-fit:contain;
+border:1px solid #eee;
+border-radius:8px;
+background:#fff0f5;
+}
+
+
+/* ================= CUSTOMER PROFILE PHOTO ================= */
+
+.customer-avatar{
+width:64px;
+height:64px;
+border-radius:50%;
+object-fit:cover;
+border:2px solid #f0d7e1;
+background:#fff0f5;
+}
+
+.customer-gallery{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:6px;
+margin-top:10px;
+}
+
+.customer-gallery img{
+width:100%;
+height:70px;
+object-fit:cover;
+border-radius:9px;
+background:#fff0f5;
+}
+
 
 @media(max-width:800px){
 
-  .products{
-    grid-template-columns:repeat(2,1fr)
-  }
+.products{
+grid-template-columns:repeat(2,1fr);
+}
 
-  .stats{
-    grid-template-columns:repeat(2,1fr)
-  }
+.stats{
+grid-template-columns:repeat(2,1fr);
+}
 
 }
+
 
 @media(max-width:600px){
 
-  .grid{
-    grid-template-columns:1fr
-  }
+.grid{
+grid-template-columns:1fr;
+}
 
-  .products{
-    grid-template-columns:1fr
-  }
+.products{
+grid-template-columns:1fr;
+}
 
-  .sizes{
-    grid-template-columns:repeat(3,1fr)
-  }
+.top{
+display:block;
+}
 
-  .photos{
-    grid-template-columns:repeat(2,1fr)
-  }
+.top button{
+margin-top:5px;
+}
 
 }
+
 </style>
+
 </head>
 
 <body>
+
 
 <!-- ================= LOGIN ================= -->
 
 <div
 id="login"
 class="card"
-style="max-width:430px;margin:70px auto">
+style="
+max-width:430px;
+margin:70px auto">
 
-<h1>🌸 Aarvi Fashion</h1>
+<h1>
+🌸 Aarvi Fashion
+</h1>
 
+<p>
 <b>Admin Login</b>
+</p>
+
+<label>
+Email
+</label>
 
 <input
 id="email"
 type="email"
 value="amreshkumar97552@gmail.com">
 
+<label>
+Password
+</label>
+
 <input
 id="password"
 type="password"
-placeholder="Password">
+placeholder="Admin password">
 
 <button
-class="btn"
 style="width:100%"
 onclick="login()">
 
@@ -306,24 +347,25 @@ class="msg hide">
 id="app"
 class="wrap hide">
 
+
 <div class="top">
 
 <div>
 
 <h1>
-🌸 Aarvi Fashion Admin
+Aarvi Fashion Admin
 </h1>
 
 <p>
-Products • Orders • Customers • Courier
+Products • Stock • Orders • Customers
 </p>
 
 </div>
 
+
 <div>
 
 <button
-class="btn secondary"
 onclick="openStore()">
 
 Open Store
@@ -331,8 +373,7 @@ Open Store
 </button>
 
 <button
-class="btn"
-style="background:#513540"
+class="secondary"
 onclick="logout()">
 
 Logout
@@ -352,37 +393,40 @@ Logout
 
 Products
 
-<b id="pc">
+<b id="productCount">
 0
 </b>
 
 </div>
+
 
 <div class="stat">
 
 Stock
 
-<b id="sc">
+<b id="stockCount">
 0
 </b>
 
 </div>
+
 
 <div class="stat">
 
 Orders
 
-<b id="oc">
+<b id="orderCount">
 0
 </b>
 
 </div>
 
+
 <div class="stat">
 
-New
+New Orders
 
-<b id="nc">
+<b id="newOrderCount">
 0
 </b>
 
@@ -393,27 +437,32 @@ New
 
 <!-- ================= TABS ================= -->
 
-<div class="card tabs">
+<div class="card">
+
+<div class="tabs">
 
 <button
-class="tab active"
-onclick="section('products',this)">
+class="active"
+id="tabProducts"
+onclick="showSection('productsSection',this)">
 
 📦 Products
 
 </button>
 
+
 <button
-class="tab"
-onclick="section('orders',this)">
+id="tabOrders"
+onclick="showSection('ordersSection',this)">
 
 🛍️ Orders
 
 </button>
 
+
 <button
-class="tab"
-onclick="section('customers',this)">
+id="tabCustomers"
+onclick="showSection('customersSection',this)">
 
 👥 Customers
 
@@ -421,10 +470,14 @@ onclick="section('customers',this)">
 
 </div>
 
+</div>
+
 
 <!-- ================= PRODUCTS ================= -->
 
-<section id="products">
+<section
+id="productsSection">
+
 
 <div class="card">
 
@@ -443,7 +496,7 @@ class="msg hide">
 <div>
 
 <label>
-Product Name
+Product Name *
 </label>
 
 <input
@@ -456,10 +509,63 @@ placeholder="Product name">
 <div>
 
 <label>
-Category
+Category *
 </label>
 
 <select id="category">
+
+<option value="Saree">
+Saree
+</option>
+
+<option value="Kurti">
+Kurti
+</option>
+
+<option value="Top">
+Top
+</option>
+
+<option value="Suit">
+Suit
+</option>
+
+<option value="Plazzo">
+Plazzo
+</option>
+
+<option value="Pant Set">
+Pant Set
+</option>
+
+<option value="Dupatta Set">
+Dupatta Set
+</option>
+
+<option value="Dress Material">
+Dress Material
+</option>
+
+<option value="Combos">
+Combos
+</option>
+
+<option value="Daily Deals">
+Daily Deals
+</option>
+
+<option value="Westernwear">
+Westernwear
+</option>
+
+<option value="Beauty">
+Beauty
+</option>
+
+<option value="Jewellery">
+Jewellery
+</option>
+
 </select>
 
 </div>
@@ -468,7 +574,7 @@ Category
 <div>
 
 <label>
-Selling Price
+Selling Price *
 </label>
 
 <input
@@ -494,29 +600,23 @@ placeholder="1499">
 
 </div>
 
-</div>
 
-
-<!-- ================= SIZE STOCK ================= -->
+<div>
 
 <label>
-<b>
-Sizes & Size-wise Stock
-</b>
+Stock *
 </label>
 
-<div
-id="sizeInputs"
-class="sizes">
+<input
+id="stock"
+type="number"
+min="0"
+value="1">
+
 </div>
 
-<p>
-Customer ko exact stock quantity nahi dikhegi.
-Selected size ka stock order hone par automatically kam hoga.
-</p>
+</div>
 
-
-<!-- ================= DESCRIPTION ================= -->
 
 <label>
 Description
@@ -528,73 +628,60 @@ placeholder="Product description">
 </textarea>
 
 
-<!-- ================= PHOTOS ================= -->
+<h3>
+Product Photos
+</h3>
+
 
 <label>
-<b>
-Photos — Maximum 4
-</b>
+Photo 1 *
 </label>
-
-<div class="grid">
 
 <input
 id="photo1"
 type="file"
-accept="image/*"
-onchange="preview()">
+accept="image/*">
+
+
+<label>
+Photo 2
+</label>
 
 <input
 id="photo2"
 type="file"
-accept="image/*"
-onchange="preview()">
+accept="image/*">
+
+
+<label>
+Photo 3
+</label>
 
 <input
 id="photo3"
 type="file"
-accept="image/*"
-onchange="preview()">
+accept="image/*">
+
+
+<label>
+Photo 4
+</label>
 
 <input
 id="photo4"
 type="file"
-accept="image/*"
-onchange="preview()">
-
-</div>
-
-
-<div
-id="pre"
-class="photos">
-</div>
-
-
-<br>
+accept="image/*">
 
 
 <button
-class="btn"
 onclick="addProduct()">
 
 Save Product
 
 </button>
 
-
-<button
-class="btn secondary"
-onclick="clearForm()">
-
-Clear
-
-</button>
-
 </div>
 
-
-<!-- ================= PRODUCT LIST ================= -->
 
 <div class="card">
 
@@ -605,7 +692,7 @@ Clear
 </h2>
 
 <button
-class="btn secondary"
+class="secondary"
 onclick="loadProducts()">
 
 Refresh
@@ -614,8 +701,9 @@ Refresh
 
 </div>
 
+
 <div
-id="productList"
+id="products"
 class="products">
 </div>
 
@@ -627,7 +715,7 @@ class="products">
 <!-- ================= ORDERS ================= -->
 
 <section
-id="orders"
+id="ordersSection"
 class="hide">
 
 <div class="card">
@@ -639,7 +727,7 @@ class="hide">
 </h2>
 
 <button
-class="btn secondary"
+class="secondary"
 onclick="loadOrders()">
 
 Refresh
@@ -648,8 +736,7 @@ Refresh
 
 </div>
 
-<div
-id="orderList">
+<div id="orders">
 </div>
 
 </div>
@@ -660,7 +747,7 @@ id="orderList">
 <!-- ================= CUSTOMERS ================= -->
 
 <section
-id="customers"
+id="customersSection"
 class="hide">
 
 <div class="card">
@@ -672,7 +759,7 @@ class="hide">
 </h2>
 
 <button
-class="btn secondary"
+class="secondary"
 onclick="loadCustomers()">
 
 Refresh
@@ -681,13 +768,13 @@ Refresh
 
 </div>
 
-<div
-id="customerList">
+<div id="customers">
 </div>
 
 </div>
 
 </section>
+
 
 </div>
 
@@ -704,7 +791,6 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_nLLITIJxfhc52cUkZaGZ4w_GvJubfM-";
 
-
 const sb =
 supabase.createClient(
 SUPABASE_URL,
@@ -713,47 +799,17 @@ SUPABASE_KEY
 
 
 /* =========================================================
-   CONSTANTS
-========================================================= */
-
-const CATS = [
-
-"Plazzo",
-"Pant Set",
-"Dupatta Set",
-"Kurta Set",
-"Kurti Set",
-"Dress Material",
-"Combos",
-"Daily Deals",
-"Western Wear",
-"Beauty",
-"Jewellery"
-
-];
-
-
-const SIZES = [
-"S",
-"M",
-"L",
-"XL",
-"XXL"
-];
-
-
-/* =========================================================
    HELPERS
 ========================================================= */
 
-const $ =
-id =>
+const $=
+id=>
 document.getElementById(id);
 
 
 function esc(value){
 
-return String(value ?? "")
+return String(value??"")
 .replace(/&/g,"&amp;")
 .replace(/</g,"&lt;")
 .replace(/>/g,"&gt;")
@@ -763,59 +819,32 @@ return String(value ?? "")
 }
 
 
-function msg(text,type="msg"){
+function showMessage(
+id,
+text,
+type="msg"
+){
 
-$("msg").className=type;
+const el=$(id);
 
-$("msg").textContent=text;
+if(!el)
+return;
 
-$("msg").classList.remove("hide");
+el.className=type;
+
+el.textContent=text;
+
+el.classList.remove("hide");
 
 }
 
 
-/* =========================================================
-   CATEGORY + SIZE UI
-========================================================= */
+function money(value){
 
-$("category").innerHTML =
+return Number(value||0)
+.toLocaleString("en-IN");
 
-CATS
-.map(
-x =>
-`<option value="${esc(x)}">
-${esc(x)}
-</option>`
-)
-.join("");
-
-
-$("sizeInputs").innerHTML =
-
-SIZES
-.map(
-s =>
-
-`
-
-<div>
-
-<label>
-${s}
-</label>
-
-<input
-id="stock_${s}"
-type="number"
-min="0"
-value="0"
-placeholder="${s} stock">
-
-</div>
-
-`
-)
-.join("");
+}
 
 
 /* =========================================================
@@ -824,42 +853,46 @@ placeholder="${s} stock">
 
 async function login(){
 
-const email =
-$("email").value.trim();
+const email=
+$("email")
+.value
+.trim();
 
-const password =
-$("password").value;
+const password=
+$("password")
+.value;
 
 
-if(!email || !password){
+if(!email||!password){
 
-$("loginmsg").textContent =
-"Email aur password bhariye.";
-
-$("loginmsg").classList.remove("hide");
+showMessage(
+"loginmsg",
+"Email aur password bhariye.",
+"error"
+);
 
 return;
 
 }
 
 
-const {
-error
-} =
+const{error}=
 await sb.auth.signInWithPassword({
 
-email,
-password
+email:email,
+
+password:password
 
 });
 
 
 if(error){
 
-$("loginmsg").textContent =
-error.message;
-
-$("loginmsg").classList.remove("hide");
+showMessage(
+"loginmsg",
+error.message,
+"error"
+);
 
 return;
 
@@ -880,7 +913,7 @@ location.reload();
 }
 
 
-async function openApp(){
+function openApp(){
 
 $("login")
 .classList.add("hide");
@@ -897,59 +930,67 @@ loadCustomers();
 }
 
 
-sb.auth
-.getSession()
-.then(x => {
+async function checkSession(){
 
-if(x.data.session)
+const{data}=
+await sb.auth.getSession();
+
+if(data.session)
 openApp();
 
-});
+}
+
+
+checkSession();
 
 
 /* =========================================================
    SECTION
 ========================================================= */
 
-function section(id,button){
+function showSection(
+id,
+button
+){
 
-[
-"products",
-"orders",
-"customers"
-]
+document
+.querySelectorAll(
+"#productsSection,#ordersSection,#customersSection"
+)
 .forEach(
-x =>
-$(x).classList.add("hide")
+el=>
+el.classList.add("hide")
 );
 
 
-$(id).classList.remove("hide");
+$(id)
+.classList.remove("hide");
 
 
 document
-.querySelectorAll(".tab")
+.querySelectorAll(".tabs button")
 .forEach(
-x =>
-x.classList.remove("active")
+b=>
+b.classList.remove("active")
 );
 
 
+if(button)
 button.classList.add("active");
 
 
-if(id==="orders")
+if(id==="ordersSection")
 loadOrders();
 
 
-if(id==="customers")
+if(id==="customersSection")
 loadCustomers();
 
 }
 
 
 /* =========================================================
-   STORE
+   OPEN STORE
 ========================================================= */
 
 function openStore(){
@@ -963,89 +1004,189 @@ window.open(
 
 
 /* =========================================================
-   IMAGE HELPERS
+   LOAD PRODUCTS
 ========================================================= */
 
-function parseImages(product){
+async function loadProducts(){
 
-let x=[];
+const container=
+$("products");
+
+container.innerHTML=
+"<p>Loading products...</p>";
+
+
+const{
+data,
+error
+}=
+await sb
+.from("products")
+.select("*")
+.order(
+"created_at",
+{ascending:false}
+);
+
+
+if(error){
+
+container.innerHTML=
+`<div class="error">
+${esc(error.message)}
+</div>`;
+
+return;
+
+}
+
+
+const products=
+data||[];
+
+
+$("productCount")
+.textContent=
+products.length;
+
+
+$("stockCount")
+.textContent=
+products.reduce(
+(sum,p)=>
+sum+
+Number(p.stock||0),
+0
+);
+
+
+if(!products.length){
+
+container.innerHTML=
+`<div class="msg">
+Abhi koi product nahi hai.
+</div>`;
+
+return;
+
+}
+
+
+container.innerHTML=
+products.map(
+p=>{
+
+let images=[];
 
 try{
 
-x =
-Array.isArray(product.image_urls)
-?
-product.image_urls
-:
+if(p.image_urls)
+images=
 JSON.parse(
-product.image_urls || "[]"
+p.image_urls
 );
 
 }catch(e){}
 
+if(!Array.isArray(images))
+images=[];
+
 if(
-!x.length &&
-product.image_url
+!images.length&&
+p.image_url
 ){
 
-x=[
-product.image_url
+images=[
+p.image_url
 ];
 
 }
 
-return x
-.slice(0,4);
-
-}
-
-
-function parseJSON(value){
-
-try{
-
-return typeof value==="object"
-?
-value
-:
-JSON.parse(value||"{}");
-
-}catch(e){
-
-return {};
-
-}
-
-}
-
-
-/* =========================================================
-   PHOTO PREVIEW
-========================================================= */
-
-function preview(){
-
-$("pre").innerHTML =
-
-[1,2,3,4]
-.map(i => {
-
-const file =
-$("photo"+i)
-.files[0];
-
-if(!file)
-return "";
 
 return `
 
+<div class="product">
+
 <img
-src="${URL.createObjectURL(file)}">
+src="${esc(images[0]||"")}"
+alt="${esc(p.name)}">
+
+<div class="info">
+
+<h3>
+${esc(p.name)}
+</h3>
+
+<p>
+${esc(p.category||"")}
+</p>
+
+<p>
+
+<b
+style="color:#d94f82">
+
+₹${money(p.price)}
+
+</b>
+
+${
+p.original_price
+?
+`<span
+style="
+text-decoration:line-through;
+color:#999;
+margin-left:6px">
+
+₹${money(p.original_price)}
+
+</span>`
+:
+""
+}
+
+</p>
+
+
+<p>
+
+Stock:
+<b>
+${Number(p.stock||0)}
+</b>
+
+</p>
+
+
+<button
+onclick="editStock(
+${Number(p.id)},
+${Number(p.stock||0)}
+)">
+
+Stock
+
+</button>
+
+
+<button
+class="danger"
+onclick="deleteProduct(
+${Number(p.id)}
+)">
+
+Delete
+
+</button>
+
+</div>
+
+</div>
 
 `;
 
-})
-.join("");
+}).join("");
 
 }
 
@@ -1056,81 +1197,50 @@ src="${URL.createObjectURL(file)}">
 
 async function addProduct(){
 
-const name =
+const name=
 $("name")
 .value
 .trim();
 
+const category=
+$("category")
+.value;
 
-const price =
+const price=
 Number(
 $("price").value
 );
 
-
-const original =
+const original=
 Number(
 $("original").value
-) || null;
+)||null;
 
+const stock=
+Number(
+$("stock").value
+)||0;
 
-const description =
+const description=
 $("desc")
 .value
 .trim();
 
 
-const sizeStock={};
-
-
-SIZES.forEach(
-s => {
-
-const n =
-Number(
-$("stock_"+s).value
-) || 0;
-
-if(n>0)
-sizeStock[s]=n;
-
-});
-
-
-const sizes =
-Object.keys(sizeStock);
-
-
-const stock =
-Object
-.values(sizeStock)
-.reduce(
-(a,b) =>
-a+b,
-0
-);
-
-
-const files =
-
-[1,2,3,4]
-.map(
-i =>
-$("photo"+i)
-.files[0]
-)
+const files=[
+$("photo1").files[0],
+$("photo2").files[0],
+$("photo3").files[0],
+$("photo4").files[0]
+]
 .filter(Boolean);
 
 
-if(
-!name ||
-price<=0 ||
-!sizes.length ||
-!files.length
-){
+if(!name){
 
-msg(
-"Name, price, kam se kam 1 size stock aur 1 photo zaroori hai.",
+showMessage(
+"msg",
+"Product name bhariye.",
 "error"
 );
 
@@ -1139,10 +1249,11 @@ return;
 }
 
 
-if(files.length>4){
+if(!price){
 
-msg(
-"Maximum 4 photos.",
+showMessage(
+"msg",
+"Selling price bhariye.",
 "error"
 );
 
@@ -1151,9 +1262,21 @@ return;
 }
 
 
-try{
+if(!files.length){
 
-msg(
+showMessage(
+"msg",
+"Kam se kam 1 photo select karein.",
+"error"
+);
+
+return;
+
+}
+
+
+showMessage(
+"msg",
 "Photos upload ho rahi hain..."
 );
 
@@ -1162,41 +1285,27 @@ const urls=[];
 
 
 for(
-const file
-of files
+const file of files
 ){
 
-if(
-!file.type.startsWith("image/") ||
-file.size > 5*1024*1024
-){
-
-throw Error(
-"Photo image ho aur 5MB se chhoti ho."
-);
-
-}
-
-
-const path =
-
-Date.now()
-+
-"-"
-+
-Math.random()
-.toString(36)
-.slice(2)
-+
-"-"
-+
+const safeName=
 file.name.replace(
 /[^a-zA-Z0-9.-]/g,
 "-"
 );
 
 
-const upload =
+const path=
+Date.now()+
+"-"+
+Math.random()
+.toString(36)
+.slice(2)+
+"-"+
+safeName;
+
+
+const upload=
 await sb
 .storage
 .from("product-images")
@@ -1206,13 +1315,20 @@ file
 );
 
 
-if(upload.error)
-throw Error(
-upload.error.message
+if(upload.error){
+
+showMessage(
+"msg",
+upload.error.message,
+"error"
 );
 
+return;
 
-const publicUrl =
+}
+
+
+const publicUrl=
 sb
 .storage
 .from("product-images")
@@ -1226,83 +1342,66 @@ urls.push(publicUrl);
 }
 
 
-msg(
+showMessage(
+"msg",
 "Product save ho raha hai..."
 );
 
 
-const {
-error
-} =
+const{error}=
 await sb
 .from("products")
 .insert({
 
 name:name,
 
-category:
-$("category").value,
+category:category,
 
 price:price,
 
-original_price:
-original,
+original_price:original,
 
-stock:
-stock,
+stock:stock,
 
-description:
-description,
+description:description,
 
 image_url:
 urls[0],
 
 image_urls:
-JSON.stringify(urls),
-
-sizes:
-JSON.stringify(sizes),
-
-size_stock:
-sizeStock
+JSON.stringify(urls)
 
 });
 
 
-if(error)
-throw Error(
-error.message
+if(error){
+
+showMessage(
+"msg",
+error.message,
+"error"
 );
 
+return;
 
-msg(
-"Product successfully added ✅",
+}
+
+
+showMessage(
+"msg",
+"Product successfully added! ✅",
 "success"
 );
 
 
-clearForm();
+clearProductForm();
 
 loadProducts();
 
-
-}catch(e){
-
-msg(
-e.message,
-"error"
-);
-
-}
-
 }
 
 
-/* =========================================================
-   CLEAR PRODUCT FORM
-========================================================= */
-
-function clearForm(){
+function clearProductForm(){
 
 $("name").value="";
 
@@ -1310,186 +1409,23 @@ $("price").value="";
 
 $("original").value="";
 
+$("stock").value="1";
+
 $("desc").value="";
 
+$("photo1").value="";
 
-[1,2,3,4]
-.forEach(
-i =>
-$("photo"+i).value=""
-);
+$("photo2").value="";
 
+$("photo3").value="";
 
-SIZES.forEach(
-s =>
-$("stock_"+s).value=0
-);
-
-
-$("pre").innerHTML="";
+$("photo4").value="";
 
 }
 
 
 /* =========================================================
-   LOAD PRODUCTS
-========================================================= */
-
-async function loadProducts(){
-
-const {
-data,
-error
-} =
-await sb
-.from("products")
-.select("*")
-.order(
-"created_at",
-{
-ascending:false
-}
-);
-
-
-if(error){
-
-$("productList").innerHTML =
-
-`
-
-<div class="error">
-
-${esc(error.message)}
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-$("pc")
-.textContent =
-data.length;
-
-
-$("sc")
-.textContent =
-
-data.reduce(
-(a,p) =>
-a +
-Number(p.stock||0),
-0
-);
-
-
-$("productList").innerHTML =
-
-data
-.map(p => {
-
-const im =
-parseImages(p);
-
-const ss =
-parseJSON(
-p.size_stock
-);
-
-
-return `
-
-<div class="product">
-
-<img
-src="${esc(im[0]||"")}">
-
-<div class="pi">
-
-<h3>
-${esc(p.name)}
-</h3>
-
-<div>
-${esc(p.category)}
-</div>
-
-<p>
-
-<b>
-₹${Number(p.price||0)
-.toLocaleString("en-IN")}
-</b>
-
-</p>
-
-<p>
-
-Sizes:
-${esc(
-Object.keys(ss)
-.join(", ")
-||
-"—"
-)}
-
-<br>
-
-Total Stock:
-<b>
-${Number(p.stock||0)}
-</b>
-
-</p>
-
-
-<button
-class="btn secondary"
-onclick="editStock(${Number(p.id)},${Number(p.stock||0)})">
-
-Edit Stock
-
-</button>
-
-
-<button
-class="btn danger"
-onclick="delProduct(${Number(p.id)})">
-
-Delete
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-})
-.join("");
-
-
-if(!data.length){
-
-$("productList").innerHTML =
-`
-<div class="msg">
-No products.
-</div>
-`;
-
-}
-
-}
-
-
-/* =========================================================
-   EDIT STOCK
+   STOCK
 ========================================================= */
 
 async function editStock(
@@ -1497,9 +1433,9 @@ id,
 current
 ){
 
-const value =
+const value=
 prompt(
-"Total stock:",
+"New stock quantity:",
 current
 );
 
@@ -1508,12 +1444,12 @@ if(value===null)
 return;
 
 
-const stock =
+const stock=
 Number(value);
 
 
 if(
-!Number.isInteger(stock) ||
+!Number.isFinite(stock)||
 stock<0
 ){
 
@@ -1526,36 +1462,34 @@ return;
 }
 
 
-const {
-error
-} =
+const{error}=
 await sb
 .from("products")
 .update({
 stock:stock
 })
-.eq(
-"id",
-id
-);
+.eq("id",id);
 
 
-if(error)
-alert(
-error.message
-);
+if(error){
 
-else
+alert(error.message);
+
+return;
+
+}
+
+
 loadProducts();
 
 }
 
 
 /* =========================================================
-   DELETE PRODUCT
+   DELETE
 ========================================================= */
 
-async function delProduct(id){
+async function deleteProduct(id){
 
 if(
 !confirm(
@@ -1565,218 +1499,245 @@ if(
 return;
 
 
-const {
-error
-} =
+const{error}=
 await sb
 .from("products")
 .delete()
-.eq(
-"id",
-id
-);
+.eq("id",id);
 
 
-if(error)
-alert(
-error.message
-);
+if(error){
 
-else
+alert(error.message);
+
+return;
+
+}
+
+
 loadProducts();
 
 }
 
 
 /* =========================================================
-   LOAD ORDERS
+   ORDERS
 ========================================================= */
 
 async function loadOrders(){
 
-const {
+const container=
+$("orders");
+
+if(!container)
+return;
+
+
+container.innerHTML=
+"<p>Orders loading...</p>";
+
+
+const{
 data,
 error
-} =
+}=
 await sb
 .from("orders")
 .select("*")
 .order(
-"created_at",
-{
-ascending:false
-}
+"id",
+{ascending:false}
 );
-
-
-$("oc")
-.textContent =
-data?.length || 0;
-
-
-$("nc")
-.textContent =
-
-(data||[])
-.filter(
-x =>
-String(
-x.order_status ||
-"New"
-)
-.toLowerCase()
-===
-"new"
-)
-.length;
 
 
 if(error){
 
-$("orderList").innerHTML =
-
-`
-
-<div class="error">
-
+container.innerHTML=
+`<div class="error">
 ${esc(error.message)}
-
-</div>
-
-`;
+</div>`;
 
 return;
 
 }
 
 
-if(!data?.length){
+const orders=
+data||[];
 
-$("orderList").innerHTML =
 
-`
+$("orderCount")
+.textContent=
+orders.length;
 
-<div class="msg">
-No orders.
-</div>
 
-`;
+$("newOrderCount")
+.textContent=
+orders.filter(
+o=>
+String(
+o.order_status||
+o.Order_states||
+""
+).toLowerCase()==="new"
+).length;
+
+
+if(!orders.length){
+
+container.innerHTML=
+`<div class="msg">
+Abhi koi order nahi hai.
+</div>`;
 
 return;
 
 }
 
 
-$("orderList").innerHTML =
+container.innerHTML=
+orders.map(
+o=>{
 
-data
-.map(o =>
+const status=
+o.order_status||
+o.Order_states||
+"New";
 
-`
+
+const phone=
+o.phone||
+o.Phone||
+"";
+
+
+const whatsappText=
+encodeURIComponent(
+
+`Aarvi Fashion Order Update
+
+Order ID: ${o.id}
+Product: ${o.product_name||o.Product_name||"-"}
+Status: ${status}`
+
+);
+
+
+return `
 
 <div class="order">
 
-<b>
+<h3>
+🛍️ Order #${esc(o.id)}
+</h3>
 
-#${esc(o.id)}
-
-—
-
+<p>
+<b>Customer:</b>
 ${esc(
-o.product_name ||
-"Product"
+o.customer_name||
+o.Customer_Name||
+"-"
 )}
+</p>
 
-</b>
+<p>
+<b>Phone:</b>
+${esc(phone)}
+</p>
+
+<p>
+<b>Product:</b>
+${esc(
+o.product_name||
+o.Product_name||
+"-"
+)}
+</p>
+
+<p>
+<b>Quantity:</b>
+${esc(
+o.quantity||
+o.Quantity||
+1
+)}
+</p>
+
+${
+o.size||
+o.Size
+?
+`
+<p>
+<b>Size:</b>
+${esc(
+o.size||
+o.Size
+)}
+</p>
+`
+:
+""
+}
 
 
 <p>
-
-Customer:
+<b>Address:</b>
 ${esc(
-o.customer_name ||
+o.address||
+o.Address||
 "-"
 )}
 
-<br>
-
-Phone:
 ${esc(
-o.phone ||
-"-"
-)}
-
-<br>
-
-Size:
-${esc(
-o.size ||
-"-"
-)}
-
-•
-
-Qty:
-${esc(
-o.quantity ||
-1
-)}
-
-<br>
-
-Address:
-${esc(
-o.address ||
+o.city||
+o.City||
 ""
 )}
 
 ${esc(
-o.city ||
+o.state||
+o.State||
 ""
 )}
 
 ${esc(
-o.state ||
+o.pin_code||
+o["Pin Code"]||
 ""
 )}
-
-${esc(
-o.pin_code ||
-""
-)}
-
-<br>
-
-Total:
-₹${Number(
-o.total_amount||0
-)
-.toLocaleString("en-IN")}
 
 </p>
 
 
-<span class="badge">
-
+<p>
+<b>Payment:</b>
 ${esc(
-o.order_status ||
-"New"
+o.payment_method||
+o.Payment_method||
+"-"
 )}
+</p>
+
+
+<p>
+
+<span class="status">
+
+${esc(status)}
 
 </span>
 
+</p>
 
-<div class="grid">
-
-
-<div>
 
 <label>
 Order Status
 </label>
 
+
 <select
-id="st_${o.id}">
+id="status-${Number(o.id)}">
 
 ${
 [
@@ -1790,23 +1751,15 @@ ${
 "Returned"
 ]
 .map(
-s =>
+s=>
 `
-
 <option
-${
-s ===
-(o.order_status||"New")
-?
-"selected"
-:
-""
-}>
+value="${esc(s)}"
+${status===s?"selected":""}>
 
-${s}
+${esc(s)}
 
 </option>
-
 `
 )
 .join("")
@@ -1814,107 +1767,77 @@ ${s}
 
 </select>
 
-</div>
-
-
-<div>
-
-<label>
-Courier
-</label>
-
-<input
-id="co_${o.id}"
-value="${esc(
-o.courier_name ||
-""
-)}">
-
-</div>
-
-
-<div>
-
-<label>
-Tracking Number
-</label>
-
-<input
-id="tn_${o.id}"
-value="${esc(
-o.tracking_number ||
-""
-)}">
-
-</div>
-
-
-<div>
-
-<label>
-Tracking URL
-</label>
-
-<input
-id="tu_${o.id}"
-value="${esc(
-o.tracking_url ||
-""
-)}">
-
-</div>
-
-</div>
-
 
 <button
-class="btn green"
-onclick="saveOrder(${o.id})">
+onclick="updateOrderStatus(
+${Number(o.id)}
+)">
 
-Save Order / Tracking
+Update Status
 
 </button>
 
 
+${
+phone
+?
+`
+<a
+href="https://wa.me/91${encodeURIComponent(phone)}?text=${whatsappText}"
+target="_blank">
+
+<button
+class="green"
+type="button">
+
+WhatsApp Customer
+
+</button>
+
+</a>
+`
+:
+""
+}
+
 </div>
 
-`
+`;
 
-)
-.join("");
+}).join("");
 
 }
 
 
 /* =========================================================
-   SAVE ORDER
+   UPDATE ORDER
 ========================================================= */
 
-async function saveOrder(id){
+async function updateOrderStatus(id){
 
-const obj={
+const select=
+$("status-"+id);
 
-order_status:
-$("st_"+id).value,
-
-courier_name:
-$("co_"+id).value.trim(),
-
-tracking_number:
-$("tn_"+id).value.trim(),
-
-tracking_url:
-$("tu_"+id).value.trim()
-
-};
+if(!select)
+return;
 
 
-const {
-error
-} =
+const status=
+select.value;
+
+
+const{error}=
 await sb
 .from("orders")
-.update(obj)
+.update({
+
+order_status:
+status,
+
+Order_states:
+status
+
+})
 .eq(
 "id",
 id
@@ -1924,6 +1847,7 @@ id
 if(error){
 
 alert(
+"Status update failed:\n"+
 error.message
 );
 
@@ -1933,9 +1857,8 @@ return;
 
 
 alert(
-"Order updated ✅"
+"Order status updated! ✅"
 );
-
 
 loadOrders();
 
@@ -1948,106 +1871,209 @@ loadOrders();
 
 async function loadCustomers(){
 
-const {
+const container=
+$("customers");
+
+if(!container)
+return;
+
+
+container.innerHTML=
+"<p>Customers loading...</p>";
+
+
+const{
 data,
 error
-} =
+}=
 await sb
 .from("customer_profiles")
 .select("*")
 .order(
 "created_at",
-{
-ascending:false
-}
+{ascending:false}
 );
 
 
 if(error){
 
-$("customerList").innerHTML =
-
-`
-
-<div class="error">
-
+container.innerHTML=
+`<div class="error">
 ${esc(error.message)}
-
-</div>
-
-`;
+</div>`;
 
 return;
 
 }
 
 
-$("customerList").innerHTML =
+const customers=
+data||[];
 
-(data||[])
-.map(c =>
 
-`
+if(!customers.length){
+
+container.innerHTML=
+`<div class="msg">
+Abhi customer profile nahi mila.
+</div>`;
+
+return;
+
+}
+
+
+container.innerHTML=
+customers.map(
+c=>{
+
+let gallery=[];
+
+try{
+
+gallery=
+JSON.parse(
+c.gallery_urls||"[]"
+);
+
+}catch(e){
+
+gallery=[];
+
+}
+
+
+if(!Array.isArray(gallery))
+gallery=[];
+
+
+const avatar=
+c.avatar_url||
+"https://via.placeholder.com/100?text=Aarvi";
+
+
+return `
 
 <div class="order">
 
-<b>
-👤 ${esc(
-c.full_name ||
+
+<div
+style="
+display:flex;
+gap:12px;
+align-items:center">
+
+<img
+class="customer-avatar"
+src="${esc(avatar)}"
+alt="Customer photo">
+
+<div>
+
+<h3
+style="margin:0">
+
+👤
+${esc(
+c.full_name||
 "Customer"
 )}
-</b>
+
+</h3>
+
+<small>
+Aarvi Fashion Customer
+</small>
+
+</div>
+
+</div>
+
 
 <p>
 
+<b>
 Email:
+</b>
+
 ${esc(
-c.email ||
-"-"
-)}
-
-<br>
-
-Phone:
-${esc(
-c.phone ||
-"-"
-)}
-
-<br>
-
-Address:
-${esc(
-c.address ||
+c.email||
 "-"
 )}
 
 </p>
 
+
+<p>
+
+<b>
+Phone:
+</b>
+
+${esc(
+c.phone||
+"-"
+)}
+
+</p>
+
+
+<p>
+
+<b>
+Notifications:
+</b>
+
+${
+c.notifications_enabled
+?
+"ON 🔔"
+:
+"OFF"
+}
+
+</p>
+
+
+${
+gallery.length
+?
+`
+
+<div
+class="customer-gallery">
+
+${
+gallery.map(
+url=>
+`
+
+<img
+src="${esc(url)}"
+alt="Gallery">
+
+`
+).join("")
+}
+
 </div>
 
 `
-)
-.join("");
+:
+""
+}
 
 
-if(!data?.length){
-
-$("customerList").innerHTML =
-
-`
-
-<div class="msg">
-No customers.
 </div>
 
 `;
 
-}
+}).join("");
 
 }
 
 </script>
 
 </body>
+
 </html>
