@@ -48,7 +48,7 @@ button{
   background:rgba(255,255,255,.96);
   backdrop-filter:blur(12px);
   border-bottom:1px solid var(--border);
-  padding:8px 10px
+  padding:6px 10px
 }
 
 .toprow{
@@ -59,10 +59,13 @@ button{
 }
 
 .brand{
-  font-weight:900;
-  color:var(--dark);
-  font-size:18px;
-  letter-spacing:1px
+  font-family:"Brush Script MT","Segoe Script","Lucida Handwriting",cursive;
+  font-weight:700;
+  color:#d94f82;
+  font-size:24px;
+  letter-spacing:1px;
+  line-height:1;
+  text-shadow:0 1px 0 #fff
 }
 
 .icon{
@@ -88,7 +91,7 @@ button{
   outline:0;
   background:transparent;
   width:100%;
-  padding:8px
+  padding:6px
 }
 
 main{
@@ -116,45 +119,60 @@ main{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin:18px 0 10px
+  margin:10px 0 7px
 }
 
 .section-title h2{
-  font-size:13px;
+  font-size:12px;
   margin:0
 }
 
+/* ================= CATALOG ================= */
+
 .cats{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:6px
+  grid-template-columns:repeat(5,1fr);
+  gap:6px;
+  margin-bottom:4px
 }
 
 .cat{
-  border:1px solid var(--border);
-  background:#fff;
-  border-radius:16px;
-  overflow:hidden;
-  text-align:left
+  border:0;
+  background:transparent;
+  text-align:center;
+  padding:0;
+  overflow:visible
 }
 
 .cat img{
-  width:100%;
-  height:58px;
+  width:54px;
+  height:54px;
+  margin:auto;
+  display:block;
   object-fit:cover;
-  background:var(--soft)
+  background:var(--soft);
+  border-radius:50%;
+  border:1px solid var(--border);
+  box-shadow:0 2px 7px rgba(80,30,50,.08)
 }
 
 .cat b{
   display:block;
-  padding:6px;
-  font-size:10px
+  padding:4px 0 0;
+  font-size:8px;
+  line-height:1.15;
+  font-weight:700;
+  color:#392531
+}
+
+.cat:active img{
+  transform:scale(.94)
 }
 
 .products{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:7px
+  grid-template-columns:repeat(3,1fr);
+  gap:5px
 }
 
 .product{
@@ -166,18 +184,19 @@ main{
 
 .product img{
   width:100%;
-  height:155px;
+  height:78px;
   object-fit:contain;
   background:#fff0f5
 }
 
 .pi{
-  padding:8px
+  padding:4px
 }
 
 .pi h3{
-  margin:0 0 5px;
-  font-size:13px
+  margin:0 0 2px;
+  font-size:9px;
+  line-height:1.15
 }
 
 .muted{
@@ -188,8 +207,8 @@ main{
 .price{
   color:var(--dark);
   font-weight:900;
-  font-size:15px;
-  margin:5px 0
+  font-size:11px;
+  margin:2px 0
 }
 
 .old{
@@ -201,7 +220,7 @@ main{
 
 .btn{
   width:100%;
-  padding:8px;
+  padding:6px;
   border-radius:11px;
   background:var(--pink);
   color:#fff;
@@ -399,16 +418,45 @@ main{
 }
 
 @media(max-width:380px){
+
   .cats{
-    grid-template-columns:repeat(4,1fr)
+    grid-template-columns:repeat(5,1fr);
+    gap:3px
   }
 
   .cat img{
-    height:58px
+    width:44px;
+    height:44px
+  }
+
+  .cat b{
+    font-size:7px
+  }
+
+  .products{
+    grid-template-columns:repeat(3,1fr);
+    gap:4px
   }
 
   .product img{
-    height:145px
+    height:68px
+  }
+
+  .pi{
+    padding:4px
+  }
+
+  .pi h3{
+    font-size:9px
+  }
+
+  .price{
+    font-size:11px
+  }
+
+  .btn{
+    font-size:10px;
+    padding:5px 3px
   }
 }
 </style>
@@ -420,34 +468,36 @@ main{
 
 <header class="top">
 
-  <div class="toprow">
+<div class="toprow">
 
-    <button
-      class="icon"
-      onclick="openMenu()">
-      ☰
-    </button>
+<button
+class="icon"
+onclick="openMenu()">
+☰
+</button>
 
-    <div class="brand">
-      AARVI FASHION
-    </div>
+<div class="brand">
+AARVI FASHION
+</div>
 
-    <button
-      class="icon"
-      onclick="showScreen('account')">
-      👤
-    </button>
+<button
+class="icon"
+onclick="showScreen('account')">
+👤
+</button>
 
-  </div>
+</div>
 
-  <div class="search">
-    <span>⌕</span>
+<div class="search">
 
-    <input
-      id="search"
-      placeholder="Search products..."
-      oninput="renderProducts()">
-  </div>
+<span>⌕</span>
+
+<input
+id="search"
+placeholder="Search products..."
+oninput="renderProducts()">
+
+</div>
 
 </header>
 
@@ -455,90 +505,94 @@ main{
 <main>
 
 <section
-  id="home"
-  class="screen active">
+id="home"
+class="screen active">
 
-  <div class="hero">
+<div class="hero">
 
-    <h1>
-      Style that feels beautifully yours.
-    </h1>
+<h1>
+Style that feels beautifully yours.
+</h1>
 
-    <p>
-      Fashion • Beauty • Jewellery
-    </p>
+<p>
+Fashion • Beauty • Jewellery
+</p>
 
-  </div>
-
-
-  <div class="section-title">
-
-    <h2>
-      Shop by Category
-    </h2>
-
-  </div>
+</div>
 
 
-  <div
-    id="cats"
-    class="cats">
-  </div>
+<div class="section-title">
+
+<h2>
+Shop by Category
+</h2>
+
+</div>
 
 
-  <div class="section-title">
-
-    <h2 id="productTitle">
-      Latest Collection
-    </h2>
-
-  </div>
+<div
+id="cats"
+class="cats">
+</div>
 
 
-  <div
-    id="products"
-    class="products">
-  </div>
+<div class="section-title">
 
-</section>
+<h2 id="productTitle">
+Latest Collection
+</h2>
+
+</div>
 
 
-<section
-  id="orders"
-  class="screen">
-
-  <div class="section-title">
-
-    <h2>
-      My Orders
-    </h2>
-
-    <button
-      class="icon"
-      onclick="loadOrders()">
-      ↻
-    </button>
-
-  </div>
-
-  <div id="ordersList"></div>
+<div
+id="products"
+class="products">
+</div>
 
 </section>
 
 
 <section
-  id="account"
-  class="screen">
+id="orders"
+class="screen">
 
-  <div class="section-title">
+<div class="section-title">
 
-    <h2>
-      My Account
-    </h2>
+<h2>
+My Orders
+</h2>
 
-  </div>
+<button
+class="icon"
+onclick="loadOrders()">
+↻
+</button>
 
-  <div id="accountBox"></div>
+</div>
+
+<div
+id="ordersList">
+</div>
+
+</section>
+
+
+<section
+id="account"
+class="screen">
+
+<div class="section-title">
+
+<h2>
+My Account
+</h2>
+
+</div>
+
+<div
+id="accountBox">
+</div>
 
 </section>
 
@@ -547,27 +601,39 @@ main{
 
 <nav class="bottom">
 
-  <button
-    id="navHome"
-    class="active"
-    onclick="showScreen('home')">
-    ⌂<br>
-    <small>Home</small>
-  </button>
+<button
+id="navHome"
+class="active"
+onclick="showScreen('home')">
 
-  <button
-    id="navOrders"
-    onclick="showScreen('orders')">
-    🛍<br>
-    <small>Orders</small>
-  </button>
+⌂
+<br>
 
-  <button
-    id="navAccount"
-    onclick="showScreen('account')">
-    👤<br>
-    <small>Account</small>
-  </button>
+<small>Home</small>
+
+</button>
+
+<button
+id="navOrders"
+onclick="showScreen('orders')">
+
+🛍
+<br>
+
+<small>Orders</small>
+
+</button>
+
+<button
+id="navAccount"
+onclick="showScreen('account')">
+
+👤
+<br>
+
+<small>Account</small>
+
+</button>
 
 </nav>
 
@@ -577,45 +643,45 @@ main{
 <!-- THREE LINE MENU -->
 
 <div
-  id="drawer"
-  class="drawer"
-  onclick="closeMenu()">
+id="drawer"
+class="drawer"
+onclick="closeMenu()">
 
-  <div
-    class="menu"
-    onclick="event.stopPropagation()">
+<div
+class="menu"
+onclick="event.stopPropagation()">
 
-    <button onclick="closeMenu()">
-      ✕ Close
-    </button>
+<button onclick="closeMenu()">
+✕ Close
+</button>
 
-    <h2>
-      Menu
-    </h2>
+<h2>
+Menu
+</h2>
 
-    <button onclick="goHome()">
-      🏠 Home
-    </button>
+<button onclick="goHome()">
+🏠 Home
+</button>
 
-    <button
-      onclick="showScreen('orders');closeMenu()">
-      🛍️ My Orders
-    </button>
+<button
+onclick="showScreen('orders');closeMenu()">
+🛍️ My Orders
+</button>
 
-    <button
-      onclick="showScreen('account');closeMenu()">
-      👤 My Account
-    </button>
+<button
+onclick="showScreen('account');closeMenu()">
+👤 My Account
+</button>
 
-    <button onclick="contact()">
-      💬 Contact
-    </button>
+<button onclick="contact()">
+💬 Contact
+</button>
 
-    <button onclick="help()">
-      ❓ Help
-    </button>
+<button onclick="help()">
+❓ Help
+</button>
 
-  </div>
+</div>
 
 </div>
 
@@ -625,41 +691,78 @@ main{
 
 <script>
 
-const SUPABASE_URL =
+const SUPABASE_URL=
 "https://sxifooelnulxldcbtmvd.supabase.co";
 
-const SUPABASE_KEY =
+const SUPABASE_KEY=
 "sb_publishable_nLLITIJxfhc52cUkZaGZ4w_GvJubfM-";
 
-const sb =
+const sb=
 supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
 
-let allProducts=[];
-let currentProduct=null;
-let selectedSize="";
-let qty=1;
-let currentCategory="All";
+let allProducts=[],
+currentProduct=null,
+selectedSize="",
+qty=1,
+currentCategory="All";
 
 
-/*
-  KURTA SET HATA DIYA HAI
-*/
+/* ================= CATEGORIES ================= */
+/* KURTA SET HATA DIYA */
+
 const CATS=[
-  "Plazzo",
-  "Pant Set",
-  "Dupatta Set",
-  "Kurti Set",
-  "Dress Material",
-  "Combos",
-  "Daily Deals",
-  "Western Wear",
-  "Beauty",
-  "Jewellery"
+"Plazzo",
+"Pant Set",
+"Dupatta Set",
+"Kurti Set",
+"Dress Material",
+"Combos",
+"Daily Deals",
+"Western Wear",
+"Beauty",
+"Jewellery"
 ];
+
+
+/* ================= SYSTEMATIC CATEGORY PHOTOS ================= */
+
+const CATEGORY_PHOTOS={
+
+"Plazzo":
+"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=300&q=80",
+
+"Pant Set":
+"https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=300&q=80",
+
+"Dupatta Set":
+"https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=300&q=80",
+
+"Kurti Set":
+"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=300&q=80",
+
+"Dress Material":
+"https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=300&q=80",
+
+"Combos":
+"https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=300&q=80",
+
+"Daily Deals":
+"https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=300&q=80",
+
+"Western Wear":
+"https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=300&q=80",
+
+"Beauty":
+"https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=300&q=80",
+
+"Jewellery":
+"https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=300&q=80"
+
+};
 
 
 const esc=v=>
@@ -673,73 +776,73 @@ String(v??"")
 
 function imgs(p){
 
-  let x=[];
+let x=[];
 
-  try{
+try{
 
-    x=Array.isArray(p.image_urls)
-      ? p.image_urls
-      : JSON.parse(p.image_urls||"[]");
+x=
+Array.isArray(p.image_urls)
+?p.image_urls
+:JSON.parse(p.image_urls||"[]");
 
-  }catch{}
+}catch{}
 
-  if(!x.length && p.image_url)
-    x=[p.image_url];
+if(!x.length&&p.image_url)
+x=[p.image_url];
 
-  return x
-    .filter(Boolean)
-    .slice(0,4);
+return x
+.filter(Boolean)
+.slice(0,4);
 
 }
 
 
 function sizes(p){
 
-  try{
+try{
 
-    return Array.isArray(p.sizes)
-      ? p.sizes
-      : JSON.parse(p.sizes||"[]");
+return Array.isArray(p.sizes)
+?p.sizes
+:JSON.parse(p.sizes||"[]");
 
-  }catch{
+}catch{
 
-    return[];
+return[];
 
-  }
+}
 
 }
 
 
+/* ================= PRODUCTS ================= */
+
 async function loadProducts(){
 
-  const {
-    data,
-    error
-  }=
-    await sb
-      .from("products")
-      .select("*")
-      .order(
-        "created_at",
-        {ascending:false}
-      );
+const{
+data,
+error
+}=await sb
+.from("products")
+.select("*")
+.order(
+"created_at",
+{ascending:false}
+);
 
+if(error){
 
-  if(error){
+$("products").innerHTML=
+'<div class="empty">Products load nahi ho rahe.</div>';
 
-    $("products").innerHTML=
-      '<div class="empty">Products load nahi ho rahe.</div>';
+return;
 
-    return;
+}
 
-  }
+allProducts=data||[];
 
+renderCategories();
 
-  allProducts=data||[];
-
-  renderCategories();
-
-  renderProducts();
+renderProducts();
 
 }
 
@@ -748,1111 +851,1184 @@ const $=
 id=>document.getElementById(id);
 
 
-function categoryImage(c){
+/* ================= CATEGORY IMAGE ================= */
 
-  let p=
-    allProducts.find(
-      x=>
-        String(
-          x.category||""
-        ).toLowerCase()===
-        c.toLowerCase()
-    );
+function categoryImage(category){
 
-  return p
-    ? imgs(p)[0]
-    : "";
+const product=
+allProducts.find(
+p=>
+String(
+p.category||""
+)
+.trim()
+.toLowerCase()
+===
+category.trim().toLowerCase()
+);
+
+
+/*
+Agar us category ka product available hai
+to us product ki asli photo use hogi.
+*/
+
+if(product){
+
+const photos=
+imgs(product);
+
+if(photos.length)
+return photos[0];
 
 }
 
+
+/*
+Agar category mein abhi product nahi hai
+to systematic category photo use hogi.
+*/
+
+return CATEGORY_PHOTOS[category]||"";
+
+}
+
+
+/* ================= RENDER CATEGORIES ================= */
 
 function renderCategories(){
 
-  $("cats").innerHTML=
-    CATS.map(
-      c=>
+$("cats").innerHTML=
 
-      `<button
-        class="cat"
-        onclick="filterCat('${esc(c)}')">
+CATS.map(category=>`
 
-        <img
-          src="${esc(categoryImage(c))}"
-          alt="${esc(c)}">
+<button
+class="cat"
+onclick="filterCat('${esc(category)}')">
 
-        <b>
-          ${esc(c)}
-        </b>
+<img
+src="${esc(categoryImage(category))}"
+alt="${esc(category)}"
+loading="lazy">
 
-      </button>`
+<b>
+${esc(category)}
+</b>
 
-    ).join("");
+</button>
+
+`).join("");
 
 }
 
+
+/* ================= CATEGORY FILTER ================= */
 
 function filterCat(c){
 
-  currentCategory=c;
+currentCategory=c;
 
-  showScreen("home");
+showScreen("home");
 
-  $("productTitle").textContent=c;
+$("productTitle").textContent=
+c==="All"
+?"Latest Collection"
+:c;
 
-  renderProducts();
+renderProducts();
 
 }
 
+
+/* ================= PRODUCTS DISPLAY ================= */
 
 function renderProducts(){
 
-  let q=
-    $("search")
-      .value
-      .trim()
-      .toLowerCase();
+let q=
+$("search")
+.value
+.trim()
+.toLowerCase();
+
+let list=
+allProducts.filter(
+
+p=>
+
+(
+currentCategory==="All"||
+String(
+p.category||""
+)
+.toLowerCase()
+===
+currentCategory.toLowerCase()
+)
+
+&&
+
+(
+!q||
+String(
+p.name||""
+)
+.toLowerCase()
+.includes(q)
+)
+
+);
 
 
-  let list=
-    allProducts.filter(
-      p=>
+if(!list.length){
 
-      (
-        currentCategory==="All" ||
-        String(
-          p.category||""
-        ).toLowerCase()===
-        currentCategory.toLowerCase()
-      )
+$("products").innerHTML=
+'<div class="empty">Is category mein abhi product nahi hai.</div>';
 
-      &&
-
-      (
-        !q ||
-        String(
-          p.name||""
-        ).toLowerCase()
-        .includes(q)
-      )
-
-    );
-
-
-  if(!list.length){
-
-    $("products").innerHTML=
-      '<div class="empty">Is category mein abhi product nahi hai.</div>';
-
-    return;
-
-  }
-
-
-  $("products").innerHTML=
-
-    list.map(p=>{
-
-      let im=imgs(p);
-
-      return`
-
-      <article class="product">
-
-        <img
-          src="${esc(im[0]||"")}"
-          alt="${esc(p.name)}">
-
-        <div class="pi">
-
-          <h3>
-            ${esc(p.name)}
-          </h3>
-
-          <div class="muted">
-            ${esc(p.category||"")}
-          </div>
-
-          <div class="price">
-
-            ₹${Number(
-              p.price||0
-            ).toLocaleString("en-IN")}
-
-            ${
-              p.original_price
-              ?
-              `<span class="old">
-                ₹${Number(
-                  p.original_price
-                ).toLocaleString("en-IN")}
-              </span>`
-              :
-              ""
-            }
-
-          </div>
-
-          ${
-            Number(p.stock||0)>0
-            ?
-            `<button
-              class="btn"
-              onclick="openOrder(${Number(p.id)})">
-              Order Now
-            </button>`
-            :
-            `<div class="out">
-              Out of Stock
-            </div>`
-          }
-
-        </div>
-
-      </article>
-
-      `;
-
-    }).join("");
+return;
 
 }
 
+
+$("products").innerHTML=
+
+list.map(p=>{
+
+let im=imgs(p);
+
+return`
+
+<article class="product">
+
+<img
+src="${esc(im[0]||"")}"
+alt="${esc(p.name)}">
+
+<div class="pi">
+
+<h3>
+${esc(p.name)}
+</h3>
+
+<div class="muted">
+${esc(p.category||"")}
+</div>
+
+<div class="price">
+
+₹${Number(
+p.price||0
+).toLocaleString("en-IN")}
+
+${
+p.original_price
+?
+`<span class="old">
+₹${Number(
+p.original_price
+).toLocaleString("en-IN")}
+</span>`
+:""
+}
+
+</div>
+
+${
+Number(p.stock||0)>0
+?
+`<button
+class="btn"
+onclick="openOrder(${Number(p.id)})">
+Order Now
+</button>`
+:
+`<div class="out">
+Out of Stock
+</div>`
+}
+
+</div>
+
+</article>
+
+`;
+
+}).join("");
+
+}
+
+
+/* ================= ORDER MODAL ================= */
 
 function openOrder(id){
 
-  currentProduct=
-    allProducts.find(
-      p=>
-        Number(p.id)===
-        Number(id)
-    );
+currentProduct=
+allProducts.find(
+p=>
+Number(p.id)===
+Number(id)
+);
 
+if(!currentProduct)
+return;
 
-  if(!currentProduct)
-    return;
+selectedSize="";
+qty=1;
 
+let ss=
+sizes(currentProduct);
 
-  selectedSize="";
+let sizeHtml=
+ss.length
+?
+`
 
-  qty=1;
+<label>
+Size
+</label>
 
+<div class="sizes">
 
-  let ss=
-    sizes(currentProduct);
+${ss.map(s=>
 
+`<button
+type="button"
+class="size"
+onclick="pickSize('${esc(s)}',this)">
 
-  let sizeHtml=
-    ss.length
-    ?
+${esc(s)}
 
-    `<label>Size</label>
+</button>`
 
-     <div class="sizes">
+).join("")}
 
-       ${ss.map(
-         s=>
+</div>
 
-         `<button
-           type="button"
-           class="size"
-           onclick="pickSize('${esc(s)}',this)">
-           ${esc(s)}
-         </button>`
+`
+:"";
 
-       ).join("")}
 
-     </div>`
+$("modalRoot").innerHTML=
 
-    :
+`
 
-    "";
+<div
+class="modal"
+onclick="if(event.target===this)closeModal()">
 
+<div class="box">
 
-  $("modalRoot").innerHTML=
+<h2>
+Place Order
+</h2>
 
-  `<div
-    class="modal"
-    onclick="if(event.target===this)closeModal()">
+<p>
 
-    <div class="box">
+<b>
+${esc(currentProduct.name)}
+</b>
 
-      <h2>
-        Place Order
-      </h2>
+<br>
 
-      <p>
-        <b>
-          ${esc(currentProduct.name)}
-        </b>
+₹${Number(
+currentProduct.price||0
+).toLocaleString("en-IN")}
 
-        <br>
+</p>
 
-        ₹${Number(
-          currentProduct.price||0
-        ).toLocaleString("en-IN")}
+${sizeHtml}
 
-      </p>
+<label>
+Quantity
+</label>
 
-      ${sizeHtml}
+<div class="qty">
 
-      <label>
-        Quantity
-      </label>
+<button
+onclick="changeQty(-1)">
+−
+</button>
 
-      <div class="qty">
+<b id="qtyVal">
+1
+</b>
 
-        <button
-          onclick="changeQty(-1)">
-          −
-        </button>
+<button
+onclick="changeQty(1)">
++
+</button>
 
-        <b id="qtyVal">
-          1
-        </b>
+</div>
 
-        <button
-          onclick="changeQty(1)">
-          +
-        </button>
+<label>
+Full Name *
+</label>
 
-      </div>
+<input
+id="oName"
+placeholder="Your name">
 
+<label>
+Mobile *
+</label>
 
-      <label>
-        Full Name *
-      </label>
+<input
+id="oPhone"
+maxlength="10"
+inputmode="numeric"
+placeholder="10 digit mobile">
 
-      <input
-        id="oName"
-        placeholder="Your name">
+<label>
+Address *
+</label>
 
+<textarea
+id="oAddress"></textarea>
 
-      <label>
-        Mobile *
-      </label>
+<label>
+City *
+</label>
 
-      <input
-        id="oPhone"
-        maxlength="10"
-        inputmode="numeric"
-        placeholder="10 digit mobile">
+<input
+id="oCity">
 
+<label>
+State *
+</label>
 
-      <label>
-        Address *
-      </label>
+<input
+id="oState">
 
-      <textarea id="oAddress"></textarea>
+<label>
+PIN *
+</label>
 
+<input
+id="oPin"
+maxlength="6"
+inputmode="numeric">
 
-      <label>
-        City *
-      </label>
+<label>
+Payment
+</label>
 
-      <input id="oCity">
+<select id="oPay">
 
+<option>
+COD
+</option>
 
-      <label>
-        State *
-      </label>
+<option>
+Online
+</option>
 
-      <input id="oState">
+</select>
 
+<button
+class="btn"
+id="placeBtn"
+onclick="placeOrder()">
 
-      <label>
-        PIN *
-      </label>
+Confirm Order
 
-      <input
-        id="oPin"
-        maxlength="6"
-        inputmode="numeric">
+</button>
 
+<button
+class="btn"
+style="margin-top:8px;background:#777"
+onclick="closeModal()">
 
-      <label>
-        Payment
-      </label>
+Cancel
 
-      <select id="oPay">
+</button>
 
-        <option>
-          COD
-        </option>
+</div>
 
-        <option>
-          Online
-        </option>
+</div>
 
-      </select>
-
-
-      <button
-        class="btn"
-        id="placeBtn"
-        onclick="placeOrder()">
-
-        Confirm Order
-
-      </button>
-
-
-      <button
-        class="btn"
-        style="margin-top:8px;background:#777"
-        onclick="closeModal()">
-
-        Cancel
-
-      </button>
-
-    </div>
-
-  </div>`;
+`;
 
 }
 
+
+/* ================= SIZE ================= */
 
 function pickSize(s,b){
 
-  selectedSize=s;
+selectedSize=s;
 
-  document
-    .querySelectorAll(".size")
-    .forEach(
-      x=>
-        x.classList.remove("sel")
-    );
+document
+.querySelectorAll(".size")
+.forEach(
+x=>
+x.classList.remove("sel")
+);
 
-  b.classList.add("sel");
+b.classList.add("sel");
 
 }
 
+
+/* ================= QUANTITY ================= */
 
 function changeQty(d){
 
-  qty=
-    Math.max(
-      1,
-      qty+d
-    );
+qty=Math.max(
+1,
+qty+d
+);
 
-  $("qtyVal")
-    .textContent=qty;
+$("qtyVal").textContent=qty;
 
 }
 
+
+/* ================= CLOSE MODAL ================= */
 
 function closeModal(){
 
-  $("modalRoot")
-    .innerHTML="";
+$("modalRoot").innerHTML="";
 
 }
 
+
+/* ================= PLACE ORDER ================= */
 
 async function placeOrder(){
 
-  const btn=
-    $("placeBtn");
+const btn=
+$("placeBtn");
 
-  btn.disabled=true;
+btn.disabled=true;
 
-  btn.textContent=
-    "Order save ho raha hai...";
+btn.textContent=
+"Order save ho raha hai...";
 
+const name=
+$("oName").value.trim();
 
-  const name=
-    $("oName").value.trim();
+const phone=
+$("oPhone").value.trim();
 
-  const phone=
-    $("oPhone").value.trim();
+const address=
+$("oAddress").value.trim();
 
-  const address=
-    $("oAddress").value.trim();
+const city=
+$("oCity").value.trim();
 
-  const city=
-    $("oCity").value.trim();
+const state=
+$("oState").value.trim();
 
-  const state=
-    $("oState").value.trim();
+const pin=
+$("oPin").value.trim();
 
-  const pin=
-    $("oPin").value.trim();
-
-  const pay=
-    $("oPay").value;
-
-
-  if(
-    !name ||
-    !/^\d{10}$/.test(phone) ||
-    !address ||
-    !city ||
-    !state ||
-    !/^\d{6}$/.test(pin)
-  ){
-
-    alert(
-      "Details sahi bhariye."
-    );
-
-    btn.disabled=false;
-
-    btn.textContent=
-      "Confirm Order";
-
-    return;
-
-  }
+const pay=
+$("oPay").value;
 
 
-  if(
-    sizes(currentProduct).length &&
-    !selectedSize
-  ){
+if(
+!name||
+! /^\d{10}$/.test(phone)||
+!address||
+!city||
+!state||
+! /^\d{6}$/.test(pin)
+){
 
-    alert(
-      "Size select karein."
-    );
+alert(
+"Details sahi bhariye."
+);
 
-    btn.disabled=false;
+btn.disabled=false;
 
-    btn.textContent=
-      "Confirm Order";
+btn.textContent=
+"Confirm Order";
 
-    return;
-
-  }
-
-
-  const {
-    data:{session}
-  }=
-    await sb.auth.getSession();
-
-
-  const {
-    data,
-    error
-  }=
-    await sb.rpc(
-      "place_order",
-      {
-        p_user_id:
-          session?.user?.id||null,
-
-        p_customer_name:
-          name,
-
-        p_phone:
-          phone,
-
-        p_address:
-          address,
-
-        p_city:
-          city,
-
-        p_state:
-          state,
-
-        p_pin_code:
-          pin,
-
-        p_product_id:
-          Number(currentProduct.id),
-
-        p_size:
-          selectedSize||null,
-
-        p_quantity:
-          qty,
-
-        p_payment_method:
-          pay
-      }
-    );
-
-
-  if(error){
-
-    alert(
-      "Order confirm nahi hua:\n"+
-      error.message
-    );
-
-    btn.disabled=false;
-
-    btn.textContent=
-      "Confirm Order";
-
-    return;
-
-  }
-
-
-  closeModal();
-
-  alert(
-    "Order Confirmed! ✅\n"+
-    "Order ID: #"+data
-  );
-
-  showScreen("orders");
-
-  loadProducts();
-
-  loadOrders();
+return;
 
 }
 
+
+if(
+sizes(currentProduct).length
+&&
+!selectedSize
+){
+
+alert(
+"Size select karein."
+);
+
+btn.disabled=false;
+
+btn.textContent=
+"Confirm Order";
+
+return;
+
+}
+
+
+const{
+data:{session}
+}=
+await sb.auth.getSession();
+
+
+const{
+data,
+error
+}=
+await sb.rpc(
+"place_order",
+{
+
+p_user_id:
+session?.user?.id||null,
+
+p_customer_name:
+name,
+
+p_phone:
+phone,
+
+p_address:
+address,
+
+p_city:
+city,
+
+p_state:
+state,
+
+p_pin_code:
+pin,
+
+p_product_id:
+Number(currentProduct.id),
+
+p_size:
+selectedSize||null,
+
+p_quantity:
+qty,
+
+p_payment_method:
+pay
+
+}
+);
+
+
+if(error){
+
+alert(
+"Order confirm nahi hua:\n"+
+error.message
+);
+
+btn.disabled=false;
+
+btn.textContent=
+"Confirm Order";
+
+return;
+
+}
+
+
+closeModal();
+
+alert(
+"Order Confirmed! ✅\nOrder ID: #"+
+data
+);
+
+showScreen("orders");
+
+loadProducts();
+
+loadOrders();
+
+}
+
+
+/* ================= SCREEN ================= */
 
 async function showScreen(id){
 
-  document
-    .querySelectorAll(".screen")
-    .forEach(
-      x=>
-        x.classList.remove("active")
-    );
+document
+.querySelectorAll(".screen")
+.forEach(
+x=>
+x.classList.remove("active")
+);
+
+$(id)
+.classList.add("active");
 
 
-  $(id)
-    .classList.add("active");
+document
+.querySelectorAll(".bottom button")
+.forEach(
+x=>
+x.classList.remove("active")
+);
 
 
-  document
-    .querySelectorAll(".bottom button")
-    .forEach(
-      x=>
-        x.classList.remove("active")
-    );
+$("nav"+
+id.charAt(0).toUpperCase()+
+id.slice(1)
+)
+.classList.add("active");
 
 
-  $("nav"+
-    id.charAt(0).toUpperCase()+
-    id.slice(1))
-    .classList.add("active");
+if(id==="orders")
+loadOrders();
 
+if(id==="account")
+loadAccount();
 
-  if(id==="orders")
-    loadOrders();
-
-
-  if(id==="account")
-    loadAccount();
-
-
-  scrollTo(0,0);
+scrollTo(0,0);
 
 }
 
+
+/* ================= HOME ================= */
 
 function goHome(){
 
-  closeMenu();
+closeMenu();
 
-  currentCategory="All";
+currentCategory="All";
 
-  showScreen("home");
+showScreen("home");
 
-  $("productTitle")
-    .textContent=
-      "Latest Collection";
+$("productTitle").textContent=
+"Latest Collection";
 
-  renderProducts();
+renderProducts();
 
 }
 
 
+/* ================= MENU ================= */
+
 function openMenu(){
 
-  $("drawer")
-    .classList.add("open");
+$("drawer")
+.classList.add("open");
 
 }
 
 
 function closeMenu(){
 
-  $("drawer")
-    .classList.remove("open");
+$("drawer")
+.classList.remove("open");
 
 }
 
+
+/* ================= CONTACT ================= */
 
 function contact(){
 
-  alert(
-    "Aarvi Fashion support se contact karein."
-  );
+alert(
+"Aarvi Fashion support se contact karein."
+);
 
-  closeMenu();
+closeMenu();
 
 }
 
+
+/* ================= HELP ================= */
 
 function help(){
 
-  alert(
-    "Product choose karein → "+
-    "size select karein → "+
-    "details bharein → "+
-    "Confirm Order."
-  );
+alert(
+"Product choose karein → size select karein → details bharein → Confirm Order."
+);
 
-  closeMenu();
+closeMenu();
 
 }
 
+
+/* ================= MY ORDERS ================= */
 
 async function loadOrders(){
 
-  const el=
-    $("ordersList");
+const el=
+$("ordersList");
 
-  el.innerHTML=
-    '<div class="empty">Orders loading...</div>';
-
-
-  const {
-    data:{session}
-  }=
-    await sb.auth.getSession();
+el.innerHTML=
+'<div class="empty">Orders loading...</div>';
 
 
-  if(!session){
-
-    el.innerHTML=
-      '<div class="empty">My Orders ke liye My Account se login karein.</div>';
-
-    return;
-
-  }
+const{
+data:{session}
+}=
+await sb.auth.getSession();
 
 
-  const {
-    data,
-    error
-  }=
-    await sb
-      .from("orders")
-      .select("*")
-      .eq(
-        "user_id",
-        session.user.id
-      )
-      .order(
-        "created_at",
-        {ascending:false}
-      );
+if(!session){
 
+el.innerHTML=
+'<div class="empty">My Orders ke liye My Account se login karein.</div>';
 
-  if(error){
-
-    el.innerHTML=
-      '<div class="empty">Orders load nahi ho rahe.</div>';
-
-    return;
-
-  }
-
-
-  if(!data?.length){
-
-    el.innerHTML=
-      '<div class="empty">Abhi koi order nahi hai.</div>';
-
-    return;
-
-  }
-
-
-  el.innerHTML=
-
-    data.map(
-      o=>
-
-      `<div class="order-card">
-
-        <img
-          src="${esc(o.product_image||"")}">
-
-        <div style="flex:1">
-
-          <b>
-            ${esc(
-              o.product_name||
-              "Product"
-            )}
-          </b>
-
-          <div class="muted">
-
-            Order #${esc(o.id)}
-            • Qty ${esc(o.quantity||1)}
-
-            ${
-              o.size
-              ?
-              ` • Size ${esc(o.size)}`
-              :
-              ""
-            }
-
-          </div>
-
-          <div class="price">
-
-            ₹${Number(
-              o.total_amount||0
-            ).toLocaleString("en-IN")}
-
-          </div>
-
-          <span class="badge">
-
-            ${esc(
-              o.order_status||
-              "New"
-            )}
-
-          </span>
-
-
-          ${
-            o.tracking_number
-
-            ?
-
-            `<div style="margin-top:8px">
-
-              <b>
-                🚚 ${esc(
-                  o.courier_name||
-                  "Courier"
-                )}
-              </b>
-
-              <br>
-
-              ${esc(
-                o.tracking_number
-              )}
-
-              ${
-                o.tracking_url
-
-                ?
-
-                `<a
-                  href="${esc(o.tracking_url)}"
-                  target="_blank">
-                  Track →
-                </a>`
-
-                :
-
-                ""
-              }
-
-            </div>`
-
-            :
-
-            ""
-
-          }
-
-        </div>
-
-      </div>`
-
-    ).join("");
+return;
 
 }
 
+
+const{
+data,
+error
+}=
+await sb
+.from("orders")
+.select("*")
+.eq(
+"user_id",
+session.user.id
+)
+.order(
+"created_at",
+{ascending:false}
+);
+
+
+if(error){
+
+el.innerHTML=
+'<div class="empty">Orders load nahi ho rahe.</div>';
+
+return;
+
+}
+
+
+if(!data?.length){
+
+el.innerHTML=
+'<div class="empty">Abhi koi order nahi hai.</div>';
+
+return;
+
+}
+
+
+el.innerHTML=
+
+data.map(o=>
+
+`
+
+<div class="order-card">
+
+<img
+src="${esc(o.product_image||"")}">
+
+<div style="flex:1">
+
+<b>
+${esc(
+o.product_name||
+"Product"
+)}
+</b>
+
+<div class="muted">
+
+Order #${esc(o.id)}
+
+•
+
+Qty ${esc(o.quantity||1)}
+
+${
+o.size
+?
+` • Size ${esc(o.size)}`
+:""
+}
+
+</div>
+
+<div class="price">
+
+₹${Number(
+o.total_amount||0
+).toLocaleString("en-IN")}
+
+</div>
+
+<span class="badge">
+
+${esc(
+o.order_status||
+"New"
+)}
+
+</span>
+
+
+${
+o.tracking_number
+?
+
+`
+
+<div style="margin-top:8px">
+
+<b>
+🚚 ${esc(
+o.courier_name||
+"Courier"
+)}
+</b>
+
+<br>
+
+${esc(
+o.tracking_number
+)}
+
+${
+o.tracking_url
+?
+
+`<a
+href="${esc(o.tracking_url)}"
+target="_blank">
+
+Track →
+
+</a>`
+
+:""
+}
+
+</div>
+
+`
+
+:""
+}
+
+</div>
+
+</div>
+
+`
+
+).join("");
+
+}
+
+
+/* ================= ACCOUNT ================= */
 
 async function loadAccount(){
 
-  const el=
-    $("accountBox");
+const el=
+$("accountBox");
+
+const{
+data:{session}
+}=
+await sb.auth.getSession();
 
 
-  const {
-    data:{session}
-  }=
-    await sb.auth.getSession();
+if(!session){
 
+el.innerHTML=
 
-  if(!session){
+`
 
-    el.innerHTML=
+<div class="profile">
 
-    `<div class="profile">
+<h3>
+Login / Create Account
+</h3>
 
-      <h3>
-        Login / Create Account
-      </h3>
+<input
+id="aEmail"
+placeholder="Email">
 
-      <input
-        id="aEmail"
-        placeholder="Email">
+<input
+id="aPass"
+type="password"
+placeholder="Password">
 
-      <input
-        id="aPass"
-        type="password"
-        placeholder="Password">
+<button
+class="btn"
+onclick="accountLogin()">
 
-      <button
-        class="btn"
-        onclick="accountLogin()">
+Login
 
-        Login
+</button>
 
-      </button>
+<button
+class="btn"
+style="margin-top:8px;background:#777"
+onclick="accountSignup()">
 
-      <button
-        class="btn"
-        style="margin-top:8px;background:#777"
-        onclick="accountSignup()">
+Create Account
 
-        Create Account
+</button>
 
-      </button>
+</div>
 
-    </div>`;
+`;
 
-    return;
-
-  }
-
-
-  const {
-    data:p
-  }=
-    await sb
-      .from("customer_profiles")
-      .select("*")
-      .eq(
-        "id",
-        session.user.id
-      )
-      .maybeSingle();
-
-
-  el.innerHTML=
-
-  `<div class="profile">
-
-    <h3>
-      👤 ${esc(
-        p?.full_name||
-        "My Account"
-      )}
-    </h3>
-
-    <div class="muted">
-      ${esc(
-        session.user.email||
-        ""
-      )}
-    </div>
-
-
-    <div class="field">
-
-      <label>
-        Name
-      </label>
-
-      <input
-        id="pName"
-        value="${esc(
-          p?.full_name||
-          ""
-        )}">
-
-    </div>
-
-
-    <div class="field">
-
-      <label>
-        Phone
-      </label>
-
-      <input
-        id="pPhone"
-        value="${esc(
-          p?.phone||
-          ""
-        )}">
-
-    </div>
-
-
-    <div class="field">
-
-      <label>
-        Address
-      </label>
-
-      <textarea id="pAddress">${esc(
-        p?.address||
-        ""
-      )}</textarea>
-
-    </div>
-
-
-    <button
-      class="btn"
-      onclick="saveProfile()">
-
-      Save Profile
-
-    </button>
-
-
-    <button
-      class="btn"
-      style="margin-top:8px;background:#777"
-      onclick="sb.auth.signOut().then(loadAccount)">
-
-      Logout
-
-    </button>
-
-  </div>`;
+return;
 
 }
 
+
+const{
+data:p
+}=
+await sb
+.from("customer_profiles")
+.select("*")
+.eq(
+"id",
+session.user.id
+)
+.maybeSingle();
+
+
+el.innerHTML=
+
+`
+
+<div class="profile">
+
+<h3>
+
+👤 ${esc(
+p?.full_name||
+"My Account"
+)}
+
+</h3>
+
+<div class="muted">
+
+${esc(
+session.user.email||
+""
+)}
+
+</div>
+
+<div class="field">
+
+<label>
+Name
+</label>
+
+<input
+id="pName"
+value="${esc(
+p?.full_name||
+""
+)}">
+
+</div>
+
+<div class="field">
+
+<label>
+Phone
+</label>
+
+<input
+id="pPhone"
+value="${esc(
+p?.phone||
+""
+)}">
+
+</div>
+
+<div class="field">
+
+<label>
+Address
+</label>
+
+<textarea
+id="pAddress">${esc(
+p?.address||
+""
+)}</textarea>
+
+</div>
+
+<button
+class="btn"
+onclick="saveProfile()">
+
+Save Profile
+
+</button>
+
+<button
+class="btn"
+style="margin-top:8px;background:#777"
+onclick="sb.auth.signOut().then(loadAccount)">
+
+Logout
+
+</button>
+
+</div>
+
+`;
+
+}
+
+
+/* ================= LOGIN ================= */
 
 async function accountLogin(){
 
-  const email=
-    $("aEmail")
-      .value
-      .trim();
+const email=
+$("aEmail")
+.value
+.trim();
 
-  const password=
-    $("aPass")
-      .value;
-
-
-  const {
-    error
-  }=
-    await sb.auth.signInWithPassword({
-      email,
-      password
-    });
+const password=
+$("aPass")
+.value;
 
 
-  if(error)
-    alert(error.message);
+const{error}=
+await sb.auth.signInWithPassword({
 
-  else
-    loadAccount();
+email,
+password
+
+});
+
+
+if(error)
+alert(error.message);
+
+else
+loadAccount();
 
 }
 
+
+/* ================= SIGNUP ================= */
 
 async function accountSignup(){
 
-  const email=
-    $("aEmail")
-      .value
-      .trim();
+const email=
+$("aEmail")
+.value
+.trim();
 
-  const password=
-    $("aPass")
-      .value;
-
-
-  if(password.length<6){
-
-    return alert(
-      "Password kam se kam 6 characters ka ho."
-    );
-
-  }
+const password=
+$("aPass")
+.value;
 
 
-  const {
-    error
-  }=
-    await sb.auth.signUp({
-      email,
-      password
-    });
+if(password.length<6)
+
+return alert(
+"Password kam se kam 6 characters ka ho."
+);
 
 
-  if(error)
-    alert(error.message);
+const{error}=
+await sb.auth.signUp({
 
-  else
-    alert(
-      "Account create ho gaya. Email confirmation required ho sakta hai."
-    );
+email,
+password
+
+});
+
+
+if(error)
+
+alert(error.message);
+
+else
+
+alert(
+"Account create ho gaya. Email confirmation required ho sakta hai."
+);
 
 }
 
+
+/* ================= SAVE PROFILE ================= */
 
 async function saveProfile(){
 
-  const {
-    data:{session}
-  }=
-    await sb.auth.getSession();
+const{
+data:{session}
+}=
+await sb.auth.getSession();
 
 
-  if(!session)
-    return;
+if(!session)
+return;
 
 
-  const obj={
+const obj={
 
-    id:
-      session.user.id,
+id:
+session.user.id,
 
-    email:
-      session.user.email,
+email:
+session.user.email,
 
-    full_name:
-      $("pName").value.trim(),
+full_name:
+$("pName").value.trim(),
 
-    phone:
-      $("pPhone").value.trim(),
+phone:
+$("pPhone").value.trim(),
 
-    address:
-      $("pAddress").value.trim()
+address:
+$("pAddress").value.trim()
 
-  };
-
-
-  const {
-    error
-  }=
-    await sb
-      .from("customer_profiles")
-      .upsert(obj);
+};
 
 
-  alert(
-    error
-    ?
-    "Profile save nahi hua: "+
-    error.message
-    :
-    "Profile saved ✅"
-  );
+const{error}=
+await sb
+.from("customer_profiles")
+.upsert(obj);
 
 
-  loadAccount();
+alert(
+
+error
+?
+
+"Profile save nahi hua: "+
+error.message
+
+:
+
+"Profile saved ✅"
+
+);
+
+
+loadAccount();
 
 }
 
+
+/* ================= START ================= */
 
 loadProducts();
 
