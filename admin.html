@@ -4,226 +4,324 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Aarvi Fashion Admin</title>
+<title>Aarvi Fashion — Admin</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{box-sizing:border-box}
 
+:root{
+  --pink:#d94f82;
+  --pink2:#b83268;
+  --light:#fff5f9;
+  --soft:#fff0f5;
+  --border:#f0d7e1;
+  --text:#392531;
+  --muted:#806a73;
+  --green:#29914b;
+  --red:#a52c2c;
+  --shadow:0 12px 35px rgba(92,36,59,.08)
+}
+
 body{
   margin:0;
   font-family:Arial,sans-serif;
-  background:#fff7fa;
-  color:#3a2430
+  background:
+    radial-gradient(circle at top right,#ffe8f1 0,transparent 30%),
+    #fff8fb;
+  color:var(--text)
 }
 
-.wrap{
-  max-width:1200px;
-  margin:auto;
-  padding:20px
-}
-
-.card{
-  background:#fff;
-  border:1px solid #f0d8e1;
-  border-radius:18px;
-  padding:20px;
-  margin:16px 0
-}
-
-h1,h2{
-  color:#d94f82
-}
-
-h3{
-  margin-top:10px
-}
-
-input,select,textarea{
-  width:100%;
-  padding:12px;
-  margin:6px 0 14px;
-  border:1px solid #e4cbd5;
-  border-radius:10px;
-  outline:none;
-  font-size:15px
-}
-
-textarea{
-  min-height:90px;
-  resize:vertical
+button,input,select,textarea{
+  font:inherit
 }
 
 button{
-  padding:11px 16px;
   border:0;
-  border-radius:10px;
-  background:#d94f82;
-  color:#fff;
-  font-weight:700;
-  cursor:pointer;
-  margin:3px
-}
-
-button:hover{
-  opacity:.9
-}
-
-.danger{
-  background:#8d274d
-}
-
-.secondary{
-  background:#777
-}
-
-.green{
-  background:#29914b
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px
-}
-
-.products{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px
-}
-
-.product{
-  border:1px solid #f0d8e1;
-  border-radius:15px;
-  overflow:hidden;
-  background:white
-}
-
-.product-main-img{
-  width:100%;
-  height:220px;
-  object-fit:contain;
-  background:#fff0f5
-}
-
-.product-thumbs{
-  display:flex;
-  gap:5px;
-  padding:7px;
-  overflow-x:auto;
-  background:#fff8fb
-}
-
-.product-thumbs img{
-  width:48px;
-  height:48px;
-  object-fit:cover;
-  border-radius:6px;
-  border:1px solid #efd2de
-}
-
-.info{
-  padding:14px
+  cursor:pointer
 }
 
 .hide{
   display:none!important
 }
 
-.msg{
-  background:#fff0f5;
-  padding:10px;
-  border-radius:10px;
-  margin:10px 0
+/* LOGIN */
+
+.login-page{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px
 }
 
-.success{
-  background:#eefbf2;
-  color:#26723a;
-  padding:10px;
-  border-radius:10px;
-  margin:10px 0
+.login-card{
+  width:100%;
+  max-width:440px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:28px;
+  padding:34px;
+  box-shadow:var(--shadow)
 }
 
-.error{
-  background:#fff0f0;
-  color:#a52c2c;
-  padding:10px;
-  border-radius:10px;
-  margin:10px 0
+.logo{
+  width:64px;
+  height:64px;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,var(--pink),#f58fb3);
+  color:white;
+  font-size:30px;
+  margin-bottom:16px
 }
 
-.top{
+.brand{
+  margin:0;
+  color:var(--pink2);
+  font-size:28px
+}
+
+.subtitle{
+  color:var(--muted);
+  margin-top:7px
+}
+
+/* APP */
+
+.app{
+  max-width:1400px;
+  margin:auto;
+  padding:20px
+}
+
+.header{
+  background:linear-gradient(135deg,#fff,#fff0f6);
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:22px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:10px
+  gap:15px;
+  box-shadow:var(--shadow)
 }
 
-.tabs{
+.header h1{
+  margin:0;
+  color:var(--pink2)
+}
+
+.header p{
+  margin:7px 0 0;
+  color:var(--muted)
+}
+
+.header-actions{
   display:flex;
   gap:8px;
   flex-wrap:wrap
 }
 
-.tabs button{
-  background:white;
-  color:#d94f82;
-  border:1px solid #d94f82
-}
+/* BUTTONS */
 
-.tabs button.active{
-  background:#d94f82;
-  color:white
-}
-
-.order{
-  border:1px solid #f0d8e1;
-  border-radius:14px;
-  padding:15px;
-  margin:10px 0;
-  background:white
-}
-
-.status{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:20px;
-  background:#d94f82;
+.btn{
+  padding:11px 16px;
+  border-radius:12px;
+  background:var(--pink);
   color:white;
-  font-size:12px;
-  font-weight:bold
+  font-weight:700
 }
+
+.btn:hover{
+  opacity:.9
+}
+
+.btn-secondary{
+  background:white;
+  color:var(--pink2);
+  border:1px solid var(--border)
+}
+
+.btn-dark{
+  background:#513540
+}
+
+.btn-green{
+  background:var(--green)
+}
+
+.btn-danger{
+  background:#8d274d
+}
+
+.btn-small{
+  padding:8px 11px;
+  font-size:13px
+}
+
+/* STATS */
 
 .stats{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:12px
+  gap:14px;
+  margin:18px 0
 }
 
 .stat{
   background:white;
-  border:1px solid #f0d8e1;
-  border-radius:14px;
-  padding:17px
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:var(--shadow)
+}
+
+.stat-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:var(--muted)
+}
+
+.stat-icon{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--soft)
 }
 
 .stat b{
   display:block;
-  font-size:25px;
-  color:#d94f82;
-  margin-top:5px
+  font-size:29px;
+  color:var(--pink2);
+  margin-top:9px
 }
 
-/* SIZE SYSTEM */
+/* TABS */
+
+.tabs{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  background:white;
+  border:1px solid var(--border);
+  padding:8px;
+  border-radius:16px;
+  margin-bottom:18px
+}
+
+.tab{
+  background:white;
+  color:var(--muted);
+  border-radius:11px;
+  padding:11px 16px;
+  font-weight:700
+}
+
+.tab.active{
+  background:var(--pink);
+  color:white
+}
+
+/* CARDS */
+
+.card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:var(--shadow)
+}
+
+.card-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:18px
+}
+
+.card-title h2{
+  margin:0;
+  color:var(--pink2)
+}
+
+label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:5px
+}
+
+input,select,textarea{
+  width:100%;
+  border:1px solid #e7ccd6;
+  border-radius:12px;
+  padding:12px;
+  outline:none;
+  background:white;
+  color:var(--text);
+  margin-bottom:14px
+}
+
+input:focus,select:focus,textarea:focus{
+  border-color:var(--pink);
+  box-shadow:0 0 0 3px rgba(217,79,130,.08)
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px
+}
+
+/* QUICK PRODUCT TEMPLATES */
+
+.templates{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:20px
+}
+
+.template{
+  text-align:left;
+  background:#fff8fb;
+  border:1px solid var(--border);
+  color:var(--pink2);
+  border-radius:14px;
+  padding:13px;
+  font-weight:700
+}
+
+.template span{
+  display:block;
+  font-size:12px;
+  color:var(--muted);
+  font-weight:400;
+  margin-top:4px
+}
+
+/* SIZES */
 
 .size-box{
   display:flex;
   flex-wrap:wrap;
   gap:8px;
-  margin:8px 0 15px
+  margin:8px 0 18px
 }
 
 .size-option{
@@ -237,98 +335,226 @@ button:hover{
 }
 
 .size-option label{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-width:55px;
-  padding:11px 15px;
+  min-width:58px;
+  text-align:center;
+  padding:11px 14px;
   border:1px solid #e2c6d2;
-  border-radius:10px;
-  background:#fff;
-  color:#d94f82;
-  font-weight:bold;
-  cursor:pointer
+  border-radius:11px;
+  background:white;
+  color:var(--pink2);
+  cursor:pointer;
+  margin:0
 }
 
 .size-option input:checked + label{
-  background:#d94f82;
-  color:#fff;
-  border-color:#d94f82
+  background:var(--pink);
+  color:white;
+  border-color:var(--pink)
 }
 
-/* PHOTO PREVIEW */
+/* PHOTOS */
 
 .photo-preview{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:8px;
-  margin:8px 0 15px
+  gap:10px;
+  margin:5px 0 18px
 }
 
-.preview-item{
+.preview{
   position:relative;
-  border:1px solid #efd2de;
-  border-radius:10px;
+  border:1px solid var(--border);
+  border-radius:13px;
   overflow:hidden;
-  background:#fff0f5
+  background:#fff5f9
 }
 
-.preview-item img{
+.preview img{
+  display:block;
   width:100%;
-  height:110px;
-  object-fit:contain;
-  display:block
+  height:120px;
+  object-fit:contain
 }
 
-.preview-label{
+.preview span{
   position:absolute;
-  left:5px;
-  bottom:5px;
-  background:#d94f82;
-  color:#fff;
+  bottom:6px;
+  left:6px;
+  background:var(--pink);
+  color:white;
   padding:4px 7px;
-  border-radius:6px;
+  border-radius:7px;
   font-size:11px
 }
 
-.selected-sizes{
+/* PRODUCTS */
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px
+}
+
+.product{
+  overflow:hidden;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:19px
+}
+
+.product-image{
+  width:100%;
+  height:240px;
+  object-fit:contain;
+  background:#fff4f8
+}
+
+.thumbs{
+  display:flex;
+  gap:6px;
+  padding:8px;
+  overflow-x:auto;
+  background:#fff9fb
+}
+
+.thumbs img{
+  width:50px;
+  height:50px;
+  object-fit:cover;
+  border-radius:8px;
+  border:1px solid var(--border)
+}
+
+.product-info{
+  padding:16px
+}
+
+.product-info h3{
+  margin:0 0 6px;
+  color:#4b2937
+}
+
+.category{
+  color:var(--muted);
+  font-size:13px
+}
+
+.price{
+  margin:12px 0;
+  font-size:20px;
+  font-weight:800;
+  color:var(--pink2)
+}
+
+.old-price{
+  color:#999;
+  font-size:13px;
+  text-decoration:line-through;
+  margin-left:6px
+}
+
+.pills{
   display:flex;
   flex-wrap:wrap;
   gap:5px;
-  margin:6px 0 10px
+  margin:8px 0
 }
 
-.selected-size{
-  background:#fff0f5;
-  color:#d94f82;
-  border:1px solid #efd2de;
-  border-radius:15px;
+.pill{
   padding:5px 9px;
-  font-size:12px;
-  font-weight:bold
+  border-radius:15px;
+  background:var(--soft);
+  color:var(--pink2);
+  border:1px solid var(--border);
+  font-size:11px;
+  font-weight:700
 }
 
-.stock-badge{
+.stock{
   display:inline-block;
+  padding:6px 10px;
+  border-radius:16px;
   background:#eefbf2;
   color:#26723a;
-  border-radius:15px;
-  padding:5px 9px;
   font-size:12px;
-  font-weight:bold
+  font-weight:700
 }
 
-.out-badge{
+.out{
   display:inline-block;
+  padding:6px 10px;
+  border-radius:16px;
   background:#fff0f0;
-  color:#a52c2c;
-  border-radius:15px;
-  padding:5px 9px;
+  color:var(--red);
   font-size:12px;
-  font-weight:bold
+  font-weight:700
 }
 
-@media(max-width:800px){
+.actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-top:12px
+}
+
+/* ORDERS */
+
+.order{
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:17px;
+  margin:10px 0;
+  background:#fff
+}
+
+.order-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center
+}
+
+.order h3{
+  margin:0;
+  color:var(--pink2)
+}
+
+.status{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:20px;
+  background:var(--pink);
+  color:white;
+  font-size:12px;
+  font-weight:700
+}
+
+/* MESSAGES */
+
+.msg,.success,.error{
+  padding:12px;
+  border-radius:12px;
+  margin:10px 0
+}
+
+.msg{
+  background:var(--soft);
+  color:#6e4655
+}
+
+.success{
+  background:#eefbf2;
+  color:#26723a
+}
+
+.error{
+  background:#fff0f0;
+  color:#a52c2c
+}
+
+/* MOBILE */
+
+@media(max-width:950px){
   .products{
     grid-template-columns:repeat(2,1fr)
   }
@@ -336,9 +562,25 @@ button:hover{
   .stats{
     grid-template-columns:repeat(2,1fr)
   }
+
+  .templates{
+    grid-template-columns:repeat(2,1fr)
+  }
 }
 
-@media(max-width:600px){
+@media(max-width:650px){
+  .app{
+    padding:10px
+  }
+
+  .header{
+    display:block
+  }
+
+  .header-actions{
+    margin-top:14px
+  }
+
   .grid{
     grid-template-columns:1fr
   }
@@ -347,16 +589,20 @@ button:hover{
     grid-template-columns:1fr
   }
 
-  .top{
-    display:block
-  }
-
-  .top button{
-    margin-top:5px
+  .stats{
+    grid-template-columns:1fr 1fr
   }
 
   .photo-preview{
     grid-template-columns:repeat(2,1fr)
+  }
+
+  .templates{
+    grid-template-columns:1fr 1fr
+  }
+
+  .card{
+    padding:15px
   }
 }
 </style>
@@ -364,166 +610,220 @@ button:hover{
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+<!-- LOGIN -->
 
-<div id="login"
-     class="card"
-     style="max-width:430px;margin:70px auto">
+<div id="login" class="login-page">
 
-  <h1>🌸 Aarvi Fashion</h1>
+  <div class="login-card">
 
-  <p><b>Admin Login</b></p>
+    <div class="logo">🌸</div>
 
-  <label>Email</label>
+    <h1 class="brand">Aarvi Fashion</h1>
 
-  <input
-    id="email"
-    type="email"
-    value="amreshkumar97552@gmail.com">
+    <p class="subtitle">
+      Premium Ladies Collection — Admin Panel
+    </p>
 
-  <label>Password</label>
+    <label>Email</label>
 
-  <input
-    id="password"
-    type="password"
-    placeholder="Admin password">
+    <input
+      id="email"
+      type="email"
+      value="amreshkumar97552@gmail.com">
 
-  <button
-    style="width:100%"
-    onclick="login()">
-    Login
-  </button>
+    <label>Password</label>
 
-  <div id="loginmsg" class="msg hide"></div>
+    <input
+      id="password"
+      type="password"
+      placeholder="Admin password">
+
+    <button
+      class="btn"
+      style="width:100%"
+      onclick="login()">
+      Login to Dashboard
+    </button>
+
+    <div id="loginmsg" class="msg hide"></div>
+
+  </div>
 
 </div>
 
 
-<!-- ================= ADMIN APP ================= -->
+<!-- ADMIN -->
 
-<div id="app" class="wrap hide">
+<div id="app" class="app hide">
 
-  <div class="top">
+  <header class="header">
 
     <div>
-      <h1>Aarvi Fashion Admin</h1>
-      <p>Products • Stock • Orders • Customers</p>
+      <h1>🌸 Aarvi Fashion</h1>
+      <p>Manage your ladies collection, stock & orders</p>
     </div>
 
-    <div>
+    <div class="header-actions">
 
-      <button onclick="openStore()">
-        Open Store
+      <button
+        class="btn btn-secondary"
+        onclick="openStore()">
+        🛍️ Open Store
       </button>
 
-      <button class="secondary" onclick="logout()">
+      <button
+        class="btn btn-dark"
+        onclick="logout()">
         Logout
       </button>
 
     </div>
 
-  </div>
+  </header>
 
 
-  <!-- ================= STATS ================= -->
+  <!-- STATS -->
 
   <div class="stats">
 
     <div class="stat">
-      Products
+      <div class="stat-top">
+        Products
+        <span class="stat-icon">📦</span>
+      </div>
       <b id="productCount">0</b>
     </div>
 
     <div class="stat">
-      Stock
+      <div class="stat-top">
+        Total Stock
+        <span class="stat-icon">📊</span>
+      </div>
       <b id="stockCount">0</b>
     </div>
 
     <div class="stat">
-      Orders
+      <div class="stat-top">
+        Orders
+        <span class="stat-icon">🛍️</span>
+      </div>
       <b id="orderCount">0</b>
     </div>
 
     <div class="stat">
-      New Orders
+      <div class="stat-top">
+        New Orders
+        <span class="stat-icon">🔔</span>
+      </div>
       <b id="newOrderCount">0</b>
     </div>
 
   </div>
 
 
-  <!-- ================= TABS ================= -->
+  <!-- TABS -->
 
-  <div class="card">
+  <div class="tabs">
 
-    <div class="tabs">
+    <button
+      class="tab active"
+      onclick="showSection('productsSection',this)">
+      📦 Products
+    </button>
 
-      <button
-        class="active"
-        id="tabProducts"
-        onclick="showSection('productsSection',this)">
-        📦 Products
-      </button>
+    <button
+      class="tab"
+      onclick="showSection('ordersSection',this)">
+      🛍️ Orders
+    </button>
 
-      <button
-        id="tabOrders"
-        onclick="showSection('ordersSection',this)">
-        🛍️ Orders
-      </button>
-
-      <button
-        id="tabCustomers"
-        onclick="showSection('customersSection',this)">
-        👥 Customers
-      </button>
-
-    </div>
+    <button
+      class="tab"
+      onclick="showSection('customersSection',this)">
+      👥 Customers
+    </button>
 
   </div>
 
 
-  <!-- ================= PRODUCTS SECTION ================= -->
+  <!-- PRODUCTS -->
 
   <section id="productsSection">
 
     <div class="card">
 
-      <h2>➕ Add Product</h2>
+      <div class="card-title">
 
-      <div id="msg" class="msg hide"></div>
+        <h2>✨ Add Ladies Dress</h2>
+
+      </div>
+
+      <div
+        id="msg"
+        class="msg hide">
+      </div>
+
+
+      <!-- QUICK TEMPLATES -->
+
+      <label>Quick Ladies Dress Template</label>
+
+      <div class="templates">
+
+        <button
+          class="template"
+          onclick="useTemplate(1)">
+          🌸 Floral Dress
+          <span>Casual / Daily Wear</span>
+        </button>
+
+        <button
+          class="template"
+          onclick="useTemplate(2)">
+          ✨ Party Dress
+          <span>Premium / Party Wear</span>
+        </button>
+
+        <button
+          class="template"
+          onclick="useTemplate(3)">
+          💕 Rayon Dress
+          <span>Comfort / Casual</span>
+        </button>
+
+        <button
+          class="template"
+          onclick="useTemplate(4)">
+          👗 Printed Dress
+          <span>Trending Collection</span>
+        </button>
+
+      </div>
 
 
       <div class="grid">
 
         <div>
-
           <label>Product Name *</label>
-
           <input
             id="name"
-            placeholder="Product name">
-
+            placeholder="Example: Elegant Floral Maxi Dress">
         </div>
 
-
         <div>
-
           <label>Category *</label>
 
           <select id="category">
-
-            <option value="Saree">Saree</option>
+            <option value="Ladies Dress">Ladies Dress</option>
             <option value="Kurti">Kurti</option>
+            <option value="Saree">Saree</option>
             <option value="Top">Top</option>
             <option value="Suit">Suit</option>
-
           </select>
 
         </div>
 
-
         <div>
-
           <label>Selling Price *</label>
 
           <input
@@ -531,12 +831,9 @@ button:hover{
             type="number"
             min="0"
             placeholder="999">
-
         </div>
 
-
         <div>
-
           <label>Original Price</label>
 
           <input
@@ -544,31 +841,29 @@ button:hover{
             type="number"
             min="0"
             placeholder="1499">
-
         </div>
 
-
         <div>
-
           <label>Total Stock *</label>
 
           <input
             id="stock"
             type="number"
             min="0"
+            step="1"
             value="1">
-
         </div>
 
       </div>
 
 
-      <!-- ================= SIZE ================= -->
+      <!-- SIZES -->
 
-      <h3>👕 Available Sizes</h3>
+      <h3>👗 Available Sizes</h3>
 
-      <p style="font-size:13px;color:#777">
-        Product mein jo size available hai usko select karein.
+      <p style="font-size:13px;color:#806a73">
+        Customer ko sirf available sizes dikhaye ja sakte hain;
+        exact stock quantity nahi.
       </p>
 
       <div class="size-box">
@@ -601,18 +896,18 @@ button:hover{
       </div>
 
 
-      <!-- ================= DESCRIPTION ================= -->
+      <!-- DESCRIPTION -->
 
-      <label>Description</label>
+      <label>Product Description</label>
 
       <textarea
         id="desc"
-        placeholder="Product description"></textarea>
+        placeholder="Example: Comfortable premium fabric, stylish design, perfect for casual and party wear..."></textarea>
 
 
-      <!-- ================= PHOTOS ================= -->
+      <!-- PHOTOS -->
 
-      <h3>📸 Product Photos — Maximum 4</h3>
+      <h3>📸 Product Photos — Up to 4</h3>
 
       <label>Photo 1 *</label>
 
@@ -622,7 +917,6 @@ button:hover{
         accept="image/*"
         onchange="previewPhotos()">
 
-
       <label>Photo 2</label>
 
       <input
@@ -631,7 +925,6 @@ button:hover{
         accept="image/*"
         onchange="previewPhotos()">
 
-
       <label>Photo 3</label>
 
       <input
@@ -639,7 +932,6 @@ button:hover{
         type="file"
         accept="image/*"
         onchange="previewPhotos()">
-
 
       <label>Photo 4</label>
 
@@ -650,51 +942,67 @@ button:hover{
         onchange="previewPhotos()">
 
 
-      <div id="photoPreview" class="photo-preview"></div>
+      <div
+        id="photoPreview"
+        class="photo-preview">
+      </div>
 
 
-      <button onclick="addProduct()">
+      <button
+        class="btn"
+        onclick="addProduct()">
         💾 Save Product
+      </button>
+
+      <button
+        class="btn btn-secondary"
+        onclick="clearProductForm()">
+        Clear
       </button>
 
     </div>
 
 
-    <!-- ================= PRODUCT LIST ================= -->
+    <!-- PRODUCT LIST -->
 
     <div class="card">
 
-      <div class="top">
+      <div class="card-title">
 
-        <h2>📦 Products</h2>
+        <h2>📦 Your Collection</h2>
 
         <button
-          class="secondary"
+          class="btn btn-secondary btn-small"
           onclick="loadProducts()">
           Refresh
         </button>
 
       </div>
 
-      <div id="products" class="products"></div>
+      <div
+        id="products"
+        class="products">
+      </div>
 
     </div>
 
   </section>
 
 
-  <!-- ================= ORDERS ================= -->
+  <!-- ORDERS -->
 
-  <section id="ordersSection" class="hide">
+  <section
+    id="ordersSection"
+    class="hide">
 
     <div class="card">
 
-      <div class="top">
+      <div class="card-title">
 
         <h2>🛍️ Customer Orders</h2>
 
         <button
-          class="secondary"
+          class="btn btn-secondary btn-small"
           onclick="loadOrders()">
           Refresh
         </button>
@@ -708,18 +1016,20 @@ button:hover{
   </section>
 
 
-  <!-- ================= CUSTOMERS ================= -->
+  <!-- CUSTOMERS -->
 
-  <section id="customersSection" class="hide">
+  <section
+    id="customersSection"
+    class="hide">
 
     <div class="card">
 
-      <div class="top">
+      <div class="card-title">
 
         <h2>👥 Customers</h2>
 
         <button
-          class="secondary"
+          class="btn btn-secondary btn-small"
           onclick="loadCustomers()">
           Refresh
         </button>
@@ -737,9 +1047,9 @@ button:hover{
 
 <script>
 
-/* =========================================================
+/* =========================
    SUPABASE
-========================================================= */
+========================= */
 
 const SUPABASE_URL =
 "https://sxifooelnulxldcbtmvd.supabase.co";
@@ -754,12 +1064,12 @@ supabase.createClient(
 );
 
 
-/* =========================================================
+/* =========================
    HELPERS
-========================================================= */
+========================= */
 
-const $ =
-id => document.getElementById(id);
+const $ = id =>
+  document.getElementById(id);
 
 
 function esc(value){
@@ -774,30 +1084,98 @@ function esc(value){
 }
 
 
-function showMessage(id,text,type="msg"){
+function money(value){
+
+  return Number(value || 0)
+    .toLocaleString("en-IN");
+
+}
+
+
+function showMessage(
+  id,
+  text,
+  type="msg"
+){
 
   const el=$(id);
 
   if(!el) return;
 
   el.className=type;
+
   el.textContent=text;
+
   el.classList.remove("hide");
 
 }
 
 
-function money(value){
+/* =========================
+   PRODUCT TEMPLATES
+========================= */
 
-  return Number(value||0)
-    .toLocaleString("en-IN");
+function useTemplate(number){
+
+  const templates={
+
+    1:{
+      name:"Elegant Floral Ladies Dress",
+      category:"Ladies Dress",
+      description:
+        "Elegant floral ladies dress with comfortable fabric and stylish look. Perfect for casual and daily wear."
+    },
+
+    2:{
+      name:"Premium Party Wear Ladies Dress",
+      category:"Ladies Dress",
+      description:
+        "Beautiful premium party wear ladies dress with stylish design. Perfect for parties and special occasions."
+    },
+
+    3:{
+      name:"Comfort Rayon Ladies Dress",
+      category:"Ladies Dress",
+      description:
+        "Comfortable rayon ladies dress with a soft feel and attractive design. Suitable for daily and casual wear."
+    },
+
+    4:{
+      name:"Trending Printed Ladies Dress",
+      category:"Ladies Dress",
+      description:
+        "Trendy printed ladies dress with a modern look. A stylish choice for casual outings and everyday fashion."
+    }
+
+  };
+
+  const t=templates[number];
+
+  if(!t) return;
+
+  $("name").value=t.name;
+
+  $("category").value=t.category;
+
+  $("desc").value=t.description;
+
+  $("sizeS").checked=true;
+  $("sizeM").checked=true;
+  $("sizeL").checked=true;
+
+  window.scrollTo({
+    top:document
+      .getElementById("productsSection")
+      .offsetTop,
+    behavior:"smooth"
+  });
 
 }
 
 
-/* =========================================================
-   GET SIZES
-========================================================= */
+/* =========================
+   SIZES
+========================= */
 
 function getSelectedSizes(){
 
@@ -815,9 +1193,9 @@ function getSelectedSizes(){
 }
 
 
-/* =========================================================
+/* =========================
    PHOTO PREVIEW
-========================================================= */
+========================= */
 
 function previewPhotos(){
 
@@ -844,15 +1222,15 @@ function previewPhotos(){
     const url=
       URL.createObjectURL(file);
 
-    container.innerHTML += `
+    container.innerHTML+=`
 
-      <div class="preview-item">
+      <div class="preview">
 
         <img
           src="${url}"
           alt="Photo ${index+1}">
 
-        <span class="preview-label">
+        <span>
           Photo ${index+1}
         </span>
 
@@ -865,19 +1243,19 @@ function previewPhotos(){
 }
 
 
-/* =========================================================
+/* =========================
    LOGIN
-========================================================= */
+========================= */
 
 async function login(){
 
-  const email =
+  const email=
     $("email").value.trim();
 
-  const password =
+  const password=
     $("password").value;
 
-  if(!email||!password){
+  if(!email || !password){
 
     showMessage(
       "loginmsg",
@@ -889,15 +1267,11 @@ async function login(){
 
   }
 
-
-  const {error} =
+  const {error}=
     await sb.auth.signInWithPassword({
-
-      email:email,
-      password:password
-
+      email,
+      password
     });
-
 
   if(error){
 
@@ -910,7 +1284,6 @@ async function login(){
     return;
 
   }
-
 
   openApp();
 
@@ -928,24 +1301,28 @@ async function logout(){
 
 function openApp(){
 
-  $("login").classList.add("hide");
+  $("login")
+    .classList.add("hide");
 
-  $("app").classList.remove("hide");
+  $("app")
+    .classList.remove("hide");
 
   loadProducts();
+
   loadOrders();
+
   loadCustomers();
 
 }
 
 
-/* =========================================================
-   SESSION CHECK
-========================================================= */
+/* =========================
+   SESSION
+========================= */
 
 async function checkSession(){
 
-  const {data} =
+  const {data}=
     await sb.auth.getSession();
 
   if(data.session){
@@ -959,11 +1336,14 @@ async function checkSession(){
 checkSession();
 
 
-/* =========================================================
-   SECTION SWITCH
-========================================================= */
+/* =========================
+   SECTION
+========================= */
 
-function showSection(id,button){
+function showSection(
+  id,
+  button
+){
 
   document
     .querySelectorAll(
@@ -973,24 +1353,19 @@ function showSection(id,button){
       el.classList.add("hide");
     });
 
-
   $(id).classList.remove("hide");
 
-
   document
-    .querySelectorAll(".tabs button")
+    .querySelectorAll(".tab")
     .forEach(b=>{
       b.classList.remove("active");
     });
 
-
   if(button)
     button.classList.add("active");
 
-
   if(id==="ordersSection")
     loadOrders();
-
 
   if(id==="customersSection")
     loadCustomers();
@@ -998,9 +1373,9 @@ function showSection(id,button){
 }
 
 
-/* =========================================================
-   OPEN STORE
-========================================================= */
+/* =========================
+   STORE
+========================= */
 
 function openStore(){
 
@@ -1012,19 +1387,92 @@ function openStore(){
 }
 
 
-/* =========================================================
+/* =========================
+   PARSE SIZES
+========================= */
+
+function parseSizes(value){
+
+  if(Array.isArray(value))
+    return value;
+
+  if(!value)
+    return [];
+
+  try{
+
+    const parsed=
+      typeof value==="string"
+      ? JSON.parse(value)
+      : value;
+
+    return Array.isArray(parsed)
+      ? parsed
+      : [];
+
+  }catch(e){
+
+    return [];
+
+  }
+
+}
+
+
+/* =========================
+   PARSE IMAGES
+========================= */
+
+function parseImages(product){
+
+  let images=[];
+
+  if(product.image_urls){
+
+    try{
+
+      if(Array.isArray(product.image_urls))
+        images=product.image_urls;
+      else
+        images=JSON.parse(product.image_urls);
+
+    }catch(e){
+
+      images=[];
+
+    }
+
+  }
+
+  if(
+    !Array.isArray(images) ||
+    !images.length
+  ){
+
+    images=[];
+
+    if(product.image_url)
+      images.push(product.image_url);
+
+  }
+
+  return images.slice(0,4);
+
+}
+
+
+/* =========================
    LOAD PRODUCTS
-========================================================= */
+========================= */
 
 async function loadProducts(){
 
   const container=$("products");
 
   container.innerHTML=
-    "<p>Loading products...</p>";
+    "<p>Products loading...</p>";
 
-
-  const {data,error} =
+  const {data,error}=
     await sb
       .from("products")
       .select("*")
@@ -1032,7 +1480,6 @@ async function loadProducts(){
         "created_at",
         {ascending:false}
       );
-
 
   if(error){
 
@@ -1045,21 +1492,17 @@ async function loadProducts(){
 
   }
 
-
-  const products=data||[];
-
+  const products=data || [];
 
   $("productCount").textContent=
     products.length;
 
-
   $("stockCount").textContent=
     products.reduce(
       (sum,p)=>
-        sum+Number(p.stock||0),
+        sum + Number(p.stock || 0),
       0
     );
-
 
   if(!products.length){
 
@@ -1072,185 +1515,133 @@ async function loadProducts(){
 
   }
 
-
   container.innerHTML=
     products.map(p=>{
 
-      let images=[];
+      const images=
+        parseImages(p);
 
-      try{
-
-        if(p.image_urls){
-
-          if(Array.isArray(p.image_urls))
-            images=p.image_urls;
-
-          else
-            images=JSON.parse(p.image_urls);
-
-        }
-
-      }catch(e){
-
-        images=[];
-
-      }
-
-
-      if(!Array.isArray(images))
-        images=[];
-
-
-      if(!images.length && p.image_url)
-        images=[p.image_url];
-
-
-      let sizes=[];
-
-      try{
-
-        if(Array.isArray(p.sizes))
-          sizes=p.sizes;
-
-        else if(p.sizes)
-          sizes=JSON.parse(p.sizes);
-
-      }catch(e){
-
-        sizes=[];
-
-      }
-
-
-      if(!Array.isArray(sizes))
-        sizes=[];
-
+      const sizes=
+        parseSizes(p.sizes);
 
       const stock=
-        Number(p.stock||0);
+        Number(p.stock || 0);
 
-
-      const sizeHTML=
-        sizes.length
-        ?
-        `<div class="selected-sizes">
-          ${sizes.map(s=>
-            `<span class="selected-size">
-              ${esc(s)}
-            </span>`
-          ).join("")}
-        </div>`
-        :
-        `<span style="font-size:12px;color:#999">
-          No size selected
-        </span>`;
-
-
-      const thumbs=
-        images.slice(0,4).map(url=>
-          `<img
-            src="${esc(url)}"
-            alt="Product photo">`
-        ).join("");
-
+      const image=
+        images[0] || "";
 
       return `
 
         <div class="product">
 
           <img
-            class="product-main-img"
-            src="${esc(images[0]||"")}"
+            class="product-image"
+            src="${esc(image)}"
             alt="${esc(p.name)}">
-
 
           ${
             images.length>1
             ?
-            `<div class="product-thumbs">
-              ${thumbs}
+            `<div class="thumbs">
+
+              ${
+                images.map(url=>
+                  `<img
+                    src="${esc(url)}"
+                    alt="Product photo">`
+                ).join("")
+              }
+
             </div>`
             :
             ""
           }
 
-
-          <div class="info">
+          <div class="product-info">
 
             <h3>
               ${esc(p.name)}
             </h3>
 
+            <div class="category">
+              ${esc(p.category || "Ladies Dress")}
+            </div>
 
-            <p>
-              ${esc(p.category||"")}
-            </p>
+            <div class="price">
 
-
-            <p>
-
-              <b style="color:#d94f82">
-                ₹${money(p.price)}
-              </b>
+              ₹${money(p.price)}
 
               ${
                 p.original_price
                 ?
-                `<span style="
-                  text-decoration:line-through;
-                  color:#999;
-                  margin-left:6px">
+                `<span class="old-price">
                   ₹${money(p.original_price)}
                 </span>`
                 :
                 ""
               }
 
-            </p>
+            </div>
 
+            <div>
+              <b>Sizes</b>
 
-            <p>
-              <b>Available Sizes:</b>
-            </p>
+              <div class="pills">
 
-            ${sizeHTML}
+                ${
+                  sizes.length
+                  ?
+                  sizes.map(s=>
+                    `<span class="pill">
+                      ${esc(s)}
+                    </span>`
+                  ).join("")
+                  :
+                  `<span class="category">
+                    No size
+                  </span>`
+                }
 
+              </div>
 
-            <p>
+            </div>
 
-              <b>Stock:</b>
+            <div style="margin-top:8px">
 
               ${
                 stock>0
                 ?
-                `<span class="stock-badge">
-                  ${stock} available
+                `<span class="stock">
+                  ${stock} in stock
                 </span>`
                 :
-                `<span class="out-badge">
+                `<span class="out">
                   Out of Stock
                 </span>`
               }
 
-            </p>
+            </div>
 
+            <div class="actions">
 
-            <button
-              onclick="editStock(
-                ${Number(p.id)},
-                ${stock}
-              )">
-              Stock
-            </button>
+              <button
+                class="btn btn-small"
+                onclick="editStock(
+                  ${Number(p.id)},
+                  ${stock}
+                )">
+                📦 Stock
+              </button>
 
+              <button
+                class="btn btn-danger btn-small"
+                onclick="deleteProduct(
+                  ${Number(p.id)}
+                )">
+                Delete
+              </button>
 
-            <button
-              class="danger"
-              onclick="deleteProduct(
-                ${Number(p.id)}
-              )">
-              Delete
-            </button>
+            </div>
 
           </div>
 
@@ -1263,39 +1654,32 @@ async function loadProducts(){
 }
 
 
-/* =========================================================
+/* =========================
    ADD PRODUCT
-========================================================= */
+========================= */
 
 async function addProduct(){
 
   const name=
     $("name").value.trim();
 
-
   const category=
     $("category").value;
-
 
   const price=
     Number($("price").value);
 
-
   const original=
-    Number($("original").value)||null;
-
+    Number($("original").value) || null;
 
   const stock=
-    Number($("stock").value)||0;
-
+    Number($("stock").value);
 
   const description=
     $("desc").value.trim();
 
-
   const sizes=
     getSelectedSizes();
-
 
   const files=[
     $("photo1").files[0],
@@ -1303,9 +1687,6 @@ async function addProduct(){
     $("photo3").files[0],
     $("photo4").files[0]
   ].filter(Boolean);
-
-
-  /* VALIDATION */
 
 
   if(!name){
@@ -1321,7 +1702,10 @@ async function addProduct(){
   }
 
 
-  if(!price || price<0){
+  if(
+    !Number.isFinite(price) ||
+    price<=0
+  ){
 
     showMessage(
       "msg",
@@ -1334,11 +1718,14 @@ async function addProduct(){
   }
 
 
-  if(stock<0){
+  if(
+    !Number.isInteger(stock) ||
+    stock<0
+  ){
 
     showMessage(
       "msg",
-      "Stock 0 ya usse zyada hona chahiye.",
+      "Stock whole number hona chahiye.",
       "error"
     );
 
@@ -1386,11 +1773,8 @@ async function addProduct(){
   }
 
 
-  /* FILE SIZE CHECK */
-
   const maxSize=
-    5*1024*1024;
-
+    5 * 1024 * 1024;
 
   for(const file of files){
 
@@ -1405,7 +1789,6 @@ async function addProduct(){
       return;
 
     }
-
 
     if(file.size>maxSize){
 
@@ -1422,113 +1805,121 @@ async function addProduct(){
   }
 
 
-  showMessage(
-    "msg",
-    "Photos upload ho rahi hain..."
-  );
+  try{
+
+    showMessage(
+      "msg",
+      "📸 Photos upload ho rahi hain..."
+    );
 
 
-  const urls=[];
+    const urls=[];
 
 
-  /* UPLOAD 4 PHOTOS */
+    for(let i=0;i<files.length;i++){
 
-  for(let i=0;i<files.length;i++){
+      const file=files[i];
 
-    const file=files[i];
-
-
-    const safeName=
-      file.name.replace(
-        /[^a-zA-Z0-9.-]/g,
-        "-"
-      );
-
-
-    const path=
-      Date.now()+
-      "-" +
-      Math.random()
-        .toString(36)
-        .slice(2)+
-      "-" +
-      safeName;
-
-
-    const upload=
-      await sb
-        .storage
-        .from("product-images")
-        .upload(
-          path,
-          file
+      const safeName=
+        file.name.replace(
+          /[^a-zA-Z0-9.-]/g,
+          "-"
         );
 
+      const path=
+        Date.now()+
+        "-" +
+        Math.random()
+          .toString(36)
+          .slice(2)+
+        "-" +
+        safeName;
 
-    if(upload.error){
 
-      showMessage(
-        "msg",
-        "Photo upload failed: "+
-        upload.error.message,
-        "error"
-      );
+      const upload=
+        await sb
+          .storage
+          .from("product-images")
+          .upload(
+            path,
+            file
+          );
 
-      return;
+
+      if(upload.error){
+
+        throw new Error(
+          "Photo upload failed: "+
+          upload.error.message
+        );
+
+      }
+
+
+      const publicUrl=
+        sb
+          .storage
+          .from("product-images")
+          .getPublicUrl(path)
+          .data
+          .publicUrl;
+
+
+      urls.push(publicUrl);
 
     }
 
 
-    const publicUrl=
-      sb
-        .storage
-        .from("product-images")
-        .getPublicUrl(path)
-        .data
-        .publicUrl;
+    showMessage(
+      "msg",
+      "💾 Product database mein save ho raha hai..."
+    );
 
 
-    urls.push(publicUrl);
+    const {error}=
+      await sb
+        .from("products")
+        .insert({
 
-  }
+          name:name,
 
+          category:category,
 
-  showMessage(
-    "msg",
-    "Product save ho raha hai..."
-  );
+          price:price,
 
+          original_price:original,
 
-  /* SAVE PRODUCT */
+          stock:stock,
 
-  const {error}=
-    await sb
-      .from("products")
-      .insert({
+          description:description,
 
-        name:name,
+          image_url:urls[0],
 
-        category:category,
+          image_urls:
+            JSON.stringify(urls),
 
-        price:price,
+          sizes:
+            JSON.stringify(sizes)
 
-        original_price:original,
-
-        stock:stock,
-
-        description:description,
-
-        image_url:urls[0],
-
-        image_urls:
-          JSON.stringify(urls),
-
-        sizes:sizes
-
-      });
+        });
 
 
-  if(error){
+    if(error)
+      throw new Error(error.message);
+
+
+    showMessage(
+      "msg",
+      "Product successfully added! ✅",
+      "success"
+    );
+
+
+    clearProductForm();
+
+    await loadProducts();
+
+  }catch(error){
 
     showMessage(
       "msg",
@@ -1536,28 +1927,14 @@ async function addProduct(){
       "error"
     );
 
-    return;
-
   }
-
-
-  showMessage(
-    "msg",
-    "Product successfully added! ✅",
-    "success"
-  );
-
-
-  clearProductForm();
-
-  loadProducts();
 
 }
 
 
-/* =========================================================
+/* =========================
    CLEAR FORM
-========================================================= */
+========================= */
 
 function clearProductForm(){
 
@@ -1571,12 +1948,14 @@ function clearProductForm(){
 
   $("desc").value="";
 
-
-  $("photo1").value="";
-  $("photo2").value="";
-  $("photo3").value="";
-  $("photo4").value="";
-
+  [
+    "photo1",
+    "photo2",
+    "photo3",
+    "photo4"
+  ].forEach(id=>{
+    $(id).value="";
+  });
 
   [
     "sizeS",
@@ -1585,21 +1964,22 @@ function clearProductForm(){
     "sizeXL",
     "sizeXXL"
   ].forEach(id=>{
-    if($(id))
-      $(id).checked=false;
+    $(id).checked=false;
   });
-
 
   $("photoPreview").innerHTML="";
 
 }
 
 
-/* =========================================================
+/* =========================
    EDIT STOCK
-========================================================= */
+========================= */
 
-async function editStock(id,current){
+async function editStock(
+  id,
+  current
+){
 
   const value=
     prompt(
@@ -1607,19 +1987,15 @@ async function editStock(id,current){
       current
     );
 
-
   if(value===null)
     return;
-
 
   const stock=
     Number(value);
 
-
   if(
-    !Number.isFinite(stock) ||
-    stock<0 ||
-    !Number.isInteger(stock)
+    !Number.isInteger(stock) ||
+    stock<0
   ){
 
     alert(
@@ -1648,21 +2024,20 @@ async function editStock(id,current){
 
   }
 
-
   loadProducts();
 
 }
 
 
-/* =========================================================
+/* =========================
    DELETE PRODUCT
-========================================================= */
+========================= */
 
 async function deleteProduct(id){
 
   if(
     !confirm(
-      "Kya aap product delete karna chahte hain?"
+      "Kya aap product permanently delete karna chahte hain?"
     )
   )
     return;
@@ -1689,9 +2064,9 @@ async function deleteProduct(id){
 }
 
 
-/* =========================================================
+/* =========================
    LOAD ORDERS
-========================================================= */
+========================= */
 
 async function loadOrders(){
 
@@ -1699,7 +2074,6 @@ async function loadOrders(){
 
   if(!container)
     return;
-
 
   container.innerHTML=
     "<p>Orders loading...</p>";
@@ -1727,18 +2101,16 @@ async function loadOrders(){
   }
 
 
-  const orders=data||[];
-
+  const orders=data || [];
 
   $("orderCount").textContent=
     orders.length;
 
-
   $("newOrderCount").textContent=
     orders.filter(o=>
       String(
-        o.Order_states||
-        o.Order_status||
+        o.Order_states ||
+        o.Order_status ||
         ""
       ).toLowerCase()==="new"
     ).length;
@@ -1760,23 +2132,19 @@ async function loadOrders(){
     orders.map(o=>{
 
       const status=
-        o.Order_states||
-        o.Order_status||
+        o.Order_states ||
+        o.Order_status ||
         "New";
 
-
       const phone=
-        o.Phone||"";
-
+        o.Phone || "";
 
       const whatsappText=
         encodeURIComponent(
-
           `Aarvi Fashion Order Update\n\n`+
           `Order ID: ${o.id}\n`+
-          `Product: ${o.Product_name||"-"}\n`+
+          `Product: ${o.Product_name || "-"}\n`+
           `Status: ${status}`
-
         );
 
 
@@ -1784,34 +2152,37 @@ async function loadOrders(){
 
         <div class="order">
 
-          <h3>
-            🛍️ Order #${esc(o.id)}
-          </h3>
+          <div class="order-head">
 
+            <h3>
+              🛍️ Order #${esc(o.id)}
+            </h3>
+
+            <span class="status">
+              ${esc(status)}
+            </span>
+
+          </div>
 
           <p>
             <b>Customer:</b>
-            ${esc(o.Customer_Name||"-")}
+            ${esc(o.Customer_Name || "-")}
           </p>
-
 
           <p>
             <b>Phone:</b>
-            ${esc(phone)}
+            ${esc(phone || "-")}
           </p>
-
 
           <p>
             <b>Product:</b>
-            ${esc(o.Product_name||"-")}
+            ${esc(o.Product_name || "-")}
           </p>
-
 
           <p>
             <b>Quantity:</b>
-            ${esc(o.Quantity||1)}
+            ${esc(o.Quantity || 1)}
           </p>
-
 
           ${
             o.Size
@@ -1824,110 +2195,60 @@ async function loadOrders(){
             ""
           }
 
-
           <p>
             <b>Address:</b>
-            ${esc(o.Address||"-")}
-            ${esc(o.City||"")}
-            ${esc(o.State||"")}
-            ${esc(o["Pin Code"]||"")}
+            ${esc(o.Address || "-")}
+            ${esc(o.City || "")}
+            ${esc(o.State || "")}
+            ${esc(o["Pin Code"] || "")}
           </p>
-
 
           <p>
             <b>Payment:</b>
-            ${esc(o.Payment_method||"-")}
+            ${esc(o.Payment_method || "-")}
           </p>
 
-
-          <p>
-            <span class="status">
-              ${esc(status)}
-            </span>
-          </p>
-
-
-          <label>
-            Order Status
-          </label>
-
+          <label>Order Status</label>
 
           <select id="status-${Number(o.id)}">
 
-            <option
-              value="New"
-              ${status==="New"?"selected":""}>
-              New
-            </option>
-
-
-            <option
-              value="Confirmed"
-              ${status==="Confirmed"?"selected":""}>
-              Confirmed
-            </option>
-
-
-            <option
-              value="Packed"
-              ${status==="Packed"?"selected":""}>
-              Packed
-            </option>
-
-
-            <option
-              value="Shipped"
-              ${status==="Shipped"?"selected":""}>
-              Shipped
-            </option>
-
-
-            <option
-              value="Out for Delivery"
-              ${status==="Out for Delivery"?"selected":""}>
-              Out for Delivery
-            </option>
-
-
-            <option
-              value="Delivered"
-              ${status==="Delivered"?"selected":""}>
-              Delivered
-            </option>
-
-
-            <option
-              value="Cancelled"
-              ${status==="Cancelled"?"selected":""}>
-              Cancelled
-            </option>
-
-
-            <option
-              value="Returned"
-              ${status==="Returned"?"selected":""}>
-              Returned
-            </option>
+            ${[
+              "New",
+              "Confirmed",
+              "Packed",
+              "Shipped",
+              "Out for Delivery",
+              "Delivered",
+              "Cancelled",
+              "Returned"
+            ].map(s=>
+              `<option
+                value="${esc(s)}"
+                ${status===s?"selected":""}>
+                ${esc(s)}
+              </option>`
+            ).join("")}
 
           </select>
 
-
           <button
-            onclick="updateOrderStatus(${Number(o.id)})">
+            class="btn"
+            onclick="updateOrderStatus(
+              ${Number(o.id)}
+            )">
             Update Status
           </button>
-
 
           ${
             phone
             ?
             `<a
-              href="https://wa.me/91${esc(phone)}?text=${whatsappText}"
+              href="https://wa.me/91${encodeURIComponent(phone)}?text=${whatsappText}"
               target="_blank"
               style="text-decoration:none">
 
               <button
-                class="green"
+                class="btn btn-green"
                 type="button">
                 WhatsApp Customer
               </button>
@@ -1946,19 +2267,17 @@ async function loadOrders(){
 }
 
 
-/* =========================================================
-   UPDATE ORDER STATUS
-========================================================= */
+/* =========================
+   UPDATE ORDER
+========================= */
 
 async function updateOrderStatus(id){
 
   const select=
     $("status-"+id);
 
-
   if(!select)
     return;
-
 
   const status=
     select.value;
@@ -1995,19 +2314,17 @@ async function updateOrderStatus(id){
 }
 
 
-/* =========================================================
+/* =========================
    LOAD CUSTOMERS
-========================================================= */
+========================= */
 
 async function loadCustomers(){
 
   const container=
     $("customers");
 
-
   if(!container)
     return;
-
 
   container.innerHTML=
     "<p>Customers loading...</p>";
@@ -2036,7 +2353,7 @@ async function loadCustomers(){
 
 
   const customers=
-    data||[];
+    data || [];
 
 
   if(!customers.length){
@@ -2057,25 +2374,22 @@ async function loadCustomers(){
       <div class="order">
 
         <h3>
-          👤 ${esc(c.full_name||"Customer")}
+          👤 ${esc(c.full_name || "Customer")}
         </h3>
-
 
         <p>
           <b>Email:</b>
-          ${esc(c.email||"-")}
+          ${esc(c.email || "-")}
         </p>
-
 
         <p>
           <b>Phone:</b>
-          ${esc(c.phone||"-")}
+          ${esc(c.phone || "-")}
         </p>
-
 
         <p>
           <b>Account Type:</b>
-          ${esc(c.account_type||"Customer")}
+          ${esc(c.account_type || "Customer")}
         </p>
 
       </div>
