@@ -1476,16 +1476,10 @@ error
 "user_id",
 session.user.id
 )
-const{
-  data,
-  error
-}=await sb
-  .from("orders")
-  .select("*")
-  .eq(
-    "user_id",
-    session.user.id
-  );
+.order(
+"created_at",
+{ascending:false}
+);
 
 
 if(error){
