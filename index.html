@@ -1,501 +1,734 @@
 <!doctype html>
 <html lang="en">
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1">
 
 <title>Aarvi Fashion</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+box-sizing:border-box;
+}
 
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#fff7fa;
-  color:#392531
+margin:0;
+font-family:Arial,sans-serif;
+background:#fff8fb;
+color:#35232b;
 }
 
-button,input,textarea,select{
-  font:inherit
+button,
+input,
+select,
+textarea{
+font:inherit;
 }
 
-button{
-  cursor:pointer;
-  border:0
+.container{
+width:min(1100px,92%);
+margin:auto;
 }
 
-:root{
-  --pink:#d94f82;
-  --dark:#b83268;
-  --soft:#fff0f5;
-  --border:#f0d7e1
+header{
+position:sticky;
+top:0;
+z-index:100;
+background:#fff;
+border-bottom:1px solid #ead9df;
 }
 
-.app{
-  max-width:520px;
-  margin:auto;
-  min-height:100vh;
-  background:#fff
+.nav{
+min-height:70px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:15px;
 }
 
-.top{
-  position:sticky;
-  top:0;
-  z-index:20;
-  background:rgba(255,255,255,.96);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-  padding:6px 10px
+.logo{
+text-decoration:none;
+color:#d94f82;
+font-family:Georgia,serif;
+font-size:25px;
+font-weight:900;
 }
 
-.toprow{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px
+.logo small{
+display:block;
+font-family:Arial,sans-serif;
+font-size:9px;
+letter-spacing:2px;
+color:#8a6c77;
 }
 
-.brand{
-  font-family:"Brush Script MT","Segoe Script","Lucida Handwriting",cursive;
-  font-weight:700;
-  color:#d94f82;
-  font-size:24px;
-  letter-spacing:1px;
-  line-height:1;
-  text-shadow:0 1px 0 #fff
+.nav-links{
+display:flex;
+gap:20px;
+}
+
+.nav-links a{
+text-decoration:none;
+color:#49343d;
+font-weight:700;
+}
+
+.nav-btn,
+.btn{
+border:0;
+border-radius:12px;
+padding:11px 16px;
+background:#d94f82;
+color:white;
+font-weight:800;
+cursor:pointer;
+text-decoration:none;
+display:inline-block;
+}
+
+.btn-light{
+background:#fff;
+color:#d94f82;
+border:1px solid #d94f82;
+}
+
+.btn-green{
+background:#29914b;
 }
 
 .icon{
-  width:34px;
-  height:34px;
-  border-radius:13px;
-  background:var(--soft);
-  color:var(--dark);
-  font-size:18px
-}
-
-.search{
-  margin-top:6px;
-  display:flex;
-  background:#fff7fa;
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:0 12px
-}
-
-.search input{
-  border:0;
-  outline:0;
-  background:transparent;
-  width:100%;
-  padding:6px
-}
-
-main{
-  padding:10px 10px 78px
+border:0;
+background:#fff0f5;
+color:#d94f82;
+border-radius:10px;
+padding:8px 12px;
+cursor:pointer;
 }
 
 .hero{
-  background:linear-gradient(135deg,#fff0f5,#ffe2ed);
-  border-radius:22px;
-  padding:10px;
-  margin-bottom:10px
+padding:65px 0;
+background:linear-gradient(
+135deg,
+#fff8fb,
+#ffeef5
+);
+}
+
+.hero-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:35px;
+align-items:center;
+}
+
+.eyebrow{
+color:#d94f82;
+font-weight:900;
+text-transform:uppercase;
+letter-spacing:2px;
+font-size:12px;
 }
 
 .hero h1{
-  margin:0 0 7px;
-  font-size:21px
+font-family:Georgia,serif;
+font-size:58px;
+line-height:1;
+margin:15px 0;
 }
 
 .hero p{
-  margin:0;
-  color:#765c67
+color:#76666d;
+line-height:1.7;
+}
+
+.hero-actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:20px;
+}
+
+.hero-art{
+min-height:350px;
+border-radius:25px;
+background:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:90px;
+box-shadow:0 15px 45px rgba(70,30,50,.08);
+}
+
+.section{
+padding:55px 0;
 }
 
 .section-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:10px 0 7px
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+margin-bottom:18px;
 }
 
 .section-title h2{
-  font-size:12px;
-  margin:0
+font-family:Georgia,serif;
+color:#d94f82;
+margin:0;
 }
 
-/* ================= CATALOG ================= */
-
 .cats{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:6px;
-  margin-bottom:4px
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin-bottom:25px;
 }
 
 .cat{
-  border:0;
-  background:transparent;
-  text-align:center;
-  padding:0;
-  overflow:visible
+border:1px solid #ead9df;
+border-radius:18px;
+padding:15px;
+background:#fff;
+text-align:center;
+cursor:pointer;
 }
 
 .cat img{
-  width:54px;
-  height:54px;
-  margin:auto;
-  display:block;
-  object-fit:cover;
-  background:var(--soft);
-  border-radius:50%;
-  border:1px solid var(--border);
-  box-shadow:0 2px 7px rgba(80,30,50,.08)
+width:70px;
+height:70px;
+border-radius:50%;
+object-fit:cover;
+display:block;
+margin:auto;
+background:#fff0f5;
 }
 
 .cat b{
-  display:block;
-  padding:4px 0 0;
-  font-size:8px;
-  line-height:1.15;
-  font-weight:700;
-  color:#392531
-}
-
-.cat:active img{
-  transform:scale(.94)
+display:block;
+font-size:13px;
+margin-top:7px;
 }
 
 .products{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:5px
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
 }
 
 .product{
-  border:1px solid var(--border);
-  border-radius:17px;
-  overflow:hidden;
-  background:#fff
+background:#fff;
+border:1px solid #ead9df;
+border-radius:15px;
+overflow:hidden;
 }
 
-.product img{
-  width:100%;
-  height:78px;
-  object-fit:contain;
-  background:#fff0f5
+.product-image{
+height:220px;
+background:#fff0f5;
+overflow:hidden;
 }
 
-.pi{
-  padding:4px
+.product-image img{
+width:100%;
+height:100%;
+object-fit:contain;
+display:block;
 }
 
-.pi h3{
-  margin:0 0 2px;
-  font-size:9px;
-  line-height:1.15
+.product-info{
+padding:11px;
+}
+
+.product-info h3{
+font-size:15px;
+margin:0 0 6px;
 }
 
 .muted{
-  color:#806a73;
-  font-size:10px
+color:#88777f;
+font-size:12px;
 }
 
 .price{
-  color:var(--dark);
-  font-weight:900;
-  font-size:11px;
-  margin:2px 0
+color:#d94f82;
+font-weight:900;
+font-size:18px;
+margin:7px 0;
 }
 
-.old{
-  text-decoration:line-through;
-  color:#999;
-  font-size:10px;
-  margin-left:4px
-}
-
-.btn{
-  width:100%;
-  padding:6px;
-  border-radius:11px;
-  background:var(--pink);
-  color:#fff;
-  font-weight:800
-}
-
-.out{
-  color:#a52c2c;
-  font-weight:700;
-  font-size:10px
-}
-
-.bottom{
-  position:fixed;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(520px,100%);
-  height:58px;
-  background:#fff;
-  border-top:1px solid var(--border);
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  z-index:25
-}
-
-.bottom button{
-  background:#fff;
-  color:#806a73
-}
-
-.bottom .active{
-  color:var(--pink);
-  font-weight:800
-}
-
-.drawer{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.45);
-  z-index:50;
-  display:none
-}
-
-.drawer.open{
-  display:block
-}
-
-.menu{
-  width:82%;
-  max-width:390px;
-  height:100%;
-  background:#fff;
-  padding:14px;
-  overflow:auto
-}
-
-.menu h2{
-  color:var(--dark)
-}
-
-.menu button{
-  display:block;
-  width:100%;
-  text-align:left;
-  padding:10px;
-  border-radius:12px;
-  background:#fff;
-  margin:4px 0
-}
-
-.menu button:hover{
-  background:var(--soft)
-}
-
-.screen{
-  display:none
-}
-
-.screen.active{
-  display:block
-}
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.5);
-  z-index:60;
-  display:flex;
-  align-items:flex-end
-}
-
-.box{
-  width:100%;
-  max-width:520px;
-  margin:auto;
-  background:#fff;
-  border-radius:24px 24px 0 0;
-  padding:14px;
-  max-height:92vh;
-  overflow:auto
-}
-
-.box input,
-.box textarea,
-.box select{
-  width:100%;
-  padding:9px;
-  border:1px solid var(--border);
-  border-radius:11px;
-  margin:5px 0 12px
-}
-
-.sizes{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin:8px 0 12px
-}
-
-.size{
-  padding:7px 10px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  background:#fff
-}
-
-.size.sel{
-  background:var(--pink);
-  color:#fff
-}
-
-.qty{
-  display:flex;
-  align-items:center;
-  gap:10px
-}
-
-.qty button{
-  width:34px;
-  height:34px;
-  border-radius:10px;
-  background:var(--soft)
-}
-
-.order-card{
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:12px;
-  margin:10px 0;
-  display:flex;
-  gap:12px
-}
-
-.order-card img{
-  width:75px;
-  height:90px;
-  object-fit:contain;
-  background:var(--soft);
-  border-radius:10px
-}
-
-.badge{
-  display:inline-block;
-  padding:4px 7px;
-  border-radius:20px;
-  background:var(--soft);
-  color:var(--dark);
-  font-size:11px;
-  font-weight:800
-}
-
-.profile{
-  background:linear-gradient(135deg,#fff0f5,#fff);
-  border:1px solid var(--border);
-  padding:18px;
-  border-radius:18px
-}
-
-.field{
-  margin:8px 0
-}
-
-.field label{
-  display:block;
-  font-size:10px;
-  font-weight:700;
-  margin-bottom:4px
+.stock{
+font-size:11px;
+color:#777;
 }
 
 .empty{
-  text-align:center;
-  padding:35px 10px;
-  color:#806a73
+padding:20px;
+background:#fff;
+border:1px solid #ead9df;
+border-radius:14px;
+text-align:center;
+color:#8a7880;
 }
 
-@media(max-width:380px){
-
-  .cats{
-    grid-template-columns:repeat(5,1fr);
-    gap:3px
-  }
-
-  .cat img{
-    width:44px;
-    height:44px
-  }
-
-  .cat b{
-    font-size:7px
-  }
-
-  .products{
-    grid-template-columns:repeat(3,1fr);
-    gap:4px
-  }
-
-  .product img{
-    height:68px
-  }
-
-  .pi{
-    padding:4px
-  }
-
-  .pi h3{
-    font-size:9px
-  }
-
-  .price{
-    font-size:11px
-  }
-
-  .btn{
-    font-size:10px;
-    padding:5px 3px
-  }
+.screen{
+display:none;
 }
+
+.screen.active{
+display:block;
+}
+
+.bottom{
+position:fixed;
+left:0;
+right:0;
+bottom:0;
+z-index:100;
+height:68px;
+background:#fff;
+border-top:1px solid #ead9df;
+display:flex;
+justify-content:space-around;
+align-items:center;
+}
+
+.bottom button{
+border:0;
+background:none;
+color:#777;
+font-weight:700;
+cursor:pointer;
+}
+
+.bottom button.active{
+color:#d94f82;
+}
+
+main{
+padding-bottom:90px;
+}
+
+.profile{
+background:#fff;
+border:1px solid #ead9df;
+border-radius:18px;
+padding:18px;
+}
+
+.field{
+margin:12px 0;
+}
+
+.field label{
+display:block;
+font-size:13px;
+font-weight:800;
+margin-bottom:5px;
+}
+
+.field input,
+.field select,
+.field textarea,
+.profile input{
+width:100%;
+padding:12px;
+border:1px solid #dfcbd3;
+border-radius:10px;
+outline:none;
+background:#fff;
+}
+
+.drawer{
+position:fixed;
+inset:0;
+background:rgba(20,10,15,.55);
+z-index:500;
+display:none;
+}
+
+.drawer.open{
+display:block;
+}
+
+.menu{
+width:min(320px,85%);
+height:100%;
+background:#fff;
+padding:20px;
+box-shadow:10px 0 30px rgba(0,0,0,.15);
+}
+
+.menu button{
+display:block;
+width:100%;
+text-align:left;
+padding:14px;
+margin:5px 0;
+border:0;
+border-radius:10px;
+background:#fff7fa;
+color:#432d37;
+font-weight:800;
+cursor:pointer;
+}
+
+.modal{
+position:fixed;
+inset:0;
+background:rgba(20,10,15,.65);
+z-index:600;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:15px;
+}
+
+.modal-box{
+background:#fff;
+width:min(920px,100%);
+max-height:94vh;
+overflow:auto;
+border-radius:20px;
+padding:22px;
+position:relative;
+}
+
+.modal-product{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:25px;
+}
+
+.gallery-main{
+height:390px;
+background:#fff5f8;
+border-radius:18px;
+overflow:hidden;
+}
+
+.gallery-main img{
+width:100%;
+height:100%;
+object-fit:contain;
+}
+
+.gallery-thumbs{
+display:flex;
+gap:8px;
+margin-top:10px;
+overflow-x:auto;
+}
+
+.gallery-thumbs img{
+width:70px;
+height:70px;
+object-fit:cover;
+border-radius:9px;
+cursor:pointer;
+}
+
+.sizes{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+}
+
+.size-radio{
+position:relative;
+}
+
+.size-radio input{
+position:absolute;
+opacity:0;
+}
+
+.size-radio label{
+display:block;
+padding:9px 14px;
+border:1px solid #ead9df;
+border-radius:9px;
+color:#d94f82;
+font-weight:800;
+cursor:pointer;
+}
+
+.size-radio input:checked + label{
+background:#d94f82;
+color:#fff;
+}
+
+.quantity{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.qty-btn{
+width:38px;
+height:38px;
+border:0;
+border-radius:9px;
+background:#f6e5eb;
+cursor:pointer;
+font-weight:900;
+}
+
+.qty-number{
+min-width:35px;
+text-align:center;
+font-weight:900;
+}
+
+.message{
+padding:11px;
+border-radius:10px;
+margin:10px 0;
+display:none;
+}
+
+.message.show{
+display:block;
+}
+
+.message.error{
+background:#fff0f0;
+color:#a52c2c;
+}
+
+.message.success{
+background:#eefbf2;
+color:#26723a;
+}
+
+/* ================= PROFILE / CONTACT / HELP / NOTIFICATIONS ================= */
+
+.profile-head{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:14px;
+}
+
+.avatar{
+width:72px;
+height:72px;
+border-radius:50%;
+object-fit:cover;
+background:#fff0f5;
+border:2px solid #ead5dd;
+}
+
+.gallery-upload{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:7px;
+margin:8px 0 14px;
+}
+
+.gallery-upload img{
+width:100%;
+height:70px;
+object-fit:cover;
+border-radius:10px;
+background:#fff0f5;
+border:1px solid #ead5dd;
+}
+
+.contact-card,
+.help-card,
+.notification-card{
+border:1px solid #ead5dd;
+border-radius:14px;
+padding:12px;
+margin:8px 0;
+background:#fff;
+}
+
+.contact-card a{
+color:#3b2730;
+font-weight:800;
+text-decoration:none;
+}
+
+.notification-card{
+display:flex;
+gap:10px;
+align-items:center;
+}
+
+.notification-card.unread{
+background:#fff0f5;
+}
+
+.notification-card img{
+width:58px;
+height:58px;
+object-fit:cover;
+border-radius:10px;
+background:#fff0f5;
+}
+
+.notification-time{
+font-size:11px;
+color:#8a7880;
+margin-top:4px;
+}
+
+.order-card{
+display:flex;
+gap:12px;
+background:#fff;
+border:1px solid #ead9df;
+border-radius:14px;
+padding:12px;
+margin:10px 0;
+}
+
+.order-card img{
+width:80px;
+height:80px;
+border-radius:10px;
+object-fit:cover;
+background:#fff0f5;
+}
+
+.badge{
+display:inline-block;
+padding:5px 9px;
+border-radius:20px;
+background:#d94f82;
+color:#fff;
+font-size:11px;
+font-weight:800;
+}
+
+@media(max-width:900px){
+
+.hero-grid{
+grid-template-columns:1fr;
+}
+
+.products{
+grid-template-columns:repeat(3,1fr);
+}
+
+.cats{
+grid-template-columns:repeat(4,1fr);
+}
+
+.modal-product{
+grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:600px){
+
+.nav-links{
+display:none;
+}
+
+.products{
+grid-template-columns:repeat(2,1fr);
+gap:9px;
+}
+
+.product-image{
+height:180px;
+}
+
+.product-info{
+padding:9px;
+}
+
+.product-info h3{
+font-size:13px;
+}
+
+.price{
+font-size:16px;
+}
+
+.cats{
+grid-template-columns:repeat(4,1fr);
+gap:7px;
+}
+
+.cat{
+padding:8px 4px;
+border-radius:15px;
+}
+
+.cat img{
+width:55px;
+height:55px;
+}
+
+.cat b{
+font-size:10px;
+}
+
+.hero h1{
+font-size:40px;
+}
+
+.hero-art{
+min-height:260px;
+}
+
+.gallery-main{
+height:300px;
+}
+
+}
+
+@media(max-width:420px){
+
+.products{
+grid-template-columns:repeat(2,1fr);
+}
+
+.product-image{
+height:165px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<header>
 
-<header class="top">
+<div class="container nav">
 
-<div class="toprow">
-
-<button
-class="icon"
-onclick="openMenu()">
-☰
-</button>
-
-<div class="brand">
+<a class="logo" href="#home">
 AARVI FASHION
+<small>ELEGANCE IN EVERY THREAD</small>
+</a>
+
+<div class="nav-links">
+<a href="#home">Home</a>
+<a href="#collections">Collections</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
 </div>
 
 <button
-class="icon"
-onclick="showScreen('account')">
-👤
+class="nav-btn"
+onclick="openMenu()">
+
+☰ Menu
+
 </button>
-
-</div>
-
-<div class="search">
-
-<span>⌕</span>
-
-<input
-id="search"
-placeholder="Search products..."
-oninput="renderProducts()">
 
 </div>
 
@@ -508,18 +741,63 @@ oninput="renderProducts()">
 id="home"
 class="screen active">
 
-<div class="hero">
+<section class="hero">
+
+<div class="container hero-grid">
+
+<div>
+
+<div class="eyebrow">
+Welcome to Aarvi Fashion
+</div>
 
 <h1>
-Style that feels beautifully yours.
+Your style.<br>
+Your elegance.
 </h1>
 
 <p>
-Fashion • Beauty • Jewellery
+Discover beautiful women's fashion made for
+everyday confidence and special moments.
 </p>
+
+<div class="hero-actions">
+
+<button
+class="btn"
+onclick="document.getElementById('collections').scrollIntoView()">
+
+Explore Collection
+
+</button>
+
+<a
+href="https://wa.me/916204117647"
+target="_blank"
+class="btn btn-light">
+
+Chat on WhatsApp
+
+</a>
 
 </div>
 
+</div>
+
+<div class="hero-art">
+🌸
+</div>
+
+</div>
+
+</section>
+
+
+<section
+id="collections"
+class="section">
+
+<div class="container">
 
 <div class="section-title">
 
@@ -528,7 +806,6 @@ Shop by Category
 </h2>
 
 </div>
-
 
 <div
 id="cats"
@@ -544,11 +821,14 @@ Latest Collection
 
 </div>
 
-
 <div
 id="products"
 class="products">
 </div>
+
+</div>
+
+</section>
 
 </section>
 
@@ -556,6 +836,8 @@ class="products">
 <section
 id="orders"
 class="screen">
+
+<div class="container section">
 
 <div class="section-title">
 
@@ -566,13 +848,15 @@ My Orders
 <button
 class="icon"
 onclick="loadOrders()">
+
 ↻
+
 </button>
 
 </div>
 
-<div
-id="ordersList">
+<div id="ordersList"></div>
+
 </div>
 
 </section>
@@ -582,6 +866,8 @@ id="ordersList">
 id="account"
 class="screen">
 
+<div class="container section">
+
 <div class="section-title">
 
 <h2>
@@ -590,8 +876,62 @@ My Account
 
 </div>
 
-<div
-id="accountBox">
+<div id="accountBox"></div>
+
+</div>
+
+</section>
+
+
+<section
+id="about"
+class="section">
+
+<div class="container">
+
+<div class="section-title">
+<h2>About Aarvi Fashion</h2>
+</div>
+
+<p class="muted">
+Fashion • Beauty • Jewellery
+</p>
+
+</div>
+
+</section>
+
+
+<section
+id="contact"
+class="section">
+
+<div class="container">
+
+<div class="section-title">
+<h2>Contact Aarvi Fashion</h2>
+</div>
+
+<div class="contact-card">
+📞 <a href="tel:6204117647">6204117647</a>
+</div>
+
+<div class="contact-card">
+💬 <a href="https://wa.me/916204117647" target="_blank">
+WhatsApp 6204117647
+</a>
+</div>
+
+<div class="contact-card">
+📧 <a href="mailto:amreshkumar97552@gmail.com">
+amreshkumar97552@gmail.com
+</a>
+</div>
+
+<div class="contact-card">
+📍 Rahui, Nalanda
+</div>
+
 </div>
 
 </section>
@@ -608,10 +948,10 @@ onclick="showScreen('home')">
 
 ⌂
 <br>
-
 <small>Home</small>
 
 </button>
+
 
 <button
 id="navOrders"
@@ -619,10 +959,10 @@ onclick="showScreen('orders')">
 
 🛍
 <br>
-
 <small>Orders</small>
 
 </button>
+
 
 <button
 id="navAccount"
@@ -630,17 +970,12 @@ onclick="showScreen('account')">
 
 👤
 <br>
-
 <small>Account</small>
 
 </button>
 
 </nav>
 
-</div>
-
-
-<!-- THREE LINE MENU -->
 
 <div
 id="drawer"
@@ -656,7 +991,7 @@ onclick="event.stopPropagation()">
 </button>
 
 <h2>
-Menu
+Aarvi Fashion
 </h2>
 
 <button onclick="goHome()">
@@ -665,12 +1000,16 @@ Menu
 
 <button
 onclick="showScreen('orders');closeMenu()">
+
 🛍️ My Orders
+
 </button>
 
 <button
 onclick="showScreen('account');closeMenu()">
+
 👤 My Account
+
 </button>
 
 <button onclick="contact()">
@@ -691,130 +1030,130 @@ onclick="showScreen('account');closeMenu()">
 
 <script>
 
-const SUPABASE_URL=
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
 "https://sxifooelnulxldcbtmvd.supabase.co";
 
-const SUPABASE_KEY=
+const SUPABASE_KEY =
 "sb_publishable_nLLITIJxfhc52cUkZaGZ4w_GvJubfM-";
 
-const sb=
+const sb =
 supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
 
 
-let allProducts=[],
-currentProduct=null,
-selectedSize="",
-qty=1,
-currentCategory="All";
+/* =========================================================
+   HELPERS
+========================================================= */
+
+const $ =
+id => document.getElementById(id);
 
 
-/* ================= CATEGORIES ================= */
-/* KURTA SET HATA DIYA */
+function esc(value){
 
-const CATS=[
-"Plazzo",
-"Pant Set",
-"Dupatta Set",
-"Kurti Set",
-"Dress Material",
-"Combos",
-"Daily Deals",
-"Western Wear",
-"Beauty",
-"Jewellery"
-];
-
-
-/* ================= SYSTEMATIC CATEGORY PHOTOS ================= */
-
-const CATEGORY_PHOTOS={
-
-"Plazzo":
-"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=300&q=80",
-
-"Pant Set":
-"https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=300&q=80",
-
-"Dupatta Set":
-"https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=300&q=80",
-
-"Kurti Set":
-"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=300&q=80",
-
-"Dress Material":
-"https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=300&q=80",
-
-"Combos":
-"https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=300&q=80",
-
-"Daily Deals":
-"https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=300&q=80",
-
-"Western Wear":
-"https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=300&q=80",
-
-"Beauty":
-"https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=300&q=80",
-
-"Jewellery":
-"https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=300&q=80"
-
-};
-
-
-const esc=v=>
-String(v??"")
+return String(value ?? "")
 .replace(/&/g,"&amp;")
 .replace(/</g,"&lt;")
 .replace(/>/g,"&gt;")
 .replace(/"/g,"&quot;")
 .replace(/'/g,"&#039;");
 
+}
 
-function imgs(p){
 
-let x=[];
+function money(value){
+
+return Number(value || 0)
+.toLocaleString("en-IN");
+
+}
+
+
+function parseArray(value){
+
+if(Array.isArray(value))
+return value;
 
 try{
 
-x=
-Array.isArray(p.image_urls)
-?p.image_urls
-:JSON.parse(p.image_urls||"[]");
+const parsed=
+JSON.parse(value || "[]");
 
-}catch{}
+return Array.isArray(parsed)
+? parsed
+: [];
 
-if(!x.length&&p.image_url)
-x=[p.image_url];
+}catch(e){
 
-return x
-.filter(Boolean)
-.slice(0,4);
+return [];
+
+}
 
 }
 
 
-function sizes(p){
+/* =========================================================
+   PRODUCT IMAGES
+   EXISTING SYSTEM KE HISAB SE
+========================================================= */
+
+function getImages(product){
+
+let images=[];
 
 try{
 
-return Array.isArray(p.sizes)
-?p.sizes
-:JSON.parse(p.sizes||"[]");
+if(product.image_urls){
 
-}catch{
-
-return[];
-
-}
+images=
+JSON.parse(
+product.image_urls
+);
 
 }
 
+}catch(e){
 
-/* ================= PRODUCTS ================= */
+images=[];
+
+}
+
+if(!Array.isArray(images))
+images=[];
+
+
+if(
+!images.length &&
+product.image_url
+){
+
+images=[
+product.image_url
+];
+
+}
+
+return images.filter(Boolean);
+
+}
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+let allProducts=[];
+let currentCategory="All";
+let selectedProduct=null;
+let selectedQuantity=1;
+let selectedSize="";
+
 
 async function loadProducts(){
 
@@ -829,10 +1168,13 @@ error
 {ascending:false}
 );
 
+
 if(error){
 
 $("products").innerHTML=
-'<div class="empty">Products load nahi ho rahe.</div>';
+`<div class="empty">
+Products load nahi ho rahe.
+</div>`;
 
 return;
 
@@ -841,172 +1183,157 @@ return;
 allProducts=data||[];
 
 renderCategories();
-
 renderProducts();
 
 }
 
 
-const $=
-id=>document.getElementById(id);
-
-
-/* ================= CATEGORY IMAGE ================= */
-
-function categoryImage(category){
-
-const product=
-allProducts.find(
-p=>
-String(
-p.category||""
-)
-.trim()
-.toLowerCase()
-===
-category.trim().toLowerCase()
-);
-
-
-/*
-Agar us category ka product available hai
-to us product ki asli photo use hogi.
-*/
-
-if(product){
-
-const photos=
-imgs(product);
-
-if(photos.length)
-return photos[0];
-
-}
-
-
-/*
-Agar category mein abhi product nahi hai
-to systematic category photo use hogi.
-*/
-
-return CATEGORY_PHOTOS[category]||"";
-
-}
-
-
-/* ================= RENDER CATEGORIES ================= */
-
 function renderCategories(){
 
-$("cats").innerHTML=
+const cats=$("cats");
 
-CATS.map(category=>`
+const categories=[
+"All",
+"Saree",
+"Kurti",
+"Top",
+"Suit",
+"Plazzo",
+"Pant Set",
+"Dupatta Set",
+"Dress Material",
+"Combos",
+"Daily Deals",
+"Westernwear",
+"Beauty",
+"Jewellery"
+];
 
-<button
+cats.innerHTML=
+categories.map(c=>`
+
+<div
 class="cat"
-onclick="filterCat('${esc(category)}')">
+onclick="setCategory('${esc(c)}')">
 
-<img
-src="${esc(categoryImage(category))}"
-alt="${esc(category)}"
-loading="lazy">
+<div
+style="
+width:65px;
+height:65px;
+margin:auto;
+border-radius:50%;
+background:#fff0f5;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:27px">
+
+${
+c==="All"?"✨":
+c==="Beauty"?"💄":
+c==="Jewellery"?"💎":
+c==="Saree"?"🥻":
+c==="Kurti"?"👗":
+c==="Westernwear"?"👚":
+"🌸"
+}
+
+</div>
 
 <b>
-${esc(category)}
+${esc(c)}
 </b>
 
-</button>
+</div>
 
 `).join("");
 
 }
 
 
-/* ================= CATEGORY FILTER ================= */
+function setCategory(category){
 
-function filterCat(c){
-
-currentCategory=c;
-
-showScreen("home");
+currentCategory=category;
 
 $("productTitle").textContent=
-c==="All"
+category==="All"
 ?"Latest Collection"
-:c;
+:category;
 
 renderProducts();
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
 
 }
 
 
-/* ================= PRODUCTS DISPLAY ================= */
-
 function renderProducts(){
 
-let q=
-$("search")
-.value
-.trim()
-.toLowerCase();
+const container=$("products");
 
-let list=
-allProducts.filter(
-
+let products=
+currentCategory==="All"
+? allProducts
+: allProducts.filter(
 p=>
-
-(
-currentCategory==="All"||
-String(
-p.category||""
-)
+String(p.category||"")
+.toLowerCase()===
+String(currentCategory)
 .toLowerCase()
-===
-currentCategory.toLowerCase()
-)
-
-&&
-
-(
-!q||
-String(
-p.name||""
-)
-.toLowerCase()
-.includes(q)
-)
-
 );
 
 
-if(!list.length){
+if(!products.length){
 
-$("products").innerHTML=
-'<div class="empty">Is category mein abhi product nahi hai.</div>';
+container.innerHTML=
+`<div class="empty">
+Is category mein abhi product nahi hai.
+</div>`;
 
 return;
 
 }
 
 
-$("products").innerHTML=
+container.innerHTML=
+products.map(p=>{
 
-list.map(p=>{
+const images=
+getImages(p);
 
-let im=imgs(p);
+const firstImage=
+images[0]||"";
 
-return`
 
-<article class="product">
+const stock=
+Number(p.stock||0);
+
+
+const sizes=
+parseArray(p.sizes);
+
+
+return `
+
+<div class="product">
+
+<div class="product-image">
 
 <img
-src="${esc(im[0]||"")}"
-alt="${esc(p.name)}">
+src="${esc(firstImage)}"
+alt="${esc(p.name||"Product")}"
+onerror="this.style.display='none'">
 
-<div class="pi">
+</div>
+
+
+<div class="product-info">
 
 <h3>
-${esc(p.name)}
+${esc(p.name||"Product")}
 </h3>
 
 <div class="muted">
@@ -1014,41 +1341,46 @@ ${esc(p.category||"")}
 </div>
 
 <div class="price">
-
-₹${Number(
-p.price||0
-).toLocaleString("en-IN")}
-
-${
-p.original_price
-?
-`<span class="old">
-₹${Number(
-p.original_price
-).toLocaleString("en-IN")}
-</span>`
-:""
-}
-
+₹${money(p.price)}
 </div>
 
 ${
-Number(p.stock||0)>0
+p.original_price
 ?
-`<button
-class="btn"
-onclick="openOrder(${Number(p.id)})">
-Order Now
-</button>`
-:
-`<div class="out">
-Out of Stock
+`<div
+style="
+font-size:12px;
+color:#999;
+text-decoration:line-through">
+
+₹${money(p.original_price)}
+
 </div>`
+:
+""
 }
+
+
+<button
+class="btn"
+style="
+width:100%;
+margin-top:8px;
+padding:9px"
+onclick="openOrder(${Number(p.id)})"
+${stock<=0?"disabled":""}>
+
+${
+stock<=0
+?"Out of Stock"
+:"View / Order"
+}
+
+</button>
 
 </div>
 
-</article>
+</div>
 
 `;
 
@@ -1057,184 +1389,459 @@ Out of Stock
 }
 
 
-/* ================= ORDER MODAL ================= */
+/* =========================================================
+   ORDER
+========================================================= */
 
 function openOrder(id){
 
-currentProduct=
+selectedProduct=
 allProducts.find(
-p=>
-Number(p.id)===
-Number(id)
+p=>Number(p.id)===Number(id)
 );
 
-if(!currentProduct)
+if(!selectedProduct)
 return;
 
+selectedQuantity=1;
 selectedSize="";
-qty=1;
 
-let ss=
-sizes(currentProduct);
+const images=
+getImages(selectedProduct);
 
-let sizeHtml=
-ss.length
-?
-`
-
-<label>
-Size
-</label>
-
-<div class="sizes">
-
-${ss.map(s=>
-
-`<button
-type="button"
-class="size"
-onclick="pickSize('${esc(s)}',this)">
-
-${esc(s)}
-
-</button>`
-
-).join("")}
-
-</div>
-
-`
-:"";
-
-
-$("modalRoot").innerHTML=
-
-`
+$("modalRoot").innerHTML=`
 
 <div
 class="modal"
 onclick="if(event.target===this)closeModal()">
 
-<div class="box">
+<div class="modal-box">
+
+<div class="modal-product">
+
+<div>
+
+<div class="gallery-main">
+
+<img
+id="mainProductImage"
+src="${esc(images[0]||"")}"
+alt="Product">
+
+</div>
+
+<div
+class="gallery-thumbs">
+
+${
+images.map(
+(url,index)=>
+`
+
+<img
+src="${esc(url)}"
+class="${index===0?"active":""}"
+onclick="changeMainImage(${index})">
+
+`
+).join("")
+}
+
+</div>
+
+</div>
+
+
+<div>
 
 <h2>
-Place Order
+${esc(selectedProduct.name)}
 </h2>
 
-<p>
+<div class="muted">
+${esc(selectedProduct.category||"")}
+</div>
 
-<b>
-${esc(currentProduct.name)}
-</b>
+<div class="price"
+style="font-size:27px">
 
-<br>
+₹${money(selectedProduct.price)}
 
-₹${Number(
-currentProduct.price||0
-).toLocaleString("en-IN")}
+</div>
 
-</p>
 
-${sizeHtml}
+<div
+class="field">
+
+<label>
+Select Size
+</label>
+
+<div
+id="sizeContainer"
+class="sizes">
+
+</div>
+
+</div>
+
+
+<div
+class="field">
 
 <label>
 Quantity
 </label>
 
-<div class="qty">
+<div class="quantity">
 
 <button
-onclick="changeQty(-1)">
+class="qty-btn"
+onclick="changeQuantity(-1)">
 −
 </button>
 
-<b id="qtyVal">
+<span
+id="quantityValue"
+class="qty-number">
 1
-</b>
+</span>
 
 <button
-onclick="changeQty(1)">
+class="qty-btn"
+onclick="changeQuantity(1)">
 +
 </button>
 
 </div>
 
-<label>
-Full Name *
-</label>
+</div>
 
-<input
-id="oName"
-placeholder="Your name">
 
-<label>
-Mobile *
-</label>
+<div
+id="orderMessage"
+class="message">
+</div>
 
-<input
-id="oPhone"
-maxlength="10"
-inputmode="numeric"
-placeholder="10 digit mobile">
-
-<label>
-Address *
-</label>
-
-<textarea
-id="oAddress"></textarea>
-
-<label>
-City *
-</label>
-
-<input
-id="oCity">
-
-<label>
-State *
-</label>
-
-<input
-id="oState">
-
-<label>
-PIN *
-</label>
-
-<input
-id="oPin"
-maxlength="6"
-inputmode="numeric">
-
-<label>
-Payment
-</label>
-
-<select id="oPay">
-
-<option>
-COD
-</option>
-
-<option>
-Online
-</option>
-
-</select>
 
 <button
 class="btn"
-id="placeBtn"
-onclick="placeOrder()">
+style="width:100%"
+onclick="showOrderForm()">
 
-Confirm Order
+Continue to Order
 
 </button>
 
 <button
 class="btn"
-style="margin-top:8px;background:#777"
+style="
+width:100%;
+margin-top:8px;
+background:#777"
+onclick="closeModal()">
+
+Close
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+renderSizes();
+
+}
+
+
+function closeModal(){
+
+$("modalRoot").innerHTML="";
+
+}
+
+
+function changeMainImage(index){
+
+const images=
+getImages(selectedProduct);
+
+const main=
+$("mainProductImage");
+
+if(main)
+main.src=
+images[index]||"";
+
+document
+.querySelectorAll(".gallery-thumbs img")
+.forEach(
+(img,i)=>
+img.classList.toggle(
+"active",
+i===index
+)
+);
+
+}
+
+
+function renderSizes(){
+
+const container=
+$("sizeContainer");
+
+if(!container)
+return;
+
+const sizes=
+parseArray(
+selectedProduct.sizes
+);
+
+if(!sizes.length){
+
+container.innerHTML=
+`<span
+class="muted">
+
+Size not required
+
+</span>`;
+
+return;
+
+}
+
+container.innerHTML=
+sizes.map(
+(size,index)=>
+`
+
+<div class="size-radio">
+
+<input
+type="radio"
+id="sizeChoice${index}"
+name="selectedSize"
+value="${esc(size)}"
+${index===0?"checked":""}
+onchange="selectedSize=this.value">
+
+<label
+for="sizeChoice${index}">
+
+${esc(size)}
+
+</label>
+
+</div>
+
+`
+).join("");
+
+selectedSize=
+sizes[0]||"";
+
+}
+
+
+function changeQuantity(change){
+
+if(!selectedProduct)
+return;
+
+const stock=
+Number(selectedProduct.stock||0);
+
+selectedQuantity+=Number(change);
+
+if(selectedQuantity<1)
+selectedQuantity=1;
+
+if(selectedQuantity>stock)
+selectedQuantity=stock;
+
+$("quantityValue").textContent=
+selectedQuantity;
+
+}
+
+
+/* =========================================================
+   ORDER FORM
+========================================================= */
+
+function showOrderForm(){
+
+const{
+data:{session}
+}=
+sb.auth.getSession
+?{data:{session:null}}
+:{};
+
+$("modalRoot").innerHTML=`
+
+<div class="modal">
+
+<div class="modal-box">
+
+<h2>
+Confirm Order
+</h2>
+
+<div
+style="
+background:#fff5f8;
+padding:12px;
+border-radius:12px;
+margin-bottom:12px">
+
+<b>
+${esc(selectedProduct.name)}
+</b>
+
+<br>
+
+₹${money(selectedProduct.price)}
+× ${selectedQuantity}
+
+${
+selectedSize
+?
+` • Size ${esc(selectedSize)}`
+:
+""
+}
+
+</div>
+
+
+<div class="field">
+
+<label>
+Full Name
+</label>
+
+<input
+id="orderName"
+placeholder="Your name">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Mobile Number
+</label>
+
+<input
+id="orderPhone"
+placeholder="10 digit mobile"
+inputmode="numeric">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Full Address
+</label>
+
+<textarea
+id="orderAddress"
+placeholder="Delivery address">
+</textarea>
+
+</div>
+
+
+<div class="field">
+
+<label>
+City
+</label>
+
+<input
+id="orderCity"
+placeholder="City">
+
+</div>
+
+
+<div class="field">
+
+<label>
+State
+</label>
+
+<input
+id="orderState"
+placeholder="State">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Pin Code
+</label>
+
+<input
+id="orderPincode"
+placeholder="6 digit PIN"
+inputmode="numeric">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Payment Method
+</label>
+
+<select id="orderPayment">
+
+<option value="COD">
+Cash on Delivery
+</option>
+
+<option value="Online">
+Online Payment
+</option>
+
+</select>
+
+</div>
+
+
+<button
+class="btn"
+style="width:100%"
+onclick="submitWebsiteOrder()">
+
+Confirm Order
+
+</button>
+
+
+<button
+class="btn"
+style="
+width:100%;
+margin-top:8px;
+background:#777"
 onclick="closeModal()">
 
 Cancel
@@ -1250,107 +1857,144 @@ Cancel
 }
 
 
-/* ================= SIZE ================= */
+async function submitWebsiteOrder(){
 
-function pickSize(s,b){
-
-selectedSize=s;
-
-document
-.querySelectorAll(".size")
-.forEach(
-x=>
-x.classList.remove("sel")
-);
-
-b.classList.add("sel");
-
-}
+const{
+data:{session}
+}=
+await sb.auth.getSession();
 
 
-/* ================= QUANTITY ================= */
+if(!session){
 
-function changeQty(d){
-
-qty=Math.max(
-1,
-qty+d
-);
-
-$("qtyVal").textContent=qty;
-
-}
-
-
-/* ================= CLOSE MODAL ================= */
-
-function closeModal(){
-
-$("modalRoot").innerHTML="";
-
-}
-
-
-/* ================= PLACE ORDER ================= */
-
-async function placeOrder(){
-
-const btn=
-$("placeBtn");
-
-btn.disabled=true;
-
-btn.textContent=
-"Order save ho raha hai...";
-
-const name=
-$("oName").value.trim();
-
-const phone=
-$("oPhone").value.trim();
-
-const address=
-$("oAddress").value.trim();
-
-const city=
-$("oCity").value.trim();
-
-const state=
-$("oState").value.trim();
-
-const pin=
-$("oPin").value.trim();
-
-const pay=
-$("oPay").value;
-
-
-if(
-!name||
-! /^\d{10}$/.test(phone)||
-!address||
-!city||
-!state||
-! /^\d{6}$/.test(pin)
-){
+closeModal();
 
 alert(
-"Details sahi bhariye."
+"Order karne ke liye Login / Sign Up required hai."
 );
 
-btn.disabled=false;
-
-btn.textContent=
-"Confirm Order";
+showScreen("account");
 
 return;
 
 }
 
 
+if(!selectedProduct){
+
+alert(
+"Product select nahi hua."
+);
+
+return;
+
+}
+
+
+const customerName=
+$("orderName")
+.value
+.trim();
+
+
+const phone=
+$("orderPhone")
+.value
+.replace(/\D/g,"");
+
+
+const address=
+$("orderAddress")
+.value
+.trim();
+
+
+const city=
+$("orderCity")
+.value
+.trim();
+
+
+const state=
+$("orderState")
+.value
+.trim();
+
+
+const pincode=
+$("orderPincode")
+.value
+.replace(/\D/g,"");
+
+
+const paymentMethod=
+$("orderPayment")
+.value;
+
+
+if(!customerName){
+
+alert("Please enter your name.");
+return;
+
+}
+
+if(!/^[0-9]{10}$/.test(phone)){
+
+alert(
+"Please enter a valid 10 digit mobile number."
+);
+
+return;
+
+}
+
+if(!address){
+
+alert(
+"Please enter your full address."
+);
+
+return;
+
+}
+
+if(!city){
+
+alert(
+"Please enter your city."
+);
+
+return;
+
+}
+
+if(!state){
+
+alert(
+"Please enter your state."
+);
+
+return;
+
+}
+
+if(!/^[0-9]{6}$/.test(pincode)){
+
+alert(
+"Please enter a valid 6 digit PIN code."
+);
+
+return;
+
+}
+
+
+const sizes=
+parseArray(selectedProduct.sizes);
+
 if(
-sizes(currentProduct).length
-&&
+sizes.length &&
 !selectedSize
 ){
 
@@ -1358,20 +2002,9 @@ alert(
 "Size select karein."
 );
 
-btn.disabled=false;
-
-btn.textContent=
-"Confirm Order";
-
 return;
 
 }
-
-
-const{
-data:{session}
-}=
-await sb.auth.getSession();
 
 
 const{
@@ -1383,10 +2016,10 @@ await sb.rpc(
 {
 
 p_user_id:
-session?.user?.id||null,
+session.user.id,
 
 p_customer_name:
-name,
+customerName,
 
 p_phone:
 phone,
@@ -1401,19 +2034,19 @@ p_state:
 state,
 
 p_pin_code:
-pin,
+pincode,
 
 p_product_id:
-Number(currentProduct.id),
+Number(selectedProduct.id),
 
 p_size:
 selectedSize||null,
 
 p_quantity:
-qty,
+selectedQuantity,
 
 p_payment_method:
-pay
+paymentMethod
 
 }
 );
@@ -1425,11 +2058,6 @@ alert(
 "Order confirm nahi hua:\n"+
 error.message
 );
-
-btn.disabled=false;
-
-btn.textContent=
-"Confirm Order";
 
 return;
 
@@ -1446,72 +2074,85 @@ data
 showScreen("orders");
 
 loadProducts();
-
 loadOrders();
 
 }
 
 
-/* ================= SCREEN ================= */
+/* =========================================================
+   AUTH
+========================================================= */
 
-async function showScreen(id){
+async function accountLogin(){
 
-document
-.querySelectorAll(".screen")
-.forEach(
-x=>
-x.classList.remove("active")
-);
+const email=
+$("aEmail")
+.value
+.trim();
 
-$(id)
-.classList.add("active");
-
-
-document
-.querySelectorAll(".bottom button")
-.forEach(
-x=>
-x.classList.remove("active")
-);
+const password=
+$("aPass")
+.value;
 
 
-$("nav"+
-id.charAt(0).toUpperCase()+
-id.slice(1)
-)
-.classList.add("active");
+const{error}=
+await sb.auth.signInWithPassword({
+email,
+password
+});
 
 
-if(id==="orders")
-loadOrders();
-
-if(id==="account")
+if(error)
+alert(error.message);
+else
 loadAccount();
 
-scrollTo(0,0);
+}
+
+
+async function accountSignup(){
+
+const email=
+$("aEmail")
+.value
+.trim();
+
+const password=
+$("aPass")
+.value;
+
+
+if(password.length<6){
+
+alert(
+"Password kam se kam 6 characters ka ho."
+);
+
+return;
 
 }
 
 
-/* ================= HOME ================= */
+const{error}=
+await sb.auth.signUp({
+email,
+password
+});
 
-function goHome(){
 
-closeMenu();
-
-currentCategory="All";
-
-showScreen("home");
-
-$("productTitle").textContent=
-"Latest Collection";
-
-renderProducts();
+if(error)
+alert(error.message);
+else
+alert(
+"Account create ho gaya. Email confirmation required ho sakta hai."
+);
 
 }
 
 
-/* ================= MENU ================= */
+/* =========================================================
+   MENU
+========================================================= */
 
 function openMenu(){
 
@@ -1529,33 +2170,267 @@ $("drawer")
 }
 
 
-/* ================= CONTACT ================= */
+function goHome(){
+
+closeMenu();
+
+currentCategory="All";
+
+showScreen("home");
+
+$("productTitle").textContent=
+"Latest Collection";
+
+renderProducts();
+
+}
+
 
 function contact(){
 
-alert(
-"Aarvi Fashion support se contact karein."
-);
-
 closeMenu();
+
+$("modalRoot").innerHTML=`
+
+<div
+class="modal"
+onclick="if(event.target===this)closeModal()">
+
+<div
+class="modal-box"
+style="max-width:520px">
+
+<h2>
+💬 Aarvi Fashion Contact
+</h2>
+
+<div class="contact-card">
+📞
+<a href="tel:6204117647">
+Call: 6204117647
+</a>
+</div>
+
+<div class="contact-card">
+💬
+<a
+href="https://wa.me/916204117647"
+target="_blank">
+
+WhatsApp: 6204117647
+
+</a>
+</div>
+
+<div class="contact-card">
+📧
+<a
+href="mailto:amreshkumar97552@gmail.com">
+
+amreshkumar97552@gmail.com
+
+</a>
+</div>
+
+<div class="contact-card">
+
+📍
+<b>Address:</b>
+Rahui, Nalanda
+
+</div>
+
+<button
+class="btn"
+onclick="closeModal()">
+
+Close
+
+</button>
+
+</div>
+
+</div>
+
+`;
 
 }
 
-
-/* ================= HELP ================= */
 
 function help(){
 
-alert(
-"Product choose karein → size select karein → details bharein → Confirm Order."
-);
-
 closeMenu();
+
+$("modalRoot").innerHTML=`
+
+<div
+class="modal"
+onclick="if(event.target===this)closeModal()">
+
+<div
+class="modal-box"
+style="max-width:620px">
+
+<h2>
+❓ Aarvi Fashion Help
+</h2>
+
+<div class="help-card">
+
+<b>🛍️ Order kaise karein?</b>
+
+<br>
+
+Product choose karein →
+size select karein →
+quantity choose karein →
+delivery details bharein →
+Confirm Order.
+
+</div>
+
+<div class="help-card">
+
+<b>📏 Size Help</b>
+
+<br>
+
+Product mein available size
+select karein. Size doubt ho to
+WhatsApp support par contact karein.
+
+</div>
+
+<div class="help-card">
+
+<b>💳 Payment / COD</b>
+
+<br>
+
+Checkout par available payment
+option choose karein.
+
+</div>
+
+<div class="help-card">
+
+<b>✅ Order Confirmation</b>
+
+<br>
+
+Order confirm hone ke baad
+Order ID milega aur My Orders
+mein order dikhega.
+
+</div>
+
+<div class="help-card">
+
+<b>🚚 Order Tracking</b>
+
+<br>
+
+Courier aur tracking number
+add hone ke baad My Orders
+mein Track option dikhega.
+
+</div>
+
+<div class="help-card">
+
+<b>❌ Cancellation</b>
+
+<br>
+
+Order ID aur mobile number ke
+saath support se contact karein.
+
+</div>
+
+<div class="help-card">
+
+<b>↩️ Return / Refund</b>
+
+<br>
+
+Order details ke saath
+Aarvi Fashion support se
+contact karein.
+
+</div>
+
+<div class="help-card">
+
+<b>📦 Delivery Help</b>
+
+<br>
+
+Delivery aur courier help ke
+liye support se contact karein.
+
+</div>
+
+<div class="help-card">
+
+<b>👤 Account Help</b>
+
+<br>
+
+My Account mein phone, email,
+selfie aur gallery photos manage karein.
+
+</div>
+
+<div class="contact-card">
+💬
+<a
+href="https://wa.me/916204117647"
+target="_blank">
+
+WhatsApp Support
+
+</a>
+</div>
+
+<div class="contact-card">
+📞
+<a href="tel:6204117647">
+
+Call Support
+
+</a>
+</div>
+
+<div class="contact-card">
+📧
+<a
+href="mailto:amreshkumar97552@gmail.com">
+
+Email Support
+
+</a>
+</div>
+
+<button
+class="btn"
+onclick="closeModal()">
+
+Close
+
+</button>
+
+</div>
+
+</div>
+
+`;
 
 }
 
 
-/* ================= MY ORDERS ================= */
+/* =========================================================
+   MY ORDERS
+========================================================= */
 
 async function loadOrders(){
 
@@ -1620,23 +2495,18 @@ return;
 
 
 el.innerHTML=
-
-data.map(o=>
-
-`
+data.map(o=>`
 
 <div class="order-card">
 
 <img
-src="${esc(o.product_image||"")}">
+src="${esc(o.product_image||"")}"
+alt="Product">
 
 <div style="flex:1">
 
 <b>
-${esc(
-o.product_name||
-"Product"
-)}
+${esc(o.product_name||"Product")}
 </b>
 
 <div class="muted">
@@ -1651,7 +2521,8 @@ ${
 o.size
 ?
 ` • Size ${esc(o.size)}`
-:""
+:
+""
 }
 
 </div>
@@ -1667,25 +2538,23 @@ o.total_amount||0
 <span class="badge">
 
 ${esc(
-o.order_status||
-"New"
+o.order_status||"New"
 )}
 
 </span>
 
-
 ${
 o.tracking_number
 ?
-
 `
 
-<div style="margin-top:8px">
+<div
+style="margin-top:8px">
 
 <b>
-🚚 ${esc(
-o.courier_name||
-"Courier"
+🚚
+${esc(
+o.courier_name||"Courier"
 )}
 </b>
 
@@ -1698,37 +2567,75 @@ o.tracking_number
 ${
 o.tracking_url
 ?
+`
 
-`<a
+<a
 href="${esc(o.tracking_url)}"
 target="_blank">
 
 Track →
 
-</a>`
+</a>
 
-:""
+`
+:
+""
 }
 
 </div>
 
 `
-
-:""
+:
+""
 }
 
 </div>
 
 </div>
 
-`
-
-).join("");
+`).join("");
 
 }
 
 
-/* ================= ACCOUNT ================= */
+/* =========================================================
+   PROFILE
+========================================================= */
+
+async function uploadCustomerPhoto(
+file,
+path
+){
+
+const upload=
+await sb
+.storage
+.from("customer-profile")
+.upload(
+path,
+file,
+{
+upsert:true,
+contentType:file.type
+}
+);
+
+
+if(upload.error)
+throw new Error(
+upload.error.message
+);
+
+
+return sb
+.storage
+.from("customer-profile")
+.getPublicUrl(path)
+.data
+.publicUrl;
+
+}
+
 
 async function loadAccount(){
 
@@ -1743,9 +2650,7 @@ await sb.auth.getSession();
 
 if(!session){
 
-el.innerHTML=
-
-`
+el.innerHTML=`
 
 <div class="profile">
 
@@ -1772,7 +2677,9 @@ Login
 
 <button
 class="btn"
-style="margin-top:8px;background:#777"
+style="
+margin-top:8px;
+background:#777"
 onclick="accountSignup()">
 
 Create Account
@@ -1801,174 +2708,238 @@ session.user.id
 .maybeSingle();
 
 
-el.innerHTML=
+let gallery=[];
 
-`
+try{
+
+gallery=
+JSON.parse(
+p?.gallery_urls||"[]"
+);
+
+}catch(e){
+
+gallery=[];
+
+}
+
+
+if(!Array.isArray(gallery))
+gallery=[];
+
+
+const avatar=
+p?.avatar_url||
+"https://via.placeholder.com/120?text=Aarvi";
+
+
+el.innerHTML=`
 
 <div class="profile">
 
-<h3>
+<div class="profile-head">
 
-👤 ${esc(
-p?.full_name||
-"My Account"
-)}
+<img
+class="avatar"
+src="${esc(avatar)}"
+alt="Profile">
+
+<div>
+
+<h3 style="margin:0">
+
+👤 My Profile
 
 </h3>
 
 <div class="muted">
 
-${esc(
-session.user.email||
-""
-)}
+Aarvi Fashion Customer
 
 </div>
+
+</div>
+
+</div>
+
 
 <div class="field">
 
 <label>
-Name
-</label>
-
-<input
-id="pName"
-value="${esc(
-p?.full_name||
-""
-)}">
-
-</div>
-
-<div class="field">
-
-<label>
-Phone
+Phone Number
 </label>
 
 <input
 id="pPhone"
-value="${esc(
-p?.phone||
-""
-)}">
+value="${esc(p?.phone||"")}"
+placeholder="Mobile number">
 
 </div>
+
 
 <div class="field">
 
 <label>
-Address
+Email
 </label>
 
-<textarea
-id="pAddress">${esc(
-p?.address||
+<input
+id="pEmail"
+type="email"
+value="${esc(
+p?.email||
+session.user.email||
 ""
-)}</textarea>
+)}"
+placeholder="Email">
 
 </div>
+
+
+<div class="field">
+
+<label>
+Selfie / Profile Photo
+</label>
+
+<input
+id="avatarFile"
+type="file"
+accept="image/*"
+capture="user">
+
+<input
+id="currentAvatar"
+type="hidden"
+value="${esc(
+p?.avatar_url||""
+)}">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Gallery Photos — Maximum 4
+</label>
+
+<input
+id="galleryFiles"
+type="file"
+accept="image/*"
+multiple>
+
+<input
+id="currentGallery"
+type="hidden"
+value='${esc(
+JSON.stringify(gallery)
+)}'>
+
+</div>
+
+
+${
+gallery.length
+?
+`
+
+<div
+class="gallery-upload">
+
+${
+gallery.map(
+url=>
+`
+
+<img
+src="${esc(url)}"
+alt="Gallery photo">
+
+`
+).join("")
+}
+
+</div>
+
+`
+:
+""
+}
+
 
 <button
 class="btn"
 onclick="saveProfile()">
 
-Save Profile
+💾 Save Profile
 
 </button>
 
+
 <button
 class="btn"
-style="margin-top:8px;background:#777"
+style="
+margin-top:8px;
+background:#29914b"
+onclick="enableNotifications()">
+
+🔔 Enable Notifications
+
+</button>
+
+
+<h3
+style="margin-top:18px">
+
+🔔 Aarvi Fashion Notifications
+
+</h3>
+
+
+<div id="notificationsBox">
+
+<div class="empty">
+
+Notifications loading...
+
+</div>
+
+</div>
+
+
+<button
+class="btn"
+style="margin-top:8px"
+onclick="loadNotifications()">
+
+Refresh Notifications
+
+</button>
+
+
+<button
+class="btn"
+style="
+margin-top:8px;
+background:#777"
 onclick="sb.auth.signOut().then(loadAccount)">
 
 Logout
 
 </button>
 
+
 </div>
 
 `;
 
-}
 
-
-/* ================= LOGIN ================= */
-
-async function accountLogin(){
-
-const email=
-$("aEmail")
-.value
-.trim();
-
-const password=
-$("aPass")
-.value;
-
-
-const{error}=
-await sb.auth.signInWithPassword({
-
-email,
-password
-
-});
-
-
-if(error)
-alert(error.message);
-
-else
-loadAccount();
+loadNotifications();
 
 }
 
-
-/* ================= SIGNUP ================= */
-
-async function accountSignup(){
-
-const email=
-$("aEmail")
-.value
-.trim();
-
-const password=
-$("aPass")
-.value;
-
-
-if(password.length<6)
-
-return alert(
-"Password kam se kam 6 characters ka ho."
-);
-
-
-const{error}=
-await sb.auth.signUp({
-
-email,
-password
-
-});
-
-
-if(error)
-
-alert(error.message);
-
-else
-
-alert(
-"Account create ho gaya. Email confirmation required ho sakta hai."
-);
-
-}
-
-
-/* ================= SAVE PROFILE ================= */
 
 async function saveProfile(){
 
@@ -1982,7 +2953,342 @@ if(!session)
 return;
 
 
-const obj={
+const phone=
+$("pPhone")
+.value
+.trim();
+
+
+const email=
+$("pEmail")
+.value
+.trim()
+||
+session.user.email
+||
+"";
+
+
+const avatarFile=
+$("avatarFile")
+?.files?.[0];
+
+
+const galleryFiles=
+[
+...(
+$("galleryFiles")
+?.files||[]
+)
+].slice(0,4);
+
+
+try{
+
+let avatarUrl=
+$("currentAvatar")
+?.value||
+null;
+
+
+let gallery=[];
+
+
+try{
+
+gallery=
+JSON.parse(
+$("currentGallery")
+?.value||
+"[]"
+);
+
+}catch(e){
+
+gallery=[];
+
+}
+
+
+if(!Array.isArray(gallery))
+gallery=[];
+
+
+if(avatarFile){
+
+avatarUrl=
+await uploadCustomerPhoto(
+avatarFile,
+session.user.id+
+"/avatar-"+
+Date.now()
+);
+
+}
+
+
+if(galleryFiles.length){
+
+gallery=[];
+
+for(
+let i=0;
+i<galleryFiles.length;
+i++
+){
+
+gallery.push(
+
+await uploadCustomerPhoto(
+
+galleryFiles[i],
+
+session.user.id+
+"/gallery-"+
+Date.now()+
+"-"+
+i
+
+)
+
+);
+
+}
+
+}
+
+
+const{
+error
+}=
+await sb
+.from("customer_profiles")
+.upsert({
+
+id:
+session.user.id,
+
+email:
+email,
+
+phone:
+phone,
+
+avatar_url:
+avatarUrl,
+
+gallery_urls:
+JSON.stringify(
+gallery
+),
+
+notifications_enabled:
+true
+
+});
+
+
+if(error)
+throw new Error(
+error.message
+);
+
+
+alert(
+"Profile saved successfully ✅"
+);
+
+loadAccount();
+
+}catch(error){
+
+alert(
+"Profile save nahi hua:\n"+
+error.message
+);
+
+}
+
+}
+
+
+async function loadNotifications(){
+
+const{
+data:{session}
+}=
+await sb.auth.getSession();
+
+
+if(!session)
+return;
+
+
+const{
+data,
+error
+}=
+await sb
+.from("customer_notifications")
+.select("*")
+.eq(
+"user_id",
+session.user.id
+)
+.order(
+"created_at",
+{ascending:false}
+)
+.limit(30);
+
+
+const box=
+$("notificationsBox");
+
+
+if(!box)
+return;
+
+
+if(error){
+
+box.innerHTML=
+`<div class="empty">
+Notifications load nahi ho rahe.
+</div>`;
+
+return;
+
+}
+
+
+if(!data?.length){
+
+box.innerHTML=
+`<div class="empty">
+Abhi koi notification nahi hai.
+</div>`;
+
+return;
+
+}
+
+
+box.innerHTML=
+data.map(n=>`
+
+<div
+class="notification-card
+${n.is_read?"":"unread"}">
+
+${
+n.image_url
+?
+`
+
+<img
+src="${esc(n.image_url)}"
+alt="Offer">
+
+`
+:
+""
+}
+
+<div>
+
+<b>
+${esc(
+n.title||
+"Aarvi Fashion"
+)}
+</b>
+
+<div class="muted">
+
+${esc(
+n.message||""
+)}
+
+</div>
+
+<div class="notification-time">
+
+${new Date(
+n.created_at
+).toLocaleString(
+"en-IN"
+)}
+
+</div>
+
+</div>
+
+</div>
+
+`).join("");
+
+
+await sb
+.from("customer_notifications")
+.update({
+is_read:true
+})
+.eq(
+"user_id",
+session.user.id
+)
+.eq(
+"is_read",
+false
+);
+
+}
+
+
+async function enableNotifications(){
+
+if(
+!("Notification" in window)
+){
+
+alert(
+"Is browser mein notification supported nahi hai."
+);
+
+return;
+
+}
+
+
+const permission=
+await Notification.requestPermission();
+
+
+if(
+permission!=="granted"
+){
+
+alert(
+"Notification permission Allow karein."
+);
+
+return;
+
+}
+
+
+const{
+data:{session}
+}=
+await sb.auth.getSession();
+
+
+if(session){
+
+await sb
+.from("customer_profiles")
+.upsert({
 
 id:
 session.user.id,
@@ -1990,45 +3296,69 @@ session.user.id,
 email:
 session.user.email,
 
-full_name:
-$("pName").value.trim(),
+notifications_enabled:
+true
 
-phone:
-$("pPhone").value.trim(),
-
-address:
-$("pAddress").value.trim()
-
-};
-
-
-const{error}=
-await sb
-.from("customer_profiles")
-.upsert(obj);
-
-
-alert(
-
-error
-?
-
-"Profile save nahi hua: "+
-error.message
-
-:
-
-"Profile saved ✅"
-
-);
-
-
-loadAccount();
+});
 
 }
 
 
-/* ================= START ================= */
+alert(
+"Aarvi Fashion notifications ON ho gaye ✅"
+);
+
+}
+
+
+/* =========================================================
+   SCREEN
+========================================================= */
+
+async function showScreen(id){
+
+document
+.querySelectorAll(".screen")
+.forEach(
+x=>
+x.classList.remove("active")
+);
+
+
+$(id)
+.classList.add("active");
+
+
+document
+.querySelectorAll(".bottom button")
+.forEach(
+x=>
+x.classList.remove("active")
+);
+
+
+const nav=
+$("nav"+
+id.charAt(0).toUpperCase()+
+id.slice(1));
+
+
+if(nav)
+nav.classList.add("active");
+
+
+if(id==="orders")
+loadOrders();
+
+
+if(id==="account")
+loadAccount();
+
+
+scrollTo(0,0);
+
+}
+
 
 loadProducts();
 
