@@ -4,542 +4,216 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Aarvi Fashion — Admin</title>
+<title>Aarvi Fashion Admin</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{box-sizing:border-box}
 
-:root{
-  --pink:#d94f82;
-  --pink2:#b83268;
-  --light:#fff5f9;
-  --soft:#fff0f5;
-  --border:#f0d7e1;
-  --text:#392531;
-  --muted:#806a73;
-  --green:#29914b;
-  --red:#a52c2c;
-  --shadow:0 12px 35px rgba(92,36,59,.08)
-}
-
 body{
   margin:0;
   font-family:Arial,sans-serif;
-  background:
-    radial-gradient(circle at top right,#ffe8f1 0,transparent 30%),
-    #fff8fb;
-  color:var(--text)
+  background:#fff7fa;
+  color:#392531
 }
 
-button,input,select,textarea{
+button,input,textarea,select{
   font:inherit
 }
 
 button{
-  border:0;
-  cursor:pointer
+  cursor:pointer;
+  border:0
 }
 
 .hide{
   display:none!important
 }
 
-/* LOGIN */
-
-.login-page{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px
+:root{
+  --p:#d94f82;
+  --d:#b83268;
+  --s:#fff0f5;
+  --b:#f0d7e1;
+  --g:#29914b
 }
 
-.login-card{
-  width:100%;
-  max-width:440px;
-  background:white;
-  border:1px solid var(--border);
-  border-radius:28px;
-  padding:34px;
-  box-shadow:var(--shadow)
-}
-
-.logo{
-  width:64px;
-  height:64px;
-  border-radius:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,var(--pink),#f58fb3);
-  color:white;
-  font-size:30px;
-  margin-bottom:16px
-}
-
-.brand{
-  margin:0;
-  color:var(--pink2);
-  font-size:28px
-}
-
-.subtitle{
-  color:var(--muted);
-  margin-top:7px
-}
-
-/* APP */
-
-.app{
-  max-width:1400px;
+.wrap{
+  max-width:1200px;
   margin:auto;
-  padding:20px
+  padding:16px
 }
 
-.header{
-  background:linear-gradient(135deg,#fff,#fff0f6);
-  border:1px solid var(--border);
-  border-radius:24px;
-  padding:22px;
+.card{
+  background:#fff;
+  border:1px solid var(--b);
+  border-radius:20px;
+  padding:18px;
+  margin:14px 0
+}
+
+.top{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:15px;
-  box-shadow:var(--shadow)
+  gap:10px
 }
-
-.header h1{
-  margin:0;
-  color:var(--pink2)
-}
-
-.header p{
-  margin:7px 0 0;
-  color:var(--muted)
-}
-
-.header-actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap
-}
-
-/* BUTTONS */
 
 .btn{
-  padding:11px 16px;
-  border-radius:12px;
-  background:var(--pink);
-  color:white;
-  font-weight:700
+  background:var(--p);
+  color:#fff;
+  padding:10px 14px;
+  border-radius:10px;
+  font-weight:800
 }
 
-.btn:hover{
-  opacity:.9
+.secondary{
+  background:#fff;
+  color:var(--d);
+  border:1px solid var(--b)
 }
 
-.btn-secondary{
-  background:white;
-  color:var(--pink2);
-  border:1px solid var(--border)
-}
-
-.btn-dark{
-  background:#513540
-}
-
-.btn-green{
-  background:var(--green)
-}
-
-.btn-danger{
+.danger{
   background:#8d274d
 }
 
-.btn-small{
-  padding:8px 11px;
-  font-size:13px
+.green{
+  background:var(--g)
 }
 
-/* STATS */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
-  margin:18px 0
-}
-
-.stat{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:20px;
-  box-shadow:var(--shadow)
-}
-
-.stat-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  color:var(--muted)
-}
-
-.stat-icon{
-  width:40px;
-  height:40px;
-  border-radius:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:var(--soft)
-}
-
-.stat b{
-  display:block;
-  font-size:29px;
-  color:var(--pink2);
-  margin-top:9px
-}
-
-/* TABS */
-
-.tabs{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  background:white;
-  border:1px solid var(--border);
-  padding:8px;
-  border-radius:16px;
-  margin-bottom:18px
-}
-
-.tab{
-  background:white;
-  color:var(--muted);
-  border-radius:11px;
-  padding:11px 16px;
-  font-weight:700
-}
-
-.tab.active{
-  background:var(--pink);
-  color:white
-}
-
-/* CARDS */
-
-.card{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:22px;
-  padding:22px;
-  margin-bottom:18px;
-  box-shadow:var(--shadow)
-}
-
-.card-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin-bottom:18px
-}
-
-.card-title h2{
-  margin:0;
-  color:var(--pink2)
-}
-
-label{
-  display:block;
-  font-size:13px;
-  font-weight:700;
-  margin-bottom:5px
-}
-
-input,select,textarea{
+input,
+select,
+textarea{
   width:100%;
-  border:1px solid #e7ccd6;
-  border-radius:12px;
-  padding:12px;
-  outline:none;
-  background:white;
-  color:var(--text);
-  margin-bottom:14px
-}
-
-input:focus,select:focus,textarea:focus{
-  border-color:var(--pink);
-  box-shadow:0 0 0 3px rgba(217,79,130,.08)
+  padding:11px;
+  border:1px solid var(--b);
+  border-radius:10px;
+  margin:5px 0 12px
 }
 
 textarea{
-  min-height:100px;
-  resize:vertical
+  min-height:90px
 }
 
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:14px
+  gap:12px
 }
 
-/* QUICK PRODUCT TEMPLATES */
-
-.templates{
+.stats{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  margin-bottom:20px
+  gap:10px
 }
 
-.template{
-  text-align:left;
-  background:#fff8fb;
-  border:1px solid var(--border);
-  color:var(--pink2);
-  border-radius:14px;
-  padding:13px;
+.stat{
+  background:#fff;
+  border:1px solid var(--b);
+  border-radius:15px;
+  padding:15px
+}
+
+.stat b{
+  display:block;
+  color:var(--d);
+  font-size:24px;
+  margin-top:5px
+}
+
+.tabs{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap
+}
+
+.tab{
+  background:#fff;
+  border:1px solid var(--b);
+  padding:10px 14px;
+  border-radius:10px;
+  color:var(--d);
   font-weight:700
 }
 
-.template span{
-  display:block;
-  font-size:12px;
-  color:var(--muted);
-  font-weight:400;
-  margin-top:4px
+.tab.active{
+  background:var(--p);
+  color:#fff
 }
 
-/* SIZES */
-
-.size-box{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin:8px 0 18px
+.sizes{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px
 }
 
-.size-option{
-  position:relative
-}
-
-.size-option input{
-  position:absolute;
-  opacity:0;
-  pointer-events:none
-}
-
-.size-option label{
-  min-width:58px;
-  text-align:center;
-  padding:11px 14px;
-  border:1px solid #e2c6d2;
-  border-radius:11px;
-  background:white;
-  color:var(--pink2);
-  cursor:pointer;
-  margin:0
-}
-
-.size-option input:checked + label{
-  background:var(--pink);
-  color:white;
-  border-color:var(--pink)
-}
-
-/* PHOTOS */
-
-.photo-preview{
+.photos{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  margin:5px 0 18px
+  gap:8px
 }
 
-.preview{
-  position:relative;
-  border:1px solid var(--border);
-  border-radius:13px;
-  overflow:hidden;
-  background:#fff5f9
-}
-
-.preview img{
-  display:block;
+.photos img{
   width:100%;
-  height:120px;
-  object-fit:contain
+  height:100px;
+  object-fit:contain;
+  background:var(--s);
+  border-radius:8px
 }
-
-.preview span{
-  position:absolute;
-  bottom:6px;
-  left:6px;
-  background:var(--pink);
-  color:white;
-  padding:4px 7px;
-  border-radius:7px;
-  font-size:11px
-}
-
-/* PRODUCTS */
 
 .products{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:16px
+  gap:12px
 }
 
 .product{
-  overflow:hidden;
-  background:white;
-  border:1px solid var(--border);
-  border-radius:19px
-}
-
-.product-image{
-  width:100%;
-  height:240px;
-  object-fit:contain;
-  background:#fff4f8
-}
-
-.thumbs{
-  display:flex;
-  gap:6px;
-  padding:8px;
-  overflow-x:auto;
-  background:#fff9fb
-}
-
-.thumbs img{
-  width:50px;
-  height:50px;
-  object-fit:cover;
-  border-radius:8px;
-  border:1px solid var(--border)
-}
-
-.product-info{
-  padding:16px
-}
-
-.product-info h3{
-  margin:0 0 6px;
-  color:#4b2937
-}
-
-.category{
-  color:var(--muted);
-  font-size:13px
-}
-
-.price{
-  margin:12px 0;
-  font-size:20px;
-  font-weight:800;
-  color:var(--pink2)
-}
-
-.old-price{
-  color:#999;
-  font-size:13px;
-  text-decoration:line-through;
-  margin-left:6px
-}
-
-.pills{
-  display:flex;
-  flex-wrap:wrap;
-  gap:5px;
-  margin:8px 0
-}
-
-.pill{
-  padding:5px 9px;
+  border:1px solid var(--b);
   border-radius:15px;
-  background:var(--soft);
-  color:var(--pink2);
-  border:1px solid var(--border);
-  font-size:11px;
-  font-weight:700
+  overflow:hidden;
+  background:#fff
 }
 
-.stock{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:16px;
-  background:#eefbf2;
-  color:#26723a;
-  font-size:12px;
-  font-weight:700
+.product>img{
+  width:100%;
+  height:210px;
+  object-fit:contain;
+  background:var(--s)
 }
 
-.out{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:16px;
-  background:#fff0f0;
-  color:var(--red);
-  font-size:12px;
-  font-weight:700
+.pi{
+  padding:12px
 }
-
-.actions{
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-  margin-top:12px
-}
-
-/* ORDERS */
 
 .order{
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:17px;
+  border:1px solid var(--b);
+  border-radius:14px;
+  padding:14px;
   margin:10px 0;
   background:#fff
 }
 
-.order-head{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:center
-}
-
-.order h3{
-  margin:0;
-  color:var(--pink2)
-}
-
-.status{
+.badge{
   display:inline-block;
-  padding:6px 10px;
+  padding:5px 9px;
+  background:var(--s);
+  color:var(--d);
   border-radius:20px;
-  background:var(--pink);
-  color:white;
-  font-size:12px;
-  font-weight:700
+  font-size:11px;
+  font-weight:800
 }
 
-/* MESSAGES */
-
-.msg,.success,.error{
-  padding:12px;
-  border-radius:12px;
-  margin:10px 0
+.msg,
+.success,
+.error{
+  padding:10px;
+  border-radius:10px;
+  margin:8px 0
 }
 
 .msg{
-  background:var(--soft);
-  color:#6e4655
+  background:var(--s)
 }
 
 .success{
@@ -552,9 +226,8 @@ textarea{
   color:#a52c2c
 }
 
-/* MOBILE */
+@media(max-width:800px){
 
-@media(max-width:950px){
   .products{
     grid-template-columns:repeat(2,1fr)
   }
@@ -563,23 +236,9 @@ textarea{
     grid-template-columns:repeat(2,1fr)
   }
 
-  .templates{
-    grid-template-columns:repeat(2,1fr)
-  }
 }
 
-@media(max-width:650px){
-  .app{
-    padding:10px
-  }
-
-  .header{
-    display:block
-  }
-
-  .header-actions{
-    margin-top:14px
-  }
+@media(max-width:600px){
 
   .grid{
     grid-template-columns:1fr
@@ -589,467 +248,455 @@ textarea{
     grid-template-columns:1fr
   }
 
-  .stats{
-    grid-template-columns:1fr 1fr
+  .sizes{
+    grid-template-columns:repeat(3,1fr)
   }
 
-  .photo-preview{
+  .photos{
     grid-template-columns:repeat(2,1fr)
   }
 
-  .templates{
-    grid-template-columns:1fr 1fr
-  }
-
-  .card{
-    padding:15px
-  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<!-- ================= LOGIN ================= -->
 
-<div id="login" class="login-page">
+<div
+id="login"
+class="card"
+style="max-width:430px;margin:70px auto">
 
-  <div class="login-card">
+<h1>🌸 Aarvi Fashion</h1>
 
-    <div class="logo">🌸</div>
+<b>Admin Login</b>
 
-    <h1 class="brand">Aarvi Fashion</h1>
+<input
+id="email"
+type="email"
+value="amreshkumar97552@gmail.com">
 
-    <p class="subtitle">
-      Premium Ladies Collection — Admin Panel
-    </p>
+<input
+id="password"
+type="password"
+placeholder="Password">
 
-    <label>Email</label>
+<button
+class="btn"
+style="width:100%"
+onclick="login()">
 
-    <input
-      id="email"
-      type="email"
-      value="amreshkumar97552@gmail.com">
+Login
 
-    <label>Password</label>
+</button>
 
-    <input
-      id="password"
-      type="password"
-      placeholder="Admin password">
-
-    <button
-      class="btn"
-      style="width:100%"
-      onclick="login()">
-      Login to Dashboard
-    </button>
-
-    <div id="loginmsg" class="msg hide"></div>
-
-  </div>
+<div
+id="loginmsg"
+class="msg hide">
+</div>
 
 </div>
 
 
-<!-- ADMIN -->
+<!-- ================= ADMIN APP ================= -->
 
-<div id="app" class="app hide">
+<div
+id="app"
+class="wrap hide">
 
-  <header class="header">
+<div class="top">
 
-    <div>
-      <h1>🌸 Aarvi Fashion</h1>
-      <p>Manage your ladies collection, stock & orders</p>
-    </div>
+<div>
 
-    <div class="header-actions">
+<h1>
+🌸 Aarvi Fashion Admin
+</h1>
 
-      <button
-        class="btn btn-secondary"
-        onclick="openStore()">
-        🛍️ Open Store
-      </button>
+<p>
+Products • Orders • Customers • Courier
+</p>
 
-      <button
-        class="btn btn-dark"
-        onclick="logout()">
-        Logout
-      </button>
+</div>
 
-    </div>
+<div>
 
-  </header>
+<button
+class="btn secondary"
+onclick="openStore()">
 
+Open Store
 
-  <!-- STATS -->
+</button>
 
-  <div class="stats">
+<button
+class="btn"
+style="background:#513540"
+onclick="logout()">
 
-    <div class="stat">
-      <div class="stat-top">
-        Products
-        <span class="stat-icon">📦</span>
-      </div>
-      <b id="productCount">0</b>
-    </div>
+Logout
 
-    <div class="stat">
-      <div class="stat-top">
-        Total Stock
-        <span class="stat-icon">📊</span>
-      </div>
-      <b id="stockCount">0</b>
-    </div>
+</button>
 
-    <div class="stat">
-      <div class="stat-top">
-        Orders
-        <span class="stat-icon">🛍️</span>
-      </div>
-      <b id="orderCount">0</b>
-    </div>
+</div>
 
-    <div class="stat">
-      <div class="stat-top">
-        New Orders
-        <span class="stat-icon">🔔</span>
-      </div>
-      <b id="newOrderCount">0</b>
-    </div>
+</div>
 
-  </div>
 
+<!-- ================= STATS ================= -->
 
-  <!-- TABS -->
+<div class="stats">
 
-  <div class="tabs">
+<div class="stat">
 
-    <button
-      class="tab active"
-      onclick="showSection('productsSection',this)">
-      📦 Products
-    </button>
+Products
 
-    <button
-      class="tab"
-      onclick="showSection('ordersSection',this)">
-      🛍️ Orders
-    </button>
+<b id="pc">
+0
+</b>
 
-    <button
-      class="tab"
-      onclick="showSection('customersSection',this)">
-      👥 Customers
-    </button>
+</div>
 
-  </div>
+<div class="stat">
 
+Stock
 
-  <!-- PRODUCTS -->
+<b id="sc">
+0
+</b>
 
-  <section id="productsSection">
+</div>
 
-    <div class="card">
+<div class="stat">
 
-      <div class="card-title">
-
-        <h2>✨ Add Ladies Dress</h2>
-
-      </div>
+Orders
 
-      <div
-        id="msg"
-        class="msg hide">
-      </div>
+<b id="oc">
+0
+</b>
 
+</div>
 
-      <!-- QUICK TEMPLATES -->
+<div class="stat">
 
-      <label>Quick Ladies Dress Template</label>
+New
 
-      <div class="templates">
+<b id="nc">
+0
+</b>
 
-        <button
-          class="template"
-          onclick="useTemplate(1)">
-          🌸 Floral Dress
-          <span>Casual / Daily Wear</span>
-        </button>
+</div>
 
-        <button
-          class="template"
-          onclick="useTemplate(2)">
-          ✨ Party Dress
-          <span>Premium / Party Wear</span>
-        </button>
+</div>
 
-        <button
-          class="template"
-          onclick="useTemplate(3)">
-          💕 Rayon Dress
-          <span>Comfort / Casual</span>
-        </button>
 
-        <button
-          class="template"
-          onclick="useTemplate(4)">
-          👗 Printed Dress
-          <span>Trending Collection</span>
-        </button>
+<!-- ================= TABS ================= -->
 
-      </div>
+<div class="card tabs">
 
+<button
+class="tab active"
+onclick="section('products',this)">
 
-      <div class="grid">
+📦 Products
 
-        <div>
-          <label>Product Name *</label>
-          <input
-            id="name"
-            placeholder="Example: Elegant Floral Maxi Dress">
-        </div>
+</button>
 
-        <div>
-          <label>Category *</label>
+<button
+class="tab"
+onclick="section('orders',this)">
 
-          <select id="category">
-            <option value="Ladies Dress">Ladies Dress</option>
-            <option value="Kurti">Kurti</option>
-            <option value="Saree">Saree</option>
-            <option value="Top">Top</option>
-            <option value="Suit">Suit</option>
-          </select>
+🛍️ Orders
 
-        </div>
+</button>
 
-        <div>
-          <label>Selling Price *</label>
+<button
+class="tab"
+onclick="section('customers',this)">
 
-          <input
-            id="price"
-            type="number"
-            min="0"
-            placeholder="999">
-        </div>
+👥 Customers
 
-        <div>
-          <label>Original Price</label>
+</button>
 
-          <input
-            id="original"
-            type="number"
-            min="0"
-            placeholder="1499">
-        </div>
+</div>
 
-        <div>
-          <label>Total Stock *</label>
 
-          <input
-            id="stock"
-            type="number"
-            min="0"
-            step="1"
-            value="1">
-        </div>
+<!-- ================= PRODUCTS ================= -->
 
-      </div>
+<section id="products">
 
+<div class="card">
 
-      <!-- SIZES -->
+<h2>
+➕ Add Product
+</h2>
 
-      <h3>👗 Available Sizes</h3>
+<div
+id="msg"
+class="msg hide">
+</div>
 
-      <p style="font-size:13px;color:#806a73">
-        Customer ko sirf available sizes dikhaye ja sakte hain;
-        exact stock quantity nahi.
-      </p>
 
-      <div class="size-box">
+<div class="grid">
 
-        <div class="size-option">
-          <input type="checkbox" id="sizeS" value="S">
-          <label for="sizeS">S</label>
-        </div>
+<div>
 
-        <div class="size-option">
-          <input type="checkbox" id="sizeM" value="M">
-          <label for="sizeM">M</label>
-        </div>
+<label>
+Product Name
+</label>
 
-        <div class="size-option">
-          <input type="checkbox" id="sizeL" value="L">
-          <label for="sizeL">L</label>
-        </div>
+<input
+id="name"
+placeholder="Product name">
 
-        <div class="size-option">
-          <input type="checkbox" id="sizeXL" value="XL">
-          <label for="sizeXL">XL</label>
-        </div>
+</div>
 
-        <div class="size-option">
-          <input type="checkbox" id="sizeXXL" value="XXL">
-          <label for="sizeXXL">XXL</label>
-        </div>
 
-      </div>
+<div>
 
+<label>
+Category
+</label>
 
-      <!-- DESCRIPTION -->
+<select id="category">
+</select>
 
-      <label>Product Description</label>
+</div>
 
-      <textarea
-        id="desc"
-        placeholder="Example: Comfortable premium fabric, stylish design, perfect for casual and party wear..."></textarea>
 
+<div>
 
-      <!-- PHOTOS -->
+<label>
+Selling Price
+</label>
 
-      <h3>📸 Product Photos — Up to 4</h3>
+<input
+id="price"
+type="number"
+min="0"
+placeholder="999">
 
-      <label>Photo 1 *</label>
+</div>
 
-      <input
-        id="photo1"
-        type="file"
-        accept="image/*"
-        onchange="previewPhotos()">
 
-      <label>Photo 2</label>
+<div>
 
-      <input
-        id="photo2"
-        type="file"
-        accept="image/*"
-        onchange="previewPhotos()">
+<label>
+Original Price
+</label>
 
-      <label>Photo 3</label>
+<input
+id="original"
+type="number"
+min="0"
+placeholder="1499">
 
-      <input
-        id="photo3"
-        type="file"
-        accept="image/*"
-        onchange="previewPhotos()">
+</div>
 
-      <label>Photo 4</label>
+</div>
 
-      <input
-        id="photo4"
-        type="file"
-        accept="image/*"
-        onchange="previewPhotos()">
 
+<!-- ================= SIZE STOCK ================= -->
 
-      <div
-        id="photoPreview"
-        class="photo-preview">
-      </div>
+<label>
+<b>
+Sizes & Size-wise Stock
+</b>
+</label>
 
+<div
+id="sizeInputs"
+class="sizes">
+</div>
 
-      <button
-        class="btn"
-        onclick="addProduct()">
-        💾 Save Product
-      </button>
+<p>
+Customer ko exact stock quantity nahi dikhegi.
+Selected size ka stock order hone par automatically kam hoga.
+</p>
 
-      <button
-        class="btn btn-secondary"
-        onclick="clearProductForm()">
-        Clear
-      </button>
 
-    </div>
+<!-- ================= DESCRIPTION ================= -->
 
+<label>
+Description
+</label>
 
-    <!-- PRODUCT LIST -->
+<textarea
+id="desc"
+placeholder="Product description">
+</textarea>
 
-    <div class="card">
 
-      <div class="card-title">
+<!-- ================= PHOTOS ================= -->
 
-        <h2>📦 Your Collection</h2>
+<label>
+<b>
+Photos — Maximum 4
+</b>
+</label>
 
-        <button
-          class="btn btn-secondary btn-small"
-          onclick="loadProducts()">
-          Refresh
-        </button>
+<div class="grid">
 
-      </div>
+<input
+id="photo1"
+type="file"
+accept="image/*"
+onchange="preview()">
 
-      <div
-        id="products"
-        class="products">
-      </div>
+<input
+id="photo2"
+type="file"
+accept="image/*"
+onchange="preview()">
 
-    </div>
+<input
+id="photo3"
+type="file"
+accept="image/*"
+onchange="preview()">
 
-  </section>
+<input
+id="photo4"
+type="file"
+accept="image/*"
+onchange="preview()">
 
+</div>
 
-  <!-- ORDERS -->
 
-  <section
-    id="ordersSection"
-    class="hide">
+<div
+id="pre"
+class="photos">
+</div>
 
-    <div class="card">
 
-      <div class="card-title">
+<br>
 
-        <h2>🛍️ Customer Orders</h2>
 
-        <button
-          class="btn btn-secondary btn-small"
-          onclick="loadOrders()">
-          Refresh
-        </button>
+<button
+class="btn"
+onclick="addProduct()">
 
-      </div>
+Save Product
 
-      <div id="orders"></div>
+</button>
 
-    </div>
 
-  </section>
+<button
+class="btn secondary"
+onclick="clearForm()">
 
+Clear
 
-  <!-- CUSTOMERS -->
+</button>
 
-  <section
-    id="customersSection"
-    class="hide">
+</div>
 
-    <div class="card">
 
-      <div class="card-title">
+<!-- ================= PRODUCT LIST ================= -->
 
-        <h2>👥 Customers</h2>
+<div class="card">
 
-        <button
-          class="btn btn-secondary btn-small"
-          onclick="loadCustomers()">
-          Refresh
-        </button>
+<div class="top">
 
-      </div>
+<h2>
+📦 Products
+</h2>
 
-      <div id="customers"></div>
+<button
+class="btn secondary"
+onclick="loadProducts()">
 
-    </div>
+Refresh
 
-  </section>
+</button>
+
+</div>
+
+<div
+id="productList"
+class="products">
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ORDERS ================= -->
+
+<section
+id="orders"
+class="hide">
+
+<div class="card">
+
+<div class="top">
+
+<h2>
+🛍️ Customer Orders
+</h2>
+
+<button
+class="btn secondary"
+onclick="loadOrders()">
+
+Refresh
+
+</button>
+
+</div>
+
+<div
+id="orderList">
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= CUSTOMERS ================= -->
+
+<section
+id="customers"
+class="hide">
+
+<div class="card">
+
+<div class="top">
+
+<h2>
+👥 Customers
+</h2>
+
+<button
+class="btn secondary"
+onclick="loadCustomers()">
+
+Refresh
+
+</button>
+
+</div>
+
+<div
+id="customerList">
+</div>
+
+</div>
+
+</section>
 
 </div>
 
 
 <script>
 
-/* =========================
+/* =========================================================
    SUPABASE
-========================= */
+========================================================= */
 
 const SUPABASE_URL =
 "https://sxifooelnulxldcbtmvd.supabase.co";
@@ -1057,1344 +704,1346 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_nLLITIJxfhc52cUkZaGZ4w_GvJubfM-";
 
+
 const sb =
 supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
 
-/* =========================
-   HELPERS
-========================= */
+/* =========================================================
+   CONSTANTS
+========================================================= */
 
-const $ = id =>
-  document.getElementById(id);
+const CATS = [
+
+"Plazzo",
+"Pant Set",
+"Dupatta Set",
+"Kurta Set",
+"Kurti Set",
+"Dress Material",
+"Combos",
+"Daily Deals",
+"Western Wear",
+"Beauty",
+"Jewellery"
+
+];
+
+
+const SIZES = [
+"S",
+"M",
+"L",
+"XL",
+"XXL"
+];
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+const $ =
+id =>
+document.getElementById(id);
 
 
 function esc(value){
 
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
 }
 
 
-function money(value){
+function msg(text,type="msg"){
 
-  return Number(value || 0)
-    .toLocaleString("en-IN");
+$("msg").className=type;
 
-}
+$("msg").textContent=text;
 
-
-function showMessage(
-  id,
-  text,
-  type="msg"
-){
-
-  const el=$(id);
-
-  if(!el) return;
-
-  el.className=type;
-
-  el.textContent=text;
-
-  el.classList.remove("hide");
+$("msg").classList.remove("hide");
 
 }
 
 
-/* =========================
-   PRODUCT TEMPLATES
-========================= */
+/* =========================================================
+   CATEGORY + SIZE UI
+========================================================= */
 
-function useTemplate(number){
+$("category").innerHTML =
 
-  const templates={
-
-    1:{
-      name:"Elegant Floral Ladies Dress",
-      category:"Ladies Dress",
-      description:
-        "Elegant floral ladies dress with comfortable fabric and stylish look. Perfect for casual and daily wear."
-    },
-
-    2:{
-      name:"Premium Party Wear Ladies Dress",
-      category:"Ladies Dress",
-      description:
-        "Beautiful premium party wear ladies dress with stylish design. Perfect for parties and special occasions."
-    },
-
-    3:{
-      name:"Comfort Rayon Ladies Dress",
-      category:"Ladies Dress",
-      description:
-        "Comfortable rayon ladies dress with a soft feel and attractive design. Suitable for daily and casual wear."
-    },
-
-    4:{
-      name:"Trending Printed Ladies Dress",
-      category:"Ladies Dress",
-      description:
-        "Trendy printed ladies dress with a modern look. A stylish choice for casual outings and everyday fashion."
-    }
-
-  };
-
-  const t=templates[number];
-
-  if(!t) return;
-
-  $("name").value=t.name;
-
-  $("category").value=t.category;
-
-  $("desc").value=t.description;
-
-  $("sizeS").checked=true;
-  $("sizeM").checked=true;
-  $("sizeL").checked=true;
-
-  window.scrollTo({
-    top:document
-      .getElementById("productsSection")
-      .offsetTop,
-    behavior:"smooth"
-  });
-
-}
+CATS
+.map(
+x =>
+`<option value="${esc(x)}">
+${esc(x)}
+</option>`
+)
+.join("");
 
 
-/* =========================
-   SIZES
-========================= */
+$("sizeInputs").innerHTML =
 
-function getSelectedSizes(){
+SIZES
+.map(
+s =>
 
-  return [
-    "sizeS",
-    "sizeM",
-    "sizeL",
-    "sizeXL",
-    "sizeXXL"
-  ]
-  .map(id=>$(id))
-  .filter(el=>el && el.checked)
-  .map(el=>el.value);
+`
 
-}
+<div>
 
+<label>
+${s}
+</label>
 
-/* =========================
-   PHOTO PREVIEW
-========================= */
+<input
+id="stock_${s}"
+type="number"
+min="0"
+value="0"
+placeholder="${s} stock">
 
-function previewPhotos(){
+</div>
 
-  const container=$("photoPreview");
-
-  if(!container) return;
-
-  container.innerHTML="";
-
-  const files=[
-    $("photo1").files[0],
-    $("photo2").files[0],
-    $("photo3").files[0],
-    $("photo4").files[0]
-  ];
-
-  files.forEach((file,index)=>{
-
-    if(!file) return;
-
-    if(!file.type.startsWith("image/"))
-      return;
-
-    const url=
-      URL.createObjectURL(file);
-
-    container.innerHTML+=`
-
-      <div class="preview">
-
-        <img
-          src="${url}"
-          alt="Photo ${index+1}">
-
-        <span>
-          Photo ${index+1}
-        </span>
-
-      </div>
-
-    `;
-
-  });
-
-}
+`
+)
+.join("");
 
 
-/* =========================
+/* =========================================================
    LOGIN
-========================= */
+========================================================= */
 
 async function login(){
 
-  const email=
-    $("email").value.trim();
+const email =
+$("email").value.trim();
 
-  const password=
-    $("password").value;
+const password =
+$("password").value;
 
-  if(!email || !password){
 
-    showMessage(
-      "loginmsg",
-      "Email aur password bhariye.",
-      "error"
-    );
+if(!email || !password){
 
-    return;
+$("loginmsg").textContent =
+"Email aur password bhariye.";
 
-  }
+$("loginmsg").classList.remove("hide");
 
-  const {error}=
-    await sb.auth.signInWithPassword({
-      email,
-      password
-    });
+return;
 
-  if(error){
+}
 
-    showMessage(
-      "loginmsg",
-      error.message,
-      "error"
-    );
 
-    return;
+const {
+error
+} =
+await sb.auth.signInWithPassword({
 
-  }
+email,
+password
 
-  openApp();
+});
+
+
+if(error){
+
+$("loginmsg").textContent =
+error.message;
+
+$("loginmsg").classList.remove("hide");
+
+return;
+
+}
+
+
+openApp();
 
 }
 
 
 async function logout(){
 
-  await sb.auth.signOut();
+await sb.auth.signOut();
 
-  location.reload();
-
-}
-
-
-function openApp(){
-
-  $("login")
-    .classList.add("hide");
-
-  $("app")
-    .classList.remove("hide");
-
-  loadProducts();
-
-  loadOrders();
-
-  loadCustomers();
+location.reload();
 
 }
 
 
-/* =========================
-   SESSION
-========================= */
+async function openApp(){
 
-async function checkSession(){
+$("login")
+.classList.add("hide");
 
-  const {data}=
-    await sb.auth.getSession();
+$("app")
+.classList.remove("hide");
 
-  if(data.session){
+loadProducts();
 
-    openApp();
+loadOrders();
 
-  }
+loadCustomers();
 
 }
 
-checkSession();
+
+sb.auth
+.getSession()
+.then(x => {
+
+if(x.data.session)
+openApp();
+
+});
 
 
-/* =========================
+/* =========================================================
    SECTION
-========================= */
+========================================================= */
 
-function showSection(
-  id,
-  button
-){
+function section(id,button){
 
-  document
-    .querySelectorAll(
-      "#productsSection,#ordersSection,#customersSection"
-    )
-    .forEach(el=>{
-      el.classList.add("hide");
-    });
+[
+"products",
+"orders",
+"customers"
+]
+.forEach(
+x =>
+$(x).classList.add("hide")
+);
 
-  $(id).classList.remove("hide");
 
-  document
-    .querySelectorAll(".tab")
-    .forEach(b=>{
-      b.classList.remove("active");
-    });
+$(id).classList.remove("hide");
 
-  if(button)
-    button.classList.add("active");
 
-  if(id==="ordersSection")
-    loadOrders();
+document
+.querySelectorAll(".tab")
+.forEach(
+x =>
+x.classList.remove("active")
+);
 
-  if(id==="customersSection")
-    loadCustomers();
+
+button.classList.add("active");
+
+
+if(id==="orders")
+loadOrders();
+
+
+if(id==="customers")
+loadCustomers();
 
 }
 
 
-/* =========================
+/* =========================================================
    STORE
-========================= */
+========================================================= */
 
 function openStore(){
 
-  window.open(
-    "https://aarvi-fashion-ladies-collection.vercel.app",
-    "_blank"
-  );
+window.open(
+"https://aarvi-fashion-ladies-collection.vercel.app",
+"_blank"
+);
 
 }
 
 
-/* =========================
-   PARSE SIZES
-========================= */
-
-function parseSizes(value){
-
-  if(Array.isArray(value))
-    return value;
-
-  if(!value)
-    return [];
-
-  try{
-
-    const parsed=
-      typeof value==="string"
-      ? JSON.parse(value)
-      : value;
-
-    return Array.isArray(parsed)
-      ? parsed
-      : [];
-
-  }catch(e){
-
-    return [];
-
-  }
-
-}
-
-
-/* =========================
-   PARSE IMAGES
-========================= */
+/* =========================================================
+   IMAGE HELPERS
+========================================================= */
 
 function parseImages(product){
 
-  let images=[];
+let x=[];
 
-  if(product.image_urls){
+try{
 
-    try{
+x =
+Array.isArray(product.image_urls)
+?
+product.image_urls
+:
+JSON.parse(
+product.image_urls || "[]"
+);
 
-      if(Array.isArray(product.image_urls))
-        images=product.image_urls;
-      else
-        images=JSON.parse(product.image_urls);
+}catch(e){}
 
-    }catch(e){
+if(
+!x.length &&
+product.image_url
+){
 
-      images=[];
+x=[
+product.image_url
+];
 
-    }
+}
 
-  }
-
-  if(
-    !Array.isArray(images) ||
-    !images.length
-  ){
-
-    images=[];
-
-    if(product.image_url)
-      images.push(product.image_url);
-
-  }
-
-  return images.slice(0,4);
+return x
+.slice(0,4);
 
 }
 
 
-/* =========================
-   LOAD PRODUCTS
-========================= */
+function parseJSON(value){
 
-async function loadProducts(){
+try{
 
-  const container=$("products");
+return typeof value==="object"
+?
+value
+:
+JSON.parse(value||"{}");
 
-  container.innerHTML=
-    "<p>Products loading...</p>";
+}catch(e){
 
-  const {data,error}=
-    await sb
-      .from("products")
-      .select("*")
-      .order(
-        "created_at",
-        {ascending:false}
-      );
+return {};
 
-  if(error){
-
-    container.innerHTML=
-      `<div class="error">
-        ${esc(error.message)}
-      </div>`;
-
-    return;
-
-  }
-
-  const products=data || [];
-
-  $("productCount").textContent=
-    products.length;
-
-  $("stockCount").textContent=
-    products.reduce(
-      (sum,p)=>
-        sum + Number(p.stock || 0),
-      0
-    );
-
-  if(!products.length){
-
-    container.innerHTML=
-      `<div class="msg">
-        Abhi koi product nahi hai.
-      </div>`;
-
-    return;
-
-  }
-
-  container.innerHTML=
-    products.map(p=>{
-
-      const images=
-        parseImages(p);
-
-      const sizes=
-        parseSizes(p.sizes);
-
-      const stock=
-        Number(p.stock || 0);
-
-      const image=
-        images[0] || "";
-
-      return `
-
-        <div class="product">
-
-          <img
-            class="product-image"
-            src="${esc(image)}"
-            alt="${esc(p.name)}">
-
-          ${
-            images.length>1
-            ?
-            `<div class="thumbs">
-
-              ${
-                images.map(url=>
-                  `<img
-                    src="${esc(url)}"
-                    alt="Product photo">`
-                ).join("")
-              }
-
-            </div>`
-            :
-            ""
-          }
-
-          <div class="product-info">
-
-            <h3>
-              ${esc(p.name)}
-            </h3>
-
-            <div class="category">
-              ${esc(p.category || "Ladies Dress")}
-            </div>
-
-            <div class="price">
-
-              ₹${money(p.price)}
-
-              ${
-                p.original_price
-                ?
-                `<span class="old-price">
-                  ₹${money(p.original_price)}
-                </span>`
-                :
-                ""
-              }
-
-            </div>
-
-            <div>
-              <b>Sizes</b>
-
-              <div class="pills">
-
-                ${
-                  sizes.length
-                  ?
-                  sizes.map(s=>
-                    `<span class="pill">
-                      ${esc(s)}
-                    </span>`
-                  ).join("")
-                  :
-                  `<span class="category">
-                    No size
-                  </span>`
-                }
-
-              </div>
-
-            </div>
-
-            <div style="margin-top:8px">
-
-              ${
-                stock>0
-                ?
-                `<span class="stock">
-                  ${stock} in stock
-                </span>`
-                :
-                `<span class="out">
-                  Out of Stock
-                </span>`
-              }
-
-            </div>
-
-            <div class="actions">
-
-              <button
-                class="btn btn-small"
-                onclick="editStock(
-                  ${Number(p.id)},
-                  ${stock}
-                )">
-                📦 Stock
-              </button>
-
-              <button
-                class="btn btn-danger btn-small"
-                onclick="deleteProduct(
-                  ${Number(p.id)}
-                )">
-                Delete
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
+}
 
 }
 
 
-/* =========================
+/* =========================================================
+   PHOTO PREVIEW
+========================================================= */
+
+function preview(){
+
+$("pre").innerHTML =
+
+[1,2,3,4]
+.map(i => {
+
+const file =
+$("photo"+i)
+.files[0];
+
+if(!file)
+return "";
+
+return `
+
+<img
+src="${URL.createObjectURL(file)}">
+
+`;
+
+})
+.join("");
+
+}
+
+
+/* =========================================================
    ADD PRODUCT
-========================= */
+========================================================= */
 
 async function addProduct(){
 
-  const name=
-    $("name").value.trim();
+const name =
+$("name")
+.value
+.trim();
 
-  const category=
-    $("category").value;
 
-  const price=
-    Number($("price").value);
+const price =
+Number(
+$("price").value
+);
 
-  const original=
-    Number($("original").value) || null;
 
-  const stock=
-    Number($("stock").value);
+const original =
+Number(
+$("original").value
+) || null;
 
-  const description=
-    $("desc").value.trim();
 
-  const sizes=
-    getSelectedSizes();
+const description =
+$("desc")
+.value
+.trim();
 
-  const files=[
-    $("photo1").files[0],
-    $("photo2").files[0],
-    $("photo3").files[0],
-    $("photo4").files[0]
-  ].filter(Boolean);
 
+const sizeStock={};
 
-  if(!name){
 
-    showMessage(
-      "msg",
-      "Product name bhariye.",
-      "error"
-    );
+SIZES.forEach(
+s => {
 
-    return;
+const n =
+Number(
+$("stock_"+s).value
+) || 0;
 
-  }
+if(n>0)
+sizeStock[s]=n;
 
+});
 
-  if(
-    !Number.isFinite(price) ||
-    price<=0
-  ){
 
-    showMessage(
-      "msg",
-      "Valid selling price bhariye.",
-      "error"
-    );
+const sizes =
+Object.keys(sizeStock);
 
-    return;
 
-  }
+const stock =
+Object
+.values(sizeStock)
+.reduce(
+(a,b) =>
+a+b,
+0
+);
 
 
-  if(
-    !Number.isInteger(stock) ||
-    stock<0
-  ){
+const files =
 
-    showMessage(
-      "msg",
-      "Stock whole number hona chahiye.",
-      "error"
-    );
+[1,2,3,4]
+.map(
+i =>
+$("photo"+i)
+.files[0]
+)
+.filter(Boolean);
 
-    return;
 
-  }
-
-
-  if(!sizes.length){
-
-    showMessage(
-      "msg",
-      "Kam se kam 1 size select karein.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  if(!files.length){
-
-    showMessage(
-      "msg",
-      "Kam se kam 1 photo select karein.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  if(files.length>4){
-
-    showMessage(
-      "msg",
-      "Maximum 4 photos allowed hain.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  const maxSize=
-    5 * 1024 * 1024;
-
-  for(const file of files){
-
-    if(!file.type.startsWith("image/")){
-
-      showMessage(
-        "msg",
-        "Sirf image files upload karein.",
-        "error"
-      );
-
-      return;
-
-    }
-
-    if(file.size>maxSize){
-
-      showMessage(
-        "msg",
-        `${file.name} 5MB se chhoti honi chahiye.`,
-        "error"
-      );
-
-      return;
-
-    }
-
-  }
-
-
-  try{
-
-    showMessage(
-      "msg",
-      "📸 Photos upload ho rahi hain..."
-    );
-
-
-    const urls=[];
-
-
-    for(let i=0;i<files.length;i++){
-
-      const file=files[i];
-
-      const safeName=
-        file.name.replace(
-          /[^a-zA-Z0-9.-]/g,
-          "-"
-        );
-
-      const path=
-        Date.now()+
-        "-" +
-        Math.random()
-          .toString(36)
-          .slice(2)+
-        "-" +
-        safeName;
-
-
-      const upload=
-        await sb
-          .storage
-          .from("product-images")
-          .upload(
-            path,
-            file
-          );
-
-
-      if(upload.error){
-
-        throw new Error(
-          "Photo upload failed: "+
-          upload.error.message
-        );
-
-      }
-
-
-      const publicUrl=
-        sb
-          .storage
-          .from("product-images")
-          .getPublicUrl(path)
-          .data
-          .publicUrl;
-
-
-      urls.push(publicUrl);
-
-    }
-
-
-    showMessage(
-      "msg",
-      "💾 Product database mein save ho raha hai..."
-    );
-
-
-    const {error}=
-      await sb
-        .from("products")
-        .insert({
-
-          name:name,
-
-          category:category,
-
-          price:price,
-
-          original_price:original,
-
-          stock:stock,
-
-          description:description,
-
-          image_url:urls[0],
-
-          image_urls:
-            JSON.stringify(urls),
-
-          sizes:
-            JSON.stringify(sizes)
-
-        });
-
-
-    if(error)
-      throw new Error(error.message);
-
-
-    showMessage(
-      "msg",
-      "Product successfully added! ✅",
-      "success"
-    );
-
-
-    clearProductForm();
-
-    await loadProducts();
-
-  }catch(error){
-
-    showMessage(
-      "msg",
-      error.message,
-      "error"
-    );
-
-  }
-
-}
-
-
-/* =========================
-   CLEAR FORM
-========================= */
-
-function clearProductForm(){
-
-  $("name").value="";
-
-  $("price").value="";
-
-  $("original").value="";
-
-  $("stock").value="1";
-
-  $("desc").value="";
-
-  [
-    "photo1",
-    "photo2",
-    "photo3",
-    "photo4"
-  ].forEach(id=>{
-    $(id).value="";
-  });
-
-  [
-    "sizeS",
-    "sizeM",
-    "sizeL",
-    "sizeXL",
-    "sizeXXL"
-  ].forEach(id=>{
-    $(id).checked=false;
-  });
-
-  $("photoPreview").innerHTML="";
-
-}
-
-
-/* =========================
-   EDIT STOCK
-========================= */
-
-async function editStock(
-  id,
-  current
+if(
+!name ||
+price<=0 ||
+!sizes.length ||
+!files.length
 ){
 
-  const value=
-    prompt(
-      "New stock quantity:",
-      current
-    );
+msg(
+"Name, price, kam se kam 1 size stock aur 1 photo zaroori hai.",
+"error"
+);
 
-  if(value===null)
-    return;
-
-  const stock=
-    Number(value);
-
-  if(
-    !Number.isInteger(stock) ||
-    stock<0
-  ){
-
-    alert(
-      "Valid whole number stock quantity bhariye."
-    );
-
-    return;
-
-  }
-
-
-  const {error}=
-    await sb
-      .from("products")
-      .update({
-        stock:stock
-      })
-      .eq("id",id);
-
-
-  if(error){
-
-    alert(error.message);
-
-    return;
-
-  }
-
-  loadProducts();
+return;
 
 }
 
 
-/* =========================
+if(files.length>4){
+
+msg(
+"Maximum 4 photos.",
+"error"
+);
+
+return;
+
+}
+
+
+try{
+
+msg(
+"Photos upload ho rahi hain..."
+);
+
+
+const urls=[];
+
+
+for(
+const file
+of files
+){
+
+if(
+!file.type.startsWith("image/") ||
+file.size > 5*1024*1024
+){
+
+throw Error(
+"Photo image ho aur 5MB se chhoti ho."
+);
+
+}
+
+
+const path =
+
+Date.now()
++
+"-"
++
+Math.random()
+.toString(36)
+.slice(2)
++
+"-"
++
+file.name.replace(
+/[^a-zA-Z0-9.-]/g,
+"-"
+);
+
+
+const upload =
+await sb
+.storage
+.from("product-images")
+.upload(
+path,
+file
+);
+
+
+if(upload.error)
+throw Error(
+upload.error.message
+);
+
+
+const publicUrl =
+sb
+.storage
+.from("product-images")
+.getPublicUrl(path)
+.data
+.publicUrl;
+
+
+urls.push(publicUrl);
+
+}
+
+
+msg(
+"Product save ho raha hai..."
+);
+
+
+const {
+error
+} =
+await sb
+.from("products")
+.insert({
+
+name:name,
+
+category:
+$("category").value,
+
+price:price,
+
+original_price:
+original,
+
+stock:
+stock,
+
+description:
+description,
+
+image_url:
+urls[0],
+
+image_urls:
+JSON.stringify(urls),
+
+sizes:
+JSON.stringify(sizes),
+
+size_stock:
+sizeStock
+
+});
+
+
+if(error)
+throw Error(
+error.message
+);
+
+
+msg(
+"Product successfully added ✅",
+"success"
+);
+
+
+clearForm();
+
+loadProducts();
+
+
+}catch(e){
+
+msg(
+e.message,
+"error"
+);
+
+}
+
+}
+
+
+/* =========================================================
+   CLEAR PRODUCT FORM
+========================================================= */
+
+function clearForm(){
+
+$("name").value="";
+
+$("price").value="";
+
+$("original").value="";
+
+$("desc").value="";
+
+
+[1,2,3,4]
+.forEach(
+i =>
+$("photo"+i).value=""
+);
+
+
+SIZES.forEach(
+s =>
+$("stock_"+s).value=0
+);
+
+
+$("pre").innerHTML="";
+
+}
+
+
+/* =========================================================
+   LOAD PRODUCTS
+========================================================= */
+
+async function loadProducts(){
+
+const {
+data,
+error
+} =
+await sb
+.from("products")
+.select("*")
+.order(
+"created_at",
+{
+ascending:false
+}
+);
+
+
+if(error){
+
+$("productList").innerHTML =
+
+`
+
+<div class="error">
+
+${esc(error.message)}
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+$("pc")
+.textContent =
+data.length;
+
+
+$("sc")
+.textContent =
+
+data.reduce(
+(a,p) =>
+a +
+Number(p.stock||0),
+0
+);
+
+
+$("productList").innerHTML =
+
+data
+.map(p => {
+
+const im =
+parseImages(p);
+
+const ss =
+parseJSON(
+p.size_stock
+);
+
+
+return `
+
+<div class="product">
+
+<img
+src="${esc(im[0]||"")}">
+
+<div class="pi">
+
+<h3>
+${esc(p.name)}
+</h3>
+
+<div>
+${esc(p.category)}
+</div>
+
+<p>
+
+<b>
+₹${Number(p.price||0)
+.toLocaleString("en-IN")}
+</b>
+
+</p>
+
+<p>
+
+Sizes:
+${esc(
+Object.keys(ss)
+.join(", ")
+||
+"—"
+)}
+
+<br>
+
+Total Stock:
+<b>
+${Number(p.stock||0)}
+</b>
+
+</p>
+
+
+<button
+class="btn secondary"
+onclick="editStock(${Number(p.id)},${Number(p.stock||0)})">
+
+Edit Stock
+
+</button>
+
+
+<button
+class="btn danger"
+onclick="delProduct(${Number(p.id)})">
+
+Delete
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+})
+.join("");
+
+
+if(!data.length){
+
+$("productList").innerHTML =
+`
+<div class="msg">
+No products.
+</div>
+`;
+
+}
+
+}
+
+
+/* =========================================================
+   EDIT STOCK
+========================================================= */
+
+async function editStock(
+id,
+current
+){
+
+const value =
+prompt(
+"Total stock:",
+current
+);
+
+
+if(value===null)
+return;
+
+
+const stock =
+Number(value);
+
+
+if(
+!Number.isInteger(stock) ||
+stock<0
+){
+
+alert(
+"Valid stock quantity bhariye."
+);
+
+return;
+
+}
+
+
+const {
+error
+} =
+await sb
+.from("products")
+.update({
+stock:stock
+})
+.eq(
+"id",
+id
+);
+
+
+if(error)
+alert(
+error.message
+);
+
+else
+loadProducts();
+
+}
+
+
+/* =========================================================
    DELETE PRODUCT
-========================= */
+========================================================= */
 
-async function deleteProduct(id){
+async function delProduct(id){
 
-  if(
-    !confirm(
-      "Kya aap product permanently delete karna chahte hain?"
-    )
-  )
-    return;
-
-
-  const {error}=
-    await sb
-      .from("products")
-      .delete()
-      .eq("id",id);
+if(
+!confirm(
+"Kya aap product delete karna chahte hain?"
+)
+)
+return;
 
 
-  if(error){
+const {
+error
+} =
+await sb
+.from("products")
+.delete()
+.eq(
+"id",
+id
+);
 
-    alert(error.message);
 
-    return;
+if(error)
+alert(
+error.message
+);
 
-  }
-
-
-  loadProducts();
+else
+loadProducts();
 
 }
 
 
-/* =========================
+/* =========================================================
    LOAD ORDERS
-========================= */
+========================================================= */
 
 async function loadOrders(){
 
-  const container=$("orders");
-
-  if(!container)
-    return;
-
-  container.innerHTML=
-    "<p>Orders loading...</p>";
-
-
-  const {data,error}=
-    await sb
-      .from("ORDER'S")
-      .select("*")
-      .order(
-        "id",
-        {ascending:false}
-      );
+const {
+data,
+error
+} =
+await sb
+.from("orders")
+.select("*")
+.order(
+"created_at",
+{
+ascending:false
+}
+);
 
 
-  if(error){
-
-    container.innerHTML=
-      `<div class="error">
-        ${esc(error.message)}
-      </div>`;
-
-    return;
-
-  }
+$("oc")
+.textContent =
+data?.length || 0;
 
 
-  const orders=data || [];
+$("nc")
+.textContent =
 
-  $("orderCount").textContent=
-    orders.length;
-
-  $("newOrderCount").textContent=
-    orders.filter(o=>
-      String(
-        o.Order_states ||
-        o.Order_status ||
-        ""
-      ).toLowerCase()==="new"
-    ).length;
-
-
-  if(!orders.length){
-
-    container.innerHTML=
-      `<div class="msg">
-        Abhi koi order nahi hai.
-      </div>`;
-
-    return;
-
-  }
+(data||[])
+.filter(
+x =>
+String(
+x.order_status ||
+"New"
+)
+.toLowerCase()
+===
+"new"
+)
+.length;
 
 
-  container.innerHTML=
-    orders.map(o=>{
+if(error){
 
-      const status=
-        o.Order_states ||
-        o.Order_status ||
-        "New";
+$("orderList").innerHTML =
 
-      const phone=
-        o.Phone || "";
+`
 
-      const whatsappText=
-        encodeURIComponent(
-          `Aarvi Fashion Order Update\n\n`+
-          `Order ID: ${o.id}\n`+
-          `Product: ${o.Product_name || "-"}\n`+
-          `Status: ${status}`
-        );
+<div class="error">
 
+${esc(error.message)}
 
-      return `
+</div>
 
-        <div class="order">
+`;
 
-          <div class="order-head">
-
-            <h3>
-              🛍️ Order #${esc(o.id)}
-            </h3>
-
-            <span class="status">
-              ${esc(status)}
-            </span>
-
-          </div>
-
-          <p>
-            <b>Customer:</b>
-            ${esc(o.Customer_Name || "-")}
-          </p>
-
-          <p>
-            <b>Phone:</b>
-            ${esc(phone || "-")}
-          </p>
-
-          <p>
-            <b>Product:</b>
-            ${esc(o.Product_name || "-")}
-          </p>
-
-          <p>
-            <b>Quantity:</b>
-            ${esc(o.Quantity || 1)}
-          </p>
-
-          ${
-            o.Size
-            ?
-            `<p>
-              <b>Size:</b>
-              ${esc(o.Size)}
-            </p>`
-            :
-            ""
-          }
-
-          <p>
-            <b>Address:</b>
-            ${esc(o.Address || "-")}
-            ${esc(o.City || "")}
-            ${esc(o.State || "")}
-            ${esc(o["Pin Code"] || "")}
-          </p>
-
-          <p>
-            <b>Payment:</b>
-            ${esc(o.Payment_method || "-")}
-          </p>
-
-          <label>Order Status</label>
-
-          <select id="status-${Number(o.id)}">
-
-            ${[
-              "New",
-              "Confirmed",
-              "Packed",
-              "Shipped",
-              "Out for Delivery",
-              "Delivered",
-              "Cancelled",
-              "Returned"
-            ].map(s=>
-              `<option
-                value="${esc(s)}"
-                ${status===s?"selected":""}>
-                ${esc(s)}
-              </option>`
-            ).join("")}
-
-          </select>
-
-          <button
-            class="btn"
-            onclick="updateOrderStatus(
-              ${Number(o.id)}
-            )">
-            Update Status
-          </button>
-
-          ${
-            phone
-            ?
-            `<a
-              href="https://wa.me/91${encodeURIComponent(phone)}?text=${whatsappText}"
-              target="_blank"
-              style="text-decoration:none">
-
-              <button
-                class="btn btn-green"
-                type="button">
-                WhatsApp Customer
-              </button>
-
-            </a>`
-            :
-            ""
-          }
-
-        </div>
-
-      `;
-
-    }).join("");
+return;
 
 }
 
 
-/* =========================
-   UPDATE ORDER
-========================= */
+if(!data?.length){
 
-async function updateOrderStatus(id){
+$("orderList").innerHTML =
 
-  const select=
-    $("status-"+id);
+`
 
-  if(!select)
-    return;
+<div class="msg">
+No orders.
+</div>
 
-  const status=
-    select.value;
+`;
 
-
-  const {error}=
-    await sb
-      .from("ORDER'S")
-      .update({
-        Order_states:status
-      })
-      .eq("id",id);
-
-
-  if(error){
-
-    alert(
-      "Status update failed:\n"+
-      error.message
-    );
-
-    return;
-
-  }
-
-
-  alert(
-    "Order status updated! ✅"
-  );
-
-
-  loadOrders();
+return;
 
 }
 
 
-/* =========================
-   LOAD CUSTOMERS
-========================= */
+$("orderList").innerHTML =
+
+data
+.map(o =>
+
+`
+
+<div class="order">
+
+<b>
+
+#${esc(o.id)}
+
+—
+
+${esc(
+o.product_name ||
+"Product"
+)}
+
+</b>
+
+
+<p>
+
+Customer:
+${esc(
+o.customer_name ||
+"-"
+)}
+
+<br>
+
+Phone:
+${esc(
+o.phone ||
+"-"
+)}
+
+<br>
+
+Size:
+${esc(
+o.size ||
+"-"
+)}
+
+•
+
+Qty:
+${esc(
+o.quantity ||
+1
+)}
+
+<br>
+
+Address:
+${esc(
+o.address ||
+""
+)}
+
+${esc(
+o.city ||
+""
+)}
+
+${esc(
+o.state ||
+""
+)}
+
+${esc(
+o.pin_code ||
+""
+)}
+
+<br>
+
+Total:
+₹${Number(
+o.total_amount||0
+)
+.toLocaleString("en-IN")}
+
+</p>
+
+
+<span class="badge">
+
+${esc(
+o.order_status ||
+"New"
+)}
+
+</span>
+
+
+<div class="grid">
+
+
+<div>
+
+<label>
+Order Status
+</label>
+
+<select
+id="st_${o.id}">
+
+${
+[
+"New",
+"Confirmed",
+"Packed",
+"Shipped",
+"Out for Delivery",
+"Delivered",
+"Cancelled",
+"Returned"
+]
+.map(
+s =>
+`
+
+<option
+${
+s ===
+(o.order_status||"New")
+?
+"selected"
+:
+""
+}>
+
+${s}
+
+</option>
+
+`
+)
+.join("")
+}
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>
+Courier
+</label>
+
+<input
+id="co_${o.id}"
+value="${esc(
+o.courier_name ||
+""
+)}">
+
+</div>
+
+
+<div>
+
+<label>
+Tracking Number
+</label>
+
+<input
+id="tn_${o.id}"
+value="${esc(
+o.tracking_number ||
+""
+)}">
+
+</div>
+
+
+<div>
+
+<label>
+Tracking URL
+</label>
+
+<input
+id="tu_${o.id}"
+value="${esc(
+o.tracking_url ||
+""
+)}">
+
+</div>
+
+</div>
+
+
+<button
+class="btn green"
+onclick="saveOrder(${o.id})">
+
+Save Order / Tracking
+
+</button>
+
+
+</div>
+
+`
+
+)
+.join("");
+
+}
+
+
+/* =========================================================
+   SAVE ORDER
+========================================================= */
+
+async function saveOrder(id){
+
+const obj={
+
+order_status:
+$("st_"+id).value,
+
+courier_name:
+$("co_"+id).value.trim(),
+
+tracking_number:
+$("tn_"+id).value.trim(),
+
+tracking_url:
+$("tu_"+id).value.trim()
+
+};
+
+
+const {
+error
+} =
+await sb
+.from("orders")
+.update(obj)
+.eq(
+"id",
+id
+);
+
+
+if(error){
+
+alert(
+error.message
+);
+
+return;
+
+}
+
+
+alert(
+"Order updated ✅"
+);
+
+
+loadOrders();
+
+}
+
+
+/* =========================================================
+   CUSTOMERS
+========================================================= */
 
 async function loadCustomers(){
 
-  const container=
-    $("customers");
-
-  if(!container)
-    return;
-
-  container.innerHTML=
-    "<p>Customers loading...</p>";
-
-
-  const {data,error}=
-    await sb
-      .from("customer_profiles")
-      .select("*")
-      .order(
-        "created_at",
-        {ascending:false}
-      );
+const {
+data,
+error
+} =
+await sb
+.from("customer_profiles")
+.select("*")
+.order(
+"created_at",
+{
+ascending:false
+}
+);
 
 
-  if(error){
+if(error){
 
-    container.innerHTML=
-      `<div class="error">
-        ${esc(error.message)}
-      </div>`;
+$("customerList").innerHTML =
 
-    return;
+`
 
-  }
+<div class="error">
 
+${esc(error.message)}
 
-  const customers=
-    data || [];
+</div>
 
+`;
 
-  if(!customers.length){
+return;
 
-    container.innerHTML=
-      `<div class="msg">
-        Abhi customer profile nahi mila.
-      </div>`;
-
-    return;
-
-  }
+}
 
 
-  container.innerHTML=
-    customers.map(c=>`
+$("customerList").innerHTML =
 
-      <div class="order">
+(data||[])
+.map(c =>
 
-        <h3>
-          👤 ${esc(c.full_name || "Customer")}
-        </h3>
+`
 
-        <p>
-          <b>Email:</b>
-          ${esc(c.email || "-")}
-        </p>
+<div class="order">
 
-        <p>
-          <b>Phone:</b>
-          ${esc(c.phone || "-")}
-        </p>
+<b>
+👤 ${esc(
+c.full_name ||
+"Customer"
+)}
+</b>
 
-        <p>
-          <b>Account Type:</b>
-          ${esc(c.account_type || "Customer")}
-        </p>
+<p>
 
-      </div>
+Email:
+${esc(
+c.email ||
+"-"
+)}
 
-    `).join("");
+<br>
+
+Phone:
+${esc(
+c.phone ||
+"-"
+)}
+
+<br>
+
+Address:
+${esc(
+c.address ||
+"-"
+)}
+
+</p>
+
+</div>
+
+`
+)
+.join("");
+
+
+if(!data?.length){
+
+$("customerList").innerHTML =
+
+`
+
+<div class="msg">
+No customers.
+</div>
+
+`;
+
+}
 
 }
 
