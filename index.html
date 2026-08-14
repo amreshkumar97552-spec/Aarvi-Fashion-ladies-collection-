@@ -2620,7 +2620,7 @@ async function placeOrder(){
     error
   } =
     await sb
-      .from("ORDER'S")
+      .from("order's")
       .insert(orderData)
       .select()
       .single();
