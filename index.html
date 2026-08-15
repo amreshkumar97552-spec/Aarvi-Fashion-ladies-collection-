@@ -4,67 +4,2294 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Aarvi Fashion</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#fff7fa;color:#3a2430}button,input,textarea,select{font:inherit}button{cursor:pointer}.wrap{max-width:1180px;margin:auto;padding:16px}header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #f0d8e1}.top{max-width:1180px;margin:auto;padding:12px 16px;display:flex;align-items:center;gap:10px}.brand{font-weight:900;color:#d94f82;font-size:22px;letter-spacing:2px;flex:1}.icon{border:1px solid #f0d8e1;background:#fff;color:#d94f82;border-radius:11px;padding:9px 11px}.search{max-width:1180px;margin:auto;padding:0 16px 12px}.search input{width:100%;padding:12px 14px;border:1px solid #ead4dd;border-radius:14px}.hero{padding:28px 0;text-align:center}.hero h1{font-size:36px;margin:0 0 8px}.hero p{color:#777}.cats,.chips{display:flex;gap:8px;flex-wrap:wrap}.cats button,.chips button{border:1px solid #d94f82;background:#fff;color:#d94f82;padding:9px 14px;border-radius:22px}.cats button.active,.cats button:hover,.chips button.active{background:#d94f82;color:#fff}.section-title{display:flex;justify-content:space-between;align-items:center;margin:20px 0 10px}.section-title h2{margin:0;color:#d94f82}.products{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}.card{background:#fff;border:1px solid #f0d8e1;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(120,60,90,.06)}.photo{height:145px;background:#fff0f5;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;position:relative}.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s ease}.photo:active img,.photo:hover img{transform:scale(1.03)}.photo .zoom{position:absolute;right:5px;bottom:5px;background:rgba(255,255,255,.9);border-radius:50%;width:25px;height:25px;display:flex;align-items:center;justify-content:center;font-size:13px}.info{padding:8px}.name{font-weight:800}.muted{color:#777;font-size:13px}.price{font-size:20px;font-weight:900;color:#d94f82;margin:7px 0}.old{text-decoration:line-through;color:#999;font-size:12px;margin-left:5px}.btn{width:100%;border:0;border-radius:10px;padding:10px;background:#d94f82;color:#fff;font-weight:800;margin-top:7px}.btn.secondary{background:#fff;color:#d94f82;border:1px solid #d94f82}.empty{padding:35px;text-align:center;background:#fff;border:1px dashed #e4cbd5;border-radius:14px;grid-column:1/-1}.screen{display:none}.screen.active{display:block}.bottom{position:sticky;bottom:0;background:#fff;border-top:1px solid #ead4dd;display:flex;justify-content:space-around;z-index:900}.bottom button{flex:1;border:0;background:#fff;padding:9px;color:#666}.bottom button.active{color:#d94f82;font-weight:800}.drawer{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:3000;display:none}.drawer.open{display:block}.menu{width:290px;max-width:85%;height:100%;background:#fff;padding:18px}.menu button{width:100%;padding:12px;margin:5px 0;border:1px solid #f0d8e1;background:#fff;border-radius:10px;text-align:left}.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:5000;display:flex;align-items:center;justify-content:center;padding:14px;overflow:auto}.box{width:100%;max-width:560px;background:#fff;border-radius:18px;padding:18px;position:relative;max-height:94vh;overflow:auto}.close{position:absolute;right:10px;top:10px;border:0;background:#fff0f5;color:#d94f82;border-radius:50%;width:34px;height:34px;font-size:20px}label{display:block;font-weight:700;font-size:13px;margin:10px 0 5px}input,textarea,select{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px}textarea{min-height:80px}.notice{background:#fff0f5;padding:10px;border-radius:10px;margin:10px 0;font-size:13px}.success{background:#eefbf2;color:#26723a;padding:10px;border-radius:10px;margin:10px 0}.error{background:#fff0f0;color:#a52c2c;padding:10px;border-radius:10px;margin:10px 0}.order-card,.policy,.cart-row{border:1px solid #f0d8e1;border-radius:12px;padding:12px;margin:8px 0;background:#fff}.badge{display:inline-block;background:#d94f82;color:#fff;border-radius:20px;padding:5px 9px;font-size:12px}.size-row{display:flex;gap:7px;flex-wrap:wrap}.size{border:1px solid #d94f82;background:#fff;color:#d94f82;border-radius:8px;padding:7px 10px}.size.sel{background:#d94f82;color:#fff}.cart-row{display:flex;gap:10px;align-items:center}.cart-row img{width:65px;height:65px;object-fit:contain;background:#fff0f5;border-radius:8px}.qty{display:flex;gap:8px;align-items:center}.qty button{border:1px solid #ddd;background:#fff;border-radius:7px;padding:4px 9px}@media(max-width:900px){.products{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.photo{height:125px}}@media(max-width:650px){.products{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.hero h1{font-size:28px}.photo{height:105px}.brand{font-size:18px}.info{padding:6px}.name{font-size:11px;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.muted{font-size:9px}.price{font-size:13px;margin:4px 0}.old{font-size:8px}.btn{font-size:10px;padding:7px 3px;border-radius:8px;margin-top:4px}.card{border-radius:9px}}@media(max-width:430px){.products{gap:5px}.photo{height:92px}.info{padding:5px}.name{font-size:10px}.price{font-size:12px}.btn{font-size:9px;padding:6px 2px}}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#fff7fa;color:#3a2430}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.wrap{max-width:1180px;margin:auto;padding:16px}
+header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #f0d8e1}
+.top{max-width:1180px;margin:auto;padding:12px 16px;display:flex;align-items:center;gap:10px}
+.brand{font-weight:900;color:#d94f82;font-size:22px;letter-spacing:2px;flex:1}
+.icon{border:1px solid #f0d8e1;background:#fff;color:#d94f82;border-radius:11px;padding:9px 11px}
+.search{max-width:1180px;margin:auto;padding:0 16px 12px}
+.search input{width:100%;padding:12px 14px;border:1px solid #ead4dd;border-radius:14px}
+.hero{padding:28px 0;text-align:center}
+.hero h1{font-size:36px;margin:0 0 8px}
+.hero p{color:#777}
+.cats,.chips{display:flex;gap:8px;flex-wrap:wrap}
+.cats button,.chips button{border:1px solid #d94f82;background:#fff;color:#d94f82;padding:9px 14px;border-radius:22px}
+.cats button.active,.cats button:hover,.chips button.active{background:#d94f82;color:#fff}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:20px 0 10px}
+.section-title h2{margin:0;color:#d94f82}
+.products{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}
+.card{background:#fff;border:1px solid #f0d8e1;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(120,60,90,.06)}
+.photo{height:145px;background:#fff0f5;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;position:relative}
+.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s ease}
+.photo:active img,.photo:hover img{transform:scale(1.03)}
+.photo .zoom{position:absolute;right:5px;bottom:5px;background:rgba(255,255,255,.9);border-radius:50%;width:25px;height:25px;display:flex;align-items:center;justify-content:center;font-size:13px}
+.info{padding:8px}
+.name{font-weight:800}
+.muted{color:#777;font-size:13px}
+.price{font-size:20px;font-weight:900;color:#d94f82;margin:7px 0}
+.old{text-decoration:line-through;color:#999;font-size:12px;margin-left:5px}
+.btn{width:100%;border:0;border-radius:10px;padding:10px;background:#d94f82;color:#fff;font-weight:800;margin-top:7px}
+.btn.secondary{background:#fff;color:#d94f82;border:1px solid #d94f82}
+.empty{padding:35px;text-align:center;background:#fff;border:1px dashed #e4cbd5;border-radius:14px;grid-column:1/-1}
+.screen{display:none}
+.screen.active{display:block}
+.bottom{position:sticky;bottom:0;background:#fff;border-top:1px solid #ead4dd;display:flex;justify-content:space-around;z-index:900}
+.bottom button{flex:1;border:0;background:#fff;padding:9px;color:#666}
+.bottom button.active{color:#d94f82;font-weight:800}
+.drawer{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:3000;display:none}
+.drawer.open{display:block}
+.menu{width:290px;max-width:85%;height:100%;background:#fff;padding:18px}
+.menu button{width:100%;padding:12px;margin:5px 0;border:1px solid #f0d8e1;background:#fff;border-radius:10px;text-align:left}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:5000;display:flex;align-items:center;justify-content:center;padding:14px;overflow:auto}
+.box{width:100%;max-width:560px;background:#fff;border-radius:18px;padding:18px;position:relative;max-height:94vh;overflow:auto}
+.close{position:absolute;right:10px;top:10px;border:0;background:#fff0f5;color:#d94f82;border-radius:50%;width:34px;height:34px;font-size:20px}
+label{display:block;font-weight:700;font-size:13px;margin:10px 0 5px}
+input,textarea,select{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px}
+textarea{min-height:80px}
+.notice{background:#fff0f5;padding:10px;border-radius:10px;margin:10px 0;font-size:13px}
+.success{background:#eefbf2;color:#26723a;padding:10px;border-radius:10px;margin:10px 0}
+.error{background:#fff0f0;color:#a52c2c;padding:10px;border-radius:10px;margin:10px 0}
+.order-card,.policy,.cart-row{border:1px solid #f0d8e1;border-radius:12px;padding:12px;margin:8px 0;background:#fff}
+.badge{display:inline-block;background:#d94f82;color:#fff;border-radius:20px;padding:5px 9px;font-size:12px}
+.size-row{display:flex;gap:7px;flex-wrap:wrap}
+.size{border:1px solid #d94f82;background:#fff;color:#d94f82;border-radius:8px;padding:7px 10px}
+.size.sel{background:#d94f82;color:#fff}
+.cart-row{display:flex;gap:10px;align-items:center}
+.cart-row img{width:65px;height:65px;object-fit:contain;background:#fff0f5;border-radius:8px}
+.qty{display:flex;gap:8px;align-items:center}
+.qty button{border:1px solid #ddd;background:#fff;border-radius:7px;padding:4px 9px}
+
+.payment-box{
+  border:1px solid #f0d8e1;
+  background:#fff7fa;
+  border-radius:12px;
+  padding:12px;
+  margin-top:10px;
+}
+
+.razorpay-info{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:700;
+  color:#d94f82;
+}
+
+@media(max-width:900px){
+.products{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.photo{height:125px}
+}
+
+@media(max-width:650px){
+.products{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.hero h1{font-size:28px}
+.photo{height:105px}
+.brand{font-size:18px}
+.info{padding:6px}
+.name{font-size:11px;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.muted{font-size:9px}
+.price{font-size:13px;margin:4px 0}
+.old{font-size:8px}
+.btn{font-size:10px;padding:7px 3px;border-radius:8px;margin-top:4px}
+.card{border-radius:9px}
+}
+
+@media(max-width:430px){
+.products{gap:5px}
+.photo{height:92px}
+.info{padding:5px}
+.name{font-size:10px}
+.price{font-size:12px}
+.btn{font-size:9px;padding:6px 2px}
+}
 </style>
 </head>
+
 <body>
-<header><div class="top"><button class="icon" onclick="openMenu()">☰</button><div class="brand">AARVI FASHION</div><button class="icon" onclick="showNotifications()">🔔</button><button class="icon" onclick="showScreen('account')">👤</button></div><div class="search"><input id="search" placeholder="Search products..." oninput="renderHome()"></div></header>
+
+<header>
+<div class="top">
+<button class="icon" onclick="openMenu()">☰</button>
+<div class="brand">AARVI FASHION</div>
+<button class="icon" onclick="showNotifications()">🔔</button>
+<button class="icon" onclick="showScreen('account')">👤</button>
+</div>
+
+<div class="search">
+<input id="search" placeholder="Search products..." oninput="renderHome">
+</div>
+</header>
+
 <main class="wrap">
-<section id="home" class="screen active"><div class="hero"><h1>Style that feels beautifully yours.</h1><p>Fashion • Beauty • Jewellery • All India Delivery</p><div id="cats" class="cats"></div></div><div class="section-title"><h2>✨ New Arrivals</h2></div><div id="newArrivals" class="products"></div><div class="section-title"><h2>🔥 Best Sellers</h2></div><div id="bestSellers" class="products"></div><div class="section-title"><h2>💖 Under ₹999</h2></div><div id="under999" class="products"></div><div class="section-title"><h2 id="productTitle">Latest Collection</h2></div><div id="products" class="products"></div></section>
-<section id="orders" class="screen"><div class="section-title"><h2>📦 My Orders</h2><button class="icon" onclick="loadOrders()">↻</button></div><div id="ordersList"></div></section>
-<section id="cart" class="screen"><div class="section-title"><h2>🛒 My Cart</h2></div><div id="cartList"></div></section>
-<section id="account" class="screen"><div class="section-title"><h2>👤 My Account</h2></div><div id="accountBox"></div></section>
+
+<section id="home" class="screen active">
+
+<div class="hero">
+<h1>Style that feels beautifully yours.</h1>
+<p>Fashion • Beauty • Jewellery • All India Delivery</p>
+<div id="cats" class="cats"></div>
+</div>
+
+<div class="section-title">
+<h2>✨ New Arrivals</h2>
+</div>
+<div id="newArrivals" class="products"></div>
+
+<div class="section-title">
+<h2>🔥 Best Sellers</h2>
+</div>
+<div id="bestSellers" class="products"></div>
+
+<div class="section-title">
+<h2>💖 Under ₹999</h2>
+</div>
+<div id="under999" class="products"></div>
+
+<div class="section-title">
+<h2 id="productTitle">Latest Collection</h2>
+</div>
+<div id="products" class="products"></div>
+
+</section>
+
+<section id="orders" class="screen">
+<div class="section-title">
+<h2>📦 My Orders</h2>
+<button class="icon" onclick="loadOrders()">↻</button>
+</div>
+<div id="ordersList"></div>
+</section>
+
+<section id="cart" class="screen">
+<div class="section-title">
+<h2>🛒 My Cart</h2>
+</div>
+<div id="cartList"></div>
+</section>
+
+<section id="account" class="screen">
+<div class="section-title">
+<h2>👤 My Account</h2>
+</div>
+<div id="accountBox"></div>
+</section>
+
 </main>
-<nav class="bottom"><button id="navHome" class="active" onclick="showScreen('home')">⌂<br><small>Home</small></button><button id="navCart" onclick="showScreen('cart')">🛒<br><small>Cart</small></button><button id="navOrders" onclick="showScreen('orders')">🛍<br><small>Orders</small></button><button id="navAccount" onclick="showScreen('account')">👤<br><small>Account</small></button></nav>
-<div id="drawer" class="drawer" onclick="closeMenu()"><div class="menu" onclick="event.stopPropagation()"><button onclick="closeMenu()">✕ Close</button><h2>Menu</h2><button onclick="goHome()">🏠 Home</button><button onclick="showScreen('cart');closeMenu()">🛒 Cart</button><button onclick="showScreen('orders');closeMenu()">📦 My Orders</button><button onclick="showScreen('account');closeMenu()">👤 My Account</button><button onclick="showNotifications();closeMenu()">🔔 Notifications</button><button onclick="openTrack();closeMenu()">🚚 Track Order</button><button onclick="showPolicies();closeMenu()">↩️ Return / Exchange Policy</button><button onclick="contact()">💬 Contact</button></div></div>
+
+<nav class="bottom">
+<button id="navHome" class="active" onclick="showScreen('home')">
+⌂<br><small>Home</small>
+</button>
+
+<button id="navCart" onclick="showScreen('cart')">
+🛒<br><small>Cart</small>
+</button>
+
+<button id="navOrders" onclick="showScreen('orders')">
+🛍<br><small>Orders</small>
+</button>
+
+<button id="navAccount" onclick="showScreen('account')">
+👤<br><small>Account</small>
+</button>
+</nav>
+
+<div id="drawer" class="drawer" onclick="closeMenu()">
+
+<div class="menu" onclick="event.stopPropagation()">
+
+<button onclick="closeMenu()">✕ Close</button>
+
+<h2>Menu</h2>
+
+<button onclick="goHome()">🏠 Home</button>
+
+<button onclick="showScreen('cart');closeMenu()">
+🛒 Cart
+</button>
+
+<button onclick="showScreen('orders');closeMenu()">
+📦 My Orders
+</button>
+
+<button onclick="showScreen('account');closeMenu()">
+👤 My Account
+</button>
+
+<button onclick="showNotifications();closeMenu()">
+🔔 Notifications
+</button>
+
+<button onclick="openTrack();closeMenu()">
+🚚 Track Order
+</button>
+
+<button onclick="showPolicies();closeMenu()">
+↩️ Return / Exchange Policy
+</button>
+
+<button onclick="contact()">
+💬 Contact
+</button>
+
+</div>
+</div>
+
 <div id="modalRoot"></div>
+
 <script>
-const SUPABASE_URL="https://sxifooelnulxldcbtmvd.supabase.co";
-const SUPABASE_KEY="sb_publishable_nLLITIJxfhc52cUkZaGZ4w_GvJubfM-";
-const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let allProducts=[],currentCategory="All",currentProduct=null,selectedSize="",qty=1;
+
+const SUPABASE_URL=
+"https://sxifooelnulxldcbtmvd.supabase.co";
+
+const SUPABASE_KEY=
+"sb_publishable_nLLITIJxfhc52cUkZaGZ4w_GvJubfM-";
+
+const sb=
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+/*
+================================================
+RAZORPAY
+================================================
+*/
+
+const RAZORPAY_KEY_ID=
+"rzp_live_TPyDWh5CVTlttc";
+
+
+/*
+================================================
+MAIN VARIABLES
+================================================
+*/
+
+let allProducts=[];
+let currentCategory="All";
+let currentProduct=null;
+let selectedSize="";
+let qty=1;
+
+
+/*
+================================================
+HELPERS
+================================================
+*/
+
 const $=id=>document.getElementById(id);
-function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
-function money(v){return Number(v||0).toLocaleString("en-IN")}
-function imgs(p){let a=[];try{a=Array.isArray(p.image_urls)?p.image_urls:JSON.parse(p.image_urls||"[]")}catch{}if(!Array.isArray(a))a=[];if(!a.length&&p.image_url)a=[p.image_url];return a.filter(Boolean)}
-function sizes(p){try{return Array.isArray(p.sizes)?p.sizes:JSON.parse(p.sizes||"[]")}catch{return[]}}
-function closeModal(){$("modalRoot").innerHTML=""}
-function openImage(src,name){if(!src)return;$("modalRoot").innerHTML=`<div class="modal" onclick="closeModal()"><div class="box" style="max-width:520px;padding:8px;background:#111" onclick="event.stopPropagation()"><button class="close" onclick="closeModal()">×</button><img src="${esc(src)}" alt="${esc(name)}" style="display:block;width:100%;max-height:82vh;object-fit:contain;border-radius:12px;background:#fff"><div style="color:#fff;text-align:center;padding:8px 4px;font-weight:700">${esc(name)}</div></div></div>`}
-function openMenu(){$("drawer").classList.add("open")}
-function closeMenu(){$("drawer").classList.remove("open")}
-function goHome(){closeMenu();showScreen("home");currentCategory="All";renderHome()}
-function showScreen(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$(id).classList.add("active");document.querySelectorAll(".bottom button").forEach(x=>x.classList.remove("active"));$("nav"+id.charAt(0).toUpperCase()+id.slice(1))?.classList.add("active");if(id==="orders")loadOrders();if(id==="cart")renderCart();if(id==="account")loadAccount();scrollTo(0,0)}
-async function loadProducts(){const c=$("products");c.innerHTML='<div class="empty">Products loading...</div>';const r=await sb.from("products").select("*").order("id",{ascending:false});if(r.error){c.innerHTML='<div class="empty">Products load nahi ho rahe.<br>'+esc(r.error.message)+'</div>';return}allProducts=r.data||[];renderCategories();renderHome()}
-function productCard(p){const im=imgs(p)[0]||"";const stock=Number(p.stock||0);const old=Number(p.original_price||0);return `<article class="card"><div class="photo" onclick="openImage('${esc(im)}','${esc(p.name||"Product")}')">${im?`<img src="${esc(im)}" alt="${esc(p.name)}" loading="lazy"><span class="zoom">🔍</span>`:'🛍️'}</div><div class="info"><div class="name">${esc(p.name||"Product")}</div><div class="muted">${esc(p.category||"")}</div><div class="price">₹${money(p.price)}${old>Number(p.price||0)?`<span class="old">₹${money(old)}</span>`:""}</div><div class="muted">${stock>0?`Stock: ${stock}`:"Out of Stock"}</div><button class="btn" ${stock<1?"disabled":""} onclick="buyNow(${Number(p.id)})">Buy Now</button><button class="btn secondary" ${stock<1?"disabled":""} onclick="addToCart(${Number(p.id)})">Add to Cart</button></div></article>`}
-function renderCategories(){const cats=["All","Saree","Kurti","Dress","Top","Suit"];$("cats").innerHTML=cats.map(c=>`<button class="${c===currentCategory?"active":""}" onclick="setCategory('${c}')">${c}</button>`).join("")}
-function setCategory(c){currentCategory=c;renderCategories();renderHome()}
-function renderList(list,id){$(id).innerHTML=list.length?list.map(productCard).join(""):'<div class="empty">Is section mein abhi product nahi hai.</div>'}
-function renderHome(){const q=$("search").value.trim().toLowerCase();let base=allProducts.filter(p=>!q||String(p.name||"").toLowerCase().includes(q)||String(p.category||"").toLowerCase().includes(q));let filtered=currentCategory==="All"?base:base.filter(p=>String(p.category||"").toLowerCase()===currentCategory.toLowerCase());$("productTitle").textContent=currentCategory==="All"?"Latest Collection":currentCategory+" Collection";renderList(filtered,"products");renderList(base.slice(0,8),"newArrivals");renderList([...base].sort((a,b)=>Number(b.sold_count||b.sales||0)-Number(a.sold_count||a.sales||0)).slice(0,8),"bestSellers");renderList(base.filter(p=>Number(p.price||0)<=999).slice(0,8),"under999")}
-function addToCart(id){const p=allProducts.find(x=>Number(x.id)===Number(id));if(!p)return;let cart=JSON.parse(localStorage.getItem("aarvi_cart")||"[]");const x=cart.find(i=>Number(i.id)===Number(id));if(x)x.qty=Math.min(x.qty+1,Number(p.stock||1));else cart.push({id:Number(p.id),qty:1});localStorage.setItem("aarvi_cart",JSON.stringify(cart));alert("Cart mein add ho gaya 🛒")}
-function getCart(){return JSON.parse(localStorage.getItem("aarvi_cart")||"[]")}
-function renderCart(){const cart=getCart();if(!cart.length){$("cartList").innerHTML='<div class="empty">Cart abhi empty hai.</div>';return}let total=0;$("cartList").innerHTML=cart.map(i=>{const p=allProducts.find(x=>Number(x.id)===Number(i.id));if(!p)return"";const sub=Number(p.price||0)*i.qty;total+=sub;return `<div class="cart-row"><img src="${esc(imgs(p)[0]||"")}"><div style="flex:1"><b>${esc(p.name)}</b><div>₹${money(p.price)} × ${i.qty}</div><div class="qty"><button onclick="changeCart(${p.id},-1)">−</button><span>${i.qty}</span><button onclick="changeCart(${p.id},1)">+</button><button onclick="removeCart(${p.id})">Remove</button></div></div></div>`}).join("")+`<div class="order-card"><b>Total: ₹${money(total)}</b><button class="btn" onclick="checkoutCart()">Checkout Cart</button></div>`}
-function changeCart(id,d){let c=getCart();let x=c.find(i=>Number(i.id)===Number(id));if(!x)return;x.qty=Math.max(1,x.qty+d);const p=allProducts.find(y=>Number(y.id)===Number(id));if(p)x.qty=Math.min(x.qty,Number(p.stock||1));localStorage.setItem("aarvi_cart",JSON.stringify(c));renderCart()}
-function removeCart(id){localStorage.setItem("aarvi_cart",JSON.stringify(getCart().filter(i=>Number(i.id)!==Number(id))));renderCart()}
-async function buyNow(id){const s=await sb.auth.getSession();if(!s.data.session){openAuth();return}currentProduct=allProducts.find(p=>Number(p.id)===Number(id));selectedSize="";qty=1;if(currentProduct)openOrderForm()}
-async function openAuth(){closeModal();$("modalRoot").innerHTML=`<div class="modal"><div class="box"><button class="close" onclick="closeModal()">×</button><h2>🌸 Aarvi Fashion</h2><label>Email</label><input id="aEmail" type="email"><label>Password</label><input id="aPass" type="password"><button class="btn" onclick="login()">Login</button><button class="btn secondary" onclick="signup()">Create Account</button></div></div>`}
-async function login(){const{error}=await sb.auth.signInWithPassword({email:$("aEmail").value.trim(),password:$("aPass").value});if(error)return alert(error.message);closeModal();loadAccount()}
-async function signup(){const email=$("aEmail").value.trim(),password=$("aPass").value;if(password.length<6)return alert("Password minimum 6 characters ka hona chahiye.");const{error}=await sb.auth.signUp({email,password});if(error)return alert(error.message);alert("Account create ho gaya. Email confirmation required ho sakta hai.")}
-function openOrderForm(){const p=currentProduct;$("modalRoot").innerHTML=`<div class="modal"><div class="box"><button class="close" onclick="closeModal()">×</button><h2>🛍️ Place Order</h2><div class="notice"><b>${esc(p.name)}</b><br>₹${money(p.price)}</div>${sizes(p).length?`<label>Size *</label><div class="size-row">${sizes(p).map(s=>`<button class="size" onclick="pickSize('${esc(s)}',this)">${esc(s)}</button>`).join("")}</div>`:""}<label>Full Name *</label><input id="oName"><label>Mobile *</label><input id="oPhone" maxlength="10" inputmode="numeric"><label>Address *</label><textarea id="oAddress"></textarea><label>City *</label><input id="oCity"><label>State *</label><input id="oState"><label>PIN *</label><input id="oPin" maxlength="6" inputmode="numeric"><label>Quantity *</label><input id="oQty" type="number" min="1" max="${Number(p.stock||1)}" value="1"><label>Payment *</label><select id="oPay"><option value="COD">Cash on Delivery</option><option value="Online">Online Payment</option></select><div class="notice">Online payment option abhi gateway ke bina sirf Pending status rakhega. COD fully supported hai.</div><button id="placeBtn" class="btn" onclick="placeOrder()">Confirm Order</button></div></div>`;loadOrderProfile()}
-function pickSize(s,b){selectedSize=s;document.querySelectorAll(".size").forEach(x=>x.classList.remove("sel"));b.classList.add("sel")}
-async function loadOrderProfile(){const{data:{session}}=await sb.auth.getSession();if(!session)return;const{data:p}=await sb.from("customer_profiles").select("*").eq("id",session.user.id).maybeSingle();if(p){$("oName").value=p.full_name||"";$("oPhone").value=p.phone||""}}
-async function placeOrder(){const btn=$("placeBtn"),name=$("oName").value.trim(),phone=$("oPhone").value.trim(),address=$("oAddress").value.trim(),city=$("oCity").value.trim(),state=$("oState").value.trim(),pin=$("oPin").value.trim(),q=Number($("oQty").value),pay=$("oPay").value;if(!name||!/^[0-9]{10}$/.test(phone)||!address||!city||!state||!/^[0-9]{6}$/.test(pin))return alert("Details sahi bhariye.");if(sizes(currentProduct).length&&!selectedSize)return alert("Size select karein.");if(!q||q<1||q>Number(currentProduct.stock||0))return alert("Quantity stock se zyada nahi ho sakti.");btn.disabled=true;btn.textContent="Order save ho raha hai...";const{data:{session}}=await sb.auth.getSession();const r=await sb.rpc("place_order",{p_user_id:session?.user?.id||null,p_customer_name:name,p_phone:phone,p_address:address,p_city:city,p_state:state,p_pin_code:pin,p_product_id:Number(currentProduct.id),p_size:selectedSize||null,p_quantity:q,p_payment_method:pay});if(r.error){btn.disabled=false;btn.textContent="Confirm Order";return alert("Order confirm nahi hua:\n"+r.error.message)}closeModal();await loadProducts();alert("Order Confirmed! ✅\nOrder ID: #"+r.data);showScreen("orders")}
-async function checkoutCart(){const c=getCart();if(!c.length)return;const s=await sb.auth.getSession();if(!s.data.session){openAuth();return}if(c.length===1){currentProduct=allProducts.find(p=>Number(p.id)===Number(c[0].id));qty=c[0].qty;selectedSize="";openOrderForm();return}alert("Cart mein multiple products hain. Abhi ek-ek product ka order place karein.");}
-async function loadOrders(){const el=$("ordersList");const{data:{session}}=await sb.auth.getSession();if(!session){el.innerHTML='<div class="empty">My Orders ke liye login karein.</div>';return}el.innerHTML='<div class="empty">Orders loading...</div>';const r=await sb.from("orders").select("*").eq("user_id",session.user.id).order("id",{ascending:false});if(r.error){el.innerHTML='<div class="empty">Orders load nahi ho rahe.<br>'+esc(r.error.message)+'</div>';return}if(!r.data?.length){el.innerHTML='<div class="empty">Abhi koi order nahi hai.</div>';return}el.innerHTML=r.data.map(o=>`<div class="order-card"><b>Order #${esc(o.id)}</b><p>${esc(o.product_name||"Product")} × ${esc(o.quantity||1)}</p><p>Total: ₹${money(o.total_amount)}</p><p>Payment: ${esc(o.payment_method||"-")}</p><span class="badge">${esc(o.order_status||"New")}</span>${o.courier_name?`<p>Courier: ${esc(o.courier_name)}</p>`:""}${o.tracking_number?`<p>Tracking: ${esc(o.tracking_number)}</p>`:""}${o.tracking_url?`<a class="btn" href="${esc(o.tracking_url)}" target="_blank">Track Shipment</a>`:""}</div>`).join("")}
-async function loadAccount(){const{data:{session}}=await sb.auth.getSession();if(!session){$("accountBox").innerHTML='<div class="order-card"><h3>Login required</h3><button class="btn" onclick="openAuth()">Login / Sign Up</button></div>';return}const{data:p}=await sb.from("customer_profiles").select("*").eq("id",session.user.id).maybeSingle();$("accountBox").innerHTML=`<div class="order-card"><h3>${esc(p?.full_name||"Customer")}</h3><p>${esc(p?.email||session.user.email||"")}<br>${esc(p?.phone||"")}</p><button class="btn" onclick="showScreen('orders')">📦 My Orders</button><button class="btn secondary" onclick="showNotifications()">🔔 Notifications</button><button class="btn secondary" onclick="openTrack()">🚚 Track Order</button><button class="btn secondary" onclick="showPolicies()">↩️ Return / Exchange</button><button class="btn secondary" onclick="sb.auth.signOut().then(loadAccount)">Logout</button></div>`}
-async function showNotifications(){const{data:{session}}=await sb.auth.getSession();if(!session)return openAuth();const r=await sb.from("customer_notifications").select("*").eq("user_id",session.user.id).order("created_at",{ascending:false}).limit(30);if(r.error)return alert(r.error.message);$("modalRoot").innerHTML=`<div class="modal"><div class="box"><button class="close" onclick="closeModal()">×</button><h2>🔔 Notifications</h2>${(r.data||[]).map(n=>`<div class="order-card"><b>${esc(n.title||"Aarvi Fashion")}</b><p>${esc(n.message||"")}</p></div>`).join("")||'<div class="empty">No notifications.</div>'}</div></div>`}
-async function openTrack(){closeModal();$("modalRoot").innerHTML=`<div class="modal"><div class="box"><button class="close" onclick="closeModal()">×</button><h2>🚚 Track Order</h2><label>Order ID</label><input id="tId" type="number"><label>Mobile</label><input id="tPhone" maxlength="10"><button class="btn" onclick="trackOrder()">Track</button><div id="tResult"></div></div></div>`}
-async function trackOrder(){const id=Number($("tId").value),phone=$("tPhone").value.trim();if(!id||!/^[0-9]{10}$/.test(phone))return alert("Order ID aur valid mobile number bhariye.");const r=await sb.rpc("track_my_order",{order_id_input:id,phone_input:phone});if(r.error)return $("tResult").innerHTML='<div class="error">'+esc(r.error.message)+'</div>';const o=r.data;if(!o)return $("tResult").innerHTML='<div class="error">Order nahi mila.</div>';const s=o.order_status||o.Order_status||o.Order_states||"New";$("tResult").innerHTML=`<div class="success">Order #${id} found ✅<br>Product: ${esc(o.product_name||o.Product_name||"-")}<br><span class="badge">${esc(s)}</span></div>`}
-function showPolicies(){$("modalRoot").innerHTML=`<div class="modal"><div class="box"><button class="close" onclick="closeModal()">×</button><h2>↩️ Return / Exchange Policy</h2><div class="policy"><b>Return / Exchange</b><p>Return ya exchange request ke liye order ID, mobile number aur problem details ke saath Aarvi Fashion support se contact karein.</p></div><div class="policy"><b>Order Cancellation</b><p>Cancellation request ke liye order dispatch hone se pehle WhatsApp ya call support karein.</p></div><div class="policy"><b>Refund</b><p>Approved return/refund ka processing business verification ke baad kiya jayega.</p></div><button class="btn" onclick="contact()">WhatsApp Support</button></div></div>`}
-function contact(){window.open("https://wa.me/916204117647?text=Hello%20Aarvi%20Fashion%2C%20I%20need%20help%20with%20my%20order.","_blank")}
-function help(){showPolicies()}
+
+function esc(v){
+return String(v??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+}
+
+function money(v){
+return Number(v||0).toLocaleString("en-IN");
+}
+
+function imgs(p){
+
+let a=[];
+
+try{
+a=Array.isArray(p.image_urls)
+?p.image_urls
+:JSON.parse(p.image_urls||"[]");
+}catch{}
+
+if(!Array.isArray(a))a=[];
+
+if(!a.length&&p.image_url)
+a=[p.image_url];
+
+return a.filter(Boolean);
+}
+
+function sizes(p){
+
+try{
+return Array.isArray(p.sizes)
+?p.sizes
+:JSON.parse(p.sizes||"[]");
+}catch{
+return[];
+}
+
+}
+
+function closeModal(){
+$("modalRoot").innerHTML="";
+}
+
+
+/*
+================================================
+IMAGE
+================================================
+*/
+
+function openImage(src,name){
+
+if(!src)return;
+
+$("modalRoot").innerHTML=`
+
+<div class="modal"
+onclick="closeModal()">
+
+<div class="box"
+style="max-width:520px;padding:8px;background:#111"
+onclick="event.stopPropagation()">
+
+<button class="close"
+onclick="closeModal()">×</button>
+
+<img
+src="${esc(src)}"
+alt="${esc(name)}"
+style="display:block;width:100%;max-height:82vh;object-fit:contain;border-radius:12px;background:#fff">
+
+<div style="color:#fff;text-align:center;padding:8px 4px;font-weight:700">
+${esc(name)}
+</div>
+
+</div>
+</div>
+`;
+}
+
+
+/*
+================================================
+MENU
+================================================
+*/
+
+function openMenu(){
+$("drawer").classList.add("open");
+}
+
+function closeMenu(){
+$("drawer").classList.remove("open");
+}
+
+function goHome(){
+closeMenu();
+showScreen("home");
+currentCategory="All";
+renderHome();
+}
+
+
+/*
+================================================
+SCREEN
+================================================
+*/
+
+function showScreen(id){
+
+document
+.querySelectorAll(".screen")
+.forEach(x=>x.classList.remove("active"));
+
+$(id).classList.add("active");
+
+document
+.querySelectorAll(".bottom button")
+.forEach(x=>x.classList.remove("active"));
+
+$("nav"+id.charAt(0).toUpperCase()+id.slice(1))
+?.classList.add("active");
+
+if(id==="orders")
+loadOrders();
+
+if(id==="cart")
+renderCart();
+
+if(id==="account")
+loadAccount();
+
+scrollTo(0,0);
+}
+
+
+/*
+================================================
+PRODUCTS
+================================================
+*/
+
+async function loadProducts(){
+
+const c=$("products");
+
+c.innerHTML=
+'<div class="empty">Products loading...</div>';
+
+const r=
+await sb
+.from("products")
+.select("*")
+.order("id",{ascending:false});
+
+if(r.error){
+
+c.innerHTML=
+'<div class="empty">Products load nahi ho rahe.<br>'+
+esc(r.error.message)+
+'</div>';
+
+return;
+}
+
+allProducts=r.data||[];
+
+renderCategories();
+
+renderHome();
+}
+
+
+/*
+================================================
+PRODUCT CARD
+================================================
+*/
+
+function productCard(p){
+
+const im=imgs(p)[0]||"";
+
+const stock=
+Number(p.stock||0);
+
+const old=
+Number(p.original_price||0);
+
+return `
+
+<article class="card">
+
+<div class="photo"
+onclick="openImage('${esc(im)}','${esc(p.name||"Product")}')">
+
+${
+im
+?`
+<img
+src="${esc(im)}"
+alt="${esc(p.name)}"
+loading="lazy">
+
+<span class="zoom">🔍</span>
+`
+:"🛍️"
+}
+
+</div>
+
+<div class="info">
+
+<div class="name">
+${esc(p.name||"Product")}
+</div>
+
+<div class="muted">
+${esc(p.category||"")}
+</div>
+
+<div class="price">
+₹${money(p.price)}
+
+${
+old>Number(p.price||0)
+?`
+<span class="old">
+₹${money(old)}
+</span>
+`
+:""
+}
+
+</div>
+
+<div class="muted">
+${
+stock>0
+?`Stock: ${stock}`
+:"Out of Stock"
+}
+</div>
+
+<button
+class="btn"
+${stock<1?"disabled":""}
+onclick="buyNow(${Number(p.id)})">
+
+Buy Now
+
+</button>
+
+<button
+class="btn secondary"
+${stock<1?"disabled":""}
+onclick="addToCart(${Number(p.id)})">
+
+Add to Cart
+
+</button>
+
+</div>
+</article>
+`;
+}
+
+
+/*
+================================================
+CATEGORIES
+================================================
+*/
+
+function renderCategories(){
+
+const cats=[
+"All",
+"Saree",
+"Kurti",
+"Dress",
+"Top",
+"Suit"
+];
+
+$("cats").innerHTML=
+cats.map(c=>`
+
+<button
+class="${c===currentCategory?"active":""}"
+onclick="setCategory('${c}')">
+
+${c}
+
+</button>
+
+`).join("");
+}
+
+function setCategory(c){
+
+currentCategory=c;
+
+renderCategories();
+
+renderHome();
+}
+
+
+/*
+================================================
+HOME
+================================================
+*/
+
+function renderList(list,id){
+
+$(id).innerHTML=
+list.length
+?list.map(productCard).join("")
+:'<div class="empty">Is section mein abhi product nahi hai.</div>';
+}
+
+function renderHome(){
+
+const q=
+$("search").value
+.trim()
+.toLowerCase();
+
+let base=
+allProducts.filter(p=>
+!q||
+String(p.name||"")
+.toLowerCase()
+.includes(q)||
+String(p.category||"")
+.toLowerCase()
+.includes(q)
+);
+
+let filtered=
+currentCategory==="All"
+?base
+:base.filter(p=>
+String(p.category||"")
+.toLowerCase()===
+currentCategory.toLowerCase()
+);
+
+$("productTitle").textContent=
+currentCategory==="All"
+?"Latest Collection"
+:currentCategory+" Collection";
+
+renderList(filtered,"products");
+
+renderList(
+base.slice(0,8),
+"newArrivals"
+);
+
+renderList(
+[...base]
+.sort(
+(a,b)=>
+Number(b.sold_count||b.sales||0)-
+Number(a.sold_count||a.sales||0)
+)
+.slice(0,8),
+"bestSellers"
+);
+
+renderList(
+base
+.filter(p=>Number(p.price||0)<=999)
+.slice(0,8),
+"under999"
+);
+}
+
+
+/*
+================================================
+CART
+================================================
+*/
+
+function addToCart(id){
+
+const p=
+allProducts.find(
+x=>Number(x.id)===Number(id)
+);
+
+if(!p)return;
+
+let cart=
+JSON.parse(
+localStorage.getItem("aarvi_cart")||"[]"
+);
+
+const x=
+cart.find(
+i=>Number(i.id)===Number(id)
+);
+
+if(x)
+x.qty=
+Math.min(
+x.qty+1,
+Number(p.stock||1)
+);
+
+else
+cart.push({
+id:Number(p.id),
+qty:1
+});
+
+localStorage.setItem(
+"aarvi_cart",
+JSON.stringify(cart)
+);
+
+alert("Cart mein add ho gaya 🛒");
+}
+
+function getCart(){
+
+return JSON.parse(
+localStorage.getItem("aarvi_cart")||"[]"
+);
+
+}
+
+function renderCart(){
+
+const cart=getCart();
+
+if(!cart.length){
+
+$("cartList").innerHTML=
+'<div class="empty">Cart abhi empty hai.</div>';
+
+return;
+}
+
+let total=0;
+
+$("cartList").innerHTML=
+cart.map(i=>{
+
+const p=
+allProducts.find(
+x=>Number(x.id)===Number(i.id)
+);
+
+if(!p)return"";
+
+const sub=
+Number(p.price||0)*i.qty;
+
+total+=sub;
+
+return `
+
+<div class="cart-row">
+
+<img
+src="${esc(imgs(p)[0]||"")}">
+
+<div style="flex:1">
+
+<b>${esc(p.name)}</b>
+
+<div>
+₹${money(p.price)} × ${i.qty}
+</div>
+
+<div class="qty">
+
+<button
+onclick="changeCart(${p.id},-1)">
+−
+</button>
+
+<span>${i.qty}</span>
+
+<button
+onclick="changeCart(${p.id},1)">
++
+</button>
+
+<button
+onclick="removeCart(${p.id})">
+Remove
+</button>
+
+</div>
+
+</div>
+
+</div>
+`;
+
+}).join("")+
+
+`
+
+<div class="order-card">
+
+<b>
+Total: ₹${money(total)}
+</b>
+
+<button
+class="btn"
+onclick="checkoutCart()">
+
+Checkout Cart
+
+</button>
+
+</div>
+
+`;
+}
+
+function changeCart(id,d){
+
+let c=getCart();
+
+let x=
+c.find(
+i=>Number(i.id)===Number(id)
+);
+
+if(!x)return;
+
+x.qty=
+Math.max(1,x.qty+d);
+
+const p=
+allProducts.find(
+y=>Number(y.id)===Number(id)
+);
+
+if(p)
+x.qty=
+Math.min(
+x.qty,
+Number(p.stock||1)
+);
+
+localStorage.setItem(
+"aarvi_cart",
+JSON.stringify(c)
+);
+
+renderCart();
+}
+
+function removeCart(id){
+
+localStorage.setItem(
+"aarvi_cart",
+JSON.stringify(
+getCart().filter(
+i=>Number(i.id)!==Number(id)
+)
+)
+);
+
+renderCart();
+}
+
+
+/*
+================================================
+BUY NOW
+================================================
+*/
+
+async function buyNow(id){
+
+const s=
+await sb.auth.getSession();
+
+if(!s.data.session){
+
+openAuth();
+
+return;
+}
+
+currentProduct=
+allProducts.find(
+p=>Number(p.id)===Number(id)
+);
+
+selectedSize="";
+qty=1;
+
+if(currentProduct)
+openOrderForm();
+}
+
+
+/*
+================================================
+AUTH
+================================================
+*/
+
+async function openAuth(){
+
+closeModal();
+
+$("modalRoot").innerHTML=`
+
+<div class="modal">
+
+<div class="box">
+
+<button
+class="close"
+onclick="closeModal()">
+×
+</button>
+
+<h2>🌸 Aarvi Fashion</h2>
+
+<label>Email</label>
+
+<input
+id="aEmail"
+type="email">
+
+<label>Password</label>
+
+<input
+id="aPass"
+type="password">
+
+<button
+class="btn"
+onclick="login()">
+
+Login
+
+</button>
+
+<button
+class="btn secondary"
+onclick="signup()">
+
+Create Account
+
+</button>
+
+</div>
+</div>
+`;
+}
+
+async function login(){
+
+const{error}=
+await sb.auth.signInWithPassword({
+
+email:
+$("aEmail").value.trim(),
+
+password:
+$("aPass").value
+
+});
+
+if(error)
+return alert(error.message);
+
+closeModal();
+
+loadAccount();
+}
+
+async function signup(){
+
+const email=
+$("aEmail").value.trim();
+
+const password=
+$("aPass").value;
+
+if(password.length<6)
+return alert(
+"Password minimum 6 characters ka hona chahiye."
+);
+
+const{error}=
+await sb.auth.signUp({
+email,
+password
+});
+
+if(error)
+return alert(error.message);
+
+alert(
+"Account create ho gaya. Email confirmation required ho sakta hai."
+);
+}
+
+
+/*
+================================================
+ORDER FORM
+================================================
+*/
+
+function openOrderForm(){
+
+const p=currentProduct;
+
+$("modalRoot").innerHTML=`
+
+<div class="modal">
+
+<div class="box">
+
+<button
+class="close"
+onclick="closeModal()">
+×
+</button>
+
+<h2>🛍️ Place Order</h2>
+
+<div class="notice">
+
+<b>${esc(p.name)}</b>
+
+<br>
+
+₹${money(p.price)}
+
+</div>
+
+${
+sizes(p).length
+?`
+
+<label>Size *</label>
+
+<div class="size-row">
+
+${sizes(p).map(s=>`
+
+<button
+class="size"
+onclick="pickSize('${esc(s)}',this)">
+
+${esc(s)}
+
+</button>
+
+`).join("")}
+
+</div>
+
+`
+:""
+}
+
+<label>Full Name *</label>
+
+<input id="oName">
+
+<label>Mobile *</label>
+
+<input
+id="oPhone"
+maxlength="10"
+inputmode="numeric">
+
+<label>Address *</label>
+
+<textarea id="oAddress"></textarea>
+
+<label>City *</label>
+
+<input id="oCity">
+
+<label>State *</label>
+
+<input id="oState">
+
+<label>PIN *</label>
+
+<input
+id="oPin"
+maxlength="6"
+inputmode="numeric">
+
+<label>Quantity *</label>
+
+<input
+id="oQty"
+type="number"
+min="1"
+max="${Number(p.stock||1)}"
+value="${qty||1}">
+
+<label>Payment *</label>
+
+<select id="oPay"
+onchange="paymentChanged()">
+
+<option value="COD">
+Cash on Delivery
+</option>
+
+<option value="Online">
+Online Payment - Razorpay
+</option>
+
+</select>
+
+<div id="paymentInfo"
+class="payment-box">
+
+<div class="razorpay-info">
+🔐 Razorpay Secure Payment
+</div>
+
+<div class="muted" style="margin-top:6px">
+Online payment select karne par Razorpay
+Checkout open hoga.
+</div>
+
+</div>
+
+<button
+id="placeBtn"
+class="btn"
+onclick="placeOrder()">
+
+Confirm Order
+
+</button>
+
+</div>
+</div>
+`;
+
+loadOrderProfile();
+
+paymentChanged();
+}
+
+
+/*
+================================================
+PAYMENT DISPLAY
+================================================
+*/
+
+function paymentChanged(){
+
+const pay=$("oPay")?.value;
+
+const info=$("paymentInfo");
+
+if(!info)return;
+
+if(pay==="Online"){
+
+info.innerHTML=`
+
+<div class="razorpay-info">
+🔐 Razorpay Secure Payment
+</div>
+
+<div class="muted" style="margin-top:6px">
+UPI • PhonePe • Google Pay • Paytm •
+Cards • Net Banking aur available Razorpay
+payment methods.
+</div>
+
+`;
+
+}else{
+
+info.innerHTML=`
+
+<div class="razorpay-info">
+💵 Cash on Delivery
+</div>
+
+<div class="muted" style="margin-top:6px">
+Delivery ke time payment karein.
+</div>
+
+`;
+}
+}
+
+
+/*
+================================================
+SIZE
+================================================
+*/
+
+function pickSize(s,b){
+
+selectedSize=s;
+
+document
+.querySelectorAll(".size")
+.forEach(x=>
+x.classList.remove("sel")
+);
+
+b.classList.add("sel");
+}
+
+
+/*
+================================================
+ORDER PROFILE
+================================================
+*/
+
+async function loadOrderProfile(){
+
+const{
+data:{session}
+}=
+await sb.auth.getSession();
+
+if(!session)return;
+
+const{data:p}=
+await sb
+.from("customer_profiles")
+.select("*")
+.eq("id",session.user.id)
+.maybeSingle();
+
+if(p){
+
+$("oName").value=
+p.full_name||"";
+
+$("oPhone").value=
+p.phone||"";
+
+}
+
+}
+
+
+/*
+================================================
+RAZORPAY ONLINE PAYMENT
+================================================
+*/
+
+async function openRazorpayPayment(
+name,
+phone,
+address,
+city,
+state,
+pin,
+q
+){
+
+const btn=$("placeBtn");
+
+const totalAmount=
+Number(currentProduct.price||0)*q;
+
+if(totalAmount<=0){
+
+btn.disabled=false;
+
+btn.textContent="Confirm Order";
+
+return alert(
+"Product price valid nahi hai."
+);
+
+}
+
+if(
+typeof Razorpay==="undefined"
+){
+
+btn.disabled=false;
+
+btn.textContent="Confirm Order";
+
+return alert(
+"Razorpay load nahi hua. Internet connection check karein."
+);
+
+}
+
+const options={
+
+key:RAZORPAY_KEY_ID,
+
+amount:
+Math.round(totalAmount*100),
+
+currency:"INR",
+
+name:"Aarvi Fashion",
+
+description:
+currentProduct.name+
+" × "+
+q,
+
+image:
+imgs(currentProduct)[0]||undefined,
+
+prefill:{
+
+name:name,
+
+contact:"+91"+phone
+
+},
+
+notes:{
+
+product_id:
+String(currentProduct.id),
+
+quantity:
+String(q),
+
+size:
+selectedSize||"",
+
+customer_name:
+name,
+
+phone:
+phone,
+
+address:
+address,
+
+city:
+city,
+
+state:
+state,
+
+pin:
+pin
+
+},
+
+theme:{
+color:"#d94f82"
+},
+
+handler:async function(response){
+
+btn.disabled=true;
+
+btn.textContent=
+"Order save ho raha hai...";
+
+/*
+Payment successful callback.
+IMPORTANT:
+Production website mein yahan server-side
+signature verification lagani chahiye.
+*/
+
+const{
+data:{session}
+}=
+await sb.auth.getSession();
+
+const r=
+await sb.rpc("place_order",{
+
+p_user_id:
+session?.user?.id||null,
+
+p_customer_name:
+name,
+
+p_phone:
+phone,
+
+p_address:
+address,
+
+p_city:
+city,
+
+p_state:
+state,
+
+p_pin_code:
+pin,
+
+p_product_id:
+Number(currentProduct.id),
+
+p_size:
+selectedSize||null,
+
+p_quantity:
+q,
+
+p_payment_method:
+"Online"
+
+});
+
+if(r.error){
+
+btn.disabled=false;
+
+btn.textContent=
+"Confirm Order";
+
+return alert(
+
+"Payment successful hua hai, lekin order save nahi hua.\n\n"+
+"Payment ID: "+
+response.razorpay_payment_id+
+"\n\nAarvi Fashion support se contact karein."
+
+);
+
+}
+
+closeModal();
+
+await loadProducts();
+
+alert(
+
+"Payment Successful! ✅\n\n"+
+"Order Confirmed! 🎉\n\n"+
+"Order ID: #"+
+r.data+
+"\nPayment ID: "+
+response.razorpay_payment_id
+
+);
+
+showScreen("orders");
+
+},
+
+modal:{
+
+ondismiss:function(){
+
+btn.disabled=false;
+
+btn.textContent=
+"Confirm Order";
+
+}
+
+}
+
+};
+
+try{
+
+const razorpay=
+new Razorpay(options);
+
+razorpay.on(
+"payment.failed",
+function(response){
+
+btn.disabled=false;
+
+btn.textContent=
+"Confirm Order";
+
+alert(
+
+"Payment Failed ❌\n\n"+
+(
+response.error?.description||
+"Payment complete nahi hua."
+)
+
+);
+
+});
+
+razorpay.open();
+
+}catch(error){
+
+btn.disabled=false;
+
+btn.textContent=
+"Confirm Order";
+
+alert(
+"Razorpay open nahi ho raha:\n"+
+error.message
+);
+
+}
+
+}
+
+
+/*
+================================================
+PLACE ORDER
+================================================
+*/
+
+async function placeOrder(){
+
+const btn=$("placeBtn");
+
+const name=
+$("oName").value.trim();
+
+const phone=
+$("oPhone").value.trim();
+
+const address=
+$("oAddress").value.trim();
+
+const city=
+$("oCity").value.trim();
+
+const state=
+$("oState").value.trim();
+
+const pin=
+$("oPin").value.trim();
+
+const q=
+Number($("oQty").value);
+
+const pay=
+$("oPay").value;
+
+
+if(
+!name||
+!/^[0-9]{10}$/.test(phone)||
+!address||
+!city||
+!state||
+!/^[0-9]{6}$/.test(pin)
+){
+
+return alert(
+"Details sahi bhariye."
+);
+
+}
+
+if(
+sizes(currentProduct).length&&
+!selectedSize
+){
+
+return alert(
+"Size select karein."
+);
+
+}
+
+if(
+!q||
+q<1||
+q>Number(currentProduct.stock||0)
+){
+
+return alert(
+"Quantity stock se zyada nahi ho sakti."
+);
+
+}
+
+
+/*
+================================================
+ONLINE RAZORPAY
+================================================
+*/
+
+if(pay==="Online"){
+
+btn.disabled=true;
+
+btn.textContent=
+"Razorpay open ho raha hai...";
+
+await openRazorpayPayment(
+name,
+phone,
+address,
+city,
+state,
+pin,
+q
+);
+
+return;
+}
+
+
+/*
+================================================
+COD
+================================================
+*/
+
+btn.disabled=true;
+
+btn.textContent=
+"Order save ho raha hai...";
+
+const{
+data:{session}
+}=
+await sb.auth.getSession();
+
+const r=
+await sb.rpc("place_order",{
+
+p_user_id:
+session?.user?.id||null,
+
+p_customer_name:
+name,
+
+p_phone:
+phone,
+
+p_address:
+address,
+
+p_city:
+city,
+
+p_state:
+state,
+
+p_pin_code:
+pin,
+
+p_product_id:
+Number(currentProduct.id),
+
+p_size:
+selectedSize||null,
+
+p_quantity:
+q,
+
+p_payment_method:
+"COD"
+
+});
+
+if(r.error){
+
+btn.disabled=false;
+
+btn.textContent=
+"Confirm Order";
+
+return alert(
+"Order confirm nahi hua:\n"+
+r.error.message
+);
+
+}
+
+closeModal();
+
+await loadProducts();
+
+alert(
+"Order Confirmed! ✅\n"+
+"Order ID: #"+r.data
+);
+
+showScreen("orders");
+}
+
+
+/*
+================================================
+CART CHECKOUT
+================================================
+*/
+
+async function checkoutCart(){
+
+const c=getCart();
+
+if(!c.length)return;
+
+const s=
+await sb.auth.getSession();
+
+if(!s.data.session){
+
+openAuth();
+
+return;
+}
+
+if(c.length===1){
+
+currentProduct=
+allProducts.find(
+p=>Number(p.id)===Number(c[0].id)
+);
+
+qty=c[0].qty;
+
+selectedSize="";
+
+openOrderForm();
+
+return;
+}
+
+alert(
+"Cart mein multiple products hain. Abhi ek-ek product ka order place karein."
+);
+}
+
+
+/*
+================================================
+ORDERS
+================================================
+*/
+
+async function loadOrders(){
+
+const el=$("ordersList");
+
+const{
+data:{session}
+}=
+await sb.auth.getSession();
+
+if(!session){
+
+el.innerHTML=
+'<div class="empty">My Orders ke liye login karein.</div>';
+
+return;
+}
+
+el.innerHTML=
+'<div class="empty">Orders loading...</div>';
+
+const r=
+await sb
+.from("orders")
+.select("*")
+.eq("user_id",session.user.id)
+.order("id",{ascending:false});
+
+if(r.error){
+
+el.innerHTML=
+'<div class="empty">Orders load nahi ho rahe.<br>'+
+esc(r.error.message)+
+'</div>';
+
+return;
+}
+
+if(!r.data?.length){
+
+el.innerHTML=
+'<div class="empty">Abhi koi order nahi hai.</div>';
+
+return;
+}
+
+el.innerHTML=
+r.data.map(o=>`
+
+<div class="order-card">
+
+<b>
+Order #${esc(o.id)}
+</b>
+
+<p>
+${esc(o.product_name||"Product")}
+×
+${esc(o.quantity||1)}
+</p>
+
+<p>
+Total:
+₹${money(o.total_amount)}
+</p>
+
+<p>
+Payment:
+${esc(o.payment_method||"-")}
+</p>
+
+<span class="badge">
+${esc(o.order_status||"New")}
+</span>
+
+${
+o.courier_name
+?`
+<p>
+Courier:
+${esc(o.courier_name)}
+</p>
+`
+:""
+}
+
+${
+o.tracking_number
+?`
+<p>
+Tracking:
+${esc(o.tracking_number)}
+</p>
+`
+:""
+}
+
+${
+o.tracking_url
+?`
+<a
+class="btn"
+href="${esc(o.tracking_url)}"
+target="_blank">
+Track Shipment
+</a>
+`
+:""
+}
+
+</div>
+
+`).join("");
+}
+
+
+/*
+================================================
+ACCOUNT
+================================================
+*/
+
+async function loadAccount(){
+
+const{
+data:{session}
+}=
+await sb.auth.getSession();
+
+if(!session){
+
+$("accountBox").innerHTML=`
+
+<div class="order-card">
+
+<h3>
+Login required
+</h3>
+
+<button
+class="btn"
+onclick="openAuth()">
+
+Login / Sign Up
+
+</button>
+
+</div>
+
+`;
+
+return;
+}
+
+const{data:p}=
+await sb
+.from("customer_profiles")
+.select("*")
+.eq("id",session.user.id)
+.maybeSingle();
+
+$("accountBox").innerHTML=`
+
+<div class="order-card">
+
+<h3>
+${esc(p?.full_name||"Customer")}
+</h3>
+
+<p>
+
+${esc(
+p?.email||
+session.user.email||
+""
+)}
+
+<br>
+
+${esc(p?.phone||"")}
+
+</p>
+
+<button
+class="btn"
+onclick="showScreen('orders')">
+
+📦 My Orders
+
+</button>
+
+<button
+class="btn secondary"
+onclick="showNotifications()">
+
+🔔 Notifications
+
+</button>
+
+<button
+class="btn secondary"
+onclick="openTrack()">
+
+🚚 Track Order
+
+</button>
+
+<button
+class="btn secondary"
+onclick="showPolicies()">
+
+↩️ Return / Exchange
+
+</button>
+
+<button
+class="btn secondary"
+onclick="sb.auth.signOut().then(loadAccount)">
+
+Logout
+
+</button>
+
+</div>
+`;
+}
+
+
+/*
+================================================
+NOTIFICATIONS
+================================================
+*/
+
+async function showNotifications(){
+
+const{
+data:{session}
+}=
+await sb.auth.getSession();
+
+if(!session)
+return openAuth();
+
+const r=
+await sb
+.from("customer_notifications")
+.select("*")
+.eq("user_id",session.user.id)
+.order("created_at",{ascending:false})
+.limit(30);
+
+if(r.error)
+return alert(r.error.message);
+
+$("modalRoot").innerHTML=`
+
+<div class="modal">
+
+<div class="box">
+
+<button
+class="close"
+onclick="closeModal()">
+×
+</button>
+
+<h2>🔔 Notifications</h2>
+
+${
+(r.data||[]).map(n=>`
+
+<div class="order-card">
+
+<b>
+${esc(n.title||"Aarvi Fashion")}
+</b>
+
+<p>
+${esc(n.message||"")}
+</p>
+
+</div>
+
+`).join("")
+||
+'<div class="empty">No notifications.</div>'
+}
+
+</div>
+</div>
+`;
+}
+
+
+/*
+================================================
+TRACK
+================================================
+*/
+
+async function openTrack(){
+
+closeModal();
+
+$("modalRoot").innerHTML=`
+
+<div class="modal">
+
+<div class="box">
+
+<button
+class="close"
+onclick="closeModal()">
+×
+</button>
+
+<h2>🚚 Track Order</h2>
+
+<label>
+Order ID
+</label>
+
+<input
+id="tId"
+type="number">
+
+<label>
+Mobile
+</label>
+
+<input
+id="tPhone"
+maxlength="10">
+
+<button
+class="btn"
+onclick="trackOrder()">
+
+Track
+
+</button>
+
+<div id="tResult"></div>
+
+</div>
+</div>
+`;
+}
+
+async function trackOrder(){
+
+const id=
+Number($("tId").value);
+
+const phone=
+$("tPhone").value.trim();
+
+if(
+!id||
+!/^[0-9]{10}$/.test(phone)
+){
+
+return alert(
+"Order ID aur valid mobile number bhariye."
+);
+
+}
+
+const r=
+await sb.rpc(
+"track_my_order",
+{
+order_id_input:id,
+phone_input:phone
+}
+);
+
+if(r.error)
+
+return $("tResult").innerHTML=
+'<div class="error">'+
+esc(r.error.message)+
+'</div>';
+
+const o=r.data;
+
+if(!o)
+
+return $("tResult").innerHTML=
+'<div class="error">Order nahi mila.</div>';
+
+const s=
+o.order_status||
+o.Order_status||
+o.Order_states||
+"New";
+
+$("tResult").innerHTML=`
+
+<div class="success">
+
+Order #${id} found ✅
+
+<br>
+
+Product:
+${esc(
+o.product_name||
+o.Product_name||
+"-"
+)}
+
+<br>
+
+<span class="badge">
+${esc(s)}
+</span>
+
+</div>
+`;
+}
+
+
+/*
+================================================
+POLICY
+================================================
+*/
+
+function showPolicies(){
+
+$("modalRoot").innerHTML=`
+
+<div class="modal">
+
+<div class="box">
+
+<button
+class="close"
+onclick="closeModal()">
+×
+</button>
+
+<h2>
+↩️ Return / Exchange Policy
+</h2>
+
+<div class="policy">
+
+<b>
+Return / Exchange
+</b>
+
+<p>
+Return ya exchange request ke liye order ID,
+mobile number aur problem details ke saath
+Aarvi Fashion support se contact karein.
+</p>
+
+</div>
+
+<div class="policy">
+
+<b>
+Order Cancellation
+</b>
+
+<p>
+Cancellation request ke liye order dispatch
+hone se pehle WhatsApp ya call support karein.
+</p>
+
+</div>
+
+<div class="policy">
+
+<b>
+Refund
+</b>
+
+<p>
+Approved return/refund ka processing business
+verification ke baad kiya jayega.
+</p>
+
+</div>
+
+<button
+class="btn"
+onclick="contact()">
+
+WhatsApp Support
+
+</button>
+
+</div>
+</div>
+`;
+}
+
+
+/*
+================================================
+CONTACT
+================================================
+*/
+
+function contact(){
+
+window.open(
+"https://wa.me/916204117647?text=Hello%20Aarvi%20Fashion%2C%20I%20need%20help%20with%20my%20order.",
+"_blank"
+);
+
+}
+
+function help(){
+showPolicies();
+}
+
+
+/*
+================================================
+START
+================================================
+*/
+
 loadProducts();
-sb.auth.onAuthStateChange(()=>{loadAccount()});
+
+sb.auth.onAuthStateChange(()=>{
+loadAccount();
+});
+
 </script>
-</body></html>
+
+</body>
+</html>
