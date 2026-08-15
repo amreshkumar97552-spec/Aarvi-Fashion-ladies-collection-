@@ -34,7 +34,7 @@ header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px soli
 .photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s ease}
 .photo:active img,.photo:hover img{transform:scale(1.03)}
 .photo .zoom{position:absolute;right:5px;bottom:5px;background:rgba(255,255,255,.9);border-radius:50%;width:25px;height:25px;display:flex;align-items:center;justify-content:center;font-size:13px}
-.section-badges{position:absolute;left:5px;top:5px;right:5px;display:flex;flex-wrap:wrap;gap:4px;z-index:2;pointer-events:none}.section-badge{font-size:9px;line-height:1;padding:5px 6px;border-radius:10px;background:rgba(255,255,255,.94);color:#d94f82;border:1px solid #f0d8e1;font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.section-badges{position:absolute;left:3px;top:3px;right:3px;display:flex;flex-wrap:wrap;gap:2px;z-index:2;pointer-events:none}.section-badge{font-size:7px;line-height:1;padding:2px 3px;border-radius:5px;background:rgba(255,255,255,.88);color:#d94f82;border:1px solid rgba(240,216,225,.8);font-weight:400;box-shadow:0 1px 2px rgba(0,0,0,.05)}
 .info{padding:8px}
 .name{font-weight:600;font-size:13px;line-height:1.25}
 .muted{color:#777;font-size:13px}
@@ -92,7 +92,7 @@ textarea{min-height:80px}
 .photo{height:125px}
 }
 
-@media(max-width:650px){
+@media(max-width:650px){.section-badges{left:2px;top:2px;right:2px;gap:1px}.section-badge{font-size:6px;padding:2px 2.5px;border-radius:4px;font-weight:400}
 .products{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
 .hero h1{font-size:28px}
 .photo{height:105px}
