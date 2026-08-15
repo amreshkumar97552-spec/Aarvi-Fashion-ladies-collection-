@@ -1,70 +1,3000 @@
 <!doctype html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Aarvi Fashion</title>
+<title>Aarvi Fashion | Women's Fashion</title>
+
+<meta
+  name="description"
+  content="Aarvi Fashion - Sarees, Kurtis, Tops and Suits."
+>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#fff7fa;color:#3a2430}button,input,textarea,select{font:inherit}button{cursor:pointer}.wrap{max-width:1180px;margin:auto;padding:16px}header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #f0d8e1}.top{max-width:1180px;margin:auto;padding:12px 16px;display:flex;align-items:center;gap:10px}.brand{font-weight:900;color:#d94f82;font-size:22px;letter-spacing:2px;flex:1}.icon{border:1px solid #f0d8e1;background:#fff;color:#d94f82;border-radius:11px;padding:9px 11px}.search{max-width:1180px;margin:auto;padding:0 16px 12px}.search input{width:100%;padding:12px 14px;border:1px solid #ead4dd;border-radius:14px}.hero{padding:28px 0;text-align:center}.hero h1{font-size:36px;margin:0 0 8px}.hero p{color:#777}.cats,.chips{display:flex;gap:8px;flex-wrap:wrap}.cats button,.chips button{border:1px solid #d94f82;background:#fff;color:#d94f82;padding:9px 14px;border-radius:22px}.cats button.active,.cats button:hover,.chips button.active{background:#d94f82;color:#fff}.section-title{display:flex;justify-content:space-between;align-items:center;margin:20px 0 10px}.section-title h2{margin:0;color:#d94f82}.products{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}.card{background:#fff;border:1px solid #f0d8e1;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(120,60,90,.06)}.photo{height:145px;background:#fff0f5;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;position:relative}.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s ease}.photo:active img,.photo:hover img{transform:scale(1.03)}.photo .zoom{position:absolute;right:5px;bottom:5px;background:rgba(255,255,255,.9);border-radius:50%;width:25px;height:25px;display:flex;align-items:center;justify-content:center;font-size:13px}.info{padding:8px}.name{font-weight:800}.muted{color:#777;font-size:13px}.price{font-size:20px;font-weight:900;color:#d94f82;margin:7px 0}.old{text-decoration:line-through;color:#999;font-size:12px;margin-left:5px}.btn{width:100%;border:0;border-radius:10px;padding:10px;background:#d94f82;color:#fff;font-weight:800;margin-top:7px}.btn.secondary{background:#fff;color:#d94f82;border:1px solid #d94f82}.empty{padding:35px;text-align:center;background:#fff;border:1px dashed #e4cbd5;border-radius:14px;grid-column:1/-1}.screen{display:none}.screen.active{display:block}.bottom{position:sticky;bottom:0;background:#fff;border-top:1px solid #ead4dd;display:flex;justify-content:space-around;z-index:900}.bottom button{flex:1;border:0;background:#fff;padding:9px;color:#666}.bottom button.active{color:#d94f82;font-weight:800}.drawer{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:3000;display:none}.drawer.open{display:block}.menu{width:290px;max-width:85%;height:100%;background:#fff;padding:18px}.menu button{width:100%;padding:12px;margin:5px 0;border:1px solid #f0d8e1;background:#fff;border-radius:10px;text-align:left}.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:5000;display:flex;align-items:center;justify-content:center;padding:14px;overflow:auto}.box{width:100%;max-width:560px;background:#fff;border-radius:18px;padding:18px;position:relative;max-height:94vh;overflow:auto}.close{position:absolute;right:10px;top:10px;border:0;background:#fff0f5;color:#d94f82;border-radius:50%;width:34px;height:34px;font-size:20px}label{display:block;font-weight:700;font-size:13px;margin:10px 0 5px}input,textarea,select{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px}textarea{min-height:80px}.notice{background:#fff0f5;padding:10px;border-radius:10px;margin:10px 0;font-size:13px}.success{background:#eefbf2;color:#26723a;padding:10px;border-radius:10px;margin:10px 0}.error{background:#fff0f0;color:#a52c2c;padding:10px;border-radius:10px;margin:10px 0}.order-card,.policy,.cart-row{border:1px solid #f0d8e1;border-radius:12px;padding:12px;margin:8px 0;background:#fff}.badge{display:inline-block;background:#d94f82;color:#fff;border-radius:20px;padding:5px 9px;font-size:12px}.size-row{display:flex;gap:7px;flex-wrap:wrap}.size{border:1px solid #d94f82;background:#fff;color:#d94f82;border-radius:8px;padding:7px 10px}.size.sel{background:#d94f82;color:#fff}.cart-row{display:flex;gap:10px;align-items:center}.cart-row img{width:65px;height:65px;object-fit:contain;background:#fff0f5;border-radius:8px}.qty{display:flex;gap:8px;align-items:center}.qty button{border:1px solid #ddd;background:#fff;border-radius:7px;padding:4px 9px}@media(max-width:900px){.products{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.photo{height:125px}}@media(max-width:650px){.products{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.hero h1{font-size:28px}.photo{height:105px}.brand{font-size:18px}.info{padding:6px}.name{font-size:11px;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.muted{font-size:9px}.price{font-size:13px;margin:4px 0}.old{font-size:8px}.btn{font-size:10px;padding:7px 3px;border-radius:8px;margin-top:4px}.card{border-radius:9px}}@media(max-width:430px){.products{gap:5px}.photo{height:92px}.info{padding:5px}.name{font-size:10px}.price{font-size:12px}.btn{font-size:9px;padding:6px 2px}}
+:root{
+  --pink:#d94f82;
+  --pink2:#f29bbb;
+  --dark:#281b22;
+  --muted:#786b72;
+  --cream:#fff8fb;
+  --soft:#fde8f0;
+  --white:#fff;
+  --line:#f0d7e1;
+  --green:#278b4b;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#fff;
+  color:var(--dark);
+}
+
+button,input,select,textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.container{
+  max-width:1180px;
+  margin:auto;
+  padding:0 20px;
+}
+
+/* HEADER */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+
+.nav{
+  min-height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.logo{
+  font-size:23px;
+  font-weight:800;
+  letter-spacing:2px;
+  color:var(--pink);
+}
+
+.logo small{
+  display:block;
+  color:var(--dark);
+  font-size:8px;
+  letter-spacing:3px;
+  text-align:center;
+  margin-top:3px;
+}
+
+.nav-links{
+  display:flex;
+  gap:22px;
+  font-size:14px;
+  font-weight:600;
+}
+
+.nav-links a:hover{
+  color:var(--pink);
+}
+
+.nav-btn{
+  border:0;
+  background:var(--dark);
+  color:#fff;
+  border-radius:30px;
+  padding:10px 16px;
+  font-weight:700;
+}
+
+/* HERO */
+
+.hero{
+  background:
+    radial-gradient(circle at 80% 20%,#ffd9e7 0,transparent 35%),
+    linear-gradient(135deg,#fff7fa,#fde7ef);
+  padding:65px 0;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  align-items:center;
+  gap:45px;
+}
+
+.eyebrow{
+  color:var(--pink);
+  text-transform:uppercase;
+  letter-spacing:3px;
+  font-size:11px;
+  font-weight:800;
+}
+
+.hero h1{
+  font-family:Georgia,serif;
+  font-size:58px;
+  line-height:1.03;
+  margin:14px 0 18px;
+}
+
+.hero p{
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.8;
+  max-width:550px;
+}
+
+.hero-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:25px;
+}
+
+.btn{
+  border:0;
+  border-radius:30px;
+  padding:13px 21px;
+  font-weight:700;
+  display:inline-block;
+}
+
+.btn-primary{
+  background:var(--pink);
+  color:white;
+}
+
+.btn-dark{
+  background:var(--dark);
+  color:white;
+}
+
+.btn-light{
+  background:white;
+  color:var(--pink);
+  border:1px solid var(--pink);
+}
+
+.hero-art{
+  min-height:380px;
+  border-radius:30px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(217,79,130,.25),
+      rgba(255,255,255,.9)
+    );
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  box-shadow:0 20px 55px rgba(75,30,50,.12);
+}
+
+.hero-art-icon{
+  font-size:90px;
+  margin-bottom:8px;
+}
+
+.hero-art h2{
+  font-family:Georgia,serif;
+  font-size:32px;
+}
+
+/* SECTION */
+
+.section{
+  padding:65px 0;
+}
+
+.section-head{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.section-head h2{
+  font-family:Georgia,serif;
+  font-size:38px;
+  margin:8px 0;
+}
+
+.section-head p{
+  color:var(--muted);
+}
+
+/* CATEGORIES */
+
+.categories{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+}
+
+.category{
+  padding:25px 15px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:var(--cream);
+  text-align:center;
+  transition:.2s;
+}
+
+.category:hover{
+  transform:translateY(-4px);
+}
+
+.category-icon{
+  font-size:40px;
+  margin-bottom:8px;
+}
+
+.category h3{
+  margin-bottom:5px;
+}
+
+.category p{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* SECTION TABS */
+
+.collection-tabs{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:28px;
+}
+
+.collection-tabs button{
+  border:1px solid var(--pink);
+  color:var(--pink);
+  background:white;
+  padding:9px 15px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:600;
+}
+
+.collection-tabs button.active,
+.collection-tabs button:hover{
+  background:var(--pink);
+  color:white;
+}
+
+/* PRODUCT GRID */
+
+.product-section{
+  background:#fffafd;
+}
+
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.product-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:19px;
+  overflow:hidden;
+  box-shadow:0 6px 25px rgba(80,30,50,.05);
+  transition:.2s;
+}
+
+.product-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 15px 35px rgba(80,30,50,.10);
+}
+
+.product-image{
+  height:270px;
+  background:#fff5f8;
+  position:relative;
+  overflow:hidden;
+}
+
+.product-image img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+
+.badges{
+  position:absolute;
+  top:10px;
+  left:10px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:5px;
+}
+
+.badge{
+  color:white;
+  background:var(--pink);
+  padding:5px 8px;
+  border-radius:15px;
+  font-size:10px;
+  font-weight:600;
+}
+
+.badge.green{
+  background:var(--green);
+}
+
+.badge.dark{
+  background:var(--dark);
+}
+
+.photo-count{
+  position:absolute;
+  right:10px;
+  bottom:10px;
+  background:rgba(40,27,34,.75);
+  color:white;
+  padding:4px 8px;
+  border-radius:12px;
+  font-size:10px;
+}
+
+.product-info{
+  padding:14px;
+}
+
+/* NAME AB CHHOTA AUR NORMAL */
+
+.product-info h3{
+  font-size:15px;
+  font-weight:500;
+  line-height:1.35;
+  margin-bottom:6px;
+}
+
+.product-description{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.45;
+  min-height:34px;
+}
+
+.category-name{
+  color:#8a7b82;
+  font-size:11px;
+  margin:5px 0;
+}
+
+.price-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:11px 0;
+}
+
+.price{
+  color:var(--pink);
+  font-size:19px;
+  font-weight:800;
+}
+
+.old-price{
+  color:#999;
+  text-decoration:line-through;
+  font-size:12px;
+}
+
+.size-preview{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px;
+  margin-bottom:10px;
+}
+
+.size-chip{
+  padding:4px 7px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  color:var(--pink);
+  font-size:10px;
+}
+
+.buy-btn{
+  width:100%;
+  border:0;
+  background:var(--dark);
+  color:white;
+  border-radius:10px;
+  padding:11px;
+  font-size:13px;
+  font-weight:700;
+}
+
+.buy-btn:hover{
+  background:var(--pink);
+}
+
+.buy-btn:disabled{
+  background:#bbb;
+  cursor:not-allowed;
+}
+
+.loading,
+.empty{
+  text-align:center;
+  padding:45px;
+  color:var(--muted);
+  grid-column:1/-1;
+}
+
+/* FEATURES */
+
+.features{
+  background:var(--cream);
+}
+
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+
+.feature{
+  background:white;
+  padding:25px 15px;
+  border-radius:18px;
+  text-align:center;
+  border:1px solid var(--line);
+}
+
+.feature-icon{
+  font-size:32px;
+}
+
+.feature strong{
+  display:block;
+  margin:8px 0 5px;
+  font-size:14px;
+}
+
+.feature p{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* ABOUT */
+
+.about{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:center;
+}
+
+.about h2{
+  font-family:Georgia,serif;
+  font-size:40px;
+  margin:10px 0 15px;
+}
+
+.about p{
+  color:var(--muted);
+  line-height:1.8;
+}
+
+.about-box{
+  background:linear-gradient(145deg,#fff0f5,#fff);
+  padding:30px;
+  border-radius:25px;
+  border:1px solid var(--line);
+}
+
+.promise{
+  display:flex;
+  gap:12px;
+  margin:17px 0;
+}
+
+/* CONTACT */
+
+.contact{
+  background:var(--dark);
+  color:white;
+}
+
+.contact-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:35px;
+}
+
+.contact p{
+  color:#e7dce1;
+  line-height:1.8;
+}
+
+/* FOOTER */
+
+footer{
+  background:#1d1419;
+  color:#cdbfc5;
+  text-align:center;
+  padding:22px;
+  font-size:12px;
+}
+
+/* WHATSAPP */
+
+.whatsapp{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  background:#25D366;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  z-index:90;
+  box-shadow:0 8px 25px rgba(0,0,0,.2);
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(20,10,15,.65);
+  z-index:200;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  background:white;
+  width:min(900px,100%);
+  max-height:94vh;
+  overflow:auto;
+  border-radius:22px;
+  position:relative;
+  padding:20px;
+}
+
+.close{
+  position:absolute;
+  right:12px;
+  top:10px;
+  width:36px;
+  height:36px;
+  border:0;
+  border-radius:50%;
+  background:#f6e8ed;
+  font-size:20px;
+}
+
+.modal-product{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:22px;
+}
+
+.gallery-main{
+  height:380px;
+  background:#fff5f8;
+  border-radius:16px;
+  overflow:hidden;
+}
+
+.gallery-main img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.gallery-thumbs{
+  display:flex;
+  gap:7px;
+  margin-top:8px;
+  overflow-x:auto;
+}
+
+.gallery-thumbs img{
+  width:65px;
+  height:65px;
+  object-fit:cover;
+  border-radius:8px;
+  border:2px solid transparent;
+  cursor:pointer;
+}
+
+.gallery-thumbs img.active{
+  border-color:var(--pink);
+}
+
+.modal-info h2{
+  font-family:Georgia,serif;
+  font-size:27px;
+  margin:7px 0;
+}
+
+.modal-description{
+  color:var(--muted);
+  line-height:1.6;
+  margin:9px 0;
+}
+
+.modal-price{
+  color:var(--pink);
+  font-size:25px;
+  font-weight:800;
+  margin:13px 0;
+}
+
+.field{
+  margin:10px 0;
+}
+
+.field label{
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:5px;
+}
+
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  border:1px solid #e2ccd5;
+  border-radius:9px;
+  padding:11px;
+  outline:none;
+}
+
+.field textarea{
+  min-height:70px;
+  resize:vertical;
+}
+
+.sizes{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+
+.size-radio{
+  position:relative;
+}
+
+.size-radio input{
+  position:absolute;
+  opacity:0;
+}
+
+.size-radio label{
+  display:block;
+  padding:8px 13px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  color:var(--pink);
+  font-size:12px;
+  cursor:pointer;
+}
+
+.size-radio input:checked + label{
+  background:var(--pink);
+  color:white;
+}
+
+.quantity{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.qty-btn{
+  width:36px;
+  height:36px;
+  border:0;
+  border-radius:9px;
+  background:#f5e5eb;
+  font-weight:800;
+}
+
+.qty-number{
+  min-width:30px;
+  text-align:center;
+  font-weight:800;
+}
+
+.payment-box{
+  background:#fff6f9;
+  border:1px solid var(--line);
+  padding:10px;
+  border-radius:10px;
+}
+
+.payment-note{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:5px;
+}
+
+.modal-submit{
+  width:100%;
+  margin-top:10px;
+  padding:13px;
+  border:0;
+  border-radius:11px;
+  background:var(--pink);
+  color:white;
+  font-weight:800;
+}
+
+.modal-submit:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.message{
+  padding:10px;
+  border-radius:9px;
+  margin:9px 0;
+  display:none;
+  font-size:13px;
+}
+
+.message.show{
+  display:block;
+}
+
+.message.error{
+  background:#fff0f0;
+  color:#a32e2e;
+}
+
+.message.success{
+  background:#edf9f0;
+  color:#28733c;
+}
+
+/* SUCCESS */
+
+.success-screen{
+  text-align:center;
+  padding:40px 15px;
+}
+
+.success-icon{
+  font-size:60px;
+}
+
+.order-number{
+  background:#fff3f7;
+  padding:11px;
+  border-radius:9px;
+  display:inline-block;
+  margin:10px 0;
+  color:var(--pink);
+  font-weight:800;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+  .hero-grid,
+  .about,
+  .contact-grid{
+    grid-template-columns:1fr;
+  }
+
+  .product-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .categories,
+  .feature-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .modal-product{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:45px;
+  }
+}
+
+@media(max-width:600px){
+
+  .nav-links{
+    display:none;
+  }
+
+  .hero{
+    padding:45px 0;
+  }
+
+  .hero h1{
+    font-size:38px;
+  }
+
+  .hero-art{
+    min-height:280px;
+  }
+
+  .product-grid{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .product-image{
+    height:190px;
+  }
+
+  .product-info{
+    padding:10px;
+  }
+
+  .product-info h3{
+    font-size:14px;
+    font-weight:500;
+  }
+
+  .product-description{
+    font-size:11px;
+  }
+
+  .price{
+    font-size:17px;
+  }
+
+  .categories,
+  .feature-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .gallery-main{
+    height:280px;
+  }
+}
+
+@media(max-width:420px){
+
+  .product-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .product-image{
+    height:175px;
+  }
+
+  .categories,
+  .feature-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:34px;
+  }
+}
 </style>
 </head>
+
 <body>
-<header><div class="top"><button class="icon" onclick="openMenu()">☰</button><div class="brand">AARVI FASHION</div><button class="icon" onclick="showNotifications()">🔔</button><button class="icon" onclick="showScreen('account')">👤</button></div><div class="search"><input id="search" placeholder="Search products..." oninput="renderHome()"></div></header>
-<main class="wrap">
-<section id="home" class="screen active"><div class="hero"><h1>Style that feels beautifully yours.</h1><p>Fashion • Beauty • Jewellery • All India Delivery</p><div id="cats" class="cats"></div></div><div class="section-title"><h2>✨ New Arrivals</h2></div><div id="newArrivals" class="products"></div><div class="section-title"><h2>🔥 Best Sellers</h2></div><div id="bestSellers" class="products"></div><div class="section-title"><h2>💖 Under ₹999</h2></div><div id="under999" class="products"></div><div class="section-title"><h2 id="productTitle">Latest Collection</h2></div><div id="products" class="products"></div></section>
-<section id="orders" class="screen"><div class="section-title"><h2>📦 My Orders</h2><button class="icon" onclick="loadOrders()">↻</button></div><div id="ordersList"></div></section>
-<section id="cart" class="screen"><div class="section-title"><h2>🛒 My Cart</h2></div><div id="cartList"></div></section>
-<section id="account" class="screen"><div class="section-title"><h2>👤 My Account</h2></div><div id="accountBox"></div></section>
-</main>
-<nav class="bottom"><button id="navHome" class="active" onclick="showScreen('home')">⌂<br><small>Home</small></button><button id="navCart" onclick="showScreen('cart')">🛒<br><small>Cart</small></button><button id="navOrders" onclick="showScreen('orders')">🛍<br><small>Orders</small></button><button id="navAccount" onclick="showScreen('account')">👤<br><small>Account</small></button></nav>
-<div id="drawer" class="drawer" onclick="closeMenu()"><div class="menu" onclick="event.stopPropagation()"><button onclick="closeMenu()">✕ Close</button><h2>Menu</h2><button onclick="goHome()">🏠 Home</button><button onclick="showScreen('cart');closeMenu()">🛒 Cart</button><button onclick="showScreen('orders');closeMenu()">📦 My Orders</button><button onclick="showScreen('account');closeMenu()">👤 My Account</button><button onclick="showNotifications();closeMenu()">🔔 Notifications</button><button onclick="openTrack();closeMenu()">🚚 Track Order</button><button onclick="showPolicies();closeMenu()">↩️ Return / Exchange Policy</button><button onclick="contact()">💬 Contact</button></div></div>
-<div id="modalRoot"></div>
+
+<header>
+  <div class="container nav">
+
+    <a class="logo" href="#home">
+      AARVI FASHION
+      <small>ELEGANCE IN EVERY THREAD</small>
+    </a>
+
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#collections">Collections</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <a
+      class="nav-btn"
+      href="https://wa.me/916204117647"
+      target="_blank">
+      WhatsApp
+    </a>
+
+  </div>
+</header>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+  <div class="container hero-grid">
+
+    <div>
+      <div class="eyebrow">
+        Welcome to Aarvi Fashion
+      </div>
+
+      <h1>
+        Your style.<br>
+        Your elegance.
+      </h1>
+
+      <p>
+        Discover beautiful women's fashion made for
+        everyday confidence and special moments.
+        Explore Sarees, Kurtis, Tops and Suits.
+      </p>
+
+      <div class="hero-actions">
+
+        <a
+          href="#collections"
+          class="btn btn-primary">
+          Explore Collection
+        </a>
+
+        <a
+          href="https://wa.me/916204117647"
+          target="_blank"
+          class="btn btn-light">
+          Chat on WhatsApp
+        </a>
+
+      </div>
+    </div>
+
+    <div class="hero-art">
+
+      <div>
+        <div class="hero-art-icon">
+          👗
+        </div>
+
+        <h2>Aarvi Fashion</h2>
+
+        <p style="margin-top:7px">
+          Fashion made beautifully simple.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="section-head">
+
+      <div class="eyebrow">
+        Explore
+      </div>
+
+      <h2>
+        Shop by Category
+      </h2>
+
+      <p>
+        Find the perfect style for every occasion.
+      </p>
+
+    </div>
+
+    <div class="categories">
+
+      <a
+        class="category"
+        href="#collections"
+        onclick="setCategory('Saree')">
+
+        <div class="category-icon">🥻</div>
+
+        <h3>Sarees</h3>
+
+        <p>Elegant styles for every occasion</p>
+
+      </a>
+
+      <a
+        class="category"
+        href="#collections"
+        onclick="setCategory('Kurti')">
+
+        <div class="category-icon">👗</div>
+
+        <h3>Kurtis</h3>
+
+        <p>Comfortable and trendy looks</p>
+
+      </a>
+
+      <a
+        class="category"
+        href="#collections"
+        onclick="setCategory('Top')">
+
+        <div class="category-icon">🌸</div>
+
+        <h3>Tops</h3>
+
+        <p>Modern everyday fashion</p>
+
+      </a>
+
+      <a
+        class="category"
+        href="#collections"
+        onclick="setCategory('Suit')">
+
+        <div class="category-icon">✨</div>
+
+        <h3>Suits</h3>
+
+        <p>Beautiful ethnic styles</p>
+
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- COLLECTIONS -->
+
+<section
+  class="section product-section"
+  id="collections">
+
+  <div class="container">
+
+    <div class="section-head">
+
+      <div class="eyebrow">
+        Aarvi Fashion
+      </div>
+
+      <h2 id="collectionTitle">
+        Latest Collection
+      </h2>
+
+      <p>
+        Choose your favourite design and order directly.
+      </p>
+
+    </div>
+
+    <div class="collection-tabs">
+
+      <button
+        class="active"
+        onclick="showSection('latest',this)">
+        Latest Collection
+      </button>
+
+      <button
+        onclick="showSection('new_arrival',this)">
+        New Arrivals
+      </button>
+
+      <button
+        onclick="showSection('best_seller',this)">
+        Best Sellers
+      </button>
+
+      <button
+        onclick="showSection('under_999',this)">
+        Under ₹999
+      </button>
+
+      <button
+        onclick="showAll(this)">
+        All Products
+      </button>
+
+    </div>
+
+    <div
+      id="productGrid"
+      class="product-grid">
+
+      <div class="loading">
+        ✨ Loading collection...
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- FEATURES -->
+
+<section class="section features">
+
+  <div class="container">
+
+    <div class="section-head">
+
+      <div class="eyebrow">
+        Aarvi Promise
+      </div>
+
+      <h2>
+        Why Shop With Us?
+      </h2>
+
+    </div>
+
+    <div class="feature-grid">
+
+      <div class="feature">
+        <div class="feature-icon">🚚</div>
+        <strong>All India Delivery</strong>
+        <p>We deliver fashion across India.</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">💵</div>
+        <strong>Cash on Delivery</strong>
+        <p>COD available on eligible orders.</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">🔒</div>
+        <strong>Secure Payment</strong>
+        <p>Online payments powered by Razorpay.</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">💬</div>
+        <strong>WhatsApp Support</strong>
+        <p>Need help? Talk to us anytime.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section
+  class="section"
+  id="about">
+
+  <div class="container about">
+
+    <div>
+
+      <div class="eyebrow">
+        About Aarvi Fashion
+      </div>
+
+      <h2>
+        Fashion made for you.
+      </h2>
+
+      <p>
+        Aarvi Fashion brings elegant and affordable
+        women's fashion together in one place.
+        From everyday Kurtis and Tops to beautiful
+        Sarees and Suits, our collection is selected
+        to make your style feel special.
+      </p>
+
+    </div>
+
+    <div class="about-box">
+
+      <h3>Our Promise</h3>
+
+      <div class="promise">
+        <div>✨</div>
+        <div>
+          <strong>Beautiful styles</strong>
+          <p>Fashion-forward designs for every mood.</p>
+        </div>
+      </div>
+
+      <div class="promise">
+        <div>💕</div>
+        <div>
+          <strong>Friendly service</strong>
+          <p>We're here whenever you need help.</p>
+        </div>
+      </div>
+
+      <div class="promise">
+        <div>📦</div>
+        <div>
+          <strong>Easy ordering</strong>
+          <p>Select your product, size and quantity.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- CONTACT -->
+
+<section
+  class="section contact"
+  id="contact">
+
+  <div class="container contact-grid">
+
+    <div>
+
+      <div class="eyebrow">
+        Get in Touch
+      </div>
+
+      <h2 style="font-family:Georgia,serif;margin:10px 0 15px">
+        Aarvi Fashion
+      </h2>
+
+      <p>
+        📍 Bihar Sharif, Nalanda, Bihar<br>
+        📞 6204117647<br>
+        ✉️ amreshkumar97552@gmail.com
+      </p>
+
+    </div>
+
+    <div>
+
+      <p style="margin-bottom:18px">
+        For latest products, prices and support,
+        contact Aarvi Fashion on WhatsApp.
+      </p>
+
+      <a
+        class="btn btn-primary"
+        href="https://wa.me/916204117647"
+        target="_blank">
+        Chat on WhatsApp
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+<footer>
+  © 2026 Aarvi Fashion. All rights reserved.
+</footer>
+
+<a
+  class="whatsapp"
+  href="https://wa.me/916204117647"
+  target="_blank"
+  aria-label="WhatsApp">
+  ✆
+</a>
+
+<!-- ORDER MODAL -->
+
+<div
+  id="orderModal"
+  class="modal">
+
+  <div class="modal-box">
+
+    <button
+      class="close"
+      onclick="closeOrder()">
+      ×
+    </button>
+
+    <div
+      id="orderFormArea"
+      class="modal-product">
+
+      <div>
+
+        <div class="gallery-main">
+          <img
+            id="mainProductImage"
+            src=""
+            alt="Product">
+        </div>
+
+        <div
+          id="galleryThumbs"
+          class="gallery-thumbs">
+        </div>
+
+      </div>
+
+      <div class="modal-info">
+
+        <div
+          class="eyebrow"
+          id="modalCategory">
+          Aarvi Fashion
+        </div>
+
+        <h2 id="modalName">
+          Product
+        </h2>
+
+        <div
+          id="modalDescription"
+          class="modal-description">
+        </div>
+
+        <div
+          id="modalPrice"
+          class="modal-price">
+        </div>
+
+        <div class="field">
+
+          <label>Select Size</label>
+
+          <div
+            id="sizeContainer"
+            class="sizes">
+          </div>
+
+        </div>
+
+        <div class="field">
+
+          <label>Quantity</label>
+
+          <div class="quantity">
+
+            <button
+              class="qty-btn"
+              onclick="changeQuantity(-1)">
+              −
+            </button>
+
+            <span
+              id="quantityValue"
+              class="qty-number">
+              1
+            </span>
+
+            <button
+              class="qty-btn"
+              onclick="changeQuantity(1)">
+              +
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="field">
+
+          <label>Full Name *</label>
+
+          <input
+            id="customerName"
+            placeholder="Your name">
+
+        </div>
+
+        <div class="field">
+
+          <label>Phone Number *</label>
+
+          <input
+            id="customerPhone"
+            type="tel"
+            maxlength="10"
+            placeholder="10 digit mobile number">
+
+        </div>
+
+        <div class="field">
+
+          <label>Full Address *</label>
+
+          <textarea
+            id="customerAddress"
+            placeholder="House no, village/street...">
+          </textarea>
+
+        </div>
+
+        <div class="field">
+
+          <label>City *</label>
+
+          <input
+            id="customerCity"
+            placeholder="City">
+
+        </div>
+
+        <div class="field">
+
+          <label>State *</label>
+
+          <input
+            id="customerState"
+            value="Bihar"
+            placeholder="State">
+
+        </div>
+
+        <div class="field">
+
+          <label>Pin Code *</label>
+
+          <input
+            id="customerPin"
+            type="tel"
+            maxlength="6"
+            placeholder="6 digit PIN">
+
+        </div>
+
+        <div class="field payment-box">
+
+          <label>Payment Method</label>
+
+          <select id="paymentMethod">
+
+            <option value="COD">
+              Cash on Delivery
+            </option>
+
+            <option value="RAZORPAY">
+              Online Payment
+            </option>
+
+          </select>
+
+          <div class="payment-note">
+            Online Payment select karne par Razorpay
+            secure checkout open hoga.
+          </div>
+
+        </div>
+
+        <div
+          id="orderMessage"
+          class="message">
+        </div>
+
+        <button
+          id="placeOrderButton"
+          class="modal-submit"
+          onclick="placeOrder()">
+
+          🛍️ Place Order
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <div
+      id="successArea"
+      class="success-screen"
+      style="display:none">
+
+      <div class="success-icon">
+        🎉
+      </div>
+
+      <h2>
+        Order Received!
+      </h2>
+
+      <p>
+        Thank you for shopping with Aarvi Fashion.
+      </p>
+
+      <div
+        id="orderNumber"
+        class="order-number">
+      </div>
+
+      <p
+        style="color:#786b72;margin:10px 0 20px">
+
+        We will contact you for order confirmation.
+
+      </p>
+
+      <button
+        class="btn btn-primary"
+        onclick="closeOrder()">
+
+        Continue Shopping
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
 <script>
-const SUPABASE_URL="https://sxifooelnulxldcbtmvd.supabase.co";
-const SUPABASE_KEY="sb_publishable_nLLITIJxfhc52cUkZaGZ4w_GvJubfM-";
-const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let allProducts=[],currentCategory="All",currentProduct=null,selectedSize="",qty=1;
-const $=id=>document.getElementById(id);
-function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
-function money(v){return Number(v||0).toLocaleString("en-IN")}
-function imgs(p){let a=[];try{a=Array.isArray(p.image_urls)?p.image_urls:JSON.parse(p.image_urls||"[]")}catch{}if(!Array.isArray(a))a=[];if(!a.length&&p.image_url)a=[p.image_url];return a.filter(Boolean)}
-function sizes(p){try{return Array.isArray(p.sizes)?p.sizes:JSON.parse(p.sizes||"[]")}catch{return[]}}
-function closeModal(){$("modalRoot").innerHTML=""}
-function openImage(src,name){if(!src)return;$("modalRoot").innerHTML=`<div class="modal" onclick="closeModal()"><div class="box" style="max-width:520px;padding:8px;background:#111" onclick="event.stopPropagation()"><button class="close" onclick="closeModal()">×</button><img src="${esc(src)}" alt="${esc(name)}" style="display:block;width:100%;max-height:82vh;object-fit:contain;border-radius:12px;background:#fff"><div style="color:#fff;text-align:center;padding:8px 4px;font-weight:700">${esc(name)}</div></div></div>`}
-function openMenu(){$("drawer").classList.add("open")}
-function closeMenu(){$("drawer").classList.remove("open")}
-function goHome(){closeMenu();showScreen("home");currentCategory="All";renderHome()}
-function showScreen(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$(id).classList.add("active");document.querySelectorAll(".bottom button").forEach(x=>x.classList.remove("active"));$("nav"+id.charAt(0).toUpperCase()+id.slice(1))?.classList.add("active");if(id==="orders")loadOrders();if(id==="cart")renderCart();if(id==="account")loadAccount();scrollTo(0,0)}
-async function loadProducts(){const c=$("products");c.innerHTML='<div class="empty">Products loading...</div>';const r=await sb.from("products").select("*").order("id",{ascending:false});if(r.error){c.innerHTML='<div class="empty">Products load nahi ho rahe.<br>'+esc(r.error.message)+'</div>';return}allProducts=r.data||[];renderCategories();renderHome()}
-function productCard(p){const im=imgs(p)[0]||"";const stock=Number(p.stock||0);const old=Number(p.original_price||0);return `<article class="card"><div class="photo" onclick="openImage('${esc(im)}','${esc(p.name||"Product")}')">${im?`<img src="${esc(im)}" alt="${esc(p.name)}" loading="lazy"><span class="zoom">🔍</span>`:'🛍️'}</div><div class="info"><div class="name">${esc(p.name||"Product")}</div><div class="muted">${esc(p.category||"")}</div><div class="price">₹${money(p.price)}${old>Number(p.price||0)?`<span class="old">₹${money(old)}</span>`:""}</div><div class="muted">${stock>0?`Stock: ${stock}`:"Out of Stock"}</div><button class="btn" ${stock<1?"disabled":""} onclick="buyNow(${Number(p.id)})">Buy Now</button><button class="btn secondary" ${stock<1?"disabled":""} onclick="addToCart(${Number(p.id)})">Add to Cart</button></div></article>`}
-function renderCategories(){const cats=["All","Saree","Kurti","Dress","Top","Suit"];$("cats").innerHTML=cats.map(c=>`<button class="${c===currentCategory?"active":""}" onclick="setCategory('${c}')">${c}</button>`).join("")}
-function setCategory(c){currentCategory=c;renderCategories();renderHome()}
-function renderList(list,id){$(id).innerHTML=list.length?list.map(productCard).join(""):'<div class="empty">Is section mein abhi product nahi hai.</div>'}
-function renderHome(){const q=$("search").value.trim().toLowerCase();let base=allProducts.filter(p=>!q||String(p.name||"").toLowerCase().includes(q)||String(p.category||"").toLowerCase().includes(q));let filtered=currentCategory==="All"?base:base.filter(p=>String(p.category||"").toLowerCase()===currentCategory.toLowerCase());$("productTitle").textContent=currentCategory==="All"?"Latest Collection":currentCategory+" Collection";renderList(filtered,"products");renderList(base.slice(0,8),"newArrivals");renderList([...base].sort((a,b)=>Number(b.sold_count||b.sales||0)-Number(a.sold_count||a.sales||0)).slice(0,8),"bestSellers");renderList(base.filter(p=>Number(p.price||0)<=999).slice(0,8),"under999")}
-function addToCart(id){const p=allProducts.find(x=>Number(x.id)===Number(id));if(!p)return;let cart=JSON.parse(localStorage.getItem("aarvi_cart")||"[]");const x=cart.find(i=>Number(i.id)===Number(id));if(x)x.qty=Math.min(x.qty+1,Number(p.stock||1));else cart.push({id:Number(p.id),qty:1});localStorage.setItem("aarvi_cart",JSON.stringify(cart));alert("Cart mein add ho gaya 🛒")}
-function getCart(){return JSON.parse(localStorage.getItem("aarvi_cart")||"[]")}
-function renderCart(){const cart=getCart();if(!cart.length){$("cartList").innerHTML='<div class="empty">Cart abhi empty hai.</div>';return}let total=0;$("cartList").innerHTML=cart.map(i=>{const p=allProducts.find(x=>Number(x.id)===Number(i.id));if(!p)return"";const sub=Number(p.price||0)*i.qty;total+=sub;return `<div class="cart-row"><img src="${esc(imgs(p)[0]||"")}"><div style="flex:1"><b>${esc(p.name)}</b><div>₹${money(p.price)} × ${i.qty}</div><div class="qty"><button onclick="changeCart(${p.id},-1)">−</button><span>${i.qty}</span><button onclick="changeCart(${p.id},1)">+</button><button onclick="removeCart(${p.id})">Remove</button></div></div></div>`}).join("")+`<div class="order-card"><b>Total: ₹${money(total)}</b><button class="btn" onclick="checkoutCart()">Checkout Cart</button></div>`}
-function changeCart(id,d){let c=getCart();let x=c.find(i=>Number(i.id)===Number(id));if(!x)return;x.qty=Math.max(1,x.qty+d);const p=allProducts.find(y=>Number(y.id)===Number(id));if(p)x.qty=Math.min(x.qty,Number(p.stock||1));localStorage.setItem("aarvi_cart",JSON.stringify(c));renderCart()}
-function removeCart(id){localStorage.setItem("aarvi_cart",JSON.stringify(getCart().filter(i=>Number(i.id)!==Number(id))));renderCart()}
-async function buyNow(id){const s=await sb.auth.getSession();if(!s.data.session){openAuth();return}currentProduct=allProducts.find(p=>Number(p.id)===Number(id));selectedSize="";qty=1;if(currentProduct)openOrderForm()}
-async function openAuth(){closeModal();$("modalRoot").innerHTML=`<div class="modal"><div class="box"><button class="close" onclick="closeModal()">×</button><h2>🌸 Aarvi Fashion</h2><label>Email</label><input id="aEmail" type="email"><label>Password</label><input id="aPass" type="password"><button class="btn" onclick="login()">Login</button><button class="btn secondary" onclick="signup()">Create Account</button></div></div>`}
-async function login(){const{error}=await sb.auth.signInWithPassword({email:$("aEmail").value.trim(),password:$("aPass").value});if(error)return alert(error.message);closeModal();loadAccount()}
-async function signup(){const email=$("aEmail").value.trim(),password=$("aPass").value;if(password.length<6)return alert("Password minimum 6 characters ka hona chahiye.");const{error}=await sb.auth.signUp({email,password});if(error)return alert(error.message);alert("Account create ho gaya. Email confirmation required ho sakta hai.")}
-function openOrderForm(){const p=currentProduct;$("modalRoot").innerHTML=`<div class="modal"><div class="box"><button class="close" onclick="closeModal()">×</button><h2>🛍️ Place Order</h2><div class="notice"><b>${esc(p.name)}</b><br>₹${money(p.price)}</div>${sizes(p).length?`<label>Size *</label><div class="size-row">${sizes(p).map(s=>`<button class="size" onclick="pickSize('${esc(s)}',this)">${esc(s)}</button>`).join("")}</div>`:""}<label>Full Name *</label><input id="oName"><label>Mobile *</label><input id="oPhone" maxlength="10" inputmode="numeric"><label>Address *</label><textarea id="oAddress"></textarea><label>City *</label><input id="oCity"><label>State *</label><input id="oState"><label>PIN *</label><input id="oPin" maxlength="6" inputmode="numeric"><label>Quantity *</label><input id="oQty" type="number" min="1" max="${Number(p.stock||1)}" value="1"><label>Payment *</label><select id="oPay"><option value="COD">Cash on Delivery</option><option value="Online">Online Payment</option></select><div class="notice">Online payment option abhi gateway ke bina sirf Pending status rakhega. COD fully supported hai.</div><button id="placeBtn" class="btn" onclick="placeOrder()">Confirm Order</button></div></div>`;loadOrderProfile()}
-function pickSize(s,b){selectedSize=s;document.querySelectorAll(".size").forEach(x=>x.classList.remove("sel"));b.classList.add("sel")}
-async function loadOrderProfile(){const{data:{session}}=await sb.auth.getSession();if(!session)return;const{data:p}=await sb.from("customer_profiles").select("*").eq("id",session.user.id).maybeSingle();if(p){$("oName").value=p.full_name||"";$("oPhone").value=p.phone||""}}
-async function placeOrder(){const btn=$("placeBtn"),name=$("oName").value.trim(),phone=$("oPhone").value.trim(),address=$("oAddress").value.trim(),city=$("oCity").value.trim(),state=$("oState").value.trim(),pin=$("oPin").value.trim(),q=Number($("oQty").value),pay=$("oPay").value;if(!name||!/^[0-9]{10}$/.test(phone)||!address||!city||!state||!/^[0-9]{6}$/.test(pin))return alert("Details sahi bhariye.");if(sizes(currentProduct).length&&!selectedSize)return alert("Size select karein.");if(!q||q<1||q>Number(currentProduct.stock||0))return alert("Quantity stock se zyada nahi ho sakti.");btn.disabled=true;btn.textContent="Order save ho raha hai...";const{data:{session}}=await sb.auth.getSession();const r=await sb.rpc("place_order",{p_user_id:session?.user?.id||null,p_customer_name:name,p_phone:phone,p_address:address,p_city:city,p_state:state,p_pin_code:pin,p_product_id:Number(currentProduct.id),p_size:selectedSize||null,p_quantity:q,p_payment_method:pay});if(r.error){btn.disabled=false;btn.textContent="Confirm Order";return alert("Order confirm nahi hua:\n"+r.error.message)}closeModal();await loadProducts();alert("Order Confirmed! ✅\nOrder ID: #"+r.data);showScreen("orders")}
-async function checkoutCart(){const c=getCart();if(!c.length)return;const s=await sb.auth.getSession();if(!s.data.session){openAuth();return}if(c.length===1){currentProduct=allProducts.find(p=>Number(p.id)===Number(c[0].id));qty=c[0].qty;selectedSize="";openOrderForm();return}alert("Cart mein multiple products hain. Abhi ek-ek product ka order place karein.");}
-async function loadOrders(){const el=$("ordersList");const{data:{session}}=await sb.auth.getSession();if(!session){el.innerHTML='<div class="empty">My Orders ke liye login karein.</div>';return}el.innerHTML='<div class="empty">Orders loading...</div>';const r=await sb.from("orders").select("*").eq("user_id",session.user.id).order("id",{ascending:false});if(r.error){el.innerHTML='<div class="empty">Orders load nahi ho rahe.<br>'+esc(r.error.message)+'</div>';return}if(!r.data?.length){el.innerHTML='<div class="empty">Abhi koi order nahi hai.</div>';return}el.innerHTML=r.data.map(o=>`<div class="order-card"><b>Order #${esc(o.id)}</b><p>${esc(o.product_name||"Product")} × ${esc(o.quantity||1)}</p><p>Total: ₹${money(o.total_amount)}</p><p>Payment: ${esc(o.payment_method||"-")}</p><span class="badge">${esc(o.order_status||"New")}</span>${o.courier_name?`<p>Courier: ${esc(o.courier_name)}</p>`:""}${o.tracking_number?`<p>Tracking: ${esc(o.tracking_number)}</p>`:""}${o.tracking_url?`<a class="btn" href="${esc(o.tracking_url)}" target="_blank">Track Shipment</a>`:""}</div>`).join("")}
-async function loadAccount(){const{data:{session}}=await sb.auth.getSession();if(!session){$("accountBox").innerHTML='<div class="order-card"><h3>Login required</h3><button class="btn" onclick="openAuth()">Login / Sign Up</button></div>';return}const{data:p}=await sb.from("customer_profiles").select("*").eq("id",session.user.id).maybeSingle();$("accountBox").innerHTML=`<div class="order-card"><h3>${esc(p?.full_name||"Customer")}</h3><p>${esc(p?.email||session.user.email||"")}<br>${esc(p?.phone||"")}</p><button class="btn" onclick="showScreen('orders')">📦 My Orders</button><button class="btn secondary" onclick="showNotifications()">🔔 Notifications</button><button class="btn secondary" onclick="openTrack()">🚚 Track Order</button><button class="btn secondary" onclick="showPolicies()">↩️ Return / Exchange</button><button class="btn secondary" onclick="sb.auth.signOut().then(loadAccount)">Logout</button></div>`}
-async function showNotifications(){const{data:{session}}=await sb.auth.getSession();if(!session)return openAuth();const r=await sb.from("customer_notifications").select("*").eq("user_id",session.user.id).order("created_at",{ascending:false}).limit(30);if(r.error)return alert(r.error.message);$("modalRoot").innerHTML=`<div class="modal"><div class="box"><button class="close" onclick="closeModal()">×</button><h2>🔔 Notifications</h2>${(r.data||[]).map(n=>`<div class="order-card"><b>${esc(n.title||"Aarvi Fashion")}</b><p>${esc(n.message||"")}</p></div>`).join("")||'<div class="empty">No notifications.</div>'}</div></div>`}
-async function openTrack(){closeModal();$("modalRoot").innerHTML=`<div class="modal"><div class="box"><button class="close" onclick="closeModal()">×</button><h2>🚚 Track Order</h2><label>Order ID</label><input id="tId" type="number"><label>Mobile</label><input id="tPhone" maxlength="10"><button class="btn" onclick="trackOrder()">Track</button><div id="tResult"></div></div></div>`}
-async function trackOrder(){const id=Number($("tId").value),phone=$("tPhone").value.trim();if(!id||!/^[0-9]{10}$/.test(phone))return alert("Order ID aur valid mobile number bhariye.");const r=await sb.rpc("track_my_order",{order_id_input:id,phone_input:phone});if(r.error)return $("tResult").innerHTML='<div class="error">'+esc(r.error.message)+'</div>';const o=r.data;if(!o)return $("tResult").innerHTML='<div class="error">Order nahi mila.</div>';const s=o.order_status||o.Order_status||o.Order_states||"New";$("tResult").innerHTML=`<div class="success">Order #${id} found ✅<br>Product: ${esc(o.product_name||o.Product_name||"-")}<br><span class="badge">${esc(s)}</span></div>`}
-function showPolicies(){$("modalRoot").innerHTML=`<div class="modal"><div class="box"><button class="close" onclick="closeModal()">×</button><h2>↩️ Return / Exchange Policy</h2><div class="policy"><b>Return / Exchange</b><p>Return ya exchange request ke liye order ID, mobile number aur problem details ke saath Aarvi Fashion support se contact karein.</p></div><div class="policy"><b>Order Cancellation</b><p>Cancellation request ke liye order dispatch hone se pehle WhatsApp ya call support karein.</p></div><div class="policy"><b>Refund</b><p>Approved return/refund ka processing business verification ke baad kiya jayega.</p></div><button class="btn" onclick="contact()">WhatsApp Support</button></div></div>`}
-function contact(){window.open("https://wa.me/916204117647?text=Hello%20Aarvi%20Fashion%2C%20I%20need%20help%20with%20my%20order.","_blank")}
-function help(){showPolicies()}
+
+/* =========================
+   SUPABASE
+========================= */
+
+const SUPABASE_URL =
+  "https://sxifooelnulxldcbtmvd.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_nLLITIJxfhc52cUkZaGZ4w_GvJubfM-";
+
+const sb =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* =========================
+   HELPERS
+========================= */
+
+const $ =
+  id => document.getElementById(id);
+
+function esc(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+function money(value){
+
+  return Number(value || 0)
+    .toLocaleString("en-IN");
+
+}
+
+function parseArray(value){
+
+  if(Array.isArray(value))
+    return value;
+
+  if(!value)
+    return [];
+
+  try{
+
+    const parsed =
+      JSON.parse(value);
+
+    return Array.isArray(parsed)
+      ? parsed
+      : [];
+
+  }catch(e){
+
+    return [];
+
+  }
+
+}
+
+
+/* =========================
+   PRODUCTS
+========================= */
+
+let allProducts = [];
+
+let selectedProduct = null;
+
+let selectedImages = [];
+
+let selectedQuantity = 1;
+
+let selectedCategory = "";
+
+let currentSection = "latest";
+
+
+/* =========================
+   LOAD PRODUCTS
+========================= */
+
+async function loadProducts(){
+
+  const grid =
+    $("productGrid");
+
+  grid.innerHTML =
+    `<div class="loading">
+      ✨ Loading collection...
+    </div>`;
+
+  const {data,error} =
+    await sb
+      .from("products")
+      .select("*")
+      .order(
+        "created_at",
+        {ascending:false}
+      );
+
+  if(error){
+
+    console.error(error);
+
+    grid.innerHTML =
+      `<div class="empty">
+        Products load nahi ho pa rahe hain.
+        <br><br>
+        ${esc(error.message)}
+      </div>`;
+
+    return;
+
+  }
+
+  allProducts =
+    data || [];
+
+  renderProducts();
+
+}
+
+
+/* =========================
+   PRODUCT IMAGES
+========================= */
+
+function getProductImages(product){
+
+  let images =
+    parseArray(product.image_urls);
+
+  if(
+    !images.length &&
+    product.image_url
+  ){
+
+    images =
+      [product.image_url];
+
+  }
+
+  return images
+    .filter(Boolean)
+    .slice(0,4);
+
+}
+
+
+/* =========================
+   PRODUCT BADGES
+========================= */
+
+function getBadges(product){
+
+  const badges = [];
+
+  if(product.new_arrival)
+    badges.push(
+      `<span class="badge">
+        New Arrival
+      </span>`
+    );
+
+  if(product.best_seller)
+    badges.push(
+      `<span class="badge dark">
+        Best Seller
+      </span>`
+    );
+
+  if(product.under_999)
+    badges.push(
+      `<span class="badge green">
+        Under ₹999
+      </span>`
+    );
+
+  if(product.latest)
+    badges.push(
+      `<span class="badge">
+        Latest Collection
+      </span>`
+    );
+
+  return badges.join("");
+
+}
+
+
+/* =========================
+   FILTER
+========================= */
+
+function setCategory(category){
+
+  selectedCategory =
+    category;
+
+  currentSection =
+    "all";
+
+  document
+    .querySelectorAll(".collection-tabs button")
+    .forEach(b =>
+      b.classList.remove("active")
+    );
+
+  renderProducts();
+
+  document
+    .getElementById("collections")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+}
+
+
+/* =========================
+   SECTION BUTTONS
+========================= */
+
+function showSection(field,button){
+
+  currentSection =
+    field;
+
+  selectedCategory =
+    "";
+
+  document
+    .querySelectorAll(".collection-tabs button")
+    .forEach(b =>
+      b.classList.remove("active")
+    );
+
+  button.classList.add("active");
+
+  const titles = {
+    latest:"Latest Collection",
+    new_arrival:"New Arrivals",
+    best_seller:"Best Sellers",
+    under_999:"Under ₹999"
+  };
+
+  $("collectionTitle")
+    .textContent =
+      titles[field] || "Collection";
+
+  renderProducts();
+
+}
+
+function showAll(button){
+
+  currentSection =
+    "all";
+
+  selectedCategory =
+    "";
+
+  document
+    .querySelectorAll(".collection-tabs button")
+    .forEach(b =>
+      b.classList.remove("active")
+    );
+
+  button.classList.add("active");
+
+  $("collectionTitle")
+    .textContent =
+      "All Products";
+
+  renderProducts();
+
+}
+
+
+/* =========================
+   RENDER PRODUCTS
+========================= */
+
+function renderProducts(){
+
+  const grid =
+    $("productGrid");
+
+  let products =
+    [...allProducts];
+
+  if(selectedCategory){
+
+    products =
+      products.filter(
+        p =>
+          String(p.category || "")
+            .toLowerCase()
+          ===
+          selectedCategory.toLowerCase()
+      );
+
+  }
+  else if(currentSection !== "all"){
+
+    products =
+      products.filter(
+        p =>
+          Boolean(p[currentSection])
+      );
+
+  }
+
+  if(!products.length){
+
+    grid.innerHTML =
+      `<div class="empty">
+        Is section mein abhi koi product available nahi hai.
+      </div>`;
+
+    return;
+
+  }
+
+  grid.innerHTML =
+    products.map(product => {
+
+      const images =
+        getProductImages(product);
+
+      const sizes =
+        parseArray(product.sizes);
+
+      const stock =
+        Number(product.stock || 0);
+
+      const image =
+        images[0] || "";
+
+      return `
+
+        <article class="product-card">
+
+          <div class="product-image">
+
+            ${
+              image
+              ?
+              `<img
+                src="${esc(image)}"
+                alt="${esc(product.name)}">`
+              :
+              `<div style="
+                width:100%;
+                height:100%;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-size:60px">
+                👗
+              </div>`
+            }
+
+            <div class="badges">
+
+              ${getBadges(product)}
+
+              ${
+                !getBadges(product)
+                ?
+                `<span class="badge">
+                  ${esc(product.category || "Fashion")}
+                </span>`
+                :
+                ""
+              }
+
+            </div>
+
+            ${
+              images.length > 1
+              ?
+              `<span class="photo-count">
+                📸 ${images.length}
+              </span>`
+              :
+              ""
+            }
+
+          </div>
+
+          <div class="product-info">
+
+            <h3>
+              ${esc(product.name || "Product")}
+            </h3>
+
+            <div class="category-name">
+              ${esc(product.category || "")}
+            </div>
+
+            <p class="product-description">
+              ${esc(
+                product.description ||
+                "Beautiful fashion collection from Aarvi Fashion."
+              )}
+            </p>
+
+            <div class="price-row">
+
+              <span class="price">
+                ₹${money(product.price)}
+              </span>
+
+              ${
+                product.original_price
+                ?
+                `<span class="old-price">
+                  ₹${money(product.original_price)}
+                </span>`
+                :
+                ""
+              }
+
+            </div>
+
+            ${
+              sizes.length
+              ?
+              `<div class="size-preview">
+                ${sizes.map(size =>
+                  `<span class="size-chip">
+                    ${esc(size)}
+                  </span>`
+                ).join("")}
+              </div>`
+              :
+              ""
+            }
+
+            <button
+              class="buy-btn"
+              ${stock <= 0 ? "disabled" : ""}
+              onclick="openOrder(${Number(product.id)})">
+
+              ${
+                stock > 0
+                ? "View & Order"
+                : "Out of Stock"
+              }
+
+            </button>
+
+          </div>
+
+        </article>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================
+   OPEN ORDER
+========================= */
+
+function openOrder(id){
+
+  const product =
+    allProducts.find(
+      p =>
+        Number(p.id) === Number(id)
+    );
+
+  if(!product)
+    return;
+
+  if(
+    Number(product.stock || 0) <= 0
+  ){
+
+    alert(
+      "Ye product abhi out of stock hai."
+    );
+
+    return;
+
+  }
+
+  selectedProduct =
+    product;
+
+  selectedImages =
+    getProductImages(product);
+
+  selectedQuantity =
+    1;
+
+  $("quantityValue")
+    .textContent =
+      "1";
+
+  $("modalName")
+    .textContent =
+      product.name || "Product";
+
+  $("modalCategory")
+    .textContent =
+      product.category || "Aarvi Fashion";
+
+  $("modalDescription")
+    .textContent =
+      product.description ||
+      "Beautiful fashion collection from Aarvi Fashion.";
+
+  $("modalPrice")
+    .textContent =
+      "₹" + money(product.price);
+
+  renderGallery();
+
+  renderSizes();
+
+  $("orderMessage")
+    .className =
+      "message";
+
+  $("orderMessage")
+    .textContent =
+      "";
+
+  $("orderFormArea")
+    .style.display =
+      "grid";
+
+  $("successArea")
+    .style.display =
+      "none";
+
+  $("orderModal")
+    .classList.add("show");
+
+}
+
+
+/* =========================
+   CLOSE ORDER
+========================= */
+
+function closeOrder(){
+
+  $("orderModal")
+    .classList.remove("show");
+
+}
+
+
+/* =========================
+   GALLERY
+========================= */
+
+function renderGallery(){
+
+  const main =
+    $("mainProductImage");
+
+  const thumbs =
+    $("galleryThumbs");
+
+  if(!selectedImages.length){
+
+    main.src = "";
+
+    thumbs.innerHTML = "";
+
+    return;
+
+  }
+
+  main.src =
+    selectedImages[0];
+
+  thumbs.innerHTML =
+    selectedImages.map(
+      (url,index) =>
+        `<img
+          class="${index===0?"active":""}"
+          src="${esc(url)}"
+          onclick="changeMainImage(${index})"
+          alt="Product photo ${index+1}">`
+    ).join("");
+
+}
+
+function changeMainImage(index){
+
+  if(!selectedImages[index])
+    return;
+
+  $("mainProductImage")
+    .src =
+      selectedImages[index];
+
+  document
+    .querySelectorAll(
+      ".gallery-thumbs img"
+    )
+    .forEach(
+      (img,i) =>
+        img.classList.toggle(
+          "active",
+          i===index
+        )
+    );
+
+}
+
+
+/* =========================
+   SIZES
+========================= */
+
+function renderSizes(){
+
+  const container =
+    $("sizeContainer");
+
+  const sizes =
+    parseArray(
+      selectedProduct.sizes
+    );
+
+  if(!sizes.length){
+
+    container.innerHTML =
+      `<span style="
+        color:#777;
+        font-size:12px">
+        Size not required
+      </span>`;
+
+    return;
+
+  }
+
+  container.innerHTML =
+    sizes.map(
+      (size,index) => {
+
+        const id =
+          "sizeChoice" + index;
+
+        return `
+
+          <div class="size-radio">
+
+            <input
+              type="radio"
+              id="${id}"
+              name="selectedSize"
+              value="${esc(size)}"
+              ${index===0 ? "checked" : ""}>
+
+            <label for="${id}">
+              ${esc(size)}
+            </label>
+
+          </div>
+
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+/* =========================
+   QUANTITY
+========================= */
+
+function changeQuantity(change){
+
+  if(!selectedProduct)
+    return;
+
+  const stock =
+    Number(
+      selectedProduct.stock || 0
+    );
+
+  selectedQuantity +=
+    Number(change);
+
+  if(selectedQuantity < 1)
+    selectedQuantity = 1;
+
+  if(selectedQuantity > stock)
+    selectedQuantity = stock;
+
+  $("quantityValue")
+    .textContent =
+      selectedQuantity;
+
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+function showOrderMessage(
+  text,
+  type="error"
+){
+
+  const box =
+    $("orderMessage");
+
+  box.className =
+    "message show " + type;
+
+  box.textContent =
+    text;
+
+}
+
+
+/* =========================
+   SELECTED SIZE
+========================= */
+
+function getSelectedSize(){
+
+  const selected =
+    document.querySelector(
+      'input[name="selectedSize"]:checked'
+    );
+
+  return selected
+    ? selected.value
+    : "";
+
+}
+
+
+/* =========================
+   VALIDATE CUSTOMER
+========================= */
+
+function getCustomerData(){
+
+  const name =
+    $("customerName")
+      .value
+      .trim();
+
+  const phone =
+    $("customerPhone")
+      .value
+      .replace(/\D/g,"");
+
+  const address =
+    $("customerAddress")
+      .value
+      .trim();
+
+  const city =
+    $("customerCity")
+      .value
+      .trim();
+
+  const state =
+    $("customerState")
+      .value
+      .trim();
+
+  const pin =
+    $("customerPin")
+      .value
+      .replace(/\D/g,"");
+
+  const payment =
+    $("paymentMethod")
+      .value;
+
+  const size =
+    getSelectedSize();
+
+  const quantity =
+    Number(selectedQuantity);
+
+  if(!name){
+
+    showOrderMessage(
+      "Apna full name bhariye."
+    );
+
+    return null;
+
+  }
+
+  if(phone.length !== 10){
+
+    showOrderMessage(
+      "Valid 10 digit mobile number bhariye."
+    );
+
+    return null;
+
+  }
+
+  if(!address){
+
+    showOrderMessage(
+      "Full address bhariye."
+    );
+
+    return null;
+
+  }
+
+  if(!city){
+
+    showOrderMessage(
+      "City bhariye."
+    );
+
+    return null;
+
+  }
+
+  if(!state){
+
+    showOrderMessage(
+      "State bhariye."
+    );
+
+    return null;
+
+  }
+
+  if(pin.length !== 6){
+
+    showOrderMessage(
+      "Valid 6 digit Pin Code bhariye."
+    );
+
+    return null;
+
+  }
+
+  const sizes =
+    parseArray(
+      selectedProduct.sizes
+    );
+
+  if(
+    sizes.length &&
+    !size
+  ){
+
+    showOrderMessage(
+      "Please size select karein."
+    );
+
+    return null;
+
+  }
+
+  if(
+    quantity < 1 ||
+    quantity >
+    Number(selectedProduct.stock || 0)
+  ){
+
+    showOrderMessage(
+      "Selected quantity available nahi hai."
+    );
+
+    return null;
+
+  }
+
+  return {
+    name,
+    phone,
+    address,
+    city,
+    state,
+    pin,
+    payment,
+    size,
+    quantity
+  };
+
+}
+
+
+/* =========================
+   COD ORDER
+========================= */
+
+async function placeCODOrder(customer){
+
+  const orderData = {
+
+    Customer_Name:
+      customer.name,
+
+    Phone:
+      customer.phone,
+
+    Product_name:
+      selectedProduct.name,
+
+    Quantity:
+      customer.quantity,
+
+    Size:
+      customer.size || null,
+
+    Address:
+      customer.address,
+
+    City:
+      customer.city,
+
+    State:
+      customer.state,
+
+    "Pin Code":
+      customer.pin,
+
+    Payment_method:
+      "COD",
+
+    Payment_status:
+      "COD",
+
+    Order_states:
+      "New"
+
+  };
+
+  const {
+    data,
+    error
+  } =
+    await sb
+      .from("ORDER'S")
+      .insert([orderData])
+      .select()
+      .single();
+
+  if(error){
+
+    throw new Error(
+      error.message
+    );
+
+  }
+
+  /* REDUCE STOCK */
+
+  const newStock =
+    Math.max(
+      0,
+      Number(selectedProduct.stock || 0)
+      - customer.quantity
+    );
+
+  await sb
+    .from("products")
+    .update({
+      stock:newStock
+    })
+    .eq(
+      "id",
+      selectedProduct.id
+    );
+
+  return data;
+
+}
+
+
+/* =========================
+   RAZORPAY ORDER
+========================= */
+
+async function createRazorpayOrder(customer){
+
+  const response =
+    await fetch(
+      "/api/create-order",
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":
+            "application/json"
+        },
+        body:JSON.stringify({
+
+          productId:
+            selectedProduct.id,
+
+          quantity:
+            customer.quantity
+
+        })
+      }
+    );
+
+  const result =
+    await response.json();
+
+  if(!response.ok){
+
+    throw new Error(
+      result.error ||
+      "Razorpay order create nahi hua."
+    );
+
+  }
+
+  return result;
+
+}
+
+
+/* =========================
+   RAZORPAY PAYMENT
+========================= */
+
+async function payWithRazorpay(customer){
+
+  const order =
+    await createRazorpayOrder(
+      customer
+    );
+
+  return new Promise(
+    (resolve,reject) => {
+
+      const options = {
+
+        key:
+          order.key_id,
+
+        amount:
+          order.amount,
+
+        currency:
+          order.currency || "INR",
+
+        name:
+          "Aarvi Fashion",
+
+        description:
+          selectedProduct.name,
+
+        order_id:
+          order.order_id,
+
+        prefill:{
+          name:
+            customer.name,
+
+          contact:
+            "+91" + customer.phone
+        },
+
+        notes:{
+          address:
+            customer.address,
+
+          city:
+            customer.city,
+
+          state:
+            customer.state,
+
+          pin:
+            customer.pin
+        },
+
+        theme:{
+          color:
+            "#d94f82"
+        },
+
+        handler:
+          async function(response){
+
+            try{
+
+              showOrderMessage(
+                "Payment verify ho raha hai...",
+                "success"
+              );
+
+              const verifyResponse =
+                await fetch(
+                  "/api/verify-payment",
+                  {
+                    method:"POST",
+                    headers:{
+                      "Content-Type":
+                        "application/json"
+                    },
+                    body:JSON.stringify({
+
+                      razorpay_order_id:
+                        response.razorpay_order_id,
+
+                      razorpay_payment_id:
+                        response.razorpay_payment_id,
+
+                      razorpay_signature:
+                        response.razorpay_signature
+
+                    })
+                  }
+                );
+
+              const verifyResult =
+                await verifyResponse.json();
+
+              if(
+                !verifyResponse.ok ||
+                !verifyResult.verified
+              ){
+
+                throw new Error(
+                  verifyResult.error ||
+                  "Payment verification failed."
+                );
+
+              }
+
+              /* SAVE PAID ORDER */
+
+              const orderData = {
+
+                Customer_Name:
+                  customer.name,
+
+                Phone:
+                  customer.phone,
+
+                Product_name:
+                  selectedProduct.name,
+
+                Quantity:
+                  customer.quantity,
+
+                Size:
+                  customer.size || null,
+
+                Address:
+                  customer.address,
+
+                City:
+                  customer.city,
+
+                State:
+                  customer.state,
+
+                "Pin Code":
+                  customer.pin,
+
+                Payment_method:
+                  "Razorpay",
+
+                Payment_status:
+                  "Paid",
+
+                Order_states:
+                  "New",
+
+                Razorpay_Order_ID:
+                  response.razorpay_order_id,
+
+                Razorpay_Payment_ID:
+                  response.razorpay_payment_id
+
+              };
+
+              const {
+                data,
+                error
+              } =
+                await sb
+                  .from("ORDER'S")
+                  .insert([orderData])
+                  .select()
+                  .single();
+
+              if(error){
+
+                throw new Error(
+                  "Payment ho gaya, lekin order save nahi hua: " +
+                  error.message
+                );
+
+              }
+
+              /* REDUCE STOCK */
+
+              const newStock =
+                Math.max(
+                  0,
+                  Number(selectedProduct.stock || 0)
+                  - customer.quantity
+                );
+
+              await sb
+                .from("products")
+                .update({
+                  stock:newStock
+                })
+                .eq(
+                  "id",
+                  selectedProduct.id
+                );
+
+              resolve(data);
+
+            }catch(error){
+
+              reject(error);
+
+            }
+
+          },
+
+        modal:{
+          ondismiss:function(){
+
+            reject(
+              new Error(
+                "Payment window close kar di gayi."
+              )
+            );
+
+          }
+        }
+
+      };
+
+      const razorpay =
+        new Razorpay(options);
+
+      razorpay.on(
+        "payment.failed",
+        function(response){
+
+          reject(
+            new Error(
+              response?.error?.description ||
+              "Payment failed."
+            )
+          );
+
+        }
+      );
+
+      razorpay.open();
+
+    }
+  );
+
+}
+
+
+/* =========================
+   PLACE ORDER
+========================= */
+
+async function placeOrder(){
+
+  if(!selectedProduct){
+
+    showOrderMessage(
+      "Product select nahi hua."
+    );
+
+    return;
+
+  }
+
+  const customer =
+    getCustomerData();
+
+  if(!customer)
+    return;
+
+  const button =
+    $("placeOrderButton");
+
+  button.disabled = true;
+
+  button.textContent =
+    customer.payment === "RAZORPAY"
+      ? "Opening Payment..."
+      : "Order Placing...";
+
+  try{
+
+    let data;
+
+    if(
+      customer.payment === "COD"
+    ){
+
+      showOrderMessage(
+        "Order place ho raha hai...",
+        "success"
+      );
+
+      data =
+        await placeCODOrder(
+          customer
+        );
+
+    }
+    else{
+
+      showOrderMessage(
+        "Secure Razorpay checkout open ho raha hai...",
+        "success"
+      );
+
+      data =
+        await payWithRazorpay(
+          customer
+        );
+
+    }
+
+    $("orderFormArea")
+      .style.display =
+      "none";
+
+    $("successArea")
+      .style.display =
+      "block";
+
+    $("orderNumber")
+      .textContent =
+      "Order #" +
+      (
+        data?.id ||
+        "Received"
+      );
+
+    await loadProducts();
+
+  }catch(error){
+
+    console.error(error);
+
+    showOrderMessage(
+      error.message ||
+      "Order place nahi ho saka."
+    );
+
+  }finally{
+
+    button.disabled = false;
+
+    button.textContent =
+      "🛍️ Place Order";
+
+  }
+
+}
+
+
+/* =========================
+   OUTSIDE CLICK
+========================= */
+
+$("orderModal")
+  .addEventListener(
+    "click",
+    function(event){
+
+      if(
+        event.target ===
+        $("orderModal")
+      ){
+
+        closeOrder();
+
+      }
+
+    }
+  );
+
+
+/* =========================
+   INITIAL LOAD
+========================= */
+
 loadProducts();
-sb.auth.onAuthStateChange(()=>{loadAccount()});
+
 </script>
-</body></html>
+
+</body>
+</html>
