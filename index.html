@@ -34,8 +34,9 @@ header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px soli
 .photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s ease}
 .photo:active img,.photo:hover img{transform:scale(1.03)}
 .photo .zoom{position:absolute;right:5px;bottom:5px;background:rgba(255,255,255,.9);border-radius:50%;width:25px;height:25px;display:flex;align-items:center;justify-content:center;font-size:13px}
+.section-badges{position:absolute;left:5px;top:5px;right:5px;display:flex;flex-wrap:wrap;gap:4px;z-index:2;pointer-events:none}.section-badge{font-size:9px;line-height:1;padding:5px 6px;border-radius:10px;background:rgba(255,255,255,.94);color:#d94f82;border:1px solid #f0d8e1;font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .info{padding:8px}
-.name{font-weight:800}
+.name{font-weight:600;font-size:13px;line-height:1.25}
 .muted{color:#777;font-size:13px}
 .price{font-size:20px;font-weight:900;color:#d94f82;margin:7px 0}
 .old{text-decoration:line-through;color:#999;font-size:12px;margin-left:5px}
@@ -97,7 +98,7 @@ textarea{min-height:80px}
 .photo{height:105px}
 .brand{font-size:18px}
 .info{padding:6px}
-.name{font-size:11px;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.name{font-size:10px;font-weight:600;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .muted{font-size:9px}
 .price{font-size:13px;margin:4px 0}
 .old{font-size:8px}
@@ -109,7 +110,7 @@ textarea{min-height:80px}
 .products{gap:5px}
 .photo{height:92px}
 .info{padding:5px}
-.name{font-size:10px}
+.name{font-size:9.5px;font-weight:600}
 .price{font-size:12px}
 .btn{font-size:9px;padding:6px 2px}
 }
@@ -127,7 +128,7 @@ textarea{min-height:80px}
 </div>
 
 <div class="search">
-<input id="search" placeholder="Search products..." oninput="renderHome">
+<input id="search" placeholder="Search products..." oninput="renderHome()">
 </div>
 </header>
 
@@ -478,92 +479,35 @@ PRODUCT CARD
 ================================================
 */
 
+function sectionBadges(p){
+const badges=[];
+if(p.new_arrival===true||p.new_arrival===1||String(p.new_arrival).toLowerCase()==="true") badges.push("🆕 New Arrival");
+if(p.latest===true||p.latest===1||String(p.latest).toLowerCase()==="true") badges.push("✨ Latest");
+if(p.under_999===true||p.under_999===1||String(p.under_999).toLowerCase()==="true") badges.push("💸 Under ₹999");
+if(p.best_seller===true||p.best_seller===1||String(p.best_seller).toLowerCase()==="true") badges.push("🔥 Best Seller");
+return badges;
+}
+
 function productCard(p){
-
 const im=imgs(p)[0]||"";
-
-const stock=
-Number(p.stock||0);
-
-const old=
-Number(p.original_price||0);
-
+const stock=Number(p.stock||0);
+const old=Number(p.original_price||0);
+const badges=sectionBadges(p);
 return `
-
 <article class="card">
-
-<div class="photo"
-onclick="openImage('${esc(im)}','${esc(p.name||"Product")}')">
-
-${
-im
-?`
-<img
-src="${esc(im)}"
-alt="${esc(p.name)}"
-loading="lazy">
-
-<span class="zoom">🔍</span>
-`
-:"🛍️"
-}
-
+<div class="photo" onclick="openImage('${esc(im)}','${esc(p.name||"Product")}')">
+${badges.length?`<div class="section-badges">${badges.map(b=>`<span class="section-badge">${b}</span>`).join("")}</div>`:""}
+${im?`<img src="${esc(im)}" alt="${esc(p.name)}" loading="lazy"><span class="zoom">🔍</span>`:"🛍️"}
 </div>
-
 <div class="info">
-
-<div class="name">
-${esc(p.name||"Product")}
+<div class="name">${esc(p.name||"Product")}</div>
+<div class="muted">${esc(p.category||"")}</div>
+<div class="price">₹${money(p.price)}${old>Number(p.price||0)?`<span class="old">₹${money(old)}</span>`:""}</div>
+<div class="muted">${stock>0?`Stock: ${stock}`:"Out of Stock"}</div>
+<button class="btn" ${stock<1?"disabled":""} onclick="buyNow(${Number(p.id)})">Buy Now</button>
+<button class="btn secondary" ${stock<1?"disabled":""} onclick="addToCart(${Number(p.id)})">Add to Cart</button>
 </div>
-
-<div class="muted">
-${esc(p.category||"")}
-</div>
-
-<div class="price">
-₹${money(p.price)}
-
-${
-old>Number(p.price||0)
-?`
-<span class="old">
-₹${money(old)}
-</span>
-`
-:""
-}
-
-</div>
-
-<div class="muted">
-${
-stock>0
-?`Stock: ${stock}`
-:"Out of Stock"
-}
-</div>
-
-<button
-class="btn"
-${stock<1?"disabled":""}
-onclick="buyNow(${Number(p.id)})">
-
-Buy Now
-
-</button>
-
-<button
-class="btn secondary"
-${stock<1?"disabled":""}
-onclick="addToCart(${Number(p.id)})">
-
-Add to Cart
-
-</button>
-
-</div>
-</article>
-`;
+</article>`;
 }
 
 
@@ -623,61 +567,14 @@ list.length
 }
 
 function renderHome(){
-
-const q=
-$("search").value
-.trim()
-.toLowerCase();
-
-let base=
-allProducts.filter(p=>
-!q||
-String(p.name||"")
-.toLowerCase()
-.includes(q)||
-String(p.category||"")
-.toLowerCase()
-.includes(q)
-);
-
-let filtered=
-currentCategory==="All"
-?base
-:base.filter(p=>
-String(p.category||"")
-.toLowerCase()===
-currentCategory.toLowerCase()
-);
-
-$("productTitle").textContent=
-currentCategory==="All"
-?"Latest Collection"
-:currentCategory+" Collection";
-
+const q=$("search").value.trim().toLowerCase();
+let base=allProducts.filter(p=>!q||String(p.name||"").toLowerCase().includes(q)||String(p.category||"").toLowerCase().includes(q));
+let filtered=currentCategory==="All"?base:base.filter(p=>String(p.category||"").toLowerCase()===currentCategory.toLowerCase());
+$("productTitle").textContent=currentCategory==="All"?"Latest Collection":currentCategory+" Collection";
 renderList(filtered,"products");
-
-renderList(
-base.slice(0,8),
-"newArrivals"
-);
-
-renderList(
-[...base]
-.sort(
-(a,b)=>
-Number(b.sold_count||b.sales||0)-
-Number(a.sold_count||a.sales||0)
-)
-.slice(0,8),
-"bestSellers"
-);
-
-renderList(
-base
-.filter(p=>Number(p.price||0)<=999)
-.slice(0,8),
-"under999"
-);
+renderList(base.filter(p=>p.new_arrival===true||p.new_arrival===1||String(p.new_arrival).toLowerCase()==="true").slice(0,8),"newArrivals");
+renderList(base.filter(p=>p.best_seller===true||p.best_seller===1||String(p.best_seller).toLowerCase()==="true").slice(0,8),"bestSellers");
+renderList(base.filter(p=>p.under_999===true||p.under_999===1||String(p.under_999).toLowerCase()==="true").slice(0,8),"under999");
 }
 
 
