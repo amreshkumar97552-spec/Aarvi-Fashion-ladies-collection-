@@ -6,73 +6,465 @@
 <title>Aarvi Fashion Admin</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#fff7fa;color:#3a2430}.wrap{max-width:1250px;margin:auto;padding:18px}.card{background:#fff;border:1px solid #f0d8e1;border-radius:18px;padding:18px;margin:14px 0}h1,h2{color:#d94f82}.top{display:flex;justify-content:space-between;align-items:center;gap:10px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}input,select,textarea{width:100%;padding:11px;margin:5px 0 12px;border:1px solid #e4cbd5;border-radius:10px}textarea{min-height:85px}button{padding:10px 14px;border:0;border-radius:10px;background:#d94f82;color:#fff;font-weight:700;cursor:pointer;margin:3px}.secondary{background:#777}.danger{background:#8d274d}.green{background:#29914b}.hide{display:none!important}.msg,.success,.error{padding:10px;border-radius:10px;margin:10px 0}.msg{background:#fff0f5}.success{background:#eefbf2;color:#26723a}.error{background:#fff0f0;color:#a52c2c}.tabs{display:flex;gap:8px;flex-wrap:wrap}.tabs button{background:#fff;color:#d94f82;border:1px solid #d94f82}.tabs button.active{background:#d94f82;color:#fff}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat{background:#fff;border:1px solid #f0d8e1;border-radius:14px;padding:14px}.stat b{display:block;font-size:24px;color:#d94f82;margin-top:4px}.products{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.product{border:1px solid #f0d8e1;border-radius:14px;overflow:hidden;background:#fff}.product img{width:100%;height:180px;object-fit:contain;background:#fff0f5}.info{padding:12px}.badges{display:flex;flex-wrap:wrap;gap:5px;margin:7px 0}.badge{font-size:11px;padding:4px 7px;border-radius:12px;background:#fff0f5;color:#d94f82;font-weight:700}.checks{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:5px 0 12px}.check{border:1px solid #edd6df;border-radius:10px;padding:10px;background:#fffafd}.check label{display:flex;gap:8px;align-items:center;font-weight:700}.check input{width:auto;margin:0}.order{border:1px solid #f0d8e1;border-radius:14px;padding:14px;margin:10px 0;background:#fff}.status{display:inline-block;padding:5px 9px;border-radius:20px;background:#d94f82;color:#fff;font-size:12px;font-weight:700}.customer-avatar{width:58px;height:58px;border-radius:50%;object-fit:cover;background:#fff0f5}.customer-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.customer-gallery img{width:100%;height:80px;object-fit:cover;border-radius:8px;background:#fff0f5}.login{max-width:430px;margin:70px auto}.help{font-size:13px;color:#77656e}@media(max-width:800px){.products{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.grid{grid-template-columns:1fr}.products{grid-template-columns:1fr 1fr}.top{display:block}.checks{grid-template-columns:1fr}.product img{height:145px}.wrap{padding:10px}}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#fff7fa;color:#3a2430}
+.wrap{max-width:1250px;margin:auto;padding:18px}
+.card{background:#fff;border:1px solid #f0d8e1;border-radius:18px;padding:18px;margin:14px 0}
+h1,h2{color:#d94f82}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+input,select,textarea{width:100%;padding:11px;margin:5px 0 12px;border:1px solid #e4cbd5;border-radius:10px}
+textarea{min-height:85px}
+button{padding:10px 14px;border:0;border-radius:10px;background:#d94f82;color:#fff;font-weight:700;cursor:pointer;margin:3px}
+.secondary{background:#777}.danger{background:#8d274d}.green{background:#29914b}
+.hide{display:none!important}
+.msg,.success,.error{padding:10px;border-radius:10px;margin:10px 0}
+.msg{background:#fff0f5}.success{background:#eefbf2;color:#26723a}.error{background:#fff0f0;color:#a52c2c}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tabs button{background:#fff;color:#d94f82;border:1px solid #d94f82}
+.tabs button.active{background:#d94f82;color:#fff}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stat{background:#fff;border:1px solid #f0d8e1;border-radius:14px;padding:14px}
+.stat b{display:block;font-size:24px;color:#d94f82;margin-top:4px}
+.products{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.product{border:1px solid #f0d8e1;border-radius:14px;overflow:hidden;background:#fff}
+.product img{width:100%;height:180px;object-fit:contain;background:#fff0f5}
+.info{padding:12px}
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin:7px 0}
+.badge{font-size:11px;padding:4px 7px;border-radius:12px;background:#fff0f5;color:#d94f82;font-weight:700}
+.checks{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:5px 0 12px}
+.check{border:1px solid #edd6df;border-radius:10px;padding:10px;background:#fffafd}
+.check label{display:flex;gap:8px;align-items:center;font-weight:700}
+.check input{width:auto;margin:0}
+.order{border:1px solid #f0d8e1;border-radius:14px;padding:14px;margin:10px 0;background:#fff}
+.status{display:inline-block;padding:5px 9px;border-radius:20px;background:#d94f82;color:#fff;font-size:12px;font-weight:700}
+.customer-avatar{width:58px;height:58px;border-radius:50%;object-fit:cover;background:#fff0f5}
+.customer-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.customer-gallery img{width:100%;height:80px;object-fit:cover;border-radius:8px;background:#fff0f5}
+.login{max-width:430px;margin:70px auto}
+.help{font-size:13px;color:#77656e}
+@media(max-width:800px){.products{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.products{grid-template-columns:1fr 1fr}.top{display:block}.checks{grid-template-columns:1fr}.product img{height:145px}.wrap{padding:10px}}
 </style>
 </head>
 <body>
+
 <div id="login" class="card login">
-<h1>🌸 Aarvi Fashion</h1><p><b>Admin Login</b></p>
-<label>Email</label><input id="email" type="email" value="amreshkumar97552@gmail.com">
-<label>Password</label><input id="password" type="password" placeholder="Admin password">
-<button style="width:100%" onclick="login()">Login</button><div id="loginmsg" class="msg hide"></div>
+<h1>🌸 Aarvi Fashion</h1>
+<p><b>Admin Login</b></p>
+<label>Email</label>
+<input id="email" type="email" value="amreshkumar97552@gmail.com">
+<label>Password</label>
+<input id="password" type="password" placeholder="Admin password">
+<button style="width:100%" onclick="login()">Login</button>
+<div id="loginmsg" class="msg hide"></div>
 </div>
+
 <div id="app" class="wrap hide">
-<div class="top"><div><h1>Aarvi Fashion Admin</h1><p>Products • Sections • Stock • Orders • Customers</p></div><div><button onclick="openStore()">Open Store</button><button class="secondary" onclick="logout()">Logout</button></div></div>
-<div class="stats"><div class="stat">Products<b id="productCount">0</b></div><div class="stat">Stock<b id="stockCount">0</b></div><div class="stat">Orders<b id="orderCount">0</b></div><div class="stat">New Orders<b id="newOrderCount">0</b></div></div>
-<div class="card"><div class="tabs"><button class="active" onclick="showSection('productsSection',this)">📦 Products</button><button onclick="showSection('ordersSection',this)">🛍️ Orders</button><button onclick="showSection('customersSection',this)">👥 Customers</button></div></div>
+<div class="top">
+<div><h1>Aarvi Fashion Admin</h1><p>Products • Sections • Stock • Orders • Customers</p></div>
+<div><button onclick="openStore()">Open Store</button><button class="secondary" onclick="logout()">Logout</button></div>
+</div>
+
+<div class="stats">
+<div class="stat">Products<b id="productCount">0</b></div>
+<div class="stat">Stock<b id="stockCount">0</b></div>
+<div class="stat">Orders<b id="orderCount">0</b></div>
+<div class="stat">New Orders<b id="newOrderCount">0</b></div>
+</div>
+
+<div class="card">
+<div class="tabs">
+<button class="active" onclick="showSection('productsSection',this)">📦 Products</button>
+<button onclick="showSection('ordersSection',this)">🛍️ Orders</button>
+<button onclick="showSection('customersSection',this)">👥 Customers</button>
+</div>
+</div>
+
 <section id="productsSection">
 <div class="card">
-<h2>➕ Add Product</h2><div id="msg" class="msg hide"></div>
+<h2>➕ Add Product</h2>
+<div id="msg" class="msg hide"></div>
+
 <div class="grid">
 <div><label>Product Name *</label><input id="name" placeholder="Product name"></div>
-<div><label>Category *</label><select id="category"><option>Saree</option><option>Kurti</option><option>Top</option><option>Suit</option><option>Plazzo</option><option>Pant Set</option><option>Dupatta Set</option><option>Kurta Set</option><option>Kurti Set</option><option>Dress Material</option><option>Dress</option><option>Combos</option><option>Daily Deals</option><option>Western Wear</option><option>Beauty</option><option>Jewellery</option></select></div>
+<div><label>Category *</label>
+<select id="category">
+<option>Saree</option><option>Kurti</option><option>Top</option><option>Suit</option>
+<option>Plazzo</option><option>Pant Set</option><option>Dupatta Set</option><option>Kurta Set</option>
+<option>Kurti Set</option><option>Dress Material</option><option>Dress</option><option>Combos</option>
+<option>Daily Deals</option><option>Western Wear</option><option>Beauty</option><option>Jewellery</option>
+</select>
+</div>
 <div><label>Selling Price *</label><input id="price" type="number" min="0" placeholder="999"></div>
 <div><label>Original Price</label><input id="original" type="number" min="0" placeholder="1499"></div>
 <div><label>Stock *</label><input id="stock" type="number" min="0" value="1"></div>
 </div>
-<label>Description</label><textarea id="desc" placeholder="Product description"></textarea>
-<h3>📌 Product Sections — har product ko alag choose karo</h3>
+
+<label>Description</label>
+<textarea id="desc" placeholder="Product description"></textarea>
+
+<h3>📌 Product Sections</h3>
 <div class="checks">
-<div class="check"><label><input id="new_arrival" type="checkbox"> 🆕 New Arrival</label><div class="help">Is product ko New Arrivals mein dikhaye</div></div>
-<div class="check"><label><input id="latest" type="checkbox"> ✨ Latest Collection</label><div class="help">Is product ko Latest mein dikhaye</div></div>
-<div class="check"><label><input id="under_999" type="checkbox"> 💸 Under ₹999</label><div class="help">Is product ko Under ₹999 section mein dikhaye</div></div>
-<div class="check"><label><input id="best_seller" type="checkbox"> 🔥 Best Seller</label><div class="help">Is product ko Best Sellers mein dikhaye</div></div>
+<div class="check">
+<label><input id="new_arrival" type="checkbox"> 🆕 New Arrival</label>
+<div class="help">Product ko New Arrivals mein dikhaye</div>
 </div>
-<p class="help">Ye options automatic sab products par apply nahi honge. Sirf jis product ko tick karoge, wahi us section mein jayega.</p>
+<div class="check">
+<label><input id="latest" type="checkbox"> ✨ Latest Collection</label>
+<div class="help">Product ko Latest Collection mein dikhaye</div>
+</div>
+<div class="check">
+<label><input id="under_999" type="checkbox"> 💸 Under ₹999</label>
+<div class="help">Product ko Under ₹999 mein dikhaye</div>
+</div>
+<div class="check">
+<label><input id="best_seller" type="checkbox"> 🔥 Best Seller</label>
+<div class="help">Product ko Best Sellers mein dikhaye</div>
+</div>
+</div>
+
+<p class="help">Sirf jis product ko tick karoge, wahi selected section mein jayega.</p>
+
 <h3>Product Photos</h3>
-<label>Photo 1 *</label><input id="photo1" type="file" accept="image/*"><label>Photo 2</label><input id="photo2" type="file" accept="image/*"><label>Photo 3</label><input id="photo3" type="file" accept="image/*"><label>Photo 4</label><input id="photo4" type="file" accept="image/*">
+<label>Photo 1 *</label><input id="photo1" type="file" accept="image/*">
+<label>Photo 2</label><input id="photo2" type="file" accept="image/*">
+<label>Photo 3</label><input id="photo3" type="file" accept="image/*">
+<label>Photo 4</label><input id="photo4" type="file" accept="image/*">
+
 <button onclick="addProduct()">Save Product</button>
 </div>
-<div class="card"><div class="top"><h2>📦 Products</h2><button class="secondary" onclick="loadProducts()">Refresh</button></div><div id="products" class="products"></div></div>
-</section>
-<section id="ordersSection" class="hide"><div class="card"><div class="top"><h2>🛍️ Customer Orders</h2><button class="secondary" onclick="loadOrders()">Refresh</button></div><div id="orders"></div></div></section>
-<section id="customersSection" class="hide"><div class="card"><div class="top"><h2>👥 Customers</h2><button class="secondary" onclick="loadCustomers()">Refresh</button></div><div id="customers"></div></div></section>
+
+<div class="card">
+<div class="top"><h2>📦 Products</h2><button class="secondary" onclick="loadProducts()">Refresh</button></div>
+<div id="products" class="products"></div>
 </div>
+</section>
+
+<section id="ordersSection" class="hide">
+<div class="card">
+<div class="top"><h2>🛍️ Customer Orders</h2><button class="secondary" onclick="loadOrders()">Refresh</button></div>
+<div id="orders"></div>
+</div>
+</section>
+
+<section id="customersSection" class="hide">
+<div class="card">
+<div class="top"><h2>👥 Customers</h2><button class="secondary" onclick="loadCustomers()">Refresh</button></div>
+<div id="customers"></div>
+</div>
+</section>
+</div>
+
 <script>
 const SUPABASE_URL="https://sxifooelnulxldcbtmvd.supabase.co";
 const SUPABASE_KEY="sb_publishable_nLLITIJxfhc52cUkZaGZ4w_GvJubfM-";
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 const money=v=>Number(v||0).toLocaleString("en-IN");
-function showMessage(id,text,type="msg"){const e=$(id);if(!e)return;e.className=type;e.textContent=text;e.classList.remove("hide")}
-async function login(){const email=$("email").value.trim(),password=$("password").value;if(!email||!password){showMessage("loginmsg","Email aur password bhariye.","error");return}const{error}=await sb.auth.signInWithPassword({email,password});if(error){showMessage("loginmsg",error.message,"error");return}openApp()}
-async function logout(){await sb.auth.signOut();location.reload()}
-function openApp(){$("login").classList.add("hide");$("app").classList.remove("hide");loadProducts();loadOrders();loadCustomers()}
-async function checkSession(){const{data}=await sb.auth.getSession();if(data.session)openApp()}checkSession();
-function showSection(id,button){document.querySelectorAll("#productsSection,#ordersSection,#customersSection").forEach(e=>e.classList.add("hide"));$(id).classList.remove("hide");document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));if(button)button.classList.add("active");if(id==="ordersSection")loadOrders();if(id==="customersSection")loadCustomers()}
-function openStore(){window.open("https://aarvi-fashion-ladies-collection.vercel.app","_blank")}
-function getImages(p){let a=[];try{a=Array.isArray(p.image_urls)?p.image_urls:JSON.parse(p.image_urls||"[]")}catch{}if(!Array.isArray(a))a=[];if(!a.length&&p.image_url)a=[p.image_url];return a.filter(Boolean)}
-function flag(p,n){return p[n]===true||p[n]===1||String(p[n]).toLowerCase()==="true"}
-function sectionBadges(p){let a=[];if(flag(p,"new_arrival"))a.push("🆕 New Arrival");if(flag(p,"latest"))a.push("✨ Latest");if(flag(p,"under_999"))a.push("💸 Under ₹999");if(flag(p,"best_seller"))a.push("🔥 Best Seller");return a.map(x=>`<span class="badge">${x}</span>`).join("")}
-async function loadProducts(){const c=$("products");c.innerHTML="<p>Loading products...</p>";const{data,error}=await sb.from("products").select("*").order("id",{ascending:false});if(error){c.innerHTML=`<div class="error">${esc(error.message)}</div>`;return}const products=data||[];$("productCount").textContent=products.length;$("stockCount").textContent=products.reduce((s,p)=>s+Number(p.stock||0),0);if(!products.length){c.innerHTML='<div class="msg">Abhi koi product nahi hai.</div>';return}c.innerHTML=products.map(p=>{const im=getImages(p);return `<div class="product"><img src="${esc(im[0]||"")}" alt="${esc(p.name)}"><div class="info"><h3>${esc(p.name)}</h3><p>${esc(p.category||"")}</p><p><b style="color:#d94f82">₹${money(p.price)}</b> ${p.original_price?`<span style="text-decoration:line-through;color:#999">₹${money(p.original_price)}</span>`:""}</p><p>Stock: <b>${Number(p.stock||0)}</b></p><div class="badges">${sectionBadges(p)||'<span class="badge">No section selected</span>'}</div><button onclick="editSections(${Number(p.id)})">Sections</button><button onclick="editStock(${Number(p.id)},${Number(p.stock||0)})">Stock</button><button class="danger" onclick="deleteProduct(${Number(p.id)})">Delete</button></div></div>`}).join("")}
-async function addProduct(){const name=$("name").value.trim(),category=$("category").value,price=Number($("price").value),original=Number($("original").value)||null,stock=Number($("stock").value)||0,description=$("desc").value.trim();const files=[$("photo1").files[0],$("photo2").files[0],$("photo3").files[0],$("photo4").files[0]].filter(Boolean);if(!name){showMessage("msg","Product name bhariye.","error");return}if(!price){showMessage("msg","Selling price bhariye.","error");return}if(!files.length){showMessage("msg","Kam se kam 1 photo select karein.","error");return}showMessage("msg","Photos upload ho rahi hain...");const urls=[];for(const file of files){const safe=file.name.replace(/[^a-zA-Z0-9.-]/g,"-");const path=Date.now()+"-"+Math.random().toString(36).slice(2)+"-"+safe;const up=await sb.storage.from("product-images").upload(path,file);if(up.error){showMessage("msg",up.error.message,"error");return}urls.push(sb.storage.from("product-images").getPublicUrl(path).data.publicUrl)}const row={name,category,price,original_price:original,stock,description,image_url:urls[0],image_urls:JSON.stringify(urls),new_arrival:$("new_arrival").checked,latest:$("latest").checked,under_999:$("under_999").checked,best_seller:$("best_seller").checked};showMessage("msg","Product save ho raha hai...");const{error}=await sb.from("products").insert(row);if(error){showMessage("msg",error.message,"error");return}showMessage("msg","Product successfully added! ✅","success");clearProductForm();loadProducts()}
-function clearProductForm(){["name","price","original","desc","photo1","photo2","photo3","photo4"].forEach(id=>$(id).value="");$("stock").value="1";["new_arrival","latest","under_999","best_seller"].forEach(id=>$(id).checked=false)}
-async function editSections(id){const{data,error}=await sb.from("products").select("id,name,new_arrival,latest,under_999,best_seller,price").eq("id",id).single();if(error){alert(error.message);return}const n=confirm(`Product: ${data.name}\n\nOK = New Arrival ON\nCancel = New Arrival OFF`);const newArrival=n;const latest=confirm(`Latest Collection?\nOK = ON, Cancel = OFF`);const under=confirm(`Under ₹999 section?\nOK = ON, Cancel = OFF`);const best=confirm(`Best Seller section?\nOK = ON, Cancel = OFF`);const{error:up}=await sb.from("products").update({new_arrival:newArrival,latest,under_999:under,best_seller:best}).eq("id",id);if(up){alert(up.message);return}loadProducts()}
-async function editStock(id,current){const v=prompt("New stock quantity:",current);if(v===null)return;const stock=Number(v);if(!Number.isFinite(stock)||stock<0){alert("Valid stock quantity bhariye.");return}const{error}=await sb.from("products").update({stock}).eq("id",id);if(error){alert(error.message);return}loadProducts()}
-async function deleteProduct(id){if(!confirm("Kya aap product delete karna chahte hain?"))return;const{error}=await sb.from("products").delete().eq("id",id);if(error){alert(error.message);return}loadProducts()}
-async function loadOrders(){const c=$("orders");c.innerHTML="<p>Orders loading...</p>";let r=await sb.from("orders").select("*").order("id",{ascending:false});if(r.error){r=await sb.from("ORDER'S").select("*").order("id",{ascending:false})}if(r.error){c.innerHTML=`<div class="error">${esc(r.error.message)}</div>`;return}const orders=r.data||[];$("orderCount").textContent=orders.length;$("newOrderCount").textContent=orders.filter(o=>String(o.order_status||o.Order_states||"").toLowerCase()==="new").length;if(!orders.length){c.innerHTML='<div class="msg">Abhi koi order nahi hai.</div>';return}c.innerHTML=orders.map(o=>{const status=o.order_status||o.Order_states||"New",phone=o.phone||o.Phone||"",name=o.customer_name||o.Customer_Name||"-",product=o.product_name||o.Product_name||"-";return `<div class="order"><h3>🛍️ Order #${esc(o.id)}</h3><p><b>Customer:</b> ${esc(name)}</p><p><b>Phone:</b> ${esc(phone)}</p><p><b>Product:</b> ${esc(product)}</p><p><b>Quantity:</b> ${esc(o.quantity||o.Quantity||1)}</p><p><b>Address:</b> ${esc(o.address||o.Address||"")} ${esc(o.city||o.City||"")} ${esc(o.state||o.State||"")} ${esc(o.pin_code||o["Pin Code"]||"")}</p><p><b>Payment:</b> ${esc(o.payment_method||o.Payment_method||"-")}</p><p><span class="status">${esc(status)}</span></p><label>Order Status</label><select id="status-${Number(o.id)}">${["New","Confirmed","Packed","Shipped","Out for Delivery","Delivered","Cancelled","Returned"].map(s=>`<option value="${s}" ${status===s?"selected":""}>${s}</option>`).join("")}</select><br><button onclick="updateOrderStatus(${Number(o.id)})">Update Status</button>${phone?`<a href="https://wa.me/91${encodeURIComponent(phone)}" target="_blank"><button class="green" type="button">WhatsApp Customer</button></a>`:""}</div>`}).join("")}
-async function updateOrderStatus(id){const status=$("status-"+id)?.value;if(!status)return;let r=await sb.from("orders").update({order_status:status}).eq("id",id);if(r.error)r=await sb.from("ORDER'S").update({Order_states:status}).eq("id",id);if(r.error){alert(r.error.message);return}alert("Order status updated! ✅");loadOrders()}
-async function loadCustomers(){const c=$("customers");c.innerHTML="<p>Customers loading...</p>";let r=await sb.from("customer_profiles").select("*").order("id",{ascending:false});if(r.error){c.innerHTML=`<div class="error">${esc(r.error.message)}</div>`;return}const customers=r.data||[];if(!customers.length){c.innerHTML='<div class="msg">Abhi customer profile nahi mila.</div>';return}c.innerHTML=customers.map(x=>{let g=[];try{g=Array.isArray(x.gallery_urls)?x.gallery_urls:JSON.parse(x.gallery_urls||"[]")}catch{}return `<div class="order"><div style="display:flex;gap:10px;align-items:center"><img class="customer-avatar" src="${esc(x.avatar_url||"")}"><div><h3 style="margin:0">👤 ${esc(x.full_name||"Customer")}</h3><small>${esc(x.email||"")}</small></div></div><p><b>Phone:</b> ${esc(x.phone||"-")}</p><p><b>Notifications:</b> ${x.notifications_enabled?"ON 🔔":"OFF"}</p>${g.length?`<div class="customer-gallery">${g.map(u=>`<img src="${esc(u)}">`).join("")}</div>`:""}</div>`}).join("")}
+
+function showMessage(id,text,type="msg"){
+ const e=$(id); if(!e)return;
+ e.className=type;
+ e.textContent=text;
+ e.classList.remove("hide");
+}
+
+async function login(){
+ const email=$("email").value.trim(), password=$("password").value;
+ if(!email||!password){showMessage("loginmsg","Email aur password bhariye.","error");return}
+ const{error}=await sb.auth.signInWithPassword({email,password});
+ if(error){showMessage("loginmsg",error.message,"error");return}
+ openApp();
+}
+
+async function logout(){
+ await sb.auth.signOut();
+ location.reload();
+}
+
+function openApp(){
+ $("login").classList.add("hide");
+ $("app").classList.remove("hide");
+ loadProducts();
+ loadOrders();
+ loadCustomers();
+}
+
+async function checkSession(){
+ const{data}=await sb.auth.getSession();
+ if(data.session)openApp();
+}
+checkSession();
+
+function showSection(id,button){
+ document.querySelectorAll("#productsSection,#ordersSection,#customersSection").forEach(e=>e.classList.add("hide"));
+ $(id).classList.remove("hide");
+ document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+ if(button)button.classList.add("active");
+ if(id==="ordersSection")loadOrders();
+ if(id==="customersSection")loadCustomers();
+}
+
+function openStore(){
+ window.open("https://aarvi-fashion-ladies-collection.vercel.app","_blank");
+}
+
+function getImages(p){
+ let a=[];
+ try{a=Array.isArray(p.image_urls)?p.image_urls:JSON.parse(p.image_urls||"[]")}catch{}
+ if(!Array.isArray(a))a=[];
+ if(!a.length&&p.image_url)a=[p.image_url];
+ return a.filter(Boolean);
+}
+
+function flag(p,n){
+ return p[n]===true||p[n]===1||String(p[n]).toLowerCase()==="true";
+}
+
+function sectionBadges(p){
+ let a=[];
+ if(flag(p,"new_arrival"))a.push("🆕 New Arrival");
+ if(flag(p,"latest"))a.push("✨ Latest");
+ if(flag(p,"under_999"))a.push("💸 Under ₹999");
+ if(flag(p,"best_seller"))a.push("🔥 Best Seller");
+ return a.map(x=>`<span class="badge">${x}</span>`).join("");
+}
+
+async function loadProducts(){
+ const c=$("products");
+ c.innerHTML="<p>Loading products...</p>";
+
+ const{data,error}=await sb.from("products").select("*").order("id",{ascending:false});
+
+ if(error){
+  c.innerHTML=`<div class="error">${esc(error.message)}<br><br>
+  Agar error mein <b>latest</b> ya <b>best_seller</b> column aaye, Supabase SQL Editor mein columns add karke schema reload karo.</div>`;
+  return;
+ }
+
+ const products=data||[];
+ $("productCount").textContent=products.length;
+ $("stockCount").textContent=products.reduce((s,p)=>s+Number(p.stock||0),0);
+
+ if(!products.length){
+  c.innerHTML='<div class="msg">Abhi koi product nahi hai.</div>';
+  return;
+ }
+
+ c.innerHTML=products.map(p=>{
+  const im=getImages(p);
+  return `<div class="product">
+  <img src="${esc(im[0]||"")}" alt="${esc(p.name)}">
+  <div class="info">
+  <h3>${esc(p.name)}</h3>
+  <p>${esc(p.category||"")}</p>
+  <p><b style="color:#d94f82">₹${money(p.price)}</b>
+  ${p.original_price?`<span style="text-decoration:line-through;color:#999">₹${money(p.original_price)}</span>`:""}</p>
+  <p>Stock: <b>${Number(p.stock||0)}</b></p>
+  <div class="badges">${sectionBadges(p)||'<span class="badge">No section selected</span>'}</div>
+  <button onclick="editSections(${Number(p.id)})">Sections</button>
+  <button onclick="editStock(${Number(p.id)},${Number(p.stock||0)})">Stock</button>
+  <button class="danger" onclick="deleteProduct(${Number(p.id)})">Delete</button>
+  </div></div>`;
+ }).join("");
+}
+
+async function addProduct(){
+ const name=$("name").value.trim();
+ const category=$("category").value;
+ const price=Number($("price").value);
+ const original=Number($("original").value)||null;
+ const stock=Number($("stock").value)||0;
+ const description=$("desc").value.trim();
+ const files=[$("photo1").files[0],$("photo2").files[0],$("photo3").files[0],$("photo4").files[0]].filter(Boolean);
+
+ if(!name){showMessage("msg","Product name bhariye.","error");return}
+ if(!price){showMessage("msg","Selling price bhariye.","error");return}
+ if(!files.length){showMessage("msg","Kam se kam 1 photo select karein.","error");return}
+
+ showMessage("msg","Photos upload ho rahi hain...");
+
+ const urls=[];
+ for(const file of files){
+  const safe=file.name.replace(/[^a-zA-Z0-9.-]/g,"-");
+  const path=Date.now()+"-"+Math.random().toString(36).slice(2)+"-"+safe;
+  const up=await sb.storage.from("product-images").upload(path,file);
+  if(up.error){showMessage("msg",up.error.message,"error");return}
+  urls.push(sb.storage.from("product-images").getPublicUrl(path).data.publicUrl);
+ }
+
+ const row={
+  name,category,price,original_price:original,stock,description,
+  image_url:urls[0],
+  image_urls:JSON.stringify(urls),
+  new_arrival:$("new_arrival").checked,
+  latest:$("latest").checked,
+  under_999:$("under_999").checked,
+  best_seller:$("best_seller").checked
+ };
+
+ showMessage("msg","Product save ho raha hai...");
+
+ const{error}=await sb.from("products").insert(row);
+
+ if(error){
+  showMessage("msg",error.message,"error");
+  return;
+ }
+
+ showMessage("msg","Product successfully added! ✅","success");
+ clearProductForm();
+ loadProducts();
+}
+
+function clearProductForm(){
+ ["name","price","original","desc","photo1","photo2","photo3","photo4"].forEach(id=>$(id).value="");
+ $("stock").value="1";
+ ["new_arrival","latest","under_999","best_seller"].forEach(id=>$(id).checked=false);
+}
+
+async function editSections(id){
+ const{data,error}=await sb.from("products")
+ .select("id,name,new_arrival,latest,under_999,best_seller,price")
+ .eq("id",id).single();
+
+ if(error){alert(error.message);return}
+
+ const newArrival=confirm(`Product: ${data.name}\n\nNew Arrival?\nOK = ON\nCancel = OFF`);
+ const latest=confirm(`Latest Collection?\nOK = ON, Cancel = OFF`);
+ const under=confirm(`Under ₹999 section?\nOK = ON, Cancel = OFF`);
+ const best=confirm(`Best Seller section?\nOK = ON, Cancel = OFF`);
+
+ const{error:up}=await sb.from("products")
+ .update({
+  new_arrival:newArrival,
+  latest:latest,
+  under_999:under,
+  best_seller:best
+ })
+ .eq("id",id);
+
+ if(up){alert(up.message);return}
+ loadProducts();
+}
+
+async function editStock(id,current){
+ const v=prompt("New stock quantity:",current);
+ if(v===null)return;
+ const stock=Number(v);
+ if(!Number.isFinite(stock)||stock<0){alert("Valid stock quantity bhariye.");return}
+ const{error}=await sb.from("products").update({stock}).eq("id",id);
+ if(error){alert(error.message);return}
+ loadProducts();
+}
+
+async function deleteProduct(id){
+ if(!confirm("Kya aap product delete karna chahte hain?"))return;
+ const{error}=await sb.from("products").delete().eq("id",id);
+ if(error){alert(error.message);return}
+ loadProducts();
+}
+
+async function loadOrders(){
+ const c=$("orders");
+ c.innerHTML="<p>Orders loading...</p>";
+
+ let r=await sb.from("orders").select("*").order("id",{ascending:false});
+
+ if(r.error){
+  r=await sb.from("ORDER'S").select("*").order("id",{ascending:false});
+ }
+
+ if(r.error){
+  c.innerHTML=`<div class="error">${esc(r.error.message)}</div>`;
+  return;
+ }
+
+ const orders=r.data||[];
+ $("orderCount").textContent=orders.length;
+ $("newOrderCount").textContent=orders.filter(o=>String(o.order_status||o.Order_states||"").toLowerCase()==="new").length;
+
+ if(!orders.length){
+  c.innerHTML='<div class="msg">Abhi koi order nahi hai.</div>';
+  return;
+ }
+
+ c.innerHTML=orders.map(o=>{
+  const status=o.order_status||o.Order_states||"New";
+  const phone=o.phone||o.Phone||"";
+  const name=o.customer_name||o.Customer_Name||"-";
+  const product=o.product_name||o.Product_name||"-";
+
+  return `<div class="order">
+  <h3>🛍️ Order #${esc(o.id)}</h3>
+  <p><b>Customer:</b> ${esc(name)}</p>
+  <p><b>Phone:</b> ${esc(phone)}</p>
+  <p><b>Product:</b> ${esc(product)}</p>
+  <p><b>Quantity:</b> ${esc(o.quantity||o.Quantity||1)}</p>
+  <p><b>Address:</b> ${esc(o.address||o.Address||"")} ${esc(o.city||o.City||"")} ${esc(o.state||o.State||"")} ${esc(o.pin_code||o["Pin Code"]||"")}</p>
+  <p><b>Payment:</b> ${esc(o.payment_method||o.Payment_method||"-")}</p>
+  <p><span class="status">${esc(status)}</span></p>
+  <label>Order Status</label>
+  <select id="status-${Number(o.id)}">
+  ${["New","Confirmed","Packed","Shipped","Out for Delivery","Delivered","Cancelled","Returned"]
+   .map(s=>`<option value="${s}" ${status===s?"selected":""}>${s}</option>`).join("")}
+  </select>
+  <br>
+  <button onclick="updateOrderStatus(${Number(o.id)})">Update Status</button>
+  ${phone?`<a href="https://wa.me/91${encodeURIComponent(phone)}" target="_blank"><button class="green" type="button">WhatsApp Customer</button></a>`:""}
+  </div>`;
+ }).join("");
+}
+
+async function updateOrderStatus(id){
+ const status=$("status-"+id)?.value;
+ if(!status)return;
+
+ let r=await sb.from("orders").update({order_status:status}).eq("id",id);
+ if(r.error)r=await sb.from("ORDER'S").update({Order_states:status}).eq("id",id);
+
+ if(r.error){alert(r.error.message);return}
+
+ alert("Order status updated! ✅");
+ loadOrders();
+}
+
+async function loadCustomers(){
+ const c=$("customers");
+ c.innerHTML="<p>Customers loading...</p>";
+
+ const{data,error}=await sb.from("customer_profiles").select("*").order("id",{ascending:false});
+
+ if(error){
+  c.innerHTML=`<div class="error">${esc(error.message)}</div>`;
+  return;
+ }
+
+ const customers=data||[];
+
+ if(!customers.length){
+  c.innerHTML='<div class="msg">Abhi customer profile nahi mila.</div>';
+  return;
+ }
+
+ c.innerHTML=customers.map(x=>{
+  let g=[];
+  try{g=Array.isArray(x.gallery_urls)?x.gallery_urls:JSON.parse(x.gallery_urls||"[]")}catch{}
+
+  return `<div class="order">
+  <div style="display:flex;gap:10px;align-items:center">
+  <img class="customer-avatar" src="${esc(x.avatar_url||"")}">
+  <div><h3 style="margin:0">👤 ${esc(x.full_name||"Customer")}</h3><small>${esc(x.email||"")}</small></div>
+  </div>
+  <p><b>Phone:</b> ${esc(x.phone||"-")}</p>
+  <p><b>Notifications:</b> ${x.notifications_enabled?"ON 🔔":"OFF"}</p>
+  ${g.length?`<div class="customer-gallery">${g.map(u=>`<img src="${esc(u)}">`).join("")}</div>`:""}
+  </div>`;
+ }).join("");
+}
 </script>
-</body></html>
+</body>
+</html>
