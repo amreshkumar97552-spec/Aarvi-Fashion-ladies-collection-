@@ -10,51 +10,97 @@
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#fff7fa;color:#3a2430}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#fff7fa;
+ color:#3a2430
+}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
+
 .wrap{max-width:1180px;margin:auto;padding:16px}
 
 header{
- position:sticky;top:0;z-index:1000;background:#fff;
+ position:sticky;
+ top:0;
+ z-index:1000;
+ background:#fff;
  border-bottom:1px solid #f0d8e1
 }
 .top{
- max-width:1180px;margin:auto;padding:12px 16px;
- display:flex;align-items:center;gap:10px
+ max-width:1180px;
+ margin:auto;
+ padding:12px 16px;
+ display:flex;
+ align-items:center;
+ gap:10px
 }
 .brand{
- font-weight:900;color:#d94f82;font-size:22px;
- letter-spacing:2px;flex:1
+ font-weight:900;
+ color:#d94f82;
+ font-size:22px;
+ letter-spacing:2px;
+ flex:1
 }
 .icon{
- border:1px solid #f0d8e1;background:#fff;color:#d94f82;
- border-radius:11px;padding:9px 11px
+ border:1px solid #f0d8e1;
+ background:#fff;
+ color:#d94f82;
+ border-radius:11px;
+ padding:9px 11px
 }
-.search{max-width:1180px;margin:auto;padding:0 16px 12px}
+.search{
+ max-width:1180px;
+ margin:auto;
+ padding:0 16px 12px
+}
 .search input{
- width:100%;padding:12px 14px;border:1px solid #ead4dd;
+ width:100%;
+ padding:12px 14px;
+ border:1px solid #ead4dd;
  border-radius:14px
 }
 
-.hero{padding:28px 0;text-align:center}
-.hero h1{font-size:36px;margin:0 0 8px}
+.hero{
+ padding:28px 0;
+ text-align:center
+}
+.hero h1{
+ font-size:36px;
+ margin:0 0 8px
+}
 .hero p{color:#777}
 
-.cats,.chips{display:flex;gap:8px;flex-wrap:wrap}
-.cats button,.chips button{
- border:1px solid #d94f82;background:#fff;color:#d94f82;
- padding:9px 14px;border-radius:22px
+.cats,.chips{
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap
 }
-.cats button.active,.cats button:hover,.chips button.active{
- background:#d94f82;color:#fff
+.cats button,.chips button{
+ border:1px solid #d94f82;
+ background:#fff;
+ color:#d94f82;
+ padding:9px 14px;
+ border-radius:22px
+}
+.cats button.active,
+.cats button:hover,
+.chips button.active{
+ background:#d94f82;
+ color:#fff
 }
 
 .section-title{
- display:flex;justify-content:space-between;
- align-items:center;margin:20px 0 10px
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin:20px 0 10px
 }
-.section-title h2{margin:0;color:#d94f82}
+.section-title h2{
+ margin:0;
+ color:#d94f82
+}
 
 .products{
  display:grid;
@@ -62,58 +108,122 @@ header{
  gap:9px
 }
 .card{
- background:#fff;border:1px solid #f0d8e1;
- border-radius:12px;overflow:hidden;
+ background:#fff;
+ border:1px solid #f0d8e1;
+ border-radius:12px;
+ overflow:hidden;
  box-shadow:0 2px 8px rgba(120,60,90,.06)
 }
 .photo{
- height:145px;background:#fff0f5;
- display:flex;align-items:center;justify-content:center;
- overflow:hidden;cursor:pointer;position:relative
+ height:145px;
+ background:#fff0f5;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ overflow:hidden;
+ cursor:pointer;
+ position:relative
 }
 .photo img{
- width:100%;height:100%;object-fit:cover;
- display:block;transition:transform .2s ease
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ display:block;
+ transition:transform .2s ease
 }
 .photo:hover img{transform:scale(1.03)}
+
 .zoom{
- position:absolute;right:5px;bottom:5px;
+ position:absolute;
+ right:5px;
+ bottom:5px;
  background:rgba(255,255,255,.9);
- border-radius:50%;width:25px;height:25px;
- display:flex;align-items:center;justify-content:center;
+ border-radius:50%;
+ width:25px;
+ height:25px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
  font-size:13px
 }
 
 .section-badges{
- position:absolute;left:3px;top:3px;right:3px;
- display:flex;flex-wrap:wrap;gap:2px;z-index:2;
+ position:absolute;
+ left:3px;
+ top:3px;
+ right:3px;
+ display:flex;
+ flex-wrap:wrap;
+ gap:2px;
+ z-index:2;
  pointer-events:none
 }
 .section-badge{
- font-size:7px;line-height:1;padding:2px 3px;
- border-radius:5px;background:rgba(255,255,255,.88);
- color:#d94f82;border:1px solid rgba(240,216,225,.8);
+ font-size:7px;
+ line-height:1;
+ padding:2px 3px;
+ border-radius:5px;
+ background:rgba(255,255,255,.88);
+ color:#d94f82;
+ border:1px solid rgba(240,216,225,.8);
  font-weight:400
 }
 
 .info{padding:8px}
-.name{font-weight:600;font-size:13px;line-height:1.25}
-.muted{color:#777;font-size:13px}
-.price{font-size:20px;font-weight:900;color:#d94f82;margin:7px 0}
-.old{text-decoration:line-through;color:#999;font-size:12px;margin-left:5px}
+.name{
+ font-weight:600;
+ font-size:13px;
+ line-height:1.25
+}
+.muted{
+ color:#777;
+ font-size:13px
+}
+.price{
+ font-size:20px;
+ font-weight:900;
+ color:#d94f82;
+ margin:7px 0
+}
+.old{
+ text-decoration:line-through;
+ color:#999;
+ font-size:12px;
+ margin-left:5px
+}
 
 .btn{
- width:100%;border:0;border-radius:10px;padding:10px;
- background:#d94f82;color:#fff;font-weight:800;margin-top:7px
+ width:100%;
+ border:0;
+ border-radius:10px;
+ padding:10px;
+ background:#d94f82;
+ color:#fff;
+ font-weight:800;
+ margin-top:7px
 }
 .btn.secondary{
- background:#fff;color:#d94f82;border:1px solid #d94f82
+ background:#fff;
+ color:#d94f82;
+ border:1px solid #d94f82
 }
-.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn.dark{
+ background:#3a2430
+}
+.btn.green{
+ background:#26723a
+}
+.btn:disabled{
+ opacity:.55;
+ cursor:not-allowed
+}
 
 .empty{
- padding:35px;text-align:center;background:#fff;
- border:1px dashed #e4cbd5;border-radius:14px;
+ padding:35px;
+ text-align:center;
+ background:#fff;
+ border:1px dashed #e4cbd5;
+ border-radius:14px;
  grid-column:1/-1
 }
 
@@ -121,100 +231,207 @@ header{
 .screen.active{display:block}
 
 .bottom{
- position:sticky;bottom:0;background:#fff;
+ position:sticky;
+ bottom:0;
+ background:#fff;
  border-top:1px solid #ead4dd;
- display:flex;justify-content:space-around;z-index:900
+ display:flex;
+ justify-content:space-around;
+ z-index:900
 }
 .bottom button{
- flex:1;border:0;background:#fff;padding:9px;color:#666
+ flex:1;
+ border:0;
+ background:#fff;
+ padding:9px;
+ color:#666
 }
-.bottom button.active{color:#d94f82;font-weight:800}
+.bottom button.active{
+ color:#d94f82;
+ font-weight:800
+}
 
 .drawer{
- position:fixed;inset:0;background:rgba(0,0,0,.45);
- z-index:3000;display:none
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.45);
+ z-index:3000;
+ display:none
 }
 .drawer.open{display:block}
+
 .menu{
- width:290px;max-width:85%;height:100%;
- background:#fff;padding:18px
+ width:290px;
+ max-width:85%;
+ height:100%;
+ background:#fff;
+ padding:18px
 }
 .menu button{
- width:100%;padding:12px;margin:5px 0;
- border:1px solid #f0d8e1;background:#fff;
- border-radius:10px;text-align:left
+ width:100%;
+ padding:12px;
+ margin:5px 0;
+ border:1px solid #f0d8e1;
+ background:#fff;
+ border-radius:10px;
+ text-align:left
 }
 
 .modal{
- position:fixed;inset:0;background:rgba(0,0,0,.55);
- z-index:5000;display:flex;align-items:center;
- justify-content:center;padding:14px;overflow:auto
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.55);
+ z-index:5000;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:14px;
+ overflow:auto
 }
 .box{
- width:100%;max-width:560px;background:#fff;
- border-radius:18px;padding:18px;position:relative;
- max-height:94vh;overflow:auto
+ width:100%;
+ max-width:560px;
+ background:#fff;
+ border-radius:18px;
+ padding:18px;
+ position:relative;
+ max-height:94vh;
+ overflow:auto
 }
 .close{
- position:absolute;right:10px;top:10px;border:0;
- background:#fff0f5;color:#d94f82;border-radius:50%;
- width:34px;height:34px;font-size:20px
+ position:absolute;
+ right:10px;
+ top:10px;
+ border:0;
+ background:#fff0f5;
+ color:#d94f82;
+ border-radius:50%;
+ width:34px;
+ height:34px;
+ font-size:20px
 }
-label{display:block;font-weight:700;font-size:13px;margin:10px 0 5px}
+
+label{
+ display:block;
+ font-weight:700;
+ font-size:13px;
+ margin:10px 0 5px
+}
 input,textarea,select{
- width:100%;padding:11px;border:1px solid #ddd;
+ width:100%;
+ padding:11px;
+ border:1px solid #ddd;
  border-radius:10px
 }
 textarea{min-height:80px}
 
 .notice{
- background:#fff0f5;padding:10px;border-radius:10px;
- margin:10px 0;font-size:13px
+ background:#fff0f5;
+ padding:10px;
+ border-radius:10px;
+ margin:10px 0;
+ font-size:13px
 }
 .success{
- background:#eefbf2;color:#26723a;padding:10px;
- border-radius:10px;margin:10px 0
+ background:#eefbf2;
+ color:#26723a;
+ padding:10px;
+ border-radius:10px;
+ margin:10px 0
 }
 .error{
- background:#fff0f0;color:#a52c2c;padding:10px;
- border-radius:10px;margin:10px 0
+ background:#fff0f0;
+ color:#a52c2c;
+ padding:10px;
+ border-radius:10px;
+ margin:10px 0
 }
-.order-card,.policy,.cart-row{
- border:1px solid #f0d8e1;border-radius:12px;
- padding:12px;margin:8px 0;background:#fff
-}
-.badge{
- display:inline-block;background:#d94f82;color:#fff;
- border-radius:20px;padding:5px 9px;font-size:12px
-}
-.size-row{display:flex;gap:7px;flex-wrap:wrap}
-.size{
- border:1px solid #d94f82;background:#fff;
- color:#d94f82;border-radius:8px;padding:7px 10px
-}
-.size.sel{background:#d94f82;color:#fff}
 
-.cart-row{display:flex;gap:10px;align-items:center}
-.cart-row img{
- width:65px;height:65px;object-fit:contain;
- background:#fff0f5;border-radius:8px
+.order-card,.policy,.cart-row{
+ border:1px solid #f0d8e1;
+ border-radius:12px;
+ padding:12px;
+ margin:8px 0;
+ background:#fff
 }
-.qty{display:flex;gap:8px;align-items:center}
+
+.badge{
+ display:inline-block;
+ background:#d94f82;
+ color:#fff;
+ border-radius:20px;
+ padding:5px 9px;
+ font-size:12px
+}
+
+.status-badge{
+ display:inline-block;
+ padding:6px 10px;
+ border-radius:20px;
+ background:#fff0f5;
+ color:#d94f82;
+ font-size:12px;
+ font-weight:800
+}
+
+.size-row{
+ display:flex;
+ gap:7px;
+ flex-wrap:wrap
+}
+.size{
+ border:1px solid #d94f82;
+ background:#fff;
+ color:#d94f82;
+ border-radius:8px;
+ padding:7px 10px
+}
+.size.sel{
+ background:#d94f82;
+ color:#fff
+}
+
+.cart-row{
+ display:flex;
+ gap:10px;
+ align-items:center
+}
+.cart-row img{
+ width:65px;
+ height:65px;
+ object-fit:contain;
+ background:#fff0f5;
+ border-radius:8px
+}
+.qty{
+ display:flex;
+ gap:8px;
+ align-items:center;
+ flex-wrap:wrap;
+ margin-top:7px
+}
 .qty button{
- border:1px solid #ddd;background:#fff;
- border-radius:7px;padding:4px 9px
+ border:1px solid #ddd;
+ background:#fff;
+ border-radius:7px;
+ padding:4px 9px
 }
 
 .payment-box{
- border:1px solid #f0d8e1;background:#fff7fa;
- border-radius:12px;padding:12px;margin-top:10px
+ border:1px solid #f0d8e1;
+ background:#fff7fa;
+ border-radius:12px;
+ padding:12px;
+ margin-top:10px
 }
 .razorpay-info{
- display:flex;align-items:center;gap:8px;
- font-weight:700;color:#d94f82
+ display:flex;
+ align-items:center;
+ gap:8px;
+ font-weight:700;
+ color:#d94f82
 }
 
-/* SHIPROCKET */
 .shipping-box{
  border:1px solid #f0d8e1;
  background:#fff;
@@ -227,7 +444,10 @@ textarea{min-height:80px}
  color:#d94f82;
  margin-bottom:6px
 }
-.shipping-loading{color:#777;font-size:13px}
+.shipping-loading{
+ color:#777;
+ font-size:13px
+}
 .shipping-ok{
  color:#26723a;
  background:#eefbf2;
@@ -242,6 +462,7 @@ textarea{min-height:80px}
  border-radius:8px;
  font-size:13px
 }
+
 .total-box{
  border-top:1px solid #ead4dd;
  margin-top:12px;
@@ -258,36 +479,159 @@ textarea{min-height:80px}
  color:#d94f82
 }
 
+.tracking-box{
+ border:1px solid #ead4dd;
+ background:#fff7fa;
+ border-radius:12px;
+ padding:12px;
+ margin-top:10px
+}
+.tracking-head{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:8px;
+ margin-bottom:10px
+}
+.tracking-title{
+ font-size:16px;
+ font-weight:900;
+ color:#d94f82
+}
+.tracking-line{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ padding:7px 0;
+ border-bottom:1px solid #f0d8e1;
+ font-size:13px
+}
+.tracking-line:last-child{
+ border-bottom:0
+}
+.tracking-label{
+ color:#777
+}
+.tracking-value{
+ font-weight:800;
+ text-align:right
+}
+.timeline{
+ margin-top:12px;
+ padding-left:8px
+}
+.timeline-item{
+ position:relative;
+ padding:0 0 13px 25px;
+ font-size:13px
+}
+.timeline-item:before{
+ content:"";
+ position:absolute;
+ left:3px;
+ top:2px;
+ width:10px;
+ height:10px;
+ border-radius:50%;
+ background:#d94f82
+}
+.timeline-item:after{
+ content:"";
+ position:absolute;
+ left:7px;
+ top:13px;
+ bottom:-2px;
+ width:2px;
+ background:#ead4dd
+}
+.timeline-item:last-child:after{display:none}
+
+.track-input-row{
+ display:flex;
+ gap:8px
+}
+.track-input-row input{
+ flex:1
+}
+.track-input-row button{
+ width:auto;
+ margin-top:0;
+ white-space:nowrap
+}
+
+.awb-box{
+ background:#fff0f5;
+ border-radius:10px;
+ padding:10px;
+ margin-top:8px
+}
+.awb-number{
+ font-size:18px;
+ font-weight:900;
+ color:#d94f82;
+ letter-spacing:1px
+}
+
 @media(max-width:900px){
- .products{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+ .products{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px
+ }
  .photo{height:125px}
 }
 
 @media(max-width:650px){
- .products{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+ .products{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:6px
+ }
  .hero h1{font-size:28px}
  .photo{height:105px}
  .brand{font-size:18px}
  .info{padding:6px}
  .name{
-  font-size:10px;font-weight:600;line-height:1.2;
-  display:-webkit-box;-webkit-line-clamp:2;
-  -webkit-box-orient:vertical;overflow:hidden
+  font-size:10px;
+  font-weight:600;
+  line-height:1.2;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden
  }
  .muted{font-size:9px}
- .price{font-size:13px;margin:4px 0}
+ .price{
+  font-size:13px;
+  margin:4px 0
+ }
  .old{font-size:8px}
- .btn{font-size:10px;padding:7px 3px;border-radius:8px;margin-top:4px}
+ .btn{
+  font-size:10px;
+  padding:7px 3px;
+  border-radius:8px;
+  margin-top:4px
+ }
  .card{border-radius:9px}
+ .track-input-row{
+  flex-direction:column
+ }
+ .track-input-row button{
+  width:100%
+ }
 }
 
 @media(max-width:430px){
  .products{gap:5px}
  .photo{height:92px}
  .info{padding:5px}
- .name{font-size:9.5px;font-weight:600}
+ .name{
+  font-size:9.5px;
+  font-weight:600
+ }
  .price{font-size:12px}
- .btn{font-size:9px;padding:6px 2px}
+ .btn{
+  font-size:9px;
+  padding:6px 2px
+ }
 }
 </style>
 </head>
@@ -296,96 +640,157 @@ textarea{min-height:80px}
 
 <header>
 <div class="top">
+
 <button class="icon" onclick="openMenu()">☰</button>
+
 <div class="brand">AARVI FASHION</div>
+
 <button class="icon" onclick="showNotifications()">🔔</button>
+
 <button class="icon" onclick="showScreen('account')">👤</button>
+
 </div>
 
 <div class="search">
-<input id="search" placeholder="Search products..." oninput="renderHome()">
+<input
+ id="search"
+ placeholder="Search products..."
+ oninput="renderHome()">
 </div>
+
 </header>
+
 
 <main class="wrap">
 
 <section id="home" class="screen active">
 
 <div class="hero">
+
 <h1>Style that feels beautifully yours.</h1>
-<p>Fashion • Beauty • Jewellery • All India Delivery</p>
+
+<p>
+Fashion • Beauty • Jewellery • All India Delivery
+</p>
+
 <div id="cats" class="cats"></div>
+
 </div>
+
 
 <div class="section-title">
 <h2>✨ New Arrivals</h2>
 </div>
+
 <div id="newArrivals" class="products"></div>
+
 
 <div class="section-title">
 <h2>🔥 Best Sellers</h2>
 </div>
+
 <div id="bestSellers" class="products"></div>
+
 
 <div class="section-title">
 <h2>💖 Under ₹999</h2>
 </div>
+
 <div id="under999" class="products"></div>
+
 
 <div class="section-title">
 <h2 id="productTitle">Latest Collection</h2>
 </div>
+
 <div id="products" class="products"></div>
 
 </section>
 
+
 <section id="orders" class="screen">
+
 <div class="section-title">
+
 <h2>📦 My Orders</h2>
+
+<div>
+
 <button class="icon" onclick="loadOrders()">↻</button>
+
+<button class="icon" onclick="openTrack()">🚚</button>
+
 </div>
+
+</div>
+
 <div id="ordersList"></div>
+
 </section>
 
+
 <section id="cart" class="screen">
+
 <div class="section-title">
 <h2>🛒 My Cart</h2>
 </div>
+
 <div id="cartList"></div>
+
 </section>
 
+
 <section id="account" class="screen">
+
 <div class="section-title">
 <h2>👤 My Account</h2>
 </div>
+
 <div id="accountBox"></div>
+
 </section>
 
 </main>
 
+
 <nav class="bottom">
 
-<button id="navHome" class="active" onclick="showScreen('home')">
+<button
+ id="navHome"
+ class="active"
+ onclick="showScreen('home')">
 ⌂<br><small>Home</small>
 </button>
 
-<button id="navCart" onclick="showScreen('cart')">
+<button
+ id="navCart"
+ onclick="showScreen('cart')">
 🛒<br><small>Cart</small>
 </button>
 
-<button id="navOrders" onclick="showScreen('orders')">
+<button
+ id="navOrders"
+ onclick="showScreen('orders')">
 🛍<br><small>Orders</small>
 </button>
 
-<button id="navAccount" onclick="showScreen('account')">
+<button
+ id="navAccount"
+ onclick="showScreen('account')">
 👤<br><small>Account</small>
 </button>
 
 </nav>
 
-<div id="drawer" class="drawer" onclick="closeMenu()">
 
-<div class="menu" onclick="event.stopPropagation()">
+<div
+ id="drawer"
+ class="drawer"
+ onclick="closeMenu()">
+
+<div
+ class="menu"
+ onclick="event.stopPropagation()">
 
 <button onclick="closeMenu()">✕ Close</button>
 
@@ -393,24 +798,40 @@ textarea{min-height:80px}
 
 <button onclick="goHome()">🏠 Home</button>
 
-<button onclick="showScreen('cart');closeMenu()">🛒 Cart</button>
+<button onclick="showScreen('cart');closeMenu()">
+🛒 Cart
+</button>
 
-<button onclick="showScreen('orders');closeMenu()">📦 My Orders</button>
+<button onclick="showScreen('orders');closeMenu()">
+📦 My Orders
+</button>
 
-<button onclick="showScreen('account');closeMenu()">👤 My Account</button>
+<button onclick="showScreen('account');closeMenu()">
+👤 My Account
+</button>
 
-<button onclick="showNotifications();closeMenu()">🔔 Notifications</button>
+<button onclick="showNotifications();closeMenu()">
+🔔 Notifications
+</button>
 
-<button onclick="openTrack();closeMenu()">🚚 Track Order</button>
+<button onclick="openTrack();closeMenu()">
+🚚 Track Order
+</button>
 
-<button onclick="showPolicies();closeMenu()">↩️ Return / Exchange Policy</button>
+<button onclick="showPolicies();closeMenu()">
+↩️ Return / Exchange Policy
+</button>
 
-<button onclick="contact()">💬 Contact</button>
+<button onclick="contact()">
+💬 Contact
+</button>
 
 </div>
 </div>
+
 
 <div id="modalRoot"></div>
+
 
 <script>
 
@@ -424,7 +845,8 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_nLLITIJxfhc52cUkZaGZ4w_GvJubfM-";
 
-const sb = supabase.createClient(
+const sb =
+supabase.createClient(
  SUPABASE_URL,
  SUPABASE_KEY
 );
@@ -443,12 +865,17 @@ const RAZORPAY_KEY_ID =
 ========================================================= */
 
 let allProducts = [];
+
 let currentCategory = "All";
+
 let currentProduct = null;
+
 let selectedSize = "";
+
 let qty = 1;
 
 let shippingCharge = 0;
+
 let shippingChecked = false;
 
 
@@ -458,50 +885,72 @@ let shippingChecked = false;
 
 const $ = id => document.getElementById(id);
 
+
 function esc(v){
+
  return String(v ?? "")
  .replace(/&/g,"&amp;")
  .replace(/</g,"&lt;")
  .replace(/>/g,"&gt;")
  .replace(/"/g,"&quot;")
  .replace(/'/g,"&#039;");
+
 }
 
+
 function money(v){
- return Number(v || 0).toLocaleString("en-IN");
+
+ return Number(v || 0)
+ .toLocaleString("en-IN");
+
 }
+
 
 function imgs(p){
 
  let a = [];
 
  try{
-  a = Array.isArray(p.image_urls)
-   ? p.image_urls
-   : JSON.parse(p.image_urls || "[]");
+
+  a =
+  Array.isArray(p.image_urls)
+  ? p.image_urls
+  : JSON.parse(p.image_urls || "[]");
+
  }catch{}
 
- if(!Array.isArray(a)) a = [];
+ if(!Array.isArray(a))
+ a = [];
 
  if(!a.length && p.image_url)
-  a = [p.image_url];
+ a = [p.image_url];
 
  return a.filter(Boolean);
+
 }
+
 
 function sizes(p){
 
  try{
+
   return Array.isArray(p.sizes)
-   ? p.sizes
-   : JSON.parse(p.sizes || "[]");
+  ? p.sizes
+  : JSON.parse(p.sizes || "[]");
+
  }catch{
+
   return [];
+
  }
+
 }
 
+
 function closeModal(){
+
  $("modalRoot").innerHTML = "";
+
 }
 
 
@@ -514,25 +963,35 @@ function openImage(src,name){
  if(!src)return;
 
  $("modalRoot").innerHTML = `
- <div class="modal" onclick="closeModal()">
 
- <div class="box"
+ <div
+ class="modal"
+ onclick="closeModal()">
+
+ <div
+ class="box"
  style="max-width:520px;padding:8px;background:#111"
  onclick="event.stopPropagation()">
 
- <button class="close" onclick="closeModal()">×</button>
+ <button
+ class="close"
+ onclick="closeModal()">×</button>
 
  <img
  src="${esc(src)}"
  alt="${esc(name)}"
  style="display:block;width:100%;max-height:82vh;object-fit:contain;border-radius:12px;background:#fff">
 
- <div style="color:#fff;text-align:center;padding:8px 4px;font-weight:700">
+ <div
+ style="color:#fff;text-align:center;padding:8px 4px;font-weight:700">
+
  ${esc(name)}
+
  </div>
 
  </div>
  </div>`;
+
 }
 
 
@@ -541,18 +1000,29 @@ function openImage(src,name){
 ========================================================= */
 
 function openMenu(){
+
  $("drawer").classList.add("open");
+
 }
+
 
 function closeMenu(){
+
  $("drawer").classList.remove("open");
+
 }
 
+
 function goHome(){
+
  closeMenu();
+
  showScreen("home");
+
  currentCategory = "All";
+
  renderHome();
+
 }
 
 
@@ -562,22 +1032,34 @@ function goHome(){
 
 function showScreen(id){
 
- document.querySelectorAll(".screen")
- .forEach(x => x.classList.remove("active"));
+ document
+ .querySelectorAll(".screen")
+ .forEach(x =>
+  x.classList.remove("active")
+ );
 
  $(id).classList.add("active");
 
- document.querySelectorAll(".bottom button")
- .forEach(x => x.classList.remove("active"));
+ document
+ .querySelectorAll(".bottom button")
+ .forEach(x =>
+  x.classList.remove("active")
+ );
 
  $("nav" + id.charAt(0).toUpperCase() + id.slice(1))
  ?.classList.add("active");
 
- if(id === "orders") loadOrders();
- if(id === "cart") renderCart();
- if(id === "account") loadAccount();
+ if(id === "orders")
+ loadOrders();
+
+ if(id === "cart")
+ renderCart();
+
+ if(id === "account")
+ loadAccount();
 
  scrollTo(0,0);
+
 }
 
 
@@ -592,7 +1074,8 @@ async function loadProducts(){
  c.innerHTML =
  '<div class="empty">Products loading...</div>';
 
- const r = await sb
+ const r =
+ await sb
  .from("products")
  .select("*")
  .order("id",{ascending:false});
@@ -600,17 +1083,21 @@ async function loadProducts(){
  if(r.error){
 
   c.innerHTML =
-  '<div class="empty">Products load nahi ho rahe.<br>' +
+  '<div class="empty">' +
+  'Products load nahi ho rahe.<br>' +
   esc(r.error.message) +
   '</div>';
 
   return;
+
  }
 
  allProducts = r.data || [];
 
  renderCategories();
+
  renderHome();
+
 }
 
 
@@ -622,27 +1109,40 @@ function sectionBadges(p){
 
  const badges = [];
 
- if(p.new_arrival === true ||
- p.new_arrival === 1 ||
- String(p.new_arrival).toLowerCase() === "true")
+ if(
+  p.new_arrival === true ||
+  p.new_arrival === 1 ||
+  String(p.new_arrival).toLowerCase() === "true"
+ )
  badges.push("🆕 New Arrival");
 
- if(p.latest === true ||
- p.latest === 1 ||
- String(p.latest).toLowerCase() === "true")
+
+ if(
+  p.latest === true ||
+  p.latest === 1 ||
+  String(p.latest).toLowerCase() === "true"
+ )
  badges.push("✨ Latest");
 
- if(p.under_999 === true ||
- p.under_999 === 1 ||
- String(p.under_999).toLowerCase() === "true")
+
+ if(
+  p.under_999 === true ||
+  p.under_999 === 1 ||
+  String(p.under_999).toLowerCase() === "true"
+ )
  badges.push("💸 Under ₹999");
 
- if(p.best_seller === true ||
- p.best_seller === 1 ||
- String(p.best_seller).toLowerCase() === "true")
+
+ if(
+  p.best_seller === true ||
+  p.best_seller === 1 ||
+  String(p.best_seller).toLowerCase() === "true"
+ )
  badges.push("🔥 Best Seller");
 
+
  return badges;
+
 }
 
 
@@ -652,37 +1152,58 @@ function sectionBadges(p){
 
 function productCard(p){
 
- const im = imgs(p)[0] || "";
- const stock = Number(p.stock || 0);
- const old = Number(p.original_price || 0);
- const badges = sectionBadges(p);
+ const im =
+ imgs(p)[0] || "";
+
+ const stock =
+ Number(p.stock || 0);
+
+ const old =
+ Number(p.original_price || 0);
+
+ const badges =
+ sectionBadges(p);
 
  return `
+
  <article class="card">
 
- <div class="photo"
- onclick="openImage('${esc(im)}','${esc(p.name || "Product")}')">
+ <div
+ class="photo"
+ onclick="openImage(
+ '${esc(im)}',
+ '${esc(p.name || "Product")}'
+ )">
 
  ${
- badges.length
- ? `<div class="section-badges">
- ${badges.map(b =>
- `<span class="section-badge">${b}</span>`
- ).join("")}
- </div>`
- : ""
+  badges.length
+  ?
+  `<div class="section-badges">
+
+  ${badges.map(b =>
+  `<span class="section-badge">
+  ${b}
+  </span>`
+  ).join("")}
+
+  </div>`
+  : ""
  }
 
  ${
- im
- ? `<img src="${esc(im)}"
- alt="${esc(p.name)}"
- loading="lazy">
- <span class="zoom">🔍</span>`
- : "🛍️"
+  im
+  ?
+  `<img
+   src="${esc(im)}"
+   alt="${esc(p.name)}"
+   loading="lazy">
+
+   <span class="zoom">🔍</span>`
+  : "🛍️"
  }
 
  </div>
+
 
  <div class="info">
 
@@ -695,32 +1216,54 @@ function productCard(p){
  </div>
 
  <div class="price">
+
  ₹${money(p.price)}
+
  ${
- old > Number(p.price || 0)
- ? `<span class="old">₹${money(old)}</span>`
- : ""
+  old > Number(p.price || 0)
+  ?
+  `<span class="old">
+   ₹${money(old)}
+   </span>`
+  : ""
  }
+
  </div>
 
  <div class="muted">
- ${stock > 0 ? `Stock: ${stock}` : "Out of Stock"}
+
+ ${
+  stock > 0
+  ? `Stock: ${stock}`
+  : "Out of Stock"
+ }
+
  </div>
 
- <button class="btn"
+
+ <button
+ class="btn"
  ${stock < 1 ? "disabled" : ""}
  onclick="buyNow(${Number(p.id)})">
+
  Buy Now
+
  </button>
 
- <button class="btn secondary"
+
+ <button
+ class="btn secondary"
  ${stock < 1 ? "disabled" : ""}
  onclick="addToCart(${Number(p.id)})">
+
  Add to Cart
+
  </button>
 
  </div>
+
  </article>`;
+
 }
 
 
@@ -731,12 +1274,12 @@ function productCard(p){
 function renderCategories(){
 
  const cats = [
- "All",
- "Saree",
- "Kurti",
- "Dress",
- "Top",
- "Suit"
+  "All",
+  "Saree",
+  "Kurti",
+  "Dress",
+  "Top",
+  "Suit"
  ];
 
  $("cats").innerHTML =
@@ -751,7 +1294,9 @@ function renderCategories(){
  </button>
 
  `).join("");
+
 }
+
 
 function setCategory(c){
 
@@ -760,6 +1305,7 @@ function setCategory(c){
  renderCategories();
 
  renderHome();
+
 }
 
 
@@ -771,61 +1317,91 @@ function renderList(list,id){
 
  $(id).innerHTML =
  list.length
- ? list.map(productCard).join("")
- : '<div class="empty">Is section mein abhi product nahi hai.</div>';
+ ?
+ list.map(productCard).join("")
+ :
+ '<div class="empty">' +
+ 'Is section mein abhi product nahi hai.' +
+ '</div>';
+
 }
+
 
 function renderHome(){
 
- const q = $("search").value.trim().toLowerCase();
+ const q =
+ $("search").value
+ .trim()
+ .toLowerCase();
 
- let base = allProducts.filter(p =>
- !q ||
- String(p.name || "").toLowerCase().includes(q) ||
- String(p.category || "").toLowerCase().includes(q)
+ let base =
+ allProducts.filter(p =>
+
+  !q ||
+
+  String(p.name || "")
+  .toLowerCase()
+  .includes(q) ||
+
+  String(p.category || "")
+  .toLowerCase()
+  .includes(q)
+
  );
+
 
  let filtered =
  currentCategory === "All"
- ? base
- : base.filter(p =>
- String(p.category || "").toLowerCase()
- === currentCategory.toLowerCase()
+ ?
+ base
+ :
+ base.filter(p =>
+  String(p.category || "")
+  .toLowerCase()
+  === currentCategory.toLowerCase()
  );
+
 
  $("productTitle").textContent =
  currentCategory === "All"
- ? "Latest Collection"
- : currentCategory + " Collection";
+ ?
+ "Latest Collection"
+ :
+ currentCategory + " Collection";
+
 
  renderList(filtered,"products");
 
- renderList(
- base.filter(p =>
- p.new_arrival === true ||
- p.new_arrival === 1 ||
- String(p.new_arrival).toLowerCase() === "true"
- ).slice(0,8),
- "newArrivals"
- );
 
  renderList(
- base.filter(p =>
- p.best_seller === true ||
- p.best_seller === 1 ||
- String(p.best_seller).toLowerCase() === "true"
- ).slice(0,8),
- "bestSellers"
+  base.filter(p =>
+   p.new_arrival === true ||
+   p.new_arrival === 1 ||
+   String(p.new_arrival).toLowerCase() === "true"
+  ).slice(0,8),
+  "newArrivals"
  );
 
+
  renderList(
- base.filter(p =>
- p.under_999 === true ||
- p.under_999 === 1 ||
- String(p.under_999).toLowerCase() === "true"
- ).slice(0,8),
- "under999"
+  base.filter(p =>
+   p.best_seller === true ||
+   p.best_seller === 1 ||
+   String(p.best_seller).toLowerCase() === "true"
+  ).slice(0,8),
+  "bestSellers"
  );
+
+
+ renderList(
+  base.filter(p =>
+   p.under_999 === true ||
+   p.under_999 === 1 ||
+   String(p.under_999).toLowerCase() === "true"
+  ).slice(0,8),
+  "under999"
+ );
+
 }
 
 
@@ -835,48 +1411,62 @@ function renderHome(){
 
 function addToCart(id){
 
- const p = allProducts.find(
- x => Number(x.id) === Number(id)
+ const p =
+ allProducts.find(
+  x => Number(x.id) === Number(id)
  );
 
  if(!p)return;
 
  let cart =
  JSON.parse(
- localStorage.getItem("aarvi_cart") || "[]"
+  localStorage.getItem("aarvi_cart") || "[]"
  );
+
 
  const x =
  cart.find(
- i => Number(i.id) === Number(id)
+  i => Number(i.id) === Number(id)
  );
 
- if(x)
- x.qty = Math.min(
- x.qty + 1,
- Number(p.stock || 1)
- );
 
- else
- cart.push({
-  id:Number(p.id),
-  qty:1
- });
+ if(x){
+
+  x.qty =
+  Math.min(
+   x.qty + 1,
+   Number(p.stock || 1)
+  );
+
+ }else{
+
+  cart.push({
+   id:Number(p.id),
+   qty:1
+  });
+
+ }
+
 
  localStorage.setItem(
- "aarvi_cart",
- JSON.stringify(cart)
+  "aarvi_cart",
+  JSON.stringify(cart)
  );
 
+
  alert("Cart mein add ho gaya 🛒");
+
 }
+
 
 function getCart(){
 
  return JSON.parse(
- localStorage.getItem("aarvi_cart") || "[]"
+  localStorage.getItem("aarvi_cart") || "[]"
  );
+
 }
+
 
 function renderCart(){
 
@@ -885,65 +1475,77 @@ function renderCart(){
  if(!cart.length){
 
   $("cartList").innerHTML =
-  '<div class="empty">Cart abhi empty hai.</div>';
+  '<div class="empty">' +
+  'Cart abhi empty hai.' +
+  '</div>';
 
   return;
+
  }
 
  let total = 0;
 
+
  $("cartList").innerHTML =
+
  cart.map(i => {
 
- const p = allProducts.find(
- x => Number(x.id) === Number(i.id)
- );
+  const p =
+  allProducts.find(
+   x => Number(x.id) === Number(i.id)
+  );
 
- if(!p)return "";
+  if(!p)return "";
 
- const sub =
- Number(p.price || 0) * i.qty;
+  const sub =
+  Number(p.price || 0) * i.qty;
 
- total += sub;
+  total += sub;
 
- return `
 
- <div class="cart-row">
+  return `
 
- <img src="${esc(imgs(p)[0] || "")}">
+  <div class="cart-row">
 
- <div style="flex:1">
+  <img
+   src="${esc(imgs(p)[0] || "")}">
 
- <b>${esc(p.name)}</b>
+  <div style="flex:1">
 
- <div>
- ₹${money(p.price)} × ${i.qty}
- </div>
+  <b>${esc(p.name)}</b>
 
- <div class="qty">
+  <div>
+  ₹${money(p.price)} × ${i.qty}
+  </div>
 
- <button onclick="changeCart(${p.id},-1)">
- −
- </button>
+  <div class="qty">
 
- <span>${i.qty}</span>
+  <button
+   onclick="changeCart(${p.id},-1)">
+   −
+  </button>
 
- <button onclick="changeCart(${p.id},1)">
+  <span>${i.qty}</span>
+
+  <button
+   onclick="changeCart(${p.id},1)">
+   +
+  </button>
+
+  <button
+   onclick="removeCart(${p.id})">
+   Remove
+  </button>
+
+  </div>
+
+  </div>
+
+  </div>`;
+
+ }).join("")
+
  +
- </button>
-
- <button onclick="removeCart(${p.id})">
- Remove
- </button>
-
- </div>
-
- </div>
-
- </div>
- `;
-
- }).join("") +
 
  `
 
@@ -953,58 +1555,78 @@ function renderCart(){
  Total: ₹${money(total)}
  </b>
 
- <button class="btn"
+ <button
+ class="btn"
  onclick="checkoutCart()">
+
  Checkout Cart
+
  </button>
 
  </div>
 
  `;
+
 }
+
 
 function changeCart(id,d){
 
  let c = getCart();
 
- let x = c.find(
- i => Number(i.id) === Number(id)
+ let x =
+ c.find(
+  i => Number(i.id) === Number(id)
  );
 
  if(!x)return;
 
- x.qty = Math.max(1,x.qty+d);
 
- const p = allProducts.find(
- y => Number(y.id) === Number(id)
+ x.qty =
+ Math.max(1,x.qty+d);
+
+
+ const p =
+ allProducts.find(
+  y => Number(y.id) === Number(id)
  );
 
- if(p)
- x.qty = Math.min(
- x.qty,
- Number(p.stock || 1)
- );
+
+ if(p){
+
+  x.qty =
+  Math.min(
+   x.qty,
+   Number(p.stock || 1)
+  );
+
+ }
+
 
  localStorage.setItem(
- "aarvi_cart",
- JSON.stringify(c)
+  "aarvi_cart",
+  JSON.stringify(c)
  );
 
+
  renderCart();
+
 }
+
 
 function removeCart(id){
 
  localStorage.setItem(
- "aarvi_cart",
- JSON.stringify(
- getCart().filter(
- i => Number(i.id) !== Number(id)
- )
- )
+  "aarvi_cart",
+  JSON.stringify(
+   getCart().filter(
+    i => Number(i.id) !== Number(id)
+   )
+  )
  );
 
  renderCart();
+
 }
 
 
@@ -1014,27 +1636,37 @@ function removeCart(id){
 
 async function buyNow(id){
 
- const s = await sb.auth.getSession();
+ const s =
+ await sb.auth.getSession();
+
 
  if(!s.data.session){
 
   openAuth();
 
   return;
+
  }
+
 
  currentProduct =
  allProducts.find(
- p => Number(p.id) === Number(id)
+  p => Number(p.id) === Number(id)
  );
 
+
  selectedSize = "";
+
  qty = 1;
+
  shippingCharge = 0;
+
  shippingChecked = false;
+
 
  if(currentProduct)
  openOrderForm();
+
 }
 
 
@@ -1046,55 +1678,75 @@ async function openAuth(){
 
  closeModal();
 
+
  $("modalRoot").innerHTML = `
 
  <div class="modal">
 
  <div class="box">
 
- <button class="close"
+ <button
+ class="close"
  onclick="closeModal()">×</button>
 
  <h2>🌸 Aarvi Fashion</h2>
 
  <label>Email</label>
 
- <input id="aEmail" type="email">
+ <input
+ id="aEmail"
+ type="email">
 
  <label>Password</label>
 
- <input id="aPass" type="password">
+ <input
+ id="aPass"
+ type="password">
 
- <button class="btn" onclick="login()">
+ <button
+ class="btn"
+ onclick="login()">
+
  Login
+
  </button>
 
- <button class="btn secondary" onclick="signup()">
+ <button
+ class="btn secondary"
+ onclick="signup()">
+
  Create Account
+
  </button>
 
  </div>
- </div>
- `;
+ </div>`;
+
 }
+
 
 async function login(){
 
  const {error} =
  await sb.auth.signInWithPassword({
 
- email:$("aEmail").value.trim(),
- password:$("aPass").value
+  email:$("aEmail").value.trim(),
+
+  password:$("aPass").value
 
  });
+
 
  if(error)
  return alert(error.message);
 
+
  closeModal();
 
  loadAccount();
+
 }
+
 
 async function signup(){
 
@@ -1104,10 +1756,12 @@ async function signup(){
  const password =
  $("aPass").value;
 
+
  if(password.length < 6)
  return alert(
- "Password minimum 6 characters ka hona chahiye."
+  "Password minimum 6 characters ka hona chahiye."
  );
+
 
  const {error} =
  await sb.auth.signUp({
@@ -1115,12 +1769,15 @@ async function signup(){
   password
  });
 
+
  if(error)
  return alert(error.message);
 
+
  alert(
- "Account create ho gaya. Email confirmation required ho sakta hai."
+  "Account create ho gaya. Email confirmation required ho sakta hai."
  );
+
 }
 
 
@@ -1130,7 +1787,9 @@ async function signup(){
 
 function openOrderForm(){
 
- const p = currentProduct;
+ const p =
+ currentProduct;
+
 
  $("modalRoot").innerHTML = `
 
@@ -1138,61 +1797,80 @@ function openOrderForm(){
 
  <div class="box">
 
- <button class="close"
+ <button
+ class="close"
  onclick="closeModal()">×</button>
 
  <h2>🛍️ Place Order</h2>
 
+
  <div class="notice">
 
  <b>${esc(p.name)}</b>
+
  <br>
- Product Price: ₹${money(p.price)}
+
+ Product Price:
+ ₹${money(p.price)}
 
  </div>
+
 
  ${
- sizes(p).length
- ? `
+  sizes(p).length
+  ?
+  `
 
- <label>Size *</label>
+  <label>Size *</label>
 
- <div class="size-row">
+  <div class="size-row">
 
- ${sizes(p).map(s => `
+  ${sizes(p).map(s => `
 
- <button
- class="size"
- onclick="pickSize('${esc(s)}',this)">
+  <button
+   class="size"
+   onclick="pickSize('${esc(s)}',this)">
 
- ${esc(s)}
+   ${esc(s)}
 
- </button>
+  </button>
 
- `).join("")}
+  `).join("")}
 
- </div>
+  </div>
 
- `
- : ""
+  `
+  : ""
  }
 
+
  <label>Full Name *</label>
+
  <input id="oName">
 
+
  <label>Mobile *</label>
- <input id="oPhone"
+
+ <input
+ id="oPhone"
  maxlength="10"
  inputmode="numeric">
 
+
  <label>Address *</label>
+
  <textarea id="oAddress"></textarea>
 
+
  <label>City *</label>
+
  <input id="oCity">
 
+
  <label>State *</label>
+
  <input id="oState">
+
 
  <label>PIN *</label>
 
@@ -1202,6 +1880,7 @@ function openOrderForm(){
  inputmode="numeric"
  oninput="pinChanged()">
 
+
  <label>Quantity *</label>
 
  <input
@@ -1210,9 +1889,11 @@ function openOrderForm(){
  min="1"
  max="${Number(p.stock || 1)}"
  value="${qty || 1}"
- oninput="pinChanged()">
+ oninput="updateOrderTotal()">
 
- <div id="shippingBox"
+
+ <div
+ id="shippingBox"
  class="shipping-box">
 
  <div class="shipping-title">
@@ -1220,15 +1901,20 @@ function openOrderForm(){
  </div>
 
  <div class="shipping-loading">
- PIN code enter karein — delivery charge check hoga.
+
+ PIN code enter karein —
+ delivery charge check hoga.
+
  </div>
 
  </div>
+
 
  <label>Payment *</label>
 
- <select id="oPay"
- onchange="paymentChanged();updateOrderTotal()">
+ <select
+ id="oPay"
+ onchange="paymentChanged()">
 
  <option value="COD">
  Cash on Delivery
@@ -1240,10 +1926,15 @@ function openOrderForm(){
 
  </select>
 
- <div id="paymentInfo"
- class="payment-box"></div>
+
+ <div
+ id="paymentInfo"
+ class="payment-box">
+ </div>
+
 
  <div id="orderTotalBox"></div>
+
 
  <button
  id="placeBtn"
@@ -1254,36 +1945,44 @@ function openOrderForm(){
 
  </button>
 
+
  </div>
- </div>
- `;
+ </div>`;
 
  loadOrderProfile();
 
  paymentChanged();
 
  updateOrderTotal();
+
 }
 
 
 /* =========================================================
-   SHIPROCKET
+   SHIPROCKET SHIPPING CHARGE
 ========================================================= */
 
 async function checkShipping(){
 
- const pin = $("oPin")?.value.trim();
+ const pin =
+ $("oPin")?.value.trim();
 
- const box = $("shippingBox");
+ const box =
+ $("shippingBox");
+
 
  if(!box)return;
 
+
  shippingCharge = 0;
+
  shippingChecked = false;
+
 
  if(!/^[0-9]{6}$/.test(pin)){
 
   box.innerHTML = `
+
   <div class="shipping-title">
   🚚 Delivery Charges
   </div>
@@ -1291,14 +1990,18 @@ async function checkShipping(){
   <div class="shipping-loading">
   Valid 6 digit PIN enter karein.
   </div>
+
   `;
 
   updateOrderTotal();
 
   return;
+
  }
 
+
  box.innerHTML = `
+
  <div class="shipping-title">
  🚚 Delivery Charges
  </div>
@@ -1306,11 +2009,14 @@ async function checkShipping(){
  <div class="shipping-loading">
  ⏳ Delivery charge check ho raha hai...
  </div>
+
  `;
+
 
  try{
 
-  const response = await fetch(
+  const response =
+  await fetch(
    "/api/shiprocket",
    {
     method:"POST",
@@ -1319,33 +2025,40 @@ async function checkShipping(){
     },
     body:JSON.stringify({
 
+     action:"shipping_charge",
+
      deliveryPincode:pin,
 
      weight:0.5,
 
-     cod:$("oPay")?.value === "COD" ? 1 : 0
+     cod:
+     $("oPay")?.value === "COD"
+     ? 1
+     : 0
 
     })
    }
   );
 
-  const data = await response.json();
 
-  if(!response.ok || data.success === false){
+  const data =
+  await response.json();
+
+
+  if(!response.ok ||
+     data.success === false){
 
    throw new Error(
     data.error ||
     data.message ||
     "Shipping charge calculate nahi hua."
    );
+
   }
 
-  /*
-    Backend response ke different possible
-    field names ko handle kiya gaya hai.
-  */
 
-  const charge = Number(
+  const charge =
+  Number(
    data.shippingCharge ??
    data.shipping_charge ??
    data.freight_charge ??
@@ -1358,15 +2071,23 @@ async function checkShipping(){
    0
   );
 
-  if(!Number.isFinite(charge) || charge < 0){
+
+  if(
+   !Number.isFinite(charge) ||
+   charge < 0
+  ){
 
    throw new Error(
     "Shiprocket se valid shipping charge nahi mila."
    );
+
   }
 
+
   shippingCharge = charge;
+
   shippingChecked = true;
+
 
   box.innerHTML = `
 
@@ -1376,7 +2097,8 @@ async function checkShipping(){
 
   <div class="shipping-ok">
 
-  ✓ PIN ${esc(pin)} par delivery available
+  ✓ PIN ${esc(pin)}
+  par delivery available
 
   <br>
 
@@ -1387,12 +2109,16 @@ async function checkShipping(){
 
   `;
 
+
   updateOrderTotal();
+
 
  }catch(error){
 
   shippingCharge = 0;
+
   shippingChecked = false;
+
 
   box.innerHTML = `
 
@@ -1412,11 +2138,16 @@ async function checkShipping(){
 
   `;
 
+
   updateOrderTotal();
+
  }
+
 }
 
+
 let pinTimer;
+
 
 function pinChanged(){
 
@@ -1424,12 +2155,16 @@ function pinChanged(){
 
  shippingChecked = false;
 
- pinTimer = setTimeout(
+
+ pinTimer =
+ setTimeout(
   checkShipping,
   500
  );
 
+
  updateOrderTotal();
+
 }
 
 
@@ -1441,18 +2176,30 @@ function updateOrderTotal(){
 
  if(!currentProduct)return;
 
+
  const q =
- Number($("oQty")?.value || qty || 1);
+ Number(
+  $("oQty")?.value ||
+  qty ||
+  1
+ );
+
 
  const productTotal =
  Number(currentProduct.price || 0) * q;
 
- const total =
- productTotal + Number(shippingCharge || 0);
 
- const el = $("orderTotalBox");
+ const total =
+ productTotal +
+ Number(shippingCharge || 0);
+
+
+ const el =
+ $("orderTotalBox");
+
 
  if(!el)return;
+
 
  el.innerHTML = `
 
@@ -1462,35 +2209,44 @@ function updateOrderTotal(){
 
  <span>Product Total</span>
 
- <b>₹${money(productTotal)}</b>
+ <b>
+ ₹${money(productTotal)}
+ </b>
 
  </div>
+
 
  <div class="total-line">
 
  <span>Delivery</span>
 
  <b>
+
  ${
- shippingChecked
- ? "₹" + money(shippingCharge)
- : "Check PIN"
+  shippingChecked
+  ? "₹" + money(shippingCharge)
+  : "Check PIN"
  }
+
  </b>
 
  </div>
+
 
  <div class="total-line grand-total">
 
  <span>Total</span>
 
- <span>₹${money(total)}</span>
+ <span>
+ ₹${money(total)}
+ </span>
 
  </div>
 
  </div>
 
  `;
+
 }
 
 
@@ -1500,11 +2256,16 @@ function updateOrderTotal(){
 
 function paymentChanged(){
 
- const pay = $("oPay")?.value;
+ const pay =
+ $("oPay")?.value;
 
- const info = $("paymentInfo");
+
+ const info =
+ $("paymentInfo");
+
 
  if(!info)return;
+
 
  if(pay === "Online"){
 
@@ -1514,13 +2275,15 @@ function paymentChanged(){
   🔐 Razorpay Secure Payment
   </div>
 
-  <div class="muted" style="margin-top:6px">
+  <div
+   class="muted"
+   style="margin-top:6px">
 
   UPI • PhonePe • Google Pay • Paytm •
-  Cards • Net Banking aur available
-  Razorpay payment methods.
+  Cards • Net Banking
 
   </div>
+
   `;
 
  }else{
@@ -1531,17 +2294,30 @@ function paymentChanged(){
   💵 Cash on Delivery
   </div>
 
-  <div class="muted" style="margin-top:6px">
+  <div
+   class="muted"
+   style="margin-top:6px">
+
   Delivery ke time payment karein.
+
   </div>
 
   `;
+
  }
 
- if($("oPin")?.value.trim().length === 6)
- checkShipping();
+
+ if(
+  $("oPin")?.value.trim().length === 6
+ ){
+
+  checkShipping();
+
+ }
+
 
  updateOrderTotal();
+
 }
 
 
@@ -1553,13 +2329,16 @@ function pickSize(s,b){
 
  selectedSize = s;
 
+
  document
  .querySelectorAll(".size")
  .forEach(x =>
- x.classList.remove("sel")
+  x.classList.remove("sel")
  );
 
+
  b.classList.add("sel");
+
 }
 
 
@@ -1574,7 +2353,9 @@ async function loadOrderProfile(){
  } =
  await sb.auth.getSession();
 
+
  if(!session)return;
+
 
  const {data:p} =
  await sb
@@ -1583,14 +2364,20 @@ async function loadOrderProfile(){
  .eq("id",session.user.id)
  .maybeSingle();
 
+
  if(p){
 
   if($("oName"))
-  $("oName").value = p.full_name || "";
+  $("oName").value =
+  p.full_name || "";
+
 
   if($("oPhone"))
-  $("oPhone").value = p.phone || "";
+  $("oPhone").value =
+  p.phone || "";
+
  }
+
 }
 
 
@@ -1608,105 +2395,426 @@ async function openRazorpayPayment(
  q
 ){
 
- const btn = $("placeBtn");
+ const btn =
+ $("placeBtn");
+
 
  const productAmount =
  Number(currentProduct.price || 0) * q;
 
+
  const totalAmount =
- productAmount + Number(shippingCharge || 0);
+ productAmount +
+ Number(shippingCharge || 0);
+
 
  if(totalAmount <= 0){
 
   btn.disabled = false;
-  btn.textContent = "Confirm Order";
+
+  btn.textContent =
+  "Confirm Order";
 
   return alert(
    "Order amount valid nahi hai."
   );
+
  }
+
 
  if(typeof Razorpay === "undefined"){
 
   btn.disabled = false;
-  btn.textContent = "Confirm Order";
+
+  btn.textContent =
+  "Confirm Order";
 
   return alert(
-   "Razorpay load nahi hua. Internet connection check karein."
+   "Razorpay load nahi hua."
   );
+
  }
+
 
  const options = {
 
- key:RAZORPAY_KEY_ID,
+  key:RAZORPAY_KEY_ID,
 
- amount:Math.round(totalAmount * 100),
+  amount:
+  Math.round(totalAmount * 100),
 
- currency:"INR",
+  currency:"INR",
 
- name:"Aarvi Fashion",
+  name:"Aarvi Fashion",
 
- description:
- currentProduct.name + " × " + q,
+  description:
+  currentProduct.name +
+  " × " + q,
 
- image:
- imgs(currentProduct)[0] || undefined,
+  image:
+  imgs(currentProduct)[0] ||
+  undefined,
 
- prefill:{
-  name:name,
-  contact:"+91" + phone
- },
 
- notes:{
+  prefill:{
 
-  product_id:
-  String(currentProduct.id),
+   name:name,
 
-  quantity:
-  String(q),
+   contact:"+91" + phone
 
-  size:
-  selectedSize || "",
+  },
 
-  customer_name:
-  name,
 
-  phone:
-  phone,
+  notes:{
 
-  address:
-  address,
+   product_id:
+   String(currentProduct.id),
 
-  city:
-  city,
+   quantity:
+   String(q),
 
-  state:
-  state,
+   size:
+   selectedSize || "",
 
-  pin:
-  pin,
+   customer_name:
+   name,
 
-  shipping_charge:
-  String(shippingCharge)
+   phone:
+   phone,
 
- },
+   address:
+   address,
 
- theme:{
-  color:"#d94f82"
- },
+   city:
+   city,
 
- handler:async function(response){
+   state:
+   state,
+
+   pin:
+   pin,
+
+   shipping_charge:
+   String(shippingCharge)
+
+  },
+
+
+  theme:{
+   color:"#d94f82"
+  },
+
+
+  handler:async function(response){
+
+   btn.disabled = true;
+
+   btn.textContent =
+   "Order save ho raha hai...";
+
+
+   const {
+    data:{session}
+   } =
+   await sb.auth.getSession();
+
+
+   const r =
+   await sb.rpc(
+    "place_order",
+    {
+
+     p_user_id:
+     session?.user?.id || null,
+
+     p_customer_name:
+     name,
+
+     p_phone:
+     phone,
+
+     p_address:
+     address,
+
+     p_city:
+     city,
+
+     p_state:
+     state,
+
+     p_pin_code:
+     pin,
+
+     p_product_id:
+     Number(currentProduct.id),
+
+     p_size:
+     selectedSize || null,
+
+     p_quantity:
+     q,
+
+     p_payment_method:
+     "Online"
+
+    }
+   );
+
+
+   if(r.error){
+
+    btn.disabled = false;
+
+    btn.textContent =
+    "Confirm Order";
+
+    return alert(
+     "Payment successful hua hai, " +
+     "lekin order save nahi hua.\n\n" +
+     "Payment ID: " +
+     response.razorpay_payment_id
+    );
+
+   }
+
+
+   closeModal();
+
+   await loadProducts();
+
+
+   alert(
+    "Payment Successful! ✅\n\n" +
+    "Order Confirmed! 🎉\n\n" +
+    "Order ID: #" +
+    r.data +
+    "\nPayment ID: " +
+    response.razorpay_payment_id
+   );
+
+
+   showScreen("orders");
+
+  },
+
+
+  modal:{
+
+   ondismiss:function(){
+
+    btn.disabled = false;
+
+    btn.textContent =
+    "Confirm Order";
+
+   }
+
+  }
+
+ };
+
+
+ try{
+
+  const razorpay =
+  new Razorpay(options);
+
+
+  razorpay.on(
+   "payment.failed",
+   function(response){
+
+    btn.disabled = false;
+
+    btn.textContent =
+    "Confirm Order";
+
+
+    alert(
+     "Payment Failed ❌\n\n" +
+     (
+      response.error?.description ||
+      "Payment complete nahi hua."
+     )
+    );
+
+   }
+  );
+
+
+  razorpay.open();
+
+
+ }catch(error){
+
+  btn.disabled = false;
+
+  btn.textContent =
+  "Confirm Order";
+
+
+  alert(
+   "Razorpay open nahi ho raha:\n" +
+   error.message
+  );
+
+ }
+
+}
+
+
+/* =========================================================
+   PLACE ORDER
+========================================================= */
+
+async function placeOrder(){
+
+ const btn =
+ $("placeBtn");
+
+
+ const name =
+ $("oName").value.trim();
+
+
+ const phone =
+ $("oPhone").value.trim();
+
+
+ const address =
+ $("oAddress").value.trim();
+
+
+ const city =
+ $("oCity").value.trim();
+
+
+ const state =
+ $("oState").value.trim();
+
+
+ const pin =
+ $("oPin").value.trim();
+
+
+ const q =
+ Number($("oQty").value);
+
+
+ const pay =
+ $("oPay").value;
+
+
+ if(
+ !name ||
+ !/^[0-9]{10}$/.test(phone) ||
+ !address ||
+ !city ||
+ !state ||
+ !/^[0-9]{6}$/.test(pin)
+ ){
+
+  return alert(
+   "Details sahi bhariye."
+  );
+
+ }
+
+
+ if(
+  sizes(currentProduct).length &&
+  !selectedSize
+ ){
+
+  return alert(
+   "Size select karein."
+  );
+
+ }
+
+
+ if(
+  !q ||
+  q < 1 ||
+  q > Number(currentProduct.stock || 0)
+ ){
+
+  return alert(
+   "Quantity stock se zyada nahi ho sakti."
+  );
+
+ }
+
+
+ if(!shippingChecked){
 
   btn.disabled = true;
-  btn.textContent = "Order save ho raha hai...";
 
-  const {
-   data:{session}
-  } =
-  await sb.auth.getSession();
+  btn.textContent =
+  "Delivery charge check ho raha hai...";
 
-  const r =
-  await sb.rpc("place_order",{
+
+  await checkShipping();
+
+
+  btn.disabled = false;
+
+  btn.textContent =
+  "Confirm Order";
+
+
+  if(!shippingChecked){
+
+   return alert(
+    "Delivery charge check nahi hua. " +
+    "PIN code dobara check karein."
+   );
+
+  }
+
+ }
+
+
+ if(pay === "Online"){
+
+  btn.disabled = true;
+
+  btn.textContent =
+  "Razorpay open ho raha hai...";
+
+
+  await openRazorpayPayment(
+   name,
+   phone,
+   address,
+   city,
+   state,
+   pin,
+   q
+  );
+
+
+  return;
+
+ }
+
+
+ btn.disabled = true;
+
+ btn.textContent =
+ "Order save ho raha hai...";
+
+
+ const {
+  data:{session}
+ } =
+ await sb.auth.getSession();
+
+
+ const r =
+ await sb.rpc(
+  "place_order",
+  {
 
    p_user_id:
    session?.user?.id || null,
@@ -1739,265 +2847,41 @@ async function openRazorpayPayment(
    q,
 
    p_payment_method:
-   "Online"
-
-  });
-
-  if(r.error){
-
-   btn.disabled = false;
-   btn.textContent = "Confirm Order";
-
-   return alert(
-    "Payment successful hua hai, lekin order save nahi hua.\n\n" +
-    "Payment ID: " +
-    response.razorpay_payment_id +
-    "\n\nAarvi Fashion support se contact karein."
-   );
-  }
-
-  closeModal();
-
-  await loadProducts();
-
-  alert(
-   "Payment Successful! ✅\n\n" +
-   "Order Confirmed! 🎉\n\n" +
-   "Order ID: #" +
-   r.data +
-   "\nPayment ID: " +
-   response.razorpay_payment_id
-  );
-
-  showScreen("orders");
- },
-
- modal:{
-  ondismiss:function(){
-
-   btn.disabled = false;
-   btn.textContent = "Confirm Order";
+   "COD"
 
   }
- }
+ );
 
- };
-
- try{
-
-  const razorpay =
-  new Razorpay(options);
-
-  razorpay.on(
-   "payment.failed",
-   function(response){
-
-    btn.disabled = false;
-    btn.textContent = "Confirm Order";
-
-    alert(
-     "Payment Failed ❌\n\n" +
-     (
-      response.error?.description ||
-      "Payment complete nahi hua."
-     )
-    );
-   }
-  );
-
-  razorpay.open();
-
- }catch(error){
-
-  btn.disabled = false;
-  btn.textContent = "Confirm Order";
-
-  alert(
-   "Razorpay open nahi ho raha:\n" +
-   error.message
-  );
- }
-}
-
-
-/* =========================================================
-   PLACE ORDER
-========================================================= */
-
-async function placeOrder(){
-
- const btn = $("placeBtn");
-
- const name =
- $("oName").value.trim();
-
- const phone =
- $("oPhone").value.trim();
-
- const address =
- $("oAddress").value.trim();
-
- const city =
- $("oCity").value.trim();
-
- const state =
- $("oState").value.trim();
-
- const pin =
- $("oPin").value.trim();
-
- const q =
- Number($("oQty").value);
-
- const pay =
- $("oPay").value;
-
- if(
- !name ||
- !/^[0-9]{10}$/.test(phone) ||
- !address ||
- !city ||
- !state ||
- !/^[0-9]{6}$/.test(pin)
- ){
-
-  return alert(
-   "Details sahi bhariye."
-  );
- }
-
- if(
- sizes(currentProduct).length &&
- !selectedSize
- ){
-
-  return alert(
-   "Size select karein."
-  );
- }
-
- if(
- !q ||
- q < 1 ||
- q > Number(currentProduct.stock || 0)
- ){
-
-  return alert(
-   "Quantity stock se zyada nahi ho sakti."
-  );
- }
-
- /*
-   Shiprocket delivery charge check
- */
-
- if(!shippingChecked){
-
-  btn.disabled = true;
-  btn.textContent = "Delivery charge check ho raha hai...";
-
-  await checkShipping();
-
-  btn.disabled = false;
-  btn.textContent = "Confirm Order";
-
-  if(!shippingChecked){
-
-   return alert(
-    "Delivery charge check nahi hua. PIN code dobara check karein."
-   );
-  }
- }
-
- /* ONLINE */
-
- if(pay === "Online"){
-
-  btn.disabled = true;
-  btn.textContent = "Razorpay open ho raha hai...";
-
-  await openRazorpayPayment(
-   name,
-   phone,
-   address,
-   city,
-   state,
-   pin,
-   q
-  );
-
-  return;
- }
-
- /* COD */
-
- btn.disabled = true;
- btn.textContent = "Order save ho raha hai...";
-
- const {
-  data:{session}
- } =
- await sb.auth.getSession();
-
- const r =
- await sb.rpc("place_order",{
-
-  p_user_id:
-  session?.user?.id || null,
-
-  p_customer_name:
-  name,
-
-  p_phone:
-  phone,
-
-  p_address:
-  address,
-
-  p_city:
-  city,
-
-  p_state:
-  state,
-
-  p_pin_code:
-  pin,
-
-  p_product_id:
-  Number(currentProduct.id),
-
-  p_size:
-  selectedSize || null,
-
-  p_quantity:
-  q,
-
-  p_payment_method:
-  "COD"
-
- });
 
  if(r.error){
 
   btn.disabled = false;
-  btn.textContent = "Confirm Order";
+
+  btn.textContent =
+  "Confirm Order";
 
   return alert(
    "Order confirm nahi hua:\n" +
    r.error.message
   );
+
  }
+
 
  closeModal();
 
+
  await loadProducts();
+
 
  alert(
   "Order Confirmed! ✅\n" +
   "Order ID: #" + r.data
  );
 
+
  showScreen("orders");
+
 }
 
 
@@ -2007,68 +2891,405 @@ async function placeOrder(){
 
 async function checkoutCart(){
 
- const c = getCart();
+ const c =
+ getCart();
+
 
  if(!c.length)return;
 
+
  const s =
  await sb.auth.getSession();
+
 
  if(!s.data.session){
 
   openAuth();
 
   return;
+
  }
+
 
  if(c.length === 1){
 
   currentProduct =
   allProducts.find(
-   p => Number(p.id) === Number(c[0].id)
+   p =>
+   Number(p.id) ===
+   Number(c[0].id)
   );
 
-  qty = c[0].qty;
+
+  qty =
+  c[0].qty;
+
 
   selectedSize = "";
 
   shippingCharge = 0;
+
   shippingChecked = false;
+
 
   openOrderForm();
 
   return;
+
  }
 
+
  alert(
-  "Cart mein multiple products hain. Abhi ek-ek product ka order place karein."
+  "Cart mein multiple products hain. " +
+  "Abhi ek-ek product ka order place karein."
  );
+
 }
 
 
 /* =========================================================
-   ORDERS
+   ORDER TRACKING DATA NORMALIZER
+========================================================= */
+
+function normalizeTracking(o){
+
+ if(!o)
+ return null;
+
+
+ return {
+
+  orderId:
+  o.id ??
+  o.order_id ??
+  o.orderId ??
+  "",
+
+
+  status:
+  o.tracking_status ??
+  o.shipment_status ??
+  o.current_status ??
+  o.order_status ??
+  o.orderStatus ??
+  "Order Received",
+
+
+  courier:
+  o.courier_name ??
+  o.courier ??
+  o.courierName ??
+  "",
+
+
+  awb:
+  o.awb_code ??
+  o.awb ??
+  o.awbCode ??
+  o.tracking_number ??
+  o.trackingNumber ??
+  "",
+
+
+  shipmentId:
+  o.shipment_id ??
+  o.shipmentId ??
+  "",
+
+
+  trackingUrl:
+  o.tracking_url ??
+  o.trackingUrl ??
+  "",
+
+
+  etd:
+  o.etd ??
+  o.estimated_delivery ??
+  o.estimatedDelivery ??
+  "",
+
+
+  activity:
+  o.tracking_activity ??
+  o.activity ??
+  o.shipment_track_activities ??
+  o.shipmentTrackActivities ??
+  []
+
+ };
+
+}
+
+
+/* =========================================================
+   TRACKING HTML
+========================================================= */
+
+function trackingHTML(o){
+
+ const t =
+ normalizeTracking(o);
+
+
+ if(!t)
+ return `
+ <div class="tracking-box">
+ <div class="error">
+ Tracking information available nahi hai.
+ </div>
+ </div>`;
+
+
+ let activities =
+ Array.isArray(t.activity)
+ ? t.activity
+ : [];
+
+
+ let timeline = "";
+
+
+ if(activities.length){
+
+  timeline = `
+
+  <div class="timeline">
+
+  ${
+   activities.map(a => `
+
+   <div class="timeline-item">
+
+   <b>
+   ${esc(
+    a.status ||
+    a.activity ||
+    a.current_status ||
+    "Shipment Update"
+   )}
+   </b>
+
+   ${
+    a.date ||
+    a.timestamp ||
+    a.activity_date
+    ?
+    `<div class="muted">
+    ${esc(
+     a.date ||
+     a.timestamp ||
+     a.activity_date
+    )}
+    </div>`
+    : ""
+   }
+
+   ${
+    a.location
+    ?
+    `<div class="muted">
+    📍 ${esc(a.location)}
+    </div>`
+    : ""
+   }
+
+   </div>
+
+   `).join("")
+  }
+
+  </div>`;
+
+ }
+
+
+ return `
+
+ <div class="tracking-box">
+
+ <div class="tracking-head">
+
+ <div class="tracking-title">
+ 🚚 Shipment Tracking
+ </div>
+
+ <button
+ class="icon"
+ onclick="refreshOrderTracking(${Number(t.orderId)})">
+ ↻
+ </button>
+
+ </div>
+
+
+ <div class="tracking-line">
+
+ <span class="tracking-label">
+ Order ID
+ </span>
+
+ <span class="tracking-value">
+ #${esc(t.orderId)}
+ </span>
+
+ </div>
+
+
+ <div class="tracking-line">
+
+ <span class="tracking-label">
+ Status
+ </span>
+
+ <span>
+ <span class="status-badge">
+ ${esc(t.status)}
+ </span>
+ </span>
+
+ </div>
+
+
+ ${
+  t.courier
+  ?
+  `<div class="tracking-line">
+
+  <span class="tracking-label">
+  Courier
+  </span>
+
+  <span class="tracking-value">
+  ${esc(t.courier)}
+  </span>
+
+  </div>`
+  : ""
+ }
+
+
+ ${
+  t.awb
+  ?
+  `<div class="awb-box">
+
+  <div class="muted">
+  AWB / Tracking Number
+  </div>
+
+  <div class="awb-number">
+  ${esc(t.awb)}
+  </div>
+
+  </div>`
+  : ""
+ }
+
+
+ ${
+  t.shipmentId
+  ?
+  `<div class="tracking-line">
+
+  <span class="tracking-label">
+  Shipment ID
+  </span>
+
+  <span class="tracking-value">
+  ${esc(t.shipmentId)}
+  </span>
+
+  </div>`
+  : ""
+ }
+
+
+ ${
+  t.etd
+  ?
+  `<div class="tracking-line">
+
+  <span class="tracking-label">
+  Estimated Delivery
+  </span>
+
+  <span class="tracking-value">
+  ${esc(t.etd)}
+  </span>
+
+  </div>`
+  : ""
+ }
+
+
+ ${timeline}
+
+
+ ${
+  t.trackingUrl
+  ?
+  `<a
+   class="btn green"
+   href="${esc(t.trackingUrl)}"
+   target="_blank"
+   rel="noopener">
+
+   🔗 Track Shipment
+
+   </a>`
+  :
+  t.awb
+  ?
+  `<button
+   class="btn secondary"
+   onclick="trackByAWB('${esc(t.awb)}')">
+
+   🔎 Check AWB Tracking
+
+   </button>`
+  : ""
+ }
+
+
+ </div>`;
+
+}
+
+
+/* =========================================================
+   LOAD ORDERS
 ========================================================= */
 
 async function loadOrders(){
 
- const el = $("ordersList");
+ const el =
+ $("ordersList");
+
 
  const {
   data:{session}
  } =
  await sb.auth.getSession();
 
+
  if(!session){
 
   el.innerHTML =
-  '<div class="empty">My Orders ke liye login karein.</div>';
+  '<div class="empty">' +
+  'My Orders ke liye login karein.' +
+  '</div>';
 
   return;
+
  }
 
+
  el.innerHTML =
- '<div class="empty">Orders loading...</div>';
+ '<div class="empty">' +
+ 'Orders loading...' +
+ '</div>';
+
 
  const r =
  await sb
@@ -2077,23 +3298,31 @@ async function loadOrders(){
  .eq("user_id",session.user.id)
  .order("id",{ascending:false});
 
+
  if(r.error){
 
   el.innerHTML =
-  '<div class="empty">Orders load nahi ho rahe.<br>' +
+  '<div class="empty">' +
+  'Orders load nahi ho rahe.<br>' +
   esc(r.error.message) +
   '</div>';
 
   return;
+
  }
+
 
  if(!r.data?.length){
 
   el.innerHTML =
-  '<div class="empty">Abhi koi order nahi hai.</div>';
+  '<div class="empty">' +
+  'Abhi koi order nahi hai.' +
+  '</div>';
 
   return;
+
  }
+
 
  el.innerHTML =
  r.data.map(o => `
@@ -2104,64 +3333,439 @@ async function loadOrders(){
  Order #${esc(o.id)}
  </b>
 
+
  <p>
  ${esc(o.product_name || "Product")}
  ×
  ${esc(o.quantity || 1)}
  </p>
 
+
  <p>
  Total:
  ₹${money(o.total_amount)}
  </p>
+
 
  <p>
  Payment:
  ${esc(o.payment_method || "-")}
  </p>
 
+
+ <div style="margin:8px 0">
+
  <span class="badge">
  ${esc(o.order_status || "New")}
  </span>
 
- ${
- o.courier_name
- ? `
- <p>
- Courier:
- ${esc(o.courier_name)}
- </p>
- `
- : ""
- }
+ </div>
+
 
  ${
- o.tracking_number
- ? `
- <p>
- Tracking:
- ${esc(o.tracking_number)}
- </p>
- `
- : ""
+  o.courier_name
+  ?
+  `<p>
+   Courier:
+   <b>${esc(o.courier_name)}</b>
+   </p>`
+  : ""
  }
 
+
  ${
- o.tracking_url
- ? `
- <a
- class="btn"
- href="${esc(o.tracking_url)}"
- target="_blank">
- Track Shipment
- </a>
- `
- : ""
+  o.tracking_number
+  ?
+  `<p>
+   AWB:
+   <b>${esc(o.tracking_number)}</b>
+   </p>`
+  : ""
  }
+
+
+ ${
+  o.tracking_url
+  ?
+  `<a
+   class="btn green"
+   href="${esc(o.tracking_url)}"
+   target="_blank"
+   rel="noopener">
+
+   🚚 Track Shipment
+
+   </a>`
+  :
+  `<button
+   class="btn secondary"
+   onclick="trackMyOrder(${Number(o.id)})">
+
+   🚚 View Tracking
+
+   </button>`
+ }
+
+
+ <div
+ id="tracking-${Number(o.id)}">
+ </div>
+
 
  </div>
 
  `).join("");
+
+}
+
+
+/* =========================================================
+   TRACK MY ORDER
+========================================================= */
+
+async function trackMyOrder(orderId){
+
+ const box =
+ $("tracking-" + orderId);
+
+
+ if(!box)return;
+
+
+ box.innerHTML =
+ '<div class="tracking-box">' +
+ '<div class="shipping-loading">' +
+ '⏳ Tracking information load ho rahi hai...' +
+ '</div>' +
+ '</div>';
+
+
+ try{
+
+  const r =
+  await sb
+  .from("orders")
+  .select("*")
+  .eq("id",orderId)
+  .maybeSingle();
+
+
+  if(r.error)
+  throw new Error(r.error.message);
+
+
+  if(!r.data){
+
+   box.innerHTML =
+   '<div class="error">' +
+   'Order nahi mila.' +
+   '</div>';
+
+   return;
+
+  }
+
+
+  box.innerHTML =
+  trackingHTML(r.data);
+
+
+ }catch(error){
+
+  box.innerHTML =
+  '<div class="error">' +
+  esc(error.message) +
+  '</div>';
+
+ }
+
+}
+
+
+/* =========================================================
+   REFRESH ORDER TRACKING
+========================================================= */
+
+async function refreshOrderTracking(orderId){
+
+ await trackMyOrder(orderId);
+
+}
+
+
+/* =========================================================
+   AWB TRACKING
+========================================================= */
+
+async function trackByAWB(awb){
+
+ if(!awb){
+
+  return alert(
+   "AWB number available nahi hai."
+  );
+
+ }
+
+
+ $("modalRoot").innerHTML = `
+
+ <div class="modal">
+
+ <div class="box">
+
+ <button
+ class="close"
+ onclick="closeModal()">×</button>
+
+ <h2>🚚 AWB Tracking</h2>
+
+ <div class="notice">
+
+ AWB Number:
+ <b>${esc(awb)}</b>
+
+ </div>
+
+ <div id="awbTrackResult">
+
+ <div class="shipping-loading">
+ ⏳ Tracking check ho rahi hai...
+ </div>
+
+ </div>
+
+ </div>
+
+ </div>`;
+
+ try{
+
+  const response =
+  await fetch(
+   "/api/shiprocket",
+   {
+    method:"POST",
+    headers:{
+     "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+
+     action:"track",
+
+     awb:awb
+
+    })
+   }
+  );
+
+
+  const data =
+  await response.json();
+
+
+  if(!response.ok ||
+     data.success === false){
+
+   throw new Error(
+    data.error ||
+    data.message ||
+    "Tracking information nahi mili."
+   );
+
+  }
+
+
+  $("awbTrackResult").innerHTML =
+  trackingHTML(
+   data.data ||
+   data.tracking ||
+   data
+  );
+
+
+ }catch(error){
+
+  $("awbTrackResult").innerHTML = `
+
+  <div class="error">
+
+  ❌ ${esc(error.message)}
+
+  <br><br>
+
+  Tracking backend connect hone ke baad
+  live Shiprocket status yahan show hoga.
+
+  </div>`;
+
+ }
+
+}
+
+
+/* =========================================================
+   TRACK ORDER MODAL
+========================================================= */
+
+async function openTrack(){
+
+ closeModal();
+
+
+ $("modalRoot").innerHTML = `
+
+ <div class="modal">
+
+ <div class="box">
+
+ <button
+ class="close"
+ onclick="closeModal()">×</button>
+
+
+ <h2>🚚 Track Order</h2>
+
+
+ <div class="notice">
+
+ Order ID aur mobile number enter karke
+ apna order track karein.
+
+ </div>
+
+
+ <label>Order ID</label>
+
+ <input
+ id="tId"
+ type="number"
+ placeholder="Example: 123">
+
+
+ <label>Mobile</label>
+
+ <input
+ id="tPhone"
+ maxlength="10"
+ inputmode="numeric"
+ placeholder="10 digit mobile number">
+
+
+ <button
+ class="btn"
+ onclick="trackOrder()">
+
+ 🔎 Track Order
+
+ </button>
+
+
+ <div id="tResult"></div>
+
+ </div>
+
+ </div>`;
+
+}
+
+
+/* =========================================================
+   TRACK ORDER
+========================================================= */
+
+async function trackOrder(){
+
+ const id =
+ Number($("tId").value);
+
+
+ const phone =
+ $("tPhone").value.trim();
+
+
+ if(
+  !id ||
+  !/^[0-9]{10}$/.test(phone)
+ ){
+
+  return alert(
+   "Order ID aur valid mobile number bhariye."
+  );
+
+ }
+
+
+ const result =
+ $("tResult");
+
+
+ result.innerHTML =
+ '<div class="tracking-box">' +
+ '<div class="shipping-loading">' +
+ '⏳ Order tracking check ho rahi hai...' +
+ '</div>' +
+ '</div>';
+
+
+ try{
+
+  const r =
+  await sb.rpc(
+   "track_my_order",
+   {
+    order_id_input:id,
+    phone_input:phone
+   }
+  );
+
+
+  if(r.error){
+
+   result.innerHTML =
+   '<div class="error">' +
+   esc(r.error.message) +
+   '</div>';
+
+   return;
+
+  }
+
+
+  const o =
+  Array.isArray(r.data)
+  ? r.data[0]
+  : r.data;
+
+
+  if(!o){
+
+   result.innerHTML =
+   '<div class="error">' +
+   'Order nahi mila.' +
+   '</div>';
+
+   return;
+
+  }
+
+
+  result.innerHTML =
+  trackingHTML({
+   ...o,
+   id:id
+  });
+
+
+ }catch(error){
+
+  result.innerHTML =
+  '<div class="error">' +
+  esc(error.message) +
+  '</div>';
+
+ }
+
 }
 
 
@@ -2176,6 +3780,7 @@ async function loadAccount(){
  } =
  await sb.auth.getSession();
 
+
  if(!session){
 
   $("accountBox").innerHTML = `
@@ -2184,17 +3789,20 @@ async function loadAccount(){
 
   <h3>Login required</h3>
 
-  <button class="btn"
-  onclick="openAuth()">
-  Login / Sign Up
+  <button
+   class="btn"
+   onclick="openAuth()">
+
+   Login / Sign Up
+
   </button>
 
-  </div>
-
-  `;
+  </div>`;
 
   return;
+
  }
+
 
  const {data:p} =
  await sb
@@ -2203,13 +3811,18 @@ async function loadAccount(){
  .eq("id",session.user.id)
  .maybeSingle();
 
+
  $("accountBox").innerHTML = `
 
  <div class="order-card">
 
  <h3>
- ${esc(p?.full_name || "Customer")}
+ ${esc(
+  p?.full_name ||
+  "Customer"
+ )}
  </h3>
+
 
  <p>
 
@@ -2221,37 +3834,59 @@ async function loadAccount(){
 
  <br>
 
- ${esc(p?.phone || "")}
+ ${esc(
+  p?.phone || ""
+ )}
 
  </p>
 
- <button class="btn"
- onclick="showScreen('orders')">
- 📦 My Orders
+
+ <button
+  class="btn"
+  onclick="showScreen('orders')">
+
+  📦 My Orders
+
  </button>
 
- <button class="btn secondary"
- onclick="showNotifications()">
- 🔔 Notifications
+
+ <button
+  class="btn secondary"
+  onclick="openTrack()">
+
+  🚚 Track Order
+
  </button>
 
- <button class="btn secondary"
- onclick="openTrack()">
- 🚚 Track Order
+
+ <button
+  class="btn secondary"
+  onclick="showNotifications()">
+
+  🔔 Notifications
+
  </button>
 
- <button class="btn secondary"
- onclick="showPolicies()">
- ↩️ Return / Exchange
+
+ <button
+  class="btn secondary"
+  onclick="showPolicies()">
+
+  ↩️ Return / Exchange
+
  </button>
 
- <button class="btn secondary"
- onclick="sb.auth.signOut().then(loadAccount)">
- Logout
+
+ <button
+  class="btn secondary"
+  onclick="sb.auth.signOut().then(loadAccount)">
+
+  Logout
+
  </button>
 
- </div>
- `;
+ </div>`;
+
 }
 
 
@@ -2266,8 +3901,10 @@ async function showNotifications(){
  } =
  await sb.auth.getSession();
 
+
  if(!session)
  return openAuth();
+
 
  const r =
  await sb
@@ -2277,8 +3914,10 @@ async function showNotifications(){
  .order("created_at",{ascending:false})
  .limit(30);
 
+
  if(r.error)
  return alert(r.error.message);
+
 
  $("modalRoot").innerHTML = `
 
@@ -2286,148 +3925,39 @@ async function showNotifications(){
 
  <div class="box">
 
- <button class="close"
+ <button
+ class="close"
  onclick="closeModal()">×</button>
 
  <h2>🔔 Notifications</h2>
 
  ${
- (r.data || []).map(n => `
+  (r.data || []).map(n => `
 
- <div class="order-card">
+  <div class="order-card">
 
- <b>
- ${esc(n.title || "Aarvi Fashion")}
- </b>
+  <b>
+  ${esc(n.title || "Aarvi Fashion")}
+  </b>
 
- <p>
- ${esc(n.message || "")}
- </p>
+  <p>
+  ${esc(n.message || "")}
+  </p>
 
- </div>
+  </div>
 
- `).join("")
+  `).join("")
 
- ||
+  ||
 
- '<div class="empty">No notifications.</div>'
+  '<div class="empty">' +
+  'No notifications.' +
+  '</div>'
  }
 
  </div>
- </div>
- `;
-}
+ </div>`;
 
-
-/* =========================================================
-   TRACK
-========================================================= */
-
-async function openTrack(){
-
- closeModal();
-
- $("modalRoot").innerHTML = `
-
- <div class="modal">
-
- <div class="box">
-
- <button class="close"
- onclick="closeModal()">×</button>
-
- <h2>🚚 Track Order</h2>
-
- <label>Order ID</label>
-
- <input id="tId" type="number">
-
- <label>Mobile</label>
-
- <input id="tPhone" maxlength="10">
-
- <button class="btn"
- onclick="trackOrder()">
- Track
- </button>
-
- <div id="tResult"></div>
-
- </div>
- </div>
- `;
-}
-
-async function trackOrder(){
-
- const id =
- Number($("tId").value);
-
- const phone =
- $("tPhone").value.trim();
-
- if(
- !id ||
- !/^[0-9]{10}$/.test(phone)
- ){
-
-  return alert(
-   "Order ID aur valid mobile number bhariye."
-  );
- }
-
- const r =
- await sb.rpc(
- "track_my_order",
- {
-  order_id_input:id,
-  phone_input:phone
- }
- );
-
- if(r.error)
-
- return $("tResult").innerHTML =
- '<div class="error">' +
- esc(r.error.message) +
- '</div>';
-
- const o = r.data;
-
- if(!o)
-
- return $("tResult").innerHTML =
- '<div class="error">Order nahi mila.</div>';
-
- const s =
- o.order_status ||
- o.Order_status ||
- o.Order_states ||
- "New";
-
- $("tResult").innerHTML = `
-
- <div class="success">
-
- Order #${id} found ✅
-
- <br>
-
- Product:
- ${esc(
-  o.product_name ||
-  o.Product_name ||
-  "-"
- )}
-
- <br>
-
- <span class="badge">
- ${esc(s)}
- </span>
-
- </div>
- `;
 }
 
 
@@ -2443,24 +3973,28 @@ function showPolicies(){
 
  <div class="box">
 
- <button class="close"
+ <button
+ class="close"
  onclick="closeModal()">×</button>
+
 
  <h2>
  ↩️ Return / Exchange Policy
  </h2>
+
 
  <div class="policy">
 
  <b>Return / Exchange</b>
 
  <p>
- Return ya exchange request ke liye order ID,
- mobile number aur problem details ke saath
- Aarvi Fashion support se contact karein.
+ Return ya exchange request ke liye
+ order ID, mobile number aur problem details
+ ke saath Aarvi Fashion support se contact karein.
  </p>
 
  </div>
+
 
  <div class="policy">
 
@@ -2473,25 +4007,31 @@ function showPolicies(){
 
  </div>
 
+
  <div class="policy">
 
  <b>Refund</b>
 
  <p>
- Approved return/refund ka processing business
- verification ke baad kiya jayega.
+ Approved return/refund ka processing
+ business verification ke baad kiya jayega.
  </p>
 
  </div>
 
- <button class="btn"
+
+ <button
+ class="btn"
  onclick="contact()">
+
  WhatsApp Support
+
  </button>
 
+
  </div>
- </div>
- `;
+ </div>`;
+
 }
 
 
@@ -2502,9 +4042,13 @@ function showPolicies(){
 function contact(){
 
  window.open(
- "https://wa.me/916204117647?text=Hello%20Aarvi%20Fashion%2C%20I%20need%20help%20with%20my%20order",
- "_blank"
+  "https://wa.me/916204117647?text=" +
+  encodeURIComponent(
+   "Hello Aarvi Fashion, I need help with my order"
+  ),
+  "_blank"
  );
+
 }
 
 
@@ -2514,8 +4058,11 @@ function contact(){
 
 loadProducts();
 
+
 sb.auth.onAuthStateChange(() => {
+
  loadAccount();
+
 });
 
 </script>
