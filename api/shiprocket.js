@@ -9,7 +9,15 @@ export default async function handler(req, res) {
   try {
     const body = req.body || {};
 
-    const action = body.action || "rate";
+    /*
+    =========================================================
+    SHIPROCKET LOGIN DETAILS
+    Vercel Environment Variables:
+      SHIPROCKET_EMAIL
+      SHIPROCKET_PASSWORD
+      SHIPROCKET_PICKUP_PINCODE
+    =========================================================
+    */
 
     const email = process.env.SHIPROCKET_EMAIL;
     const password = process.env.SHIPROCKET_PASSWORD;
@@ -19,58 +27,74 @@ export default async function handler(req, res) {
     if (!email || !password) {
       return res.status(500).json({
         success: false,
-        error:
-          "SHIPROCKET_EMAIL or SHIPROCKET_PASSWORD missing in Vercel"
+        error: "Shiprocket login details missing in Vercel"
       });
     }
 
-    if (!pickupPincode) {
-      return res.status(500).json({
+    /*
+    =========================================================
+    SHIPROCKET LOGIN
+    =========================================================
+    */
+
+    const loginResponse = await fetch(
+      "https://apiv2.shiprocket.in/v1/external/auth/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email,
+          password
+        })
+      }
+    );
+
+    const loginData = await loginResponse.json();
+
+    if (!loginResponse.ok || !loginData.token) {
+      return res.status(401).json({
         success: false,
         error:
-          "SHIPROCKET_PICKUP_PINCODE missing in Vercel"
+          loginData.message ||
+          "Shiprocket login failed"
       });
     }
 
-    /* =====================================================
-       SHIPROCKET LOGIN
-    ===================================================== */
+    const token = loginData.token;
 
-    async function getToken() {
-      const response = await fetch(
-        "https://apiv2.shiprocket.in/v1/external/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            email,
-            password
-          })
-        }
-      );
+    /*
+    =========================================================
+    ACTION
+    =========================================================
 
-      const data = await response.json();
+    Default:
+      rate = shipping charge
 
-      if (!response.ok || !data.token) {
-        throw new Error(
-          data.message ||
-          "Shiprocket login failed"
-        );
-      }
+    Tracking:
+      action = "track"
+      awb = AWB number
 
-      return data.token;
-    }
+    Or:
+      action = "track"
+      shipmentId = Shiprocket shipment ID
+    */
 
-    const token = await getToken();
+    const action =
+      String(body.action || "rate").toLowerCase();
 
-    /* =====================================================
-       1. SHIPPING RATE
-       action = rate
-    ===================================================== */
+    /*
+    =========================================================
+    1. SHIPPING RATE
+    =========================================================
+    */
 
-    if (action === "rate") {
+    if (
+      action === "rate" ||
+      action === "shipping" ||
+      action === "shipping_rate"
+    ) {
       const {
         deliveryPincode,
         weight = 0.5,
@@ -78,10 +102,18 @@ export default async function handler(req, res) {
         declaredValue = 0
       } = body;
 
-      if (!/^[0-9]{6}$/.test(String(deliveryPincode || ""))) {
+      if (!deliveryPincode) {
         return res.status(400).json({
           success: false,
-          error: "Valid 6 digit delivery pincode required"
+          error: "Delivery pincode required"
+        });
+      }
+
+      if (!pickupPincode) {
+        return res.status(500).json({
+          success: false,
+          error:
+            "SHIPROCKET_PICKUP_PINCODE missing in Vercel"
         });
       }
 
@@ -90,10 +122,10 @@ export default async function handler(req, res) {
         delivery_postcode: String(deliveryPincode),
         weight: String(weight),
         cod: String(cod),
-        declared_value: String(declaredValue)
+        declared_value: String(declaredValue || 0)
       });
 
-      const response = await fetch(
+      const rateResponse = await fetch(
         "https://apiv2.shiprocket.in/v1/external/courier/serviceability?" +
           params.toString(),
         {
@@ -105,19 +137,20 @@ export default async function handler(req, res) {
         }
       );
 
-      const data = await response.json();
+      const rateData = await rateResponse.json();
 
-      if (!response.ok) {
+      if (!rateResponse.ok) {
         return res.status(400).json({
           success: false,
           error:
-            data.message ||
+            rateData.message ||
+            rateData.error ||
             "Shipping rate check failed"
         });
       }
 
       const couriers =
-        data?.data?.available_courier_companies || [];
+        rateData?.data?.available_courier_companies || [];
 
       if (!couriers.length) {
         return res.status(404).json({
@@ -126,6 +159,10 @@ export default async function handler(req, res) {
             "Is pincode ke liye courier available nahi mila."
         });
       }
+
+      /*
+      Lowest shipping charge courier
+      */
 
       const sorted = [...couriers].sort(
         (a, b) =>
@@ -137,6 +174,7 @@ export default async function handler(req, res) {
 
       return res.status(200).json({
         success: true,
+        type: "shipping_rate",
 
         shipping_charge:
           Number(best.freight_charge || 0),
@@ -150,579 +188,247 @@ export default async function handler(req, res) {
         estimated_delivery:
           best.etd || "",
 
-        delivery_pincode:
-          String(deliveryPincode),
+        cod_charges:
+          Number(best.cod_charges || 0),
 
-        all_couriers: couriers.map(c => ({
-          courier_name:
-            c.courier_name || "",
-
-          courier_id:
-            c.courier_company_id || null,
-
-          freight_charge:
-            Number(c.freight_charge || 0),
-
-          etd:
-            c.etd || ""
-        }))
+        rate:
+          Number(best.rate || best.freight_charge || 0)
       });
     }
 
-    /* =====================================================
-       2. CREATE SHIPROCKET ORDER
-       action = create_order
-    ===================================================== */
+    /*
+    =========================================================
+    2. TRACKING
+    =========================================================
+    */
 
-    if (action === "create_order") {
-      const {
-        orderId,
-        customerName,
-        customerPhone,
-        customerEmail = "",
-        address,
-        city,
-        state,
-        pincode,
-        productName,
-        quantity = 1,
-        price = 0,
-        paymentMethod = "COD",
-        weight = 0.5,
-        length = 20,
-        breadth = 15,
-        height = 5
-      } = body;
+    if (
+      action === "track" ||
+      action === "tracking"
+    ) {
+      let awb =
+        body.awb ||
+        body.awb_code ||
+        body.awbCode ||
+        "";
 
-      if (!orderId) {
-        return res.status(400).json({
-          success: false,
-          error: "Website order ID required"
-        });
-      }
+      const shipmentId =
+        body.shipmentId ||
+        body.shipment_id ||
+        "";
 
-      if (!customerName) {
-        return res.status(400).json({
-          success: false,
-          error: "Customer name required"
-        });
-      }
+      /*
+      -----------------------------------------
+      If AWB is not supplied but shipment ID is
+      supplied, get shipment details first.
+      -----------------------------------------
+      */
 
-      if (!customerPhone) {
-        return res.status(400).json({
-          success: false,
-          error: "Customer phone required"
-        });
-      }
-
-      if (!address || !city || !state || !pincode) {
-        return res.status(400).json({
-          success: false,
-          error:
-            "Complete customer address required"
-        });
-      }
-
-      const orderPayload = {
-        order_id: String(orderId),
-
-        order_date:
-          new Date().toISOString().slice(0, 19),
-
-        pickup_location:
-          process.env.SHIPROCKET_PICKUP_LOCATION ||
-          "Primary",
-
-        channel_id:
-          process.env.SHIPROCKET_CHANNEL_ID
-            ? Number(
-                process.env.SHIPROCKET_CHANNEL_ID
-              )
-            : undefined,
-
-        billing_customer_name:
-          customerName,
-
-        billing_last_name: "",
-
-        billing_address:
-          address,
-
-        billing_address_2: "",
-
-        billing_city:
-          city,
-
-        billing_pincode:
-          String(pincode),
-
-        billing_state:
-          state,
-
-        billing_country:
-          "India",
-
-        billing_email:
-          customerEmail,
-
-        billing_phone:
-          customerPhone,
-
-        shipping_is_billing:
-          true,
-
-        order_items: [
+      if (!awb && shipmentId) {
+        const shipmentResponse = await fetch(
+          "https://apiv2.shiprocket.in/v1/external/shipments/" +
+            encodeURIComponent(String(shipmentId)),
           {
-            name:
-              productName || "Aarvi Fashion Product",
-
-            sku:
-              "AARVI-" + String(orderId),
-
-            units:
-              Number(quantity),
-
-            selling_price:
-              Number(price),
-
-            discount:
-              0,
-
-            tax:
-              0,
-
-            hsn:
-              ""
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+            }
           }
-        ],
+        );
 
-        payment_method:
-          String(paymentMethod).toUpperCase() ===
-          "COD"
-            ? "COD"
-            : "Prepaid",
+        const shipmentData =
+          await shipmentResponse.json();
 
-        shipping_charges:
-          0,
-
-        giftwrap_charges:
-          0,
-
-        transaction_charges:
-          0,
-
-        total_discount:
-          0,
-
-        sub_total:
-          Number(price) * Number(quantity),
-
-        length:
-          Number(length),
-
-        breadth:
-          Number(breadth),
-
-        height:
-          Number(height),
-
-        weight:
-          Number(weight)
-      };
-
-      const response = await fetch(
-        "https://apiv2.shiprocket.in/v1/external/orders/create/adhoc",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization:
-              `Bearer ${token}`
-          },
-          body: JSON.stringify(orderPayload)
+        if (!shipmentResponse.ok) {
+          return res.status(400).json({
+            success: false,
+            error:
+              shipmentData.message ||
+              shipmentData.error ||
+              "Shipment details nahi mile"
+          });
         }
-      );
 
-      const data = await response.json();
+        /*
+        Different Shiprocket response structures
+        */
 
-      if (!response.ok) {
-        return res.status(400).json({
-          success: false,
-          error:
-            data.message ||
-            data.error ||
-            "Shiprocket order create failed",
-          shiprocket_response: data
-        });
+        awb =
+          shipmentData?.data?.awb ||
+          shipmentData?.data?.awb_code ||
+          shipmentData?.data?.shipment?.awb ||
+          shipmentData?.data?.shipment?.awb_code ||
+          shipmentData?.awb ||
+          shipmentData?.awb_code ||
+          "";
       }
 
-      return res.status(200).json({
-        success: true,
-
-        message:
-          "Shiprocket order created",
-
-        shiprocket_order_id:
-          data.order_id ||
-          data.orderId ||
-          null,
-
-        shipment_id:
-          data.shipment_id ||
-          data.shipmentId ||
-          null,
-
-        status:
-          data.status ||
-          "Created",
-
-        response: data
-      });
-    }
-
-    /* =====================================================
-       3. GENERATE AWB
-       action = generate_awb
-    ===================================================== */
-
-    if (action === "generate_awb") {
-      const {
-        shipmentId,
-        courierId
-      } = body;
-
-      if (!shipmentId) {
-        return res.status(400).json({
-          success: false,
-          error: "Shipment ID required"
-        });
-      }
-
-      const payload = {
-        shipment_id:
-          Number(shipmentId)
-      };
-
-      if (courierId) {
-        payload.courier_id =
-          Number(courierId);
-      }
-
-      const response = await fetch(
-        "https://apiv2.shiprocket.in/v1/external/courier/assign/awb",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization:
-              `Bearer ${token}`
-          },
-          body: JSON.stringify(payload)
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        return res.status(400).json({
-          success: false,
-          error:
-            data.message ||
-            data.error ||
-            "AWB generate failed",
-          response: data
-        });
-      }
-
-      const shipment =
-        data?.response?.data ||
-        data?.data ||
-        data;
-
-      return res.status(200).json({
-        success: true,
-
-        awb_code:
-          shipment?.awb_code ||
-          shipment?.awb ||
-          data?.awb_code ||
-          "",
-
-        courier_name:
-          shipment?.courier_name ||
-          data?.courier_name ||
-          "",
-
-        courier_company_id:
-          shipment?.courier_company_id ||
-          data?.courier_company_id ||
-          null,
-
-        shipment_id:
-          Number(shipmentId),
-
-        response:
-          data
-      });
-    }
-
-    /* =====================================================
-       4. REQUEST PICKUP
-       action = pickup
-    ===================================================== */
-
-    if (action === "pickup") {
-      const {
-        shipmentId,
-        pickupDate
-      } = body;
-
-      if (!shipmentId) {
-        return res.status(400).json({
-          success: false,
-          error: "Shipment ID required"
-        });
-      }
-
-      const payload = {
-        shipment_id: [
-          Number(shipmentId)
-        ]
-      };
-
-      if (pickupDate) {
-        payload.pickup_date = [
-          pickupDate
-        ];
-      }
-
-      const response = await fetch(
-        "https://apiv2.shiprocket.in/v1/external/courier/generate/pickup",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization:
-              `Bearer ${token}`
-          },
-          body: JSON.stringify(payload)
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        return res.status(400).json({
-          success: false,
-          error:
-            data.message ||
-            data.error ||
-            "Pickup request failed",
-          response: data
-        });
-      }
-
-      return res.status(200).json({
-        success: true,
-        message:
-          "Pickup request submitted",
-        response:
-          data
-      });
-    }
-
-    /* =====================================================
-       5. TRACK AWB
-       action = track
-    ===================================================== */
-
-    if (action === "track") {
-      const {
-        awb
-      } = body;
+      /*
+      -----------------------------------------
+      AWB required
+      -----------------------------------------
+      */
 
       if (!awb) {
         return res.status(400).json({
           success: false,
-          error: "AWB number required"
+          error:
+            "Tracking ke liye AWB number required hai."
         });
       }
 
-      const response = await fetch(
+      /*
+      -----------------------------------------
+      Shiprocket AWB Tracking API
+      -----------------------------------------
+      */
+
+      const trackResponse = await fetch(
         "https://apiv2.shiprocket.in/v1/external/courier/track/awb/" +
           encodeURIComponent(String(awb)),
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization:
-              `Bearer ${token}`
+            Authorization: `Bearer ${token}`
           }
         }
       );
 
-      const data = await response.json();
+      const trackData =
+        await trackResponse.json();
 
-      if (!response.ok) {
+      if (!trackResponse.ok) {
         return res.status(400).json({
           success: false,
           error:
-            data.message ||
-            data.error ||
-            "Tracking failed",
-          response: data
+            trackData.message ||
+            trackData.error ||
+            "Tracking information nahi mili",
+          raw: trackData
         });
       }
+
+      /*
+      -----------------------------------------
+      Tracking data normalize
+      -----------------------------------------
+      */
+
+      const trackingData =
+        trackData?.tracking_data ||
+        trackData?.data ||
+        trackData;
+
+      const shipmentTrack =
+        trackingData?.shipment_track?.[0] ||
+        trackingData?.shipment_track ||
+        {};
+
+      const shipmentTrackActivities =
+        trackingData?.shipment_track_activities ||
+        trackingData?.shipment_track_activities ||
+        [];
+
+      const courierName =
+        shipmentTrack?.courier_name ||
+        trackingData?.courier_name ||
+        trackingData?.courier ||
+        "";
+
+      const currentStatus =
+        shipmentTrack?.current_status ||
+        shipmentTrack?.status ||
+        trackingData?.current_status ||
+        trackingData?.status ||
+        "";
+
+      const statusCode =
+        shipmentTrack?.status_code ||
+        trackingData?.status_code ||
+        null;
+
+      const etd =
+        shipmentTrack?.edd ||
+        shipmentTrack?.etd ||
+        trackingData?.edd ||
+        trackingData?.etd ||
+        "";
+
+      const deliveredDate =
+        shipmentTrack?.delivered_date ||
+        trackingData?.delivered_date ||
+        "";
+
+      const pickupDate =
+        shipmentTrack?.pickup_date ||
+        trackingData?.pickup_date ||
+        "";
+
+      const destination =
+        shipmentTrack?.destination ||
+        trackingData?.destination ||
+        "";
+
+      const origin =
+        shipmentTrack?.origin ||
+        trackingData?.origin ||
+        "";
+
+      /*
+      Shiprocket tracking URL
+      */
+
+      const trackingUrl =
+        trackingData?.track_url ||
+        shipmentTrack?.track_url ||
+        `https://www.shiprocket.in/shipment-tracking/`;
 
       return res.status(200).json({
         success: true,
+        type: "tracking",
 
-        awb:
-          String(awb),
+        awb: String(awb),
 
-        tracking:
-          data,
+        courier_name: courierName,
 
-        status:
-          data?.tracking_data?.shipment_status ||
-          data?.tracking_data?.shipment_status_name ||
-          data?.tracking_data?.status ||
-          "",
+        current_status: currentStatus,
 
-        courier_name:
-          data?.tracking_data?.courier_name ||
-          "",
+        status_code: statusCode,
 
-        etd:
-          data?.tracking_data?.etd ||
-          "",
+        estimated_delivery: etd,
 
-        current_location:
-          data?.tracking_data?.current_location ||
-          "",
+        delivered_date: deliveredDate,
 
-        scans:
-          data?.tracking_data?.shipment_track_activities ||
-          []
+        pickup_date: pickupDate,
+
+        origin: origin,
+
+        destination: destination,
+
+        tracking_url: trackingUrl,
+
+        activities: Array.isArray(
+          shipmentTrackActivities
+        )
+          ? shipmentTrackActivities
+          : [],
+
+        raw: trackData
       });
     }
 
-    /* =====================================================
-       6. SHIPMENT DETAILS
-       action = shipment
-    ===================================================== */
-
-    if (action === "shipment") {
-      const {
-        shipmentId
-      } = body;
-
-      if (!shipmentId) {
-        return res.status(400).json({
-          success: false,
-          error: "Shipment ID required"
-        });
-      }
-
-      const response = await fetch(
-        "https://apiv2.shiprocket.in/v1/external/shipments/" +
-          encodeURIComponent(String(shipmentId)),
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization:
-              `Bearer ${token}`
-          }
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        return res.status(400).json({
-          success: false,
-          error:
-            data.message ||
-            data.error ||
-            "Shipment details failed",
-          response: data
-        });
-      }
-
-      return res.status(200).json({
-        success: true,
-        shipment:
-          data
-      });
-    }
-
-    /* =====================================================
-       7. LABEL
-       action = label
-    ===================================================== */
-
-    if (action === "label") {
-      const {
-        shipmentId
-      } = body;
-
-      if (!shipmentId) {
-        return res.status(400).json({
-          success: false,
-          error: "Shipment ID required"
-        });
-      }
-
-      const response = await fetch(
-        "https://apiv2.shiprocket.in/v1/external/courier/generate/label",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization:
-              `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            shipment_id: [
-              Number(shipmentId)
-            ]
-          })
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        return res.status(400).json({
-          success: false,
-          error:
-            data.message ||
-            data.error ||
-            "Label generation failed",
-          response: data
-        });
-      }
-
-      return res.status(200).json({
-        success: true,
-        label_url:
-          data?.label_url ||
-          data?.response?.label_url ||
-          "",
-        response:
-          data
-      });
-    }
-
-    /* =====================================================
-       UNKNOWN ACTION
-    ===================================================== */
+    /*
+    =========================================================
+    UNKNOWN ACTION
+    =========================================================
+    */
 
     return res.status(400).json({
       success: false,
       error:
-        "Invalid action. Use rate, create_order, generate_awb, pickup, track, shipment or label."
+        "Invalid action. Use 'rate' or 'track'."
     });
 
   } catch (error) {
