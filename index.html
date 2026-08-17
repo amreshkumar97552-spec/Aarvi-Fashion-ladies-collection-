@@ -822,140 +822,121 @@ body{
 </style>
 
 <style>
-/* ===== PRODUCT CARDS — COMPACT, SQUARE & SECOND-PHOTO STYLE ===== */
+/* ===== PRODUCT CARD: COMPACT + EQUAL SQUARE STYLE ===== */
+
 .products{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:14px;
   align-items:stretch;
 }
+
 .card{
   height:100%;
-  min-width:0;
   display:flex;
   flex-direction:column;
-  border-radius:14px;
-  overflow:hidden;
+  min-width:0;
 }
+
 .photo{
   width:100%;
   aspect-ratio:1 / 1;
   height:auto !important;
   flex:none;
-  background:#f7f3f8;
 }
-.photo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+
 .info{
-  padding:8px 9px 9px !important;
+  flex:1;
   display:flex;
   flex-direction:column;
-  gap:0;
   min-width:0;
-  flex:1;
 }
+
 .name{
   display:-webkit-box;
   -webkit-box-orient:vertical;
   -webkit-line-clamp:2;
   overflow:hidden;
-  min-height:0;
-  max-height:2.5em;
+  min-height:2.45em;
   line-height:1.22;
-  font-size:12px !important;
-  font-weight:500 !important;
-  color:#302932;
-  margin:0 0 3px;
+  font-size:11px !important;
+  font-weight:600 !important;
 }
+
 .muted{
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
-  font-size:10px !important;
-  line-height:1.2;
-  margin:0 0 3px;
 }
+
 .price{
-  display:flex;
-  align-items:baseline;
-  flex-wrap:nowrap;
-  gap:3px;
-  font-size:17px !important;
-  line-height:1.15;
+  font-size:16px !important;
+  line-height:1.2;
   white-space:nowrap;
-  margin:2px 0 3px !important;
-  overflow:hidden;
 }
-.price .old{
-  flex:none;
+
+.old{
   font-size:10px !important;
   font-weight:400 !important;
-  color:#999 !important;
   text-decoration:line-through;
-  margin-left:2px !important;
+  color:#999 !important;
+  margin-left:4px;
 }
+
 .discount-text{
-  flex:none;
-  font-size:9px !important;
-  font-weight:500 !important;
-  color:#3d8b65 !important;
+  font-size:9px;
+  font-weight:600;
   white-space:nowrap;
 }
-.discount-pill{
-  font-size:9px !important;
-  padding:4px 7px !important;
-  border-radius:12px !important;
-}
-.card-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:5px;
+
+.info .btn{
   margin-top:5px;
 }
-.card-actions .btn{
-  width:100%;
-  min-width:0;
-  margin:0 !important;
-  padding:7px 3px !important;
-  border-radius:8px !important;
-  font-size:10px !important;
-  line-height:1.1;
-  white-space:nowrap;
-}
-@media(max-width:900px){
-  .products{
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:10px;
-  }
-}
+
 @media(max-width:650px){
-  .products{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:10px;
+  .name{
+    font-size:9.5px !important;
+    min-height:2.35em;
   }
-  .info{padding:7px 7px 8px !important}
-  .name{font-size:11px !important;max-height:2.45em}
-  .muted{font-size:9px !important}
-  .price{font-size:15px !important}
-  .price .old{font-size:9px !important}
-  .discount-text{font-size:8px !important}
-  .card-actions .btn{font-size:9px !important;padding:7px 2px !important}
+
+  .price{
+    font-size:13px !important;
+  }
+
+  .old{
+    font-size:8px !important;
+    font-weight:400 !important;
+  }
+
+  .discount-text{
+    font-size:8px;
+  }
 }
+
 @media(max-width:430px){
-  .products{gap:8px}
-  .card{border-radius:12px}
-  .info{padding:6px !important}
-  .name{font-size:10px !important}
-  .muted{font-size:8px !important}
-  .price{font-size:14px !important}
-  .price .old{font-size:8px !important}
-  .discount-text{font-size:7.5px !important}
-  .card-actions{gap:4px}
-  .card-actions .btn{font-size:8px !important;padding:6px 1px !important}
+  .name{
+    font-size:9px !important;
+    min-height:2.3em;
+  }
+
+  .price{
+    font-size:12px !important;
+  }
+
+  .old{
+    font-size:7.5px !important;
+    font-weight:400 !important;
+  }
 }
+</style>
+
+
+<style>
+/* ===== MANUAL AWB EDITOR ===== */
+.awb-admin-box{margin-top:10px;padding:12px;border:1px solid #ead4dd;border-radius:12px;background:#fff7fa}
+.awb-admin-title{font-weight:800;margin-bottom:8px}
+.awb-admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.awb-admin-grid input{width:100%;padding:10px;border:1px solid #e7cfd8;border-radius:9px;background:#fff}
+.awb-admin-actions{display:flex;gap:8px;margin-top:8px}
+.awb-admin-actions button{flex:1}
+@media(max-width:650px){.awb-admin-grid{grid-template-columns:1fr}.awb-admin-actions{flex-direction:column}}
 </style>
 
 </head>
@@ -1790,23 +1771,24 @@ function productCard(p){
  </div>
 
 
- <div class="card-actions">
-
  <button
  class="btn"
  ${stock < 1 ? "disabled" : ""}
  onclick="buyNow(${Number(p.id)})">
+
  Buy Now
+
  </button>
+
 
  <button
  class="btn secondary"
  ${stock < 1 ? "disabled" : ""}
  onclick="addToCart(${Number(p.id)})">
- Add to Cart
- </button>
 
- </div>
+ Add to Cart
+
+ </button>
 
  </div>
 
@@ -4057,11 +4039,103 @@ async function loadOrders(){
  id="tracking-${Number(o.id)}">
  </div>
 
+ <div class="awb-admin-box">
+  <div class="awb-admin-title">🚚 Shipment / AWB</div>
+
+  <div class="awb-admin-grid">
+   <input
+    id="awb-${Number(o.id)}"
+    value="${esc(o.tracking_number || o.awb_code || o.awb || "")}"
+    placeholder="Shiprocket AWB number">
+
+   <input
+    id="courier-${Number(o.id)}"
+    value="${esc(o.courier_name || "")}"
+    placeholder="Courier name">
+  </div>
+
+  <div class="awb-admin-actions">
+   <button
+    class="btn"
+    onclick="saveManualAWB(${Number(o.id)})">
+    💾 Save AWB & Enable Tracking
+   </button>
+
+   <button
+    class="btn secondary"
+    onclick="trackMyOrder(${Number(o.id)})">
+    🔎 Check Tracking
+   </button>
+  </div>
+ </div>
 
  </div>
 
  `).join("");
 
+}
+
+
+/* =========================================================
+   MANUAL SHIPROCKET AWB SAVE
+   User Shiprocket me order manually add karke
+   AWB yahan paste kar sakta hai.
+========================================================= */
+
+async function saveManualAWB(orderId){
+
+ const awbInput = $("awb-" + orderId);
+ const courierInput = $("courier-" + orderId);
+
+ const awb =
+  awbInput?.value.trim() || "";
+
+ const courier =
+  courierInput?.value.trim() || "";
+
+ if(!awb){
+  return alert("Shiprocket AWB number daliye.");
+ }
+
+ try{
+
+  const trackingUrl =
+   "https://www.shiprocket.in/shipment-tracking/" +
+   encodeURIComponent(awb);
+
+  const update = {
+   tracking_number: awb,
+   tracking_url: trackingUrl,
+   courier_name: courier || null,
+   tracking_status: "Shipment Booked"
+  };
+
+  const r =
+   await sb
+   .from("orders")
+   .update(update)
+   .eq("id",Number(orderId));
+
+  if(r.error){
+   throw new Error(r.error.message);
+  }
+
+  alert(
+   "AWB save ho gaya. ✅\n\n" +
+   "AWB: " + awb +
+   (courier ? "\nCourier: " + courier : "") +
+   "\n\nAb Track Order se tracking check kar sakte hain."
+  );
+
+  await loadOrders();
+
+ }catch(error){
+
+  alert(
+   "AWB save nahi hua. ❌\n\n" +
+   (error?.message || "Database update failed")
+  );
+ }
 }
 
 
