@@ -931,19 +931,12 @@ body{
   .old{font-size:6.5px !important}
   .info .btn{font-size:7.5px !important;padding:5px 3px !important}
 }
+
+/* ===== PREPAID 5% DISCOUNT ===== */
+.prepaid-off{color:#26723a;font-weight:800;font-size:11px;margin-top:6px}
 </style>
 
 
-<style>
-/* ===== MANUAL AWB EDITOR ===== */
-.awb-admin-box{margin-top:10px;padding:12px;border:1px solid #ead4dd;border-radius:12px;background:#fff7fa}
-.awb-admin-title{font-weight:800;margin-bottom:8px}
-.awb-admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.awb-admin-grid input{width:100%;padding:10px;border:1px solid #e7cfd8;border-radius:9px;background:#fff}
-.awb-admin-actions{display:flex;gap:8px;margin-top:8px}
-.awb-admin-actions button{flex:1}
-@media(max-width:650px){.awb-admin-grid{grid-template-columns:1fr}.awb-admin-actions{flex-direction:column}}
-</style>
 
 </head>
 
@@ -1225,6 +1218,12 @@ async function createShiprocketOrder(orderId, paymentMethod, paymentId){
     shippingCharge || 0
    ),
 
+   discount:Number(
+    paymentMethod === "Online"
+    ? ((Number(currentProduct?.price || 0) * Number($('oQty')?.value || qty || 1)) * PREPAID_DISCOUNT_PERCENT / 100)
+    : 0
+   ),
+
    paymentMethod:String(
     paymentMethod || "COD"
    ),
@@ -1400,6 +1399,8 @@ let qty = 1;
 let shippingCharge = 0;
 
 let shippingChecked = false;
+
+const PREPAID_DISCOUNT_PERCENT = 5;
 
 
 /* =========================================================
@@ -2704,81 +2705,61 @@ function pinChanged(){
    TOTAL
 ========================================================= */
 
+function getPrepaidDiscount(){
+
+ const pay = $("oPay")?.value || "COD";
+ const q = Number($("oQty")?.value || qty || 1);
+ const productTotal = Number(currentProduct?.price || 0) * q;
+
+ return pay === "Online"
+  ? productTotal * PREPAID_DISCOUNT_PERCENT / 100
+  : 0;
+}
+
 function updateOrderTotal(){
 
  if(!currentProduct)return;
 
+ const q = Number($("oQty")?.value || qty || 1);
+ const productTotal = Number(currentProduct.price || 0) * q;
+ const prepaidDiscount = getPrepaidDiscount();
+ const payableProductTotal = Math.max(0, productTotal - prepaidDiscount);
+ const total = payableProductTotal + Number(shippingCharge || 0);
 
- const q =
- Number(
-  $("oQty")?.value ||
-  qty ||
-  1
- );
-
-
- const productTotal =
- Number(currentProduct.price || 0) * q;
-
-
- const total =
- productTotal +
- Number(shippingCharge || 0);
-
-
- const el =
- $("orderTotalBox");
-
-
+ const el = $("orderTotalBox");
  if(!el)return;
 
-
  el.innerHTML = `
-
  <div class="total-box">
 
- <div class="total-line">
+  <div class="total-line">
+   <span>Product Total</span>
+   <b>₹${money(productTotal)}</b>
+  </div>
 
- <span>Product Total</span>
+  ${prepaidDiscount > 0 ? `
+  <div class="total-line" style="color:#26723a">
+   <span>Advance Payment Discount (${PREPAID_DISCOUNT_PERCENT}%)</span>
+   <b>- ₹${money(prepaidDiscount)}</b>
+  </div>` : ""}
 
- <b>
- ₹${money(productTotal)}
- </b>
+  <div class="total-line">
+   <span>Delivery</span>
+   <b>${shippingChecked ? "₹" + money(shippingCharge) : "Check PIN"}</b>
+  </div>
 
- </div>
+  <div class="total-line grand-total">
+   <span>Total</span>
+   <span>₹${money(total)}</span>
+  </div>
 
-
- <div class="total-line">
-
- <span>Delivery</span>
-
- <b>
-
- ${
-  shippingChecked
-  ? "₹" + money(shippingCharge)
-  : "Check PIN"
- }
-
- </b>
-
- </div>
-
-
- <div class="total-line grand-total">
-
- <span>Total</span>
-
- <span>
- ₹${money(total)}
- </span>
+  ${prepaidDiscount > 0 ? `
+  <div class="muted" style="margin-top:7px;color:#26723a;font-weight:700">
+   ✨ ${PREPAID_DISCOUNT_PERCENT}% advance-payment discount applied
+  </div>` : ""}
 
  </div>
-
- </div>
-
  `;
-
 }
 
 
@@ -2814,6 +2795,10 @@ function paymentChanged(){
   UPI • PhonePe • Google Pay • Paytm •
   Cards • Net Banking
 
+  </div>
+
+  <div style="margin-top:8px;color:#26723a;font-weight:800">
+  ✨ Advance payment par ${PREPAID_DISCOUNT_PERCENT}% OFF
   </div>
 
   `;
@@ -3027,7 +3012,13 @@ async function openRazorpayPayment(
    pin,
 
    shipping_charge:
-   String(shippingCharge)
+   String(shippingCharge),
+
+   prepaid_discount_percent:
+   String(PREPAID_DISCOUNT_PERCENT),
+
+   prepaid_discount_amount:
+   String(prepaidDiscount)
 
   },
 
@@ -3129,10 +3120,21 @@ async function openRazorpayPayment(
 
    }catch(shipError){
 
-    console.warn(
+    console.error(
      "Shiprocket order create error:",
      shipError
     );
+
+    closeModal();
+
+    alert(
+     "Payment successful hai, lekin Shiprocket shipment create nahi hua. ❌\n\n" +
+     "Order website me save hai.\n\n" +
+     "Reason: " + (shipError?.message || "Shiprocket error")
+    );
+
+    showScreen("orders");
+    return;
 
    }
 
@@ -3473,10 +3475,20 @@ async function placeOrder(){
 
  }catch(shipError){
 
-  console.warn(
+  console.error(
    "Shiprocket order create error:",
    shipError
   );
+
+  closeModal();
+
+  alert(
+   "Order website me save ho gaya, lekin Shiprocket shipment create nahi hua. ❌\n\n" +
+   "Reason: " + (shipError?.message || "Shiprocket error")
+  );
+
+  showScreen("orders");
+  return;
 
  }
 
@@ -4045,103 +4057,11 @@ async function loadOrders(){
  id="tracking-${Number(o.id)}">
  </div>
 
- <div class="awb-admin-box">
-  <div class="awb-admin-title">🚚 Shipment / AWB</div>
-
-  <div class="awb-admin-grid">
-   <input
-    id="awb-${Number(o.id)}"
-    value="${esc(o.tracking_number || o.awb_code || o.awb || "")}"
-    placeholder="Shiprocket AWB number">
-
-   <input
-    id="courier-${Number(o.id)}"
-    value="${esc(o.courier_name || "")}"
-    placeholder="Courier name">
-  </div>
-
-  <div class="awb-admin-actions">
-   <button
-    class="btn"
-    onclick="saveManualAWB(${Number(o.id)})">
-    💾 Save AWB & Enable Tracking
-   </button>
-
-   <button
-    class="btn secondary"
-    onclick="trackMyOrder(${Number(o.id)})">
-    🔎 Check Tracking
-   </button>
-  </div>
- </div>
 
  </div>
 
  `).join("");
 
-}
-
-
-/* =========================================================
-   MANUAL SHIPROCKET AWB SAVE
-   User Shiprocket me order manually add karke
-   AWB yahan paste kar sakta hai.
-========================================================= */
-
-async function saveManualAWB(orderId){
-
- const awbInput = $("awb-" + orderId);
- const courierInput = $("courier-" + orderId);
-
- const awb =
-  awbInput?.value.trim() || "";
-
- const courier =
-  courierInput?.value.trim() || "";
-
- if(!awb){
-  return alert("Shiprocket AWB number daliye.");
- }
-
- try{
-
-  const trackingUrl =
-   "https://www.shiprocket.in/shipment-tracking/" +
-   encodeURIComponent(awb);
-
-  const update = {
-   tracking_number: awb,
-   tracking_url: trackingUrl,
-   courier_name: courier || null,
-   tracking_status: "Shipment Booked"
-  };
-
-  const r =
-   await sb
-   .from("orders")
-   .update(update)
-   .eq("id",Number(orderId));
-
-  if(r.error){
-   throw new Error(r.error.message);
-  }
-
-  alert(
-   "AWB save ho gaya. ✅\n\n" +
-   "AWB: " + awb +
-   (courier ? "\nCourier: " + courier : "") +
-   "\n\nAb Track Order se tracking check kar sakte hain."
-  );
-
-  await loadOrders();
-
- }catch(error){
-
-  alert(
-   "AWB save nahi hua. ❌\n\n" +
-   (error?.message || "Database update failed")
-  );
- }
 }
 
 
