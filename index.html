@@ -820,6 +820,113 @@ body{
 }
 
 </style>
+
+<style>
+/* ===== PRODUCT CARD: COMPACT + EQUAL SQUARE STYLE ===== */
+
+.products{
+  align-items:stretch;
+}
+
+.card{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+
+.photo{
+  width:100%;
+  aspect-ratio:1 / 1;
+  height:auto !important;
+  flex:none;
+}
+
+.info{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+
+.name{
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
+  min-height:2.45em;
+  line-height:1.22;
+  font-size:11px !important;
+  font-weight:600 !important;
+}
+
+.muted{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.price{
+  font-size:16px !important;
+  line-height:1.2;
+  white-space:nowrap;
+}
+
+.old{
+  font-size:10px !important;
+  font-weight:400 !important;
+  text-decoration:line-through;
+  color:#999 !important;
+  margin-left:4px;
+}
+
+.discount-text{
+  font-size:9px;
+  font-weight:600;
+  white-space:nowrap;
+}
+
+.info .btn{
+  margin-top:5px;
+}
+
+@media(max-width:650px){
+  .name{
+    font-size:9.5px !important;
+    min-height:2.35em;
+  }
+
+  .price{
+    font-size:13px !important;
+  }
+
+  .old{
+    font-size:8px !important;
+    font-weight:400 !important;
+  }
+
+  .discount-text{
+    font-size:8px;
+  }
+}
+
+@media(max-width:430px){
+  .name{
+    font-size:9px !important;
+    min-height:2.3em;
+  }
+
+  .price{
+    font-size:12px !important;
+  }
+
+  .old{
+    font-size:7.5px !important;
+    font-weight:400 !important;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -1055,6 +1162,199 @@ supabase.createClient(
  SUPABASE_URL,
  SUPABASE_KEY
 );
+
+
+/* =========================================================
+   SHIPROCKET CREATE ORDER + API RESPONSE + AWB SAVE
+========================================================= */
+
+async function createShiprocketOrder(orderId, paymentMethod, paymentId){
+
+ const response = await fetch("/api/shiprocket",{
+  method:"POST",
+  headers:{
+   "Content-Type":"application/json"
+  },
+  body:JSON.stringify({
+
+   action:"create_order",
+   orderId:String(orderId),
+
+   productId:Number(currentProduct?.id || 0),
+
+   productName:String(
+    currentProduct?.name ||
+    "Aarvi Fashion Product"
+   ),
+
+   sku:String(
+    currentProduct?.sku ||
+    currentProduct?.id ||
+    `AF-${orderId}`
+   ),
+
+   quantity:Number(
+    $("oQty")?.value ||
+    qty ||
+    1
+   ),
+
+   unitPrice:Number(
+    currentProduct?.price || 0
+   ),
+
+   shippingAmount:Number(
+    shippingCharge || 0
+   ),
+
+   paymentMethod:String(
+    paymentMethod || "COD"
+   ),
+
+   razorpayPaymentId:String(
+    paymentId || ""
+   ),
+
+   customerName:$("oName")?.value.trim() || "",
+   phone:$("oPhone")?.value.trim() || "",
+   address:$("oAddress")?.value.trim() || "",
+   city:$("oCity")?.value.trim() || "",
+   state:$("oState")?.value.trim() || "",
+   deliveryPincode:$("oPin")?.value.trim() || "",
+   size:selectedSize || "",
+   weight:0.5
+
+  })
+ });
+
+ const data =
+ await response.json().catch(()=>({}));
+
+ if(!response.ok || data.success === false){
+  throw new Error(
+   data.error ||
+   data.message ||
+   "Shiprocket me order create nahi hua."
+  );
+ }
+
+ const awb =
+  data.awb ||
+  data.awb_code ||
+  data.tracking_number ||
+  data.data?.awb ||
+  data.data?.awb_code ||
+  "";
+
+ const shipmentId =
+  data.shipment_id ||
+  data.shipmentId ||
+  data.data?.shipment_id ||
+  data.data?.shipmentId ||
+  "";
+
+ const shiprocketOrderId =
+  data.shiprocket_order_id ||
+  data.shiprocketOrderId ||
+  data.data?.shiprocket_order_id ||
+  data.data?.shiprocketOrderId ||
+  "";
+
+ const courierName =
+  data.courier_name ||
+  data.courier ||
+  data.data?.courier_name ||
+  "";
+
+ const trackingUrl =
+  data.tracking_url ||
+  data.trackingUrl ||
+  data.data?.tracking_url ||
+  "";
+
+ const pickupRequested =
+  data.pickup_requested ??
+  data.pickupRequested ??
+  false;
+
+
+ /* Save AWB and tracking fields already used by the website. */
+
+ if(orderId){
+
+  const basicUpdate = {};
+
+  if(awb)
+   basicUpdate.tracking_number =
+    String(awb);
+
+  if(courierName)
+   basicUpdate.courier_name =
+    String(courierName);
+
+  if(trackingUrl)
+   basicUpdate.tracking_url =
+    String(trackingUrl);
+
+  if(Object.keys(basicUpdate).length){
+
+   const u =
+   await sb
+   .from("orders")
+   .update(basicUpdate)
+   .eq("id",Number(orderId));
+
+   if(u.error){
+    console.warn(
+     "AWB website order me save nahi hua:",
+     u.error.message
+    );
+   }
+  }
+
+
+  /* Optional response fields. */
+
+  const optionalUpdate = {};
+
+  if(shipmentId)
+   optionalUpdate.shipment_id =
+    String(shipmentId);
+
+  if(shiprocketOrderId)
+   optionalUpdate.shiprocket_order_id =
+    String(shiprocketOrderId);
+
+  optionalUpdate.pickup_requested =
+   Boolean(pickupRequested);
+
+  if(Object.keys(optionalUpdate).length){
+
+   const u2 =
+   await sb
+   .from("orders")
+   .update(optionalUpdate)
+   .eq("id",Number(orderId));
+
+   if(u2.error){
+    console.warn(
+     "Optional Shiprocket fields save nahi hue:",
+     u2.error.message
+    );
+   }
+  }
+ }
+
+ return {
+  ...data,
+  awb,
+  shipment_id:shipmentId,
+  shiprocket_order_id:shiprocketOrderId,
+  courier_name:courierName,
+  tracking_url:trackingUrl,
+  pickup_requested:pickupRequested
+ };
+}
 
 
 /* =========================================================
@@ -2790,22 +3090,76 @@ async function openRazorpayPayment(
     );
 
    }
+   /*
+    Payment successful + website order save ho chuka hai.
+    Ab Shiprocket me shipment + AWB create karo.
+   */
 
+   let shiprocketInfo = null;
+
+   try{
+
+    btn.textContent =
+    "Shiprocket shipment create ho raha hai...";
+
+    shiprocketInfo =
+    await createShiprocketOrder(
+     r.data,
+     "Online",
+     response.razorpay_payment_id
+    );
+
+   }catch(shipError){
+
+    console.warn(
+     "Shiprocket order create error:",
+     shipError
+    );
+
+   }
 
    closeModal();
 
    await loadProducts();
 
+   if(shiprocketInfo?.awb){
 
-   alert(
-    "Payment Successful! ✅\n\n" +
-    "Order Confirmed! 🎉\n\n" +
-    "Order ID: #" +
-    r.data +
-    "\nPayment ID: " +
-    response.razorpay_payment_id
-   );
+    alert(
+     "Payment Successful! ✅\n\n" +
+     "Order Confirmed! 🎉\n\n" +
+     "Order ID: #" +
+     r.data +
+     "\n" +
+     "Payment ID: " +
+     response.razorpay_payment_id +
+     "\n\n" +
+     "AWB: " +
+     shiprocketInfo.awb +
+     "\n" +
+     "Courier: " +
+     (
+      shiprocketInfo.courier_name ||
+      "Assigned"
+     ) +
+     "\n\n" +
+     "Shipment Shiprocket me create ho gaya. 🚚"
+    );
 
+   }else{
+
+    alert(
+     "Payment Successful! ✅\n\n" +
+     "Order Confirmed! 🎉\n\n" +
+     "Order ID: #" +
+     r.data +
+     "\n" +
+     "Payment ID: " +
+     response.razorpay_payment_id +
+     "\n\n" +
+     "Shiprocket shipment/AWB abhi generate nahi hua."
+    );
+
+   }
 
    showScreen("orders");
 
@@ -3080,19 +3434,67 @@ async function placeOrder(){
   );
 
  }
+ /*
+  Website order save ho chuka hai.
+  Ab Shiprocket me shipment + AWB create karo.
+ */
 
+ let shiprocketInfo = null;
+
+ try{
+
+  btn.textContent =
+  "Shiprocket shipment create ho raha hai...";
+
+  shiprocketInfo =
+  await createShiprocketOrder(
+   r.data,
+   "COD",
+   ""
+  );
+
+ }catch(shipError){
+
+  console.warn(
+   "Shiprocket order create error:",
+   shipError
+  );
+
+ }
 
  closeModal();
 
-
  await loadProducts();
 
+ if(shiprocketInfo?.awb){
 
- alert(
-  "Order Confirmed! ✅\n" +
-  "Order ID: #" + r.data
- );
+  alert(
+   "Order Confirmed! ✅\n\n" +
+   "Order ID: #" + r.data +
+   "\n\n" +
+   "AWB: " +
+   shiprocketInfo.awb +
+   "\n" +
+   "Courier: " +
+   (
+    shiprocketInfo.courier_name ||
+    "Assigned"
+   ) +
+   "\n\n" +
+   "Shipment Shiprocket me create ho gaya. 🚚"
+  );
 
+ }else{
+
+  alert(
+   "Order Confirmed! ✅\n" +
+   "Order ID: #" + r.data +
+   "\n\n" +
+   "Shiprocket shipment/AWB abhi generate nahi hua. " +
+   "Order website me save hai."
+  );
+
+ }
 
  showScreen("orders");
 
