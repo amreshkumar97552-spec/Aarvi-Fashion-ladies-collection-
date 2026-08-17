@@ -822,108 +822,114 @@ body{
 </style>
 
 <style>
-/* ===== PRODUCT CARD: COMPACT + EQUAL SQUARE STYLE ===== */
-
+/* ===== NEW WEBSITE: SQUARE PRODUCT + VERY COMPACT DETAILS ===== */
 .products{
-  align-items:stretch;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  align-items:start;
 }
-
 .card{
-  height:100%;
-  display:flex;
-  flex-direction:column;
+  height:auto !important;
+  display:block !important;
   min-width:0;
 }
-
 .photo{
   width:100%;
   aspect-ratio:1 / 1;
   height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
   flex:none;
 }
-
 .info{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  min-width:0;
+  padding:5px 6px 6px !important;
+  display:block !important;
 }
-
 .name{
   display:-webkit-box;
   -webkit-box-orient:vertical;
   -webkit-line-clamp:2;
   overflow:hidden;
-  min-height:2.45em;
-  line-height:1.22;
-  font-size:11px !important;
+  min-height:0 !important;
+  max-height:2.35em;
+  line-height:1.17 !important;
+  font-size:10px !important;
   font-weight:600 !important;
+  margin:0 0 2px !important;
 }
-
 .muted{
+  font-size:8px !important;
+  line-height:1.15 !important;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
-
 .price{
-  font-size:16px !important;
-  line-height:1.2;
+  margin:3px 0 !important;
+  font-size:14px !important;
+  line-height:1.15 !important;
+  font-weight:800 !important;
   white-space:nowrap;
+  color:#d94f82;
 }
-
 .old{
-  font-size:10px !important;
+  font-size:8px !important;
+  line-height:1 !important;
   font-weight:400 !important;
   text-decoration:line-through;
   color:#999 !important;
-  margin-left:4px;
+  margin-left:3px !important;
 }
-
 .discount-text{
-  font-size:9px;
-  font-weight:600;
+  font-size:7px !important;
+  line-height:1 !important;
+  font-weight:600 !important;
   white-space:nowrap;
 }
-
 .info .btn{
-  margin-top:5px;
+  margin-top:4px !important;
+  padding:6px 5px !important;
+  min-height:0 !important;
+  border-radius:7px !important;
+  font-size:9px !important;
+  line-height:1.1 !important;
 }
-
+.discount-pill{
+  font-size:7px !important;
+  padding:3px 5px !important;
+  border-radius:5px !important;
+}
+.zoom{
+  width:20px !important;
+  height:20px !important;
+  font-size:10px !important;
+  right:4px !important;
+  bottom:4px !important;
+}
+.section-badge{
+  font-size:6px !important;
+  padding:2px 3px !important;
+}
+@media(max-width:900px){
+  .products{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+}
 @media(max-width:650px){
-  .name{
-    font-size:9.5px !important;
-    min-height:2.35em;
-  }
-
-  .price{
-    font-size:13px !important;
-  }
-
-  .old{
-    font-size:8px !important;
-    font-weight:400 !important;
-  }
-
-  .discount-text{
-    font-size:8px;
-  }
+  .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .info{padding:4px 5px 5px !important}
+  .name{font-size:9px !important;line-height:1.15 !important}
+  .muted{font-size:7px !important}
+  .price{font-size:13px !important;margin:3px 0 !important}
+  .old{font-size:7px !important;font-weight:400 !important}
+  .discount-text{font-size:6.5px !important}
+  .info .btn{font-size:8px !important;padding:6px 4px !important}
 }
-
 @media(max-width:430px){
-  .name{
-    font-size:9px !important;
-    min-height:2.3em;
-  }
-
-  .price{
-    font-size:12px !important;
-  }
-
-  .old{
-    font-size:7.5px !important;
-    font-weight:400 !important;
-  }
+  .products{gap:6px}
+  .name{font-size:8.5px !important}
+  .muted{font-size:6.5px !important}
+  .price{font-size:12px !important}
+  .old{font-size:6.5px !important}
+  .info .btn{font-size:7.5px !important;padding:5px 3px !important}
 }
 </style>
 
