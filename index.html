@@ -932,6 +932,89 @@ body{
   .info .btn{font-size:7.5px !important;padding:5px 3px !important}
 }
 
+/* ===== CUSTOMER 4-PHOTO PRODUCT GALLERY ===== */
+.product-gallery-modal{
+ max-width:560px !important;
+ padding:10px !important;
+ background:#111 !important;
+}
+.gallery-main{
+ position:relative;
+ width:100%;
+ min-height:300px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:#111;
+ border-radius:14px;
+ overflow:hidden;
+}
+.gallery-main>img{
+ display:block;
+ width:100%;
+ max-height:72vh;
+ object-fit:contain;
+ border-radius:14px;
+ background:#fff;
+}
+.gallery-arrow{
+ position:absolute;
+ top:50%;
+ transform:translateY(-50%);
+ width:38px;
+ height:38px;
+ border:0;
+ border-radius:50%;
+ background:rgba(255,255,255,.92);
+ color:#4b3d4d;
+ font-size:30px;
+ line-height:34px;
+ z-index:3;
+}
+.gallery-prev{left:10px}
+.gallery-next{right:10px}
+.gallery-thumbs{
+ display:flex;
+ gap:7px;
+ overflow-x:auto;
+ padding:9px 2px 3px;
+ scrollbar-width:none;
+}
+.gallery-thumbs::-webkit-scrollbar{display:none}
+.gallery-thumb{
+ flex:0 0 62px;
+ width:62px;
+ height:62px;
+ padding:2px;
+ border:1px solid #555;
+ border-radius:9px;
+ background:#222;
+ overflow:hidden;
+}
+.gallery-thumb.active{border:2px solid #d94f82}
+.gallery-thumb img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ border-radius:6px;
+}
+.gallery-caption{
+ color:#fff;
+ text-align:center;
+ padding:8px 4px 3px;
+ display:flex;
+ flex-direction:column;
+ gap:3px;
+ font-size:13px;
+}
+.gallery-caption span{font-size:11px;color:#ccc}
+@media(max-width:650px){
+ .gallery-main{min-height:240px}
+ .gallery-main>img{max-height:65vh}
+ .gallery-thumb{flex-basis:54px;width:54px;height:54px}
+ .gallery-arrow{width:34px;height:34px;font-size:26px}
+}
+
 /* ===== PREPAID 5% DISCOUNT ===== */
 .prepaid-off{color:#26723a;font-weight:800;font-size:11px;margin-top:6px}
 </style>
@@ -1432,24 +1515,43 @@ function money(v){
 
 function imgs(p){
 
+ /* Customer website: support all 4 admin-uploaded photos.
+    Primary source is image_urls, with fallbacks for older product rows. */
  let a = [];
 
  try{
-
-  a =
-  Array.isArray(p.image_urls)
-  ? p.image_urls
-  : JSON.parse(p.image_urls || "[]");
-
+  if(Array.isArray(p?.image_urls)){
+   a = p.image_urls;
+  }else if(typeof p?.image_urls === "string" && p.image_urls.trim()){
+   const raw = p.image_urls.trim();
+   try{
+    const parsed = JSON.parse(raw);
+    a = Array.isArray(parsed) ? parsed : [raw];
+   }catch{
+    /* Also accept comma/newline separated URLs if older admin code saved them that way. */
+    a = raw.split(/[,\n]+/).map(x => x.trim()).filter(Boolean);
+   }
+  }
  }catch{}
 
- if(!Array.isArray(a))
- a = [];
+ /* Fallback for databases that have separate image_1 ... image_4 columns. */
+ if(!a.length){
+  a = [
+   p?.image_1,
+   p?.image_2,
+   p?.image_3,
+   p?.image_4,
+   p?.image1,
+   p?.image2,
+   p?.image3,
+   p?.image4
+  ].filter(Boolean);
+ }
 
- if(!a.length && p.image_url)
- a = [p.image_url];
+ if(!a.length && p?.image_url)
+  a = [p.image_url];
 
- return a.filter(Boolean);
+ return [...new Set(a.map(x => String(x).trim()).filter(Boolean))].slice(0,4);
 
 }
 
@@ -1482,40 +1584,78 @@ function closeModal(){
    IMAGE
 ========================================================= */
 
-function openImage(src,name){
+let productGalleryIndex = 0;
+let productGalleryImages = [];
 
+function openImage(src,name){
  if(!src)return;
+ openProductGallery([src],name,0);
+}
+
+function openProductGallery(images,name,startIndex=0){
+ productGalleryImages = (images || []).filter(Boolean).slice(0,4);
+ if(!productGalleryImages.length)return;
+ productGalleryIndex = Math.max(0,Math.min(startIndex,productGalleryImages.length-1));
+ renderProductGallery(name);
+}
+
+function openProductGalleryById(id){
+ const p = allProducts.find(x => Number(x.id) === Number(id));
+ if(!p)return;
+ openProductGallery(imgs(p), p.name || "Product", 0);
+}
+
+function renderProductGallery(name){
+ const total = productGalleryImages.length;
+ const src = productGalleryImages[productGalleryIndex];
 
  $("modalRoot").innerHTML = `
+ <div class="modal" onclick="closeModal()">
+  <div class="box product-gallery-modal" onclick="event.stopPropagation()">
+   <button class="close" onclick="closeModal()">×</button>
 
- <div
- class="modal"
- onclick="closeModal()">
+   <div class="gallery-main">
+    <img
+     src="${esc(src)}"
+     alt="${esc(name)}"
+     onerror="this.style.display='none'">
 
- <div
- class="box"
- style="max-width:520px;padding:8px;background:#111"
- onclick="event.stopPropagation()">
+    ${total > 1 ? `
+     <button class="gallery-arrow gallery-prev" onclick="galleryMove(-1)">‹</button>
+     <button class="gallery-arrow gallery-next" onclick="galleryMove(1)">›</button>
+    ` : ""}
+   </div>
 
- <button
- class="close"
- onclick="closeModal()">×</button>
+   ${total > 1 ? `
+    <div class="gallery-thumbs">
+     ${productGalleryImages.map((image,i)=>`
+      <button class="gallery-thumb ${i===productGalleryIndex ? "active" : ""}" onclick="galleryGo(${i})">
+       <img src="${esc(image)}" alt="Photo ${i+1}">
+      </button>
+     `).join("")}
+    </div>
+   ` : ""}
 
- <img
- src="${esc(src)}"
- alt="${esc(name)}"
- style="display:block;width:100%;max-height:82vh;object-fit:contain;border-radius:12px;background:#fff">
-
- <div
- style="color:#fff;text-align:center;padding:8px 4px;font-weight:700">
-
- ${esc(name)}
-
- </div>
-
- </div>
+   <div class="gallery-caption">
+    <b>${esc(name)}</b>
+    ${total > 1 ? `<span>Photo ${productGalleryIndex+1} / ${total}</span>` : ""}
+   </div>
+  </div>
  </div>`;
+}
 
+function galleryMove(step){
+ if(productGalleryImages.length < 2)return;
+ productGalleryIndex = (productGalleryIndex + step + productGalleryImages.length) % productGalleryImages.length;
+ const name = $("modalRoot")?.querySelector(".gallery-caption b")?.textContent || "Product";
+ renderProductGallery(name);
+}
+
+function galleryGo(index){
+ if(index < 0 || index >= productGalleryImages.length)return;
+ productGalleryIndex = index;
+ const name = $("modalRoot")?.querySelector(".gallery-caption b")?.textContent || "Product";
+ renderProductGallery(name);
 }
 
 
@@ -1676,9 +1816,10 @@ function sectionBadges(p){
 
 function productCard(p){
 
- const im =
- imgs(p)[0] || "";
+ const images = imgs(p);
+ const im = images[0] || "";
 
+ /* Stock stays available internally for ordering, but is never rendered to customers. */
  const stock =
  Number(p.stock || 0);
 
@@ -1700,10 +1841,7 @@ function productCard(p){
 
  <div
  class="photo"
- onclick="openImage(
- '${esc(im)}',
- '${esc(p.name || "Product")}'
- )">
+ onclick="openProductGalleryById(${Number(p.id)})">
 
  ${
   discountPercent
@@ -1763,16 +1901,6 @@ function productCard(p){
    </span>
    <span class="discount-text">(${discountPercent}% OFF)</span>`
   : ""
- }
-
- </div>
-
- <div class="muted">
-
- ${
-  stock > 0
-  ? `Stock: ${stock}`
-  : "Out of Stock"
  }
 
  </div>
