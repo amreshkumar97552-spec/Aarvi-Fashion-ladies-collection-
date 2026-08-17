@@ -853,6 +853,68 @@ supabase.createClient(
 
 
 /* =========================================================
+   SHIPROCKET ORDER CREATE + AWB
+========================================================= */
+
+async function createShiprocketOrder(orderId, paymentMethod, paymentId){
+ const response = await fetch("/api/shiprocket",{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({
+   action:"create_order",
+   orderId:String(orderId),
+   productId:Number(currentProduct.id),
+   productName:currentProduct.name,
+   sku:String(currentProduct.id),
+   quantity:Number(qty),
+   unitPrice:Number(currentProduct.price || 0),
+   shippingAmount:Number(shippingCharge || 0),
+   paymentMethod:paymentMethod,
+   razorpayPaymentId:paymentId || "",
+   customerName:$("oName")?.value.trim() || "",
+   phone:$("oPhone")?.value.trim() || "",
+   address:$("oAddress")?.value.trim() || "",
+   city:$("oCity")?.value.trim() || "",
+   state:$("oState")?.value.trim() || "",
+   deliveryPincode:$("oPin")?.value.trim() || "",
+   size:selectedSize || "",
+   weight:0.5
+  })
+ });
+
+ const data = await response.json().catch(()=>({}));
+
+ if(!response.ok || data.success === false){
+  throw new Error(
+   data.error ||
+   data.message ||
+   "Shiprocket me order create nahi hua."
+  );
+ }
+
+ if(orderId && (data.awb || data.courier_name || data.tracking_url)){
+  const updateData = {};
+
+  if(data.awb) updateData.tracking_number = String(data.awb);
+  if(data.courier_name) updateData.courier_name = String(data.courier_name);
+  if(data.tracking_url) updateData.tracking_url = String(data.tracking_url);
+
+  if(Object.keys(updateData).length){
+   const u = await sb
+    .from("orders")
+    .update(updateData)
+    .eq("id",Number(orderId));
+
+   if(u.error){
+    console.warn("AWB website order me save nahi hua:",u.error.message);
+   }
+  }
+ }
+
+ return data;
+}
+
+/* =========================================================
    RAZORPAY
 ========================================================= */
 
@@ -2025,7 +2087,7 @@ async function checkShipping(){
     },
     body:JSON.stringify({
 
-     action:"rate",
+     action:"shipping_charge",
 
      deliveryPincode:pin,
 
@@ -2557,10 +2619,10 @@ async function openRazorpayPayment(
      p_payment_method:
      "Online",
 
-     p_shipping_amount:
+    p_shipping_amount:
      Number(shippingCharge || 0),
 
-     p_razorpay_payment_id:
+    p_razorpay_payment_id:
      response.razorpay_payment_id || null
 
     }
@@ -2853,13 +2915,7 @@ async function placeOrder(){
    q,
 
    p_payment_method:
-   "COD",
-
-   p_shipping_amount:
-   Number(shippingCharge || 0),
-
-   p_razorpay_payment_id:
-   null
+   "COD"
 
   }
  );
@@ -3440,173 +3496,57 @@ async function trackMyOrder(orderId){
  const box =
  $("tracking-" + orderId);
 
+
  if(!box)return;
+
 
  box.innerHTML =
  '<div class="tracking-box">' +
  '<div class="shipping-loading">' +
- '⏳ Shiprocket tracking load ho rahi hai...' +
+ '⏳ Tracking information load ho rahi hai...' +
  '</div>' +
  '</div>';
 
+
  try{
-
-  const {
-   data:{session}
-  } =
-  await sb.auth.getSession();
-
-  if(!session){
-   throw new Error("Login required.");
-  }
 
   const r =
   await sb
   .from("orders")
   .select("*")
   .eq("id",orderId)
-  .eq("user_id",session.user.id)
   .maybeSingle();
 
+
   if(r.error)
-   throw new Error(r.error.message);
+  throw new Error(r.error.message);
+
 
   if(!r.data){
-   throw new Error("Order nahi mila.");
+
+   box.innerHTML =
+   '<div class="error">' +
+   'Order nahi mila.' +
+   '</div>';
+
+   return;
+
   }
 
-  const o = r.data;
-
-  const awb =
-   o.awb_code ||
-   o.awb ||
-   o.tracking_number ||
-   o.trackingNumber ||
-   "";
-
-  const shipmentId =
-   o.shipment_id ||
-   o.shipmentId ||
-   "";
-
-  const shiprocketOrderId =
-   o.shiprocket_order_id ||
-   o.shiprocketOrderId ||
-   "";
-
-  /*
-     Live Shiprocket tracking backend ko call karein.
-     AWB ho to AWB se, warna shipment/order id se lookup hoga.
-  */
-  const response =
-   await fetch(
-    "/api/shiprocket",
-    {
-     method:"POST",
-     headers:{
-      "Content-Type":"application/json"
-     },
-     body:JSON.stringify({
-      action:"track",
-      awb:awb || null,
-      shipmentId:shipmentId || null,
-      shiprocketOrderId:shiprocketOrderId || null,
-      orderId:String(orderId),
-      phone:o.phone || ""
-     })
-    }
-   );
-
-  const data =
-   await response.json();
-
-  if(!response.ok || data.success === false){
-
-   /* Agar shipment abhi Shiprocket me create/assign nahi hua,
-      order ki saved information fir bhi dikhayein. */
-   if(awb || shipmentId || shiprocketOrderId){
-    box.innerHTML = trackingHTML({
-     ...o,
-     awb_code:awb,
-     shipment_id:shipmentId,
-     shiprocket_order_id:shiprocketOrderId,
-     tracking_status:
-      o.tracking_status ||
-      o.shipment_status ||
-      o.order_status ||
-      "Shipment update pending"
-    }) +
-    '<div class="shipping-error">' +
-    '⚠️ Live Shiprocket update abhi nahi mila.<br>' +
-    esc(data.error || data.message || "Tracking unavailable") +
-    '</div>';
-    return;
-   }
-
-   throw new Error(
-    data.error ||
-    data.message ||
-    "Shiprocket shipment/AWB abhi available nahi hai."
-   );
-  }
-
-  const live =
-   data.data ||
-   data.tracking ||
-   data.shipment ||
-   data;
 
   box.innerHTML =
-   trackingHTML({
-    ...o,
-    ...live,
-    id:orderId,
-    awb_code:
-     live.awb_code ||
-     live.awb ||
-     live.awbCode ||
-     awb,
-    shipment_id:
-     live.shipment_id ||
-     live.shipmentId ||
-     shipmentId,
-    tracking_status:
-     live.tracking_status ||
-     live.shipment_status ||
-     live.current_status ||
-     live.status ||
-     o.order_status ||
-     "Shipment Update",
-    courier_name:
-     live.courier_name ||
-     live.courier ||
-     live.courierName ||
-     o.courier_name ||
-     "",
-    etd:
-     live.etd ||
-     live.estimated_delivery ||
-     live.estimatedDelivery ||
-     o.etd ||
-     "",
-    tracking_activity:
-     live.tracking_activity ||
-     live.shipment_track_activities ||
-     live.activity ||
-     []
-   });
+  trackingHTML(r.data);
+
 
  }catch(error){
 
   box.innerHTML =
-  '<div class="tracking-box">' +
-  '<div class="shipping-error">' +
-  '❌ ' + esc(error.message) +
-  '<br><br>' +
-  'Shiprocket me shipment/AWB create hone ke baad live tracking yahan dikhegi.' +
-  '</div>' +
+  '<div class="error">' +
+  esc(error.message) +
   '</div>';
+
  }
+
 }
 
 
@@ -4196,4 +4136,25 @@ sb.auth.onAuthStateChange(() => {
 </script>
 
 </body>
-</html>
+</html  try{
+   btn.textContent = "Shiprocket order create ho raha hai...";
+
+   await createShiprocketOrder(
+    r.data,
+    "COD",
+    ""
+   );
+  }catch(shipError){
+   console.error("Shiprocket create error:",shipError);
+   closeModal();
+   await loadProducts();
+   alert(
+    "Order website par save ho gaya, lekin Shiprocket me create nahi hua.\n\n" +
+    shipError.message +
+    "\n\nOrder ID: #" + r.data
+   );
+   showScreen("orders");
+   return;
+  }
+
+>
