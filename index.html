@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Aarvi Fashion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -12,9 +15,9 @@
 *{box-sizing:border-box}
 body{
  margin:0;
- font-family:Arial,sans-serif;
- background:#fff7fa;
- color:#3a2430
+ font-family:Inter,Arial,sans-serif;
+ background:#fbfaf7;
+ color:#2b2622
 }
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
@@ -26,7 +29,7 @@ header{
  top:0;
  z-index:1000;
  background:#fff;
- border-bottom:1px solid #f0d8e1
+ border-bottom:1px solid #e7ded4
 }
 .top{
  max-width:1180px;
@@ -38,15 +41,15 @@ header{
 }
 .brand{
  font-weight:900;
- color:#d94f82;
+ color:#8b5e3c;
  font-size:22px;
  letter-spacing:2px;
  flex:1
 }
 .icon{
- border:1px solid #f0d8e1;
+ border:1px solid #e7ded4;
  background:#fff;
- color:#d94f82;
+ color:#8b5e3c;
  border-radius:11px;
  padding:9px 11px
 }
@@ -58,7 +61,7 @@ header{
 .search input{
  width:100%;
  padding:12px 14px;
- border:1px solid #ead4dd;
+ border:1px solid #ded5ca;
  border-radius:14px
 }
 
@@ -78,16 +81,16 @@ header{
  flex-wrap:wrap
 }
 .cats button,.chips button{
- border:1px solid #d94f82;
+ border:1px solid #8b5e3c;
  background:#fff;
- color:#d94f82;
+ color:#8b5e3c;
  padding:9px 14px;
  border-radius:22px
 }
 .cats button.active,
 .cats button:hover,
 .chips button.active{
- background:#d94f82;
+ background:#8b5e3c;
  color:#fff
 }
 
@@ -99,7 +102,7 @@ header{
 }
 .section-title h2{
  margin:0;
- color:#d94f82
+ color:#8b5e3c
 }
 
 .products{
@@ -109,14 +112,14 @@ header{
 }
 .card{
  background:#fff;
- border:1px solid #f0d8e1;
+ border:1px solid #e7ded4;
  border-radius:12px;
  overflow:hidden;
  box-shadow:0 2px 8px rgba(120,60,90,.06)
 }
 .photo{
  height:145px;
- background:#fff0f5;
+ background:#f3eee8;
  display:flex;
  align-items:center;
  justify-content:center;
@@ -164,7 +167,7 @@ header{
  padding:2px 3px;
  border-radius:5px;
  background:rgba(255,255,255,.88);
- color:#d94f82;
+ color:#8b5e3c;
  border:1px solid rgba(240,216,225,.8);
  font-weight:400
 }
@@ -182,7 +185,7 @@ header{
 .price{
  font-size:20px;
  font-weight:900;
- color:#d94f82;
+ color:#8b5e3c;
  margin:7px 0
 }
 .old{
@@ -197,18 +200,18 @@ header{
  border:0;
  border-radius:10px;
  padding:10px;
- background:#d94f82;
+ background:#8b5e3c;
  color:#fff;
  font-weight:800;
  margin-top:7px
 }
 .btn.secondary{
  background:#fff;
- color:#d94f82;
- border:1px solid #d94f82
+ color:#8b5e3c;
+ border:1px solid #8b5e3c
 }
 .btn.dark{
- background:#3a2430
+ background:#2b2622
 }
 .btn.green{
  background:#26723a
@@ -222,7 +225,7 @@ header{
  padding:35px;
  text-align:center;
  background:#fff;
- border:1px dashed #e4cbd5;
+ border:1px dashed #d9cfc4;
  border-radius:14px;
  grid-column:1/-1
 }
@@ -234,7 +237,7 @@ header{
  position:sticky;
  bottom:0;
  background:#fff;
- border-top:1px solid #ead4dd;
+ border-top:1px solid #ded5ca;
  display:flex;
  justify-content:space-around;
  z-index:900
@@ -247,7 +250,7 @@ header{
  color:#666
 }
 .bottom button.active{
- color:#d94f82;
+ color:#8b5e3c;
  font-weight:800
 }
 
@@ -271,7 +274,7 @@ header{
  width:100%;
  padding:12px;
  margin:5px 0;
- border:1px solid #f0d8e1;
+ border:1px solid #e7ded4;
  background:#fff;
  border-radius:10px;
  text-align:left
@@ -303,8 +306,8 @@ header{
  right:10px;
  top:10px;
  border:0;
- background:#fff0f5;
- color:#d94f82;
+ background:#f3eee8;
+ color:#8b5e3c;
  border-radius:50%;
  width:34px;
  height:34px;
@@ -326,7 +329,7 @@ input,textarea,select{
 textarea{min-height:80px}
 
 .notice{
- background:#fff0f5;
+ background:#f3eee8;
  padding:10px;
  border-radius:10px;
  margin:10px 0;
@@ -341,14 +344,14 @@ textarea{min-height:80px}
 }
 .error{
  background:#fff0f0;
- color:#a52c2c;
+ color:#9b3d35;
  padding:10px;
  border-radius:10px;
  margin:10px 0
 }
 
 .order-card,.policy,.cart-row{
- border:1px solid #f0d8e1;
+ border:1px solid #e7ded4;
  border-radius:12px;
  padding:12px;
  margin:8px 0;
@@ -357,7 +360,7 @@ textarea{min-height:80px}
 
 .badge{
  display:inline-block;
- background:#d94f82;
+ background:#8b5e3c;
  color:#fff;
  border-radius:20px;
  padding:5px 9px;
@@ -368,8 +371,8 @@ textarea{min-height:80px}
  display:inline-block;
  padding:6px 10px;
  border-radius:20px;
- background:#fff0f5;
- color:#d94f82;
+ background:#f3eee8;
+ color:#8b5e3c;
  font-size:12px;
  font-weight:800
 }
@@ -380,14 +383,14 @@ textarea{min-height:80px}
  flex-wrap:wrap
 }
 .size{
- border:1px solid #d94f82;
+ border:1px solid #8b5e3c;
  background:#fff;
- color:#d94f82;
+ color:#8b5e3c;
  border-radius:8px;
  padding:7px 10px
 }
 .size.sel{
- background:#d94f82;
+ background:#8b5e3c;
  color:#fff
 }
 
@@ -400,7 +403,7 @@ textarea{min-height:80px}
  width:65px;
  height:65px;
  object-fit:contain;
- background:#fff0f5;
+ background:#f3eee8;
  border-radius:8px
 }
 .qty{
@@ -418,8 +421,8 @@ textarea{min-height:80px}
 }
 
 .payment-box{
- border:1px solid #f0d8e1;
- background:#fff7fa;
+ border:1px solid #e7ded4;
+ background:#fbfaf7;
  border-radius:12px;
  padding:12px;
  margin-top:10px
@@ -429,11 +432,11 @@ textarea{min-height:80px}
  align-items:center;
  gap:8px;
  font-weight:700;
- color:#d94f82
+ color:#8b5e3c
 }
 
 .shipping-box{
- border:1px solid #f0d8e1;
+ border:1px solid #e7ded4;
  background:#fff;
  border-radius:12px;
  padding:12px;
@@ -441,7 +444,7 @@ textarea{min-height:80px}
 }
 .shipping-title{
  font-weight:800;
- color:#d94f82;
+ color:#8b5e3c;
  margin-bottom:6px
 }
 .shipping-loading{
@@ -456,7 +459,7 @@ textarea{min-height:80px}
  font-size:13px
 }
 .shipping-error{
- color:#a52c2c;
+ color:#9b3d35;
  background:#fff0f0;
  padding:9px;
  border-radius:8px;
@@ -464,7 +467,7 @@ textarea{min-height:80px}
 }
 
 .total-box{
- border-top:1px solid #ead4dd;
+ border-top:1px solid #ded5ca;
  margin-top:12px;
  padding-top:12px
 }
@@ -476,12 +479,12 @@ textarea{min-height:80px}
 .grand-total{
  font-size:20px;
  font-weight:900;
- color:#d94f82
+ color:#8b5e3c
 }
 
 .tracking-box{
- border:1px solid #ead4dd;
- background:#fff7fa;
+ border:1px solid #ded5ca;
+ background:#fbfaf7;
  border-radius:12px;
  padding:12px;
  margin-top:10px
@@ -496,14 +499,14 @@ textarea{min-height:80px}
 .tracking-title{
  font-size:16px;
  font-weight:900;
- color:#d94f82
+ color:#8b5e3c
 }
 .tracking-line{
  display:flex;
  justify-content:space-between;
  gap:10px;
  padding:7px 0;
- border-bottom:1px solid #f0d8e1;
+ border-bottom:1px solid #e7ded4;
  font-size:13px
 }
 .tracking-line:last-child{
@@ -533,7 +536,7 @@ textarea{min-height:80px}
  width:10px;
  height:10px;
  border-radius:50%;
- background:#d94f82
+ background:#8b5e3c
 }
 .timeline-item:after{
  content:"";
@@ -542,7 +545,7 @@ textarea{min-height:80px}
  top:13px;
  bottom:-2px;
  width:2px;
- background:#ead4dd
+ background:#ded5ca
 }
 .timeline-item:last-child:after{display:none}
 
@@ -560,7 +563,7 @@ textarea{min-height:80px}
 }
 
 .awb-box{
- background:#fff0f5;
+ background:#f3eee8;
  border-radius:10px;
  padding:10px;
  margin-top:8px
@@ -568,10 +571,30 @@ textarea{min-height:80px}
 .awb-number{
  font-size:18px;
  font-weight:900;
- color:#d94f82;
+ color:#8b5e3c;
  letter-spacing:1px
 }
 
+/* PREMIUM FASHION UI */
+.hero p{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:500;letter-spacing:.4px;color:#75695f}
+.section-title h2{font-family:"Cormorant Garamond",serif;font-size:27px;font-weight:600;color:#6f4b32}
+.card{border:1px solid #e7ded4;border-radius:16px;box-shadow:0 8px 24px rgba(70,48,30,.07);transition:transform .18s ease,box-shadow .18s ease}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(70,48,30,.12)}
+.photo{background:linear-gradient(135deg,#f7f2ec,#eee7df)}
+.btn{background:linear-gradient(135deg,#8b5e3c,#6f472f);border-radius:12px;box-shadow:0 5px 14px rgba(111,71,47,.16)}
+.btn.secondary{background:#fff;color:#6f4b32;border-color:#bda890}
+.price{color:#6f472f}
+.old{color:#9b938b}
+.discount-pill{display:inline-flex;align-items:center;gap:4px;background:#efe6da;color:#6f472f;border:1px solid #ddcdbb;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:800;margin-left:5px;vertical-align:middle}
+.product-offer{font-size:10px;color:#6f4b32;margin-top:2px;font-weight:700}
+.brand{font-family:"Cormorant Garamond",serif;letter-spacing:2.5px}
+.cats button,.chips button{border-color:#bda890;color:#6f472f;background:#fffdfb}
+.cats button.active,.cats button:hover,.chips button.active{background:#6f472f;color:#fff;border-color:#6f472f}
+.icon{border-color:#e0d4c7;color:#6f472f;background:#fffdfb}
+.close{background:#f3eee8;color:#6f472f}
+.status-badge,.badge{background:#efe6da;color:#6f472f}
+.awb-number,.tracking-title,.shipping-title{color:#6f472f}
+.timeline-item:before{background:#8b5e3c}
 @media(max-width:900px){
  .products{
   grid-template-columns:repeat(4,minmax(0,1fr));
@@ -667,10 +690,10 @@ textarea{min-height:80px}
 
 <div class="hero">
 
-<h1>Style that feels beautifully yours.</h1>
+<h1>Curated style, made beautifully yours.</h1>
 
 <p>
-Fashion • Beauty • Jewellery • All India Delivery
+Fashion • Beauty • Jewellery • Delivered across India
 </p>
 
 <div id="cats" class="cats"></div>
@@ -851,68 +874,6 @@ supabase.createClient(
  SUPABASE_KEY
 );
 
-
-/* =========================================================
-   SHIPROCKET ORDER CREATE + AWB
-========================================================= */
-
-async function createShiprocketOrder(orderId, paymentMethod, paymentId){
- const response = await fetch("/api/shiprocket",{
-  method:"POST",
-  headers:{"Content-Type":"application/json"},
-  body:JSON.stringify({
-   action:"create_order",
-   orderId:String(orderId),
-   productId:Number(currentProduct.id),
-   productName:currentProduct.name,
-   sku:String(currentProduct.id),
-   quantity:Number(qty),
-   unitPrice:Number(currentProduct.price || 0),
-   shippingAmount:Number(shippingCharge || 0),
-   paymentMethod:paymentMethod,
-   razorpayPaymentId:paymentId || "",
-   customerName:$("oName")?.value.trim() || "",
-   phone:$("oPhone")?.value.trim() || "",
-   address:$("oAddress")?.value.trim() || "",
-   city:$("oCity")?.value.trim() || "",
-   state:$("oState")?.value.trim() || "",
-   deliveryPincode:$("oPin")?.value.trim() || "",
-   size:selectedSize || "",
-   weight:0.5
-  })
- });
-
- const data = await response.json().catch(()=>({}));
-
- if(!response.ok || data.success === false){
-  throw new Error(
-   data.error ||
-   data.message ||
-   "Shiprocket me order create nahi hua."
-  );
- }
-
- if(orderId && (data.awb || data.courier_name || data.tracking_url)){
-  const updateData = {};
-
-  if(data.awb) updateData.tracking_number = String(data.awb);
-  if(data.courier_name) updateData.courier_name = String(data.courier_name);
-  if(data.tracking_url) updateData.tracking_url = String(data.tracking_url);
-
-  if(Object.keys(updateData).length){
-   const u = await sb
-    .from("orders")
-    .update(updateData)
-    .eq("id",Number(orderId));
-
-   if(u.error){
-    console.warn("AWB website order me save nahi hua:",u.error.message);
-   }
-  }
- }
-
- return data;
-}
 
 /* =========================================================
    RAZORPAY
@@ -1284,13 +1245,18 @@ function productCard(p){
  ${
   old > Number(p.price || 0)
   ?
-  `<span class="old">
-   ₹${money(old)}
-   </span>`
+  `<span class="old">₹${money(old)}</span>
+   <span class="discount-pill">${Math.round(((old-Number(p.price||0))/old)*100)}% OFF</span>`
   : ""
  }
 
  </div>
+
+ ${
+  old > Number(p.price || 0)
+  ? `<div class="product-offer">✨ You save ₹${money(old-Number(p.price||0))}</div>`
+  : ""
+ }
 
  <div class="muted">
 
@@ -2563,7 +2529,7 @@ async function openRazorpayPayment(
 
 
   theme:{
-   color:"#d94f82"
+   color:"#8b5e3c"
   },
 
 
@@ -2617,13 +2583,7 @@ async function openRazorpayPayment(
      q,
 
      p_payment_method:
-     "Online",
-
-    p_shipping_amount:
-     Number(shippingCharge || 0),
-
-    p_razorpay_payment_id:
-     response.razorpay_payment_id || null
+     "Online"
 
     }
    );
@@ -4136,25 +4096,4 @@ sb.auth.onAuthStateChange(() => {
 </script>
 
 </body>
-</html  try{
-   btn.textContent = "Shiprocket order create ho raha hai...";
-
-   await createShiprocketOrder(
-    r.data,
-    "COD",
-    ""
-   );
-  }catch(shipError){
-   console.error("Shiprocket create error:",shipError);
-   closeModal();
-   await loadProducts();
-   alert(
-    "Order website par save ho gaya, lekin Shiprocket me create nahi hua.\n\n" +
-    shipError.message +
-    "\n\nOrder ID: #" + r.data
-   );
-   showScreen("orders");
-   return;
-  }
-
->
+</html>
