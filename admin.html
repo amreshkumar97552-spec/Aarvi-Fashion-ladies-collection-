@@ -7,25 +7,25 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#fff7fa;color:#3a2430}
+body{margin:0;font-family:Arial,sans-serif;background:#f7f4f1;color:#2f2925}
 .wrap{max-width:1250px;margin:auto;padding:18px}
 .card{background:#fff;border:1px solid #f0d8e1;border-radius:18px;padding:18px;margin:14px 0}
-h1,h2{color:#d94f82}
+h1,h2{color:#7a5545}
 .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-input,select,textarea{width:100%;padding:11px;margin:5px 0 12px;border:1px solid #e4cbd5;border-radius:10px}
+input,select,textarea{width:100%;padding:11px;margin:5px 0 12px;border:1px solid #ddd1c8;border-radius:10px;background:#fff}
 textarea{min-height:85px}
-button{padding:10px 14px;border:0;border-radius:10px;background:#d94f82;color:#fff;font-weight:700;cursor:pointer;margin:3px}
+button{padding:10px 14px;border:0;border-radius:10px;background:#7a5545;color:#fff;font-weight:700;cursor:pointer;margin:3px}
 .secondary{background:#777}.danger{background:#8d274d}.green{background:#29914b}
 .hide{display:none!important}
 .msg,.success,.error{padding:10px;border-radius:10px;margin:10px 0}
 .msg{background:#fff0f5}.success{background:#eefbf2;color:#26723a}.error{background:#fff0f0;color:#a52c2c}
 .tabs{display:flex;gap:8px;flex-wrap:wrap}
-.tabs button{background:#fff;color:#d94f82;border:1px solid #d94f82}
-.tabs button.active{background:#d94f82;color:#fff}
+.tabs button{background:#fff;color:#7a5545;border:1px solid #7a5545}
+.tabs button.active{background:#7a5545;color:#fff}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .stat{background:#fff;border:1px solid #f0d8e1;border-radius:14px;padding:14px}
-.stat b{display:block;font-size:24px;color:#d94f82;margin-top:4px}
+.stat b{display:block;font-size:24px;color:#7a5545;margin-top:4px}
 .products{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .product{border:1px solid #f0d8e1;border-radius:14px;overflow:hidden;background:#fff}
 .product img{width:100%;height:180px;object-fit:contain;background:#fff0f5}
@@ -62,7 +62,7 @@ button{padding:10px 14px;border:0;border-radius:10px;background:#d94f82;color:#f
 
 <div id="app" class="wrap hide">
 <div class="top">
-<div><h1>Aarvi Fashion Admin</h1><p>Products • Sections • Stock • Orders • Customers</p></div>
+<div><h1>Aarvi Fashion Admin</h1><p>Products • Sizes • Sections • Stock • Orders • Customers</p></div>
 <div><button onclick="openStore()">Open Store</button><button class="secondary" onclick="logout()">Logout</button></div>
 </div>
 
@@ -99,6 +99,7 @@ button{padding:10px 14px;border:0;border-radius:10px;background:#d94f82;color:#f
 <div><label>Selling Price *</label><input id="price" type="number" min="0" placeholder="999"></div>
 <div><label>Original Price</label><input id="original" type="number" min="0" placeholder="1499"></div>
 <div><label>Stock *</label><input id="stock" type="number" min="0" value="1"></div>
+<div><label>Size / Sizes</label><input id="size" placeholder="S, M, L, XL or Free Size"><div class="help">Multiple sizes comma se separated likh sakte hain.</div></div>
 </div>
 
 <label>Description</label>
@@ -264,6 +265,7 @@ async function loadProducts(){
   <p><b style="color:#d94f82">₹${money(p.price)}</b>
   ${p.original_price?`<span style="text-decoration:line-through;color:#999">₹${money(p.original_price)}</span>`:""}</p>
   <p>Stock: <b>${Number(p.stock||0)}</b></p>
+   <p><b>Size:</b> ${esc(p.size||"Free Size")}</p>
   <div class="badges">${sectionBadges(p)||'<span class="badge">No section selected</span>'}</div>
   <button onclick="editSections(${Number(p.id)})">Sections</button>
   <button onclick="editStock(${Number(p.id)},${Number(p.stock||0)})">Stock</button>
@@ -278,6 +280,7 @@ async function addProduct(){
  const price=Number($("price").value);
  const original=Number($("original").value)||null;
  const stock=Number($("stock").value)||0;
+  const size=$("size").value.trim();
  const description=$("desc").value.trim();
  const files=[$("photo1").files[0],$("photo2").files[0],$("photo3").files[0],$("photo4").files[0]].filter(Boolean);
 
@@ -297,7 +300,7 @@ async function addProduct(){
  }
 
  const row={
-  name,category,price,original_price:original,stock,description,
+  name,category,price,original_price:original,stock,size,description,
   image_url:urls[0],
   image_urls:JSON.stringify(urls),
   new_arrival:$("new_arrival").checked,
@@ -321,7 +324,7 @@ async function addProduct(){
 }
 
 function clearProductForm(){
- ["name","price","original","desc","photo1","photo2","photo3","photo4"].forEach(id=>$(id).value="");
+ ["name","price","original","size","desc","photo1","photo2","photo3","photo4"].forEach(id=>$(id).value="");
  $("stock").value="1";
  ["new_arrival","latest","under_999","best_seller"].forEach(id=>$(id).checked=false);
 }
