@@ -4,9 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Aarvi Fashion</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -15,9 +12,9 @@
 *{box-sizing:border-box}
 body{
  margin:0;
- font-family:Inter,Arial,sans-serif;
- background:#fbfaf7;
- color:#2b2622
+ font-family:Arial,sans-serif;
+ background:#fff7fa;
+ color:#3a2430
 }
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
@@ -29,7 +26,7 @@ header{
  top:0;
  z-index:1000;
  background:#fff;
- border-bottom:1px solid #e7ded4
+ border-bottom:1px solid #f0d8e1
 }
 .top{
  max-width:1180px;
@@ -41,15 +38,15 @@ header{
 }
 .brand{
  font-weight:900;
- color:#8b5e3c;
+ color:#d94f82;
  font-size:22px;
  letter-spacing:2px;
  flex:1
 }
 .icon{
- border:1px solid #e7ded4;
+ border:1px solid #f0d8e1;
  background:#fff;
- color:#8b5e3c;
+ color:#d94f82;
  border-radius:11px;
  padding:9px 11px
 }
@@ -61,7 +58,7 @@ header{
 .search input{
  width:100%;
  padding:12px 14px;
- border:1px solid #ded5ca;
+ border:1px solid #ead4dd;
  border-radius:14px
 }
 
@@ -81,16 +78,16 @@ header{
  flex-wrap:wrap
 }
 .cats button,.chips button{
- border:1px solid #8b5e3c;
+ border:1px solid #d94f82;
  background:#fff;
- color:#8b5e3c;
+ color:#d94f82;
  padding:9px 14px;
  border-radius:22px
 }
 .cats button.active,
 .cats button:hover,
 .chips button.active{
- background:#8b5e3c;
+ background:#d94f82;
  color:#fff
 }
 
@@ -102,7 +99,7 @@ header{
 }
 .section-title h2{
  margin:0;
- color:#8b5e3c
+ color:#d94f82
 }
 
 .products{
@@ -112,14 +109,14 @@ header{
 }
 .card{
  background:#fff;
- border:1px solid #e7ded4;
+ border:1px solid #f0d8e1;
  border-radius:12px;
  overflow:hidden;
  box-shadow:0 2px 8px rgba(120,60,90,.06)
 }
 .photo{
  height:145px;
- background:#f3eee8;
+ background:#fff0f5;
  display:flex;
  align-items:center;
  justify-content:center;
@@ -167,7 +164,7 @@ header{
  padding:2px 3px;
  border-radius:5px;
  background:rgba(255,255,255,.88);
- color:#8b5e3c;
+ color:#d94f82;
  border:1px solid rgba(240,216,225,.8);
  font-weight:400
 }
@@ -185,7 +182,7 @@ header{
 .price{
  font-size:20px;
  font-weight:900;
- color:#8b5e3c;
+ color:#d94f82;
  margin:7px 0
 }
 .old{
@@ -200,18 +197,18 @@ header{
  border:0;
  border-radius:10px;
  padding:10px;
- background:#8b5e3c;
+ background:#d94f82;
  color:#fff;
  font-weight:800;
  margin-top:7px
 }
 .btn.secondary{
  background:#fff;
- color:#8b5e3c;
- border:1px solid #8b5e3c
+ color:#d94f82;
+ border:1px solid #d94f82
 }
 .btn.dark{
- background:#2b2622
+ background:#3a2430
 }
 .btn.green{
  background:#26723a
@@ -225,7 +222,7 @@ header{
  padding:35px;
  text-align:center;
  background:#fff;
- border:1px dashed #d9cfc4;
+ border:1px dashed #e4cbd5;
  border-radius:14px;
  grid-column:1/-1
 }
@@ -237,7 +234,7 @@ header{
  position:sticky;
  bottom:0;
  background:#fff;
- border-top:1px solid #ded5ca;
+ border-top:1px solid #ead4dd;
  display:flex;
  justify-content:space-around;
  z-index:900
@@ -250,7 +247,7 @@ header{
  color:#666
 }
 .bottom button.active{
- color:#8b5e3c;
+ color:#d94f82;
  font-weight:800
 }
 
@@ -274,7 +271,7 @@ header{
  width:100%;
  padding:12px;
  margin:5px 0;
- border:1px solid #e7ded4;
+ border:1px solid #f0d8e1;
  background:#fff;
  border-radius:10px;
  text-align:left
@@ -306,8 +303,8 @@ header{
  right:10px;
  top:10px;
  border:0;
- background:#f3eee8;
- color:#8b5e3c;
+ background:#fff0f5;
+ color:#d94f82;
  border-radius:50%;
  width:34px;
  height:34px;
@@ -329,7 +326,7 @@ input,textarea,select{
 textarea{min-height:80px}
 
 .notice{
- background:#f3eee8;
+ background:#fff0f5;
  padding:10px;
  border-radius:10px;
  margin:10px 0;
@@ -344,14 +341,14 @@ textarea{min-height:80px}
 }
 .error{
  background:#fff0f0;
- color:#9b3d35;
+ color:#a52c2c;
  padding:10px;
  border-radius:10px;
  margin:10px 0
 }
 
 .order-card,.policy,.cart-row{
- border:1px solid #e7ded4;
+ border:1px solid #f0d8e1;
  border-radius:12px;
  padding:12px;
  margin:8px 0;
@@ -360,7 +357,7 @@ textarea{min-height:80px}
 
 .badge{
  display:inline-block;
- background:#8b5e3c;
+ background:#d94f82;
  color:#fff;
  border-radius:20px;
  padding:5px 9px;
@@ -371,8 +368,8 @@ textarea{min-height:80px}
  display:inline-block;
  padding:6px 10px;
  border-radius:20px;
- background:#f3eee8;
- color:#8b5e3c;
+ background:#fff0f5;
+ color:#d94f82;
  font-size:12px;
  font-weight:800
 }
@@ -383,14 +380,14 @@ textarea{min-height:80px}
  flex-wrap:wrap
 }
 .size{
- border:1px solid #8b5e3c;
+ border:1px solid #d94f82;
  background:#fff;
- color:#8b5e3c;
+ color:#d94f82;
  border-radius:8px;
  padding:7px 10px
 }
 .size.sel{
- background:#8b5e3c;
+ background:#d94f82;
  color:#fff
 }
 
@@ -403,7 +400,7 @@ textarea{min-height:80px}
  width:65px;
  height:65px;
  object-fit:contain;
- background:#f3eee8;
+ background:#fff0f5;
  border-radius:8px
 }
 .qty{
@@ -421,8 +418,8 @@ textarea{min-height:80px}
 }
 
 .payment-box{
- border:1px solid #e7ded4;
- background:#fbfaf7;
+ border:1px solid #f0d8e1;
+ background:#fff7fa;
  border-radius:12px;
  padding:12px;
  margin-top:10px
@@ -432,11 +429,11 @@ textarea{min-height:80px}
  align-items:center;
  gap:8px;
  font-weight:700;
- color:#8b5e3c
+ color:#d94f82
 }
 
 .shipping-box{
- border:1px solid #e7ded4;
+ border:1px solid #f0d8e1;
  background:#fff;
  border-radius:12px;
  padding:12px;
@@ -444,7 +441,7 @@ textarea{min-height:80px}
 }
 .shipping-title{
  font-weight:800;
- color:#8b5e3c;
+ color:#d94f82;
  margin-bottom:6px
 }
 .shipping-loading{
@@ -459,7 +456,7 @@ textarea{min-height:80px}
  font-size:13px
 }
 .shipping-error{
- color:#9b3d35;
+ color:#a52c2c;
  background:#fff0f0;
  padding:9px;
  border-radius:8px;
@@ -467,7 +464,7 @@ textarea{min-height:80px}
 }
 
 .total-box{
- border-top:1px solid #ded5ca;
+ border-top:1px solid #ead4dd;
  margin-top:12px;
  padding-top:12px
 }
@@ -479,12 +476,12 @@ textarea{min-height:80px}
 .grand-total{
  font-size:20px;
  font-weight:900;
- color:#8b5e3c
+ color:#d94f82
 }
 
 .tracking-box{
- border:1px solid #ded5ca;
- background:#fbfaf7;
+ border:1px solid #ead4dd;
+ background:#fff7fa;
  border-radius:12px;
  padding:12px;
  margin-top:10px
@@ -499,14 +496,14 @@ textarea{min-height:80px}
 .tracking-title{
  font-size:16px;
  font-weight:900;
- color:#8b5e3c
+ color:#d94f82
 }
 .tracking-line{
  display:flex;
  justify-content:space-between;
  gap:10px;
  padding:7px 0;
- border-bottom:1px solid #e7ded4;
+ border-bottom:1px solid #f0d8e1;
  font-size:13px
 }
 .tracking-line:last-child{
@@ -536,7 +533,7 @@ textarea{min-height:80px}
  width:10px;
  height:10px;
  border-radius:50%;
- background:#8b5e3c
+ background:#d94f82
 }
 .timeline-item:after{
  content:"";
@@ -545,7 +542,7 @@ textarea{min-height:80px}
  top:13px;
  bottom:-2px;
  width:2px;
- background:#ded5ca
+ background:#ead4dd
 }
 .timeline-item:last-child:after{display:none}
 
@@ -563,7 +560,7 @@ textarea{min-height:80px}
 }
 
 .awb-box{
- background:#f3eee8;
+ background:#fff0f5;
  border-radius:10px;
  padding:10px;
  margin-top:8px
@@ -571,30 +568,10 @@ textarea{min-height:80px}
 .awb-number{
  font-size:18px;
  font-weight:900;
- color:#8b5e3c;
+ color:#d94f82;
  letter-spacing:1px
 }
 
-/* PREMIUM FASHION UI */
-.hero p{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:500;letter-spacing:.4px;color:#75695f}
-.section-title h2{font-family:"Cormorant Garamond",serif;font-size:27px;font-weight:600;color:#6f4b32}
-.card{border:1px solid #e7ded4;border-radius:16px;box-shadow:0 8px 24px rgba(70,48,30,.07);transition:transform .18s ease,box-shadow .18s ease}
-.card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(70,48,30,.12)}
-.photo{background:linear-gradient(135deg,#f7f2ec,#eee7df)}
-.btn{background:linear-gradient(135deg,#8b5e3c,#6f472f);border-radius:12px;box-shadow:0 5px 14px rgba(111,71,47,.16)}
-.btn.secondary{background:#fff;color:#6f4b32;border-color:#bda890}
-.price{color:#6f472f}
-.old{color:#9b938b}
-.discount-pill{display:inline-flex;align-items:center;gap:4px;background:#efe6da;color:#6f472f;border:1px solid #ddcdbb;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:800;margin-left:5px;vertical-align:middle}
-.product-offer{font-size:10px;color:#6f4b32;margin-top:2px;font-weight:700}
-.brand{font-family:"Cormorant Garamond",serif;letter-spacing:2.5px}
-.cats button,.chips button{border-color:#bda890;color:#6f472f;background:#fffdfb}
-.cats button.active,.cats button:hover,.chips button.active{background:#6f472f;color:#fff;border-color:#6f472f}
-.icon{border-color:#e0d4c7;color:#6f472f;background:#fffdfb}
-.close{background:#f3eee8;color:#6f472f}
-.status-badge,.badge{background:#efe6da;color:#6f472f}
-.awb-number,.tracking-title,.shipping-title{color:#6f472f}
-.timeline-item:before{background:#8b5e3c}
 @media(max-width:900px){
  .products{
   grid-template-columns:repeat(4,minmax(0,1fr));
@@ -656,6 +633,192 @@ textarea{min-height:80px}
   padding:6px 2px
  }
 }
+
+/* ===== AARVI PREMIUM FASHION UI ===== */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Montserrat:wght@400;500;600;700&display=swap');
+
+body{
+ font-family:'Montserrat',Arial,sans-serif;
+ background:#fbfafc;
+ color:#2f2932
+}
+.brand{
+ font-family:'Cormorant Garamond',serif;
+ font-style:italic;
+ font-weight:600;
+ color:#2e2630;
+ font-size:31px;
+ letter-spacing:0;
+ line-height:.8
+}
+.brand::after{
+ content:'FASHION';
+ display:block;
+ font-family:'Montserrat',sans-serif;
+ font-style:normal;
+ font-size:6px;
+ letter-spacing:3px;
+ text-align:center;
+ margin-top:4px;
+ color:#8d718e
+}
+.icon{border-color:#e9e1eb;color:#4b3d4d}
+.search input{border-color:#e8e1ea;background:#fff}
+.hero{
+ padding:0 0 18px;
+ text-align:center
+}
+.hero-banner{
+ position:relative;
+ min-height:390px;
+ border-radius:0 0 28px 28px;
+ overflow:hidden;
+ background:
+   linear-gradient(90deg,rgba(255,251,247,.96) 0%,rgba(255,249,246,.82) 38%,rgba(233,218,237,.34) 68%,rgba(206,182,218,.42) 100%),
+   url('https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1600&q=88') center/cover;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ box-shadow:0 12px 30px rgba(72,45,74,.10)
+}
+.hero-banner::after{
+ content:"";
+ position:absolute;inset:0;
+ background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.05))
+}
+.hero-content{position:relative;z-index:2;max-width:560px;padding:34px 20px 48px;margin-right:38%;text-align:center}
+.hero h1{
+ margin:0;
+ font-family:'Cormorant Garamond',serif;
+ font-style:italic;
+ font-weight:400;
+ font-size:clamp(30px,4.5vw,58px);
+ line-height:.88;
+ letter-spacing:-.8px;
+ color:#302631
+}
+.hero h1 span{display:block;margin:2px 0}.hero h1 span:nth-child(2){margin-left:12px}.hero h1 span:nth-child(3){margin-left:28px}
+.hero h1 .aarvi-word{color:#80608d}
+.hero p{
+ color:#4c444e;
+ font-size:15px;
+ letter-spacing:.2px;
+ margin:22px 0
+}
+.hero-shop{
+ display:inline-flex;
+ align-items:center;
+ gap:10px;
+ border:0;
+ border-radius:28px;
+ padding:12px 25px;
+ background:linear-gradient(135deg,#7c5b8d,#a77ab0);
+ color:#fff;
+ font-weight:700;
+ box-shadow:0 10px 22px rgba(124,91,141,.22)
+}
+.hero-shop:hover{transform:translateY(-1px)}
+.hero-divider{width:190px;height:1px;background:#8f7b8e;margin:18px auto 0;opacity:.65}
+
+.feature-strip{
+ margin:-1px 28px 20px;
+ position:relative;
+ z-index:5;
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ background:#fff;
+ border:1px solid #eee7f0;
+ border-radius:22px;
+ box-shadow:0 10px 28px rgba(65,44,68,.10);
+ overflow:hidden
+}
+.feature{
+ display:flex;align-items:center;gap:12px;
+ padding:15px 20px;
+ text-align:left;
+ border-right:1px solid #eee7f0
+}
+.feature:last-child{border-right:0}
+.feature-icon{
+ width:46px;height:46px;border-radius:50%;
+ background:#f8f2fa;border:1px solid #e8deeb;
+ display:flex;align-items:center;justify-content:center;font-size:22px;flex:0 0 auto
+}
+.feature b{font-size:13px;display:block}
+.feature span{font-size:11px;color:#777;display:block;margin-top:3px}
+
+.category-strip{
+ display:flex;gap:17px;overflow-x:auto;padding:3px 4px 12px;
+ scrollbar-width:none;justify-content:center
+}
+.category-strip::-webkit-scrollbar{display:none}
+.category-item{
+ flex:0 0 78px;text-align:center;border:0;background:transparent;color:#433a46;padding:0;
+ font-size:11px
+}
+.category-icon{
+ width:68px;height:68px;border-radius:50%;margin:0 auto 6px;
+ display:flex;align-items:center;justify-content:center;
+ background:#f8f4f8;border:1px solid #eee5ef;
+ transition:.2s
+}
+.category-item.active .category-icon{
+ border:1.5px solid #8c6b98;
+ box-shadow:0 5px 16px rgba(119,83,132,.14)
+}
+.category-icon img{width:40px;height:40px;object-fit:contain}
+.category-item:hover .category-icon{transform:translateY(-2px)}
+
+.section-title{
+ margin:18px 0 10px;padding:0 2px
+}
+.section-title h2{
+ font-family:'Cormorant Garamond',serif;
+ font-style:italic;
+ font-weight:600;
+ font-size:25px;
+ color:#76537f;
+ letter-spacing:.1px
+}
+.card{border-color:#eee7ef;border-radius:15px;box-shadow:0 5px 16px rgba(70,47,73,.07)}
+.photo{background:#f7f3f8}
+.info{padding:9px}
+.name{font-size:12px;font-weight:600;color:#302932}
+.price{color:#76537f;font-size:18px}
+.btn{background:linear-gradient(135deg,#775581,#9a73a6);border-radius:11px}
+.btn.secondary{color:#76537f;border-color:#cbbbd1;background:#fff}
+.section-badge{
+ background:rgba(255,255,255,.92);color:#775581;border-color:#e6dbe9;
+ font-size:7px;padding:3px 5px;border-radius:7px
+}
+.discount-pill{
+ position:absolute;left:7px;top:7px;z-index:4;
+ background:#3d8b65;color:#fff;font-size:10px;font-weight:700;
+ padding:5px 8px;border-radius:14px;box-shadow:0 3px 8px rgba(35,75,54,.16)
+}
+.discount-text{color:#3d8b65;font-size:11px;font-weight:700;margin-left:5px}
+
+
+@media(max-width:650px){
+ .hero-banner{min-height:310px;border-radius:0 0 20px 20px}
+ .hero-content{margin-right:28%;padding:30px 12px 40px;max-width:330px}
+ .hero h1{font-size:31px;line-height:.86}
+ .hero p{font-size:11px;margin:15px 0}
+ .hero-divider{width:120px;margin:13px auto 0}
+ .hero-shop{font-size:11px;padding:10px 18px}
+ .feature-strip{margin:-1px 10px 16px;border-radius:16px}
+ .feature{padding:10px 8px;gap:6px}
+ .feature-icon{width:34px;height:34px;font-size:16px}
+ .feature b{font-size:9px}
+ .feature span{font-size:8px}
+ .category-strip{justify-content:flex-start;gap:10px;padding-left:4px}
+ .category-item{flex-basis:64px;font-size:9px}
+ .category-icon{width:56px;height:56px}
+ .category-icon img{width:32px;height:32px}
+ .section-title h2{font-size:20px}
+ .why-aarvi>div{grid-template-columns:repeat(2,1fr)!important;row-gap:18px}
+}
+
 </style>
 </head>
 
@@ -666,7 +829,7 @@ textarea{min-height:80px}
 
 <button class="icon" onclick="openMenu()">☰</button>
 
-<div class="brand">AARVI FASHION</div>
+<div class="brand">Aarvi Fashion</div>
 
 <button class="icon" onclick="showNotifications()">🔔</button>
 
@@ -689,17 +852,36 @@ textarea{min-height:80px}
 <section id="home" class="screen active">
 
 <div class="hero">
-
-<h1>Curated style, made beautifully yours.</h1>
-
-<p>
-Fashion • Beauty • Jewellery • Delivered across India
-</p>
-
-<div id="cats" class="cats"></div>
-
+  <div class="hero-banner">
+    <div class="hero-content">
+      <h1>
+        <span>Your Style.</span>
+        <span>Your Story.</span>
+        <span class="aarvi-word">Your Aarvi.</span>
+      </h1>
+      <div class="hero-divider"></div>
+      <p>Handpicked styles for every beautiful you.</p>
+      <button class="hero-shop" onclick="document.getElementById('newArrivals').scrollIntoView({behavior:'smooth'})">
+        SHOP NOW <span>›</span>
+      </button>
+    </div>
+  </div>
+  <div class="feature-strip">
+    <div class="feature">
+      <div class="feature-icon">🏅</div>
+      <div><b>Premium Quality</b><span>Handpicked with care</span></div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🚚</div>
+      <div><b>Easy Delivery</b><span>Pan India Shipping</span></div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🛡️</div>
+      <div><b>Secure Payment</b><span>100% Safe &amp; Reliable</span></div>
+    </div>
+  </div>
+  <div id="cats" class="category-strip"></div>
 </div>
-
 
 <div class="section-title">
 <h2>✨ New Arrivals</h2>
@@ -1184,6 +1366,12 @@ function productCard(p){
  const old =
  Number(p.original_price || 0);
 
+ const priceNow = Number(p.price || 0);
+ const discountPercent =
+ old > priceNow
+ ? Math.round(((old - priceNow) / old) * 100)
+ : 0;
+
  const badges =
  sectionBadges(p);
 
@@ -1197,6 +1385,12 @@ function productCard(p){
  '${esc(im)}',
  '${esc(p.name || "Product")}'
  )">
+
+ ${
+  discountPercent
+  ? `<span class="discount-pill">${discountPercent}% OFF</span>`
+  : ""
+ }
 
  ${
   badges.length
@@ -1243,20 +1437,16 @@ function productCard(p){
  ₹${money(p.price)}
 
  ${
-  old > Number(p.price || 0)
+  old > priceNow
   ?
-  `<span class="old">₹${money(old)}</span>
-   <span class="discount-pill">${Math.round(((old-Number(p.price||0))/old)*100)}% OFF</span>`
+  `<span class="old">
+   ₹${money(old)}
+   </span>
+   <span class="discount-text">(${discountPercent}% OFF)</span>`
   : ""
  }
 
  </div>
-
- ${
-  old > Number(p.price || 0)
-  ? `<div class="product-offer">✨ You save ₹${money(old-Number(p.price||0))}</div>`
-  : ""
- }
 
  <div class="muted">
 
@@ -1300,29 +1490,25 @@ function productCard(p){
 ========================================================= */
 
 function renderCategories(){
-
  const cats = [
-  "All",
-  "Saree",
-  "Kurti",
-  "Dress",
-  "Top",
-  "Suit"
+  ["All","✦"],
+  ["Kurti","👗"],
+  ["Suit","🧥"],
+  ["Saree","🥻"],
+  ["Dress","👗"],
+  ["Top","👚"]
  ];
 
  $("cats").innerHTML =
- cats.map(c => `
-
- <button
- class="${c === currentCategory ? "active" : ""}"
- onclick="setCategory('${c}')">
-
- ${c}
-
- </button>
-
+ cats.map(([c,icon]) => `
+  <button class="category-item ${c === currentCategory ? "active" : ""}"
+   onclick="setCategory('${c}')">
+   <span class="category-icon">
+     <span style="font-size:30px;line-height:1">${icon}</span>
+   </span>
+   <span>${c}</span>
+  </button>
  `).join("");
-
 }
 
 
@@ -2529,7 +2715,7 @@ async function openRazorpayPayment(
 
 
   theme:{
-   color:"#8b5e3c"
+   color:"#d94f82"
   },
 
 
